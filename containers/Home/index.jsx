@@ -1,12 +1,19 @@
-"use client"
+import FirstContent from '@/components/first-content';
+import HowToUse from '@/components/howToUse';
+import ALitleBitAboutUs from '@/components/aLittleBitAboutUs';
+import Terapizone from '@/components/terapizone';
+import Faq from '@/components/faq';
 
-import React from 'react'
 const HomeContainer = () => {
   return (
     <>
-        Home Main Page
+      <FirstContent />
+      <HowToUse />
+      <ALitleBitAboutUs />
+      <Terapizone />
+      <Faq />
     </>
-  )
-}
+  );
+};
 
-export default HomeContainer
+export default HomeContainer;
