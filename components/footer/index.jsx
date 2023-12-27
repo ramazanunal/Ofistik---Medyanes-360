@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 
 //ICONS
-import terappin from "@/public/terappinWhite.svg";
 import {
   BsFacebook,
   BsInstagram,
