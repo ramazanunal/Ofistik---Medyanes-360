@@ -1,26 +1,24 @@
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 function Card({ item }) {
   return (
-    <div
-      className="flex flex-col items-center rounded-b-2xl
-   py-10 px-6 border-t-8 border-t-[#FE7163] bg-white w-fit font-semibold"
-    >
-      <Image
-        src={item.img}
-        alt={`${item.title} image`}
-        width={200}
-        height={200}
-        quality={100}
-        className="md:min-w-[135px]  md:min-h-[135px] xl:min-w-[200px] xl:min-h-[200px]"
-      />
-      <h5 className="text-2xl text-[#4344E5] whitespace-nowrap">{item.title}</h5>
-      <Link className="border-b border-b-[#FE7163] mt-5 hover:border-black hover:text-[#FE7163] " href="#">
-        DAHA FAZLA
-      </Link>
-    </div>
+      <div
+          className="flex flex-col relative items-center rounded-lg shadow-sm bg-slate-200 w-fit font-semibold gap-4"
+      >
+        <Image
+            src={item.img}
+            width={500}
+            height={500}
+            quality={100}
+            alt={`${item.title} image`}
+            className="md:w-[200px] xl:w-[250px] object-contain mix-blend-multiply rounded-lg"
+        />
+        <h5 className="text-2xl text-white absolute bottom-4 whitespace-nowrap z-20">{item.title}</h5>
+        <div className="absolute bottom-0 left-0 bg-gradient-to-t rounded-b-lg from-slate-800 to-transparent h-24 w-full z-10"/>
+      </div>
   );
 }
 

@@ -1,43 +1,34 @@
-import analitikOne from "@/assets/img/AboutUsImg/analitikOne.png";
-import webTasarim from "@/assets/img/AboutUsImg/WebTasarim.jpg";
-import analitikTwo from "@/assets/img/AboutUsImg/analitikTwo.jpg";
-import basvuru from "@/assets/img/AboutUsImg/Basvuru.jpg";
-import iletisim from "@/assets/img/AboutUsImg/iletisim.jpg";
-import pazarlama from "@/assets/img/AboutUsImg/pazarlama.jpg";
-import strateji from "@/assets/img/AboutUsImg/strateji.png";
-import destek from "@/assets/img/AboutUsImg/destek.png";
-
 const data = [
   {
-    img: analitikOne,
+    img: "/images/AboutUsImg/analitikOne.jpeg",
     title: "ANALITIK",
   },
   {
-    img: webTasarim,
+    img: "/images/AboutUsImg/WebTasarim.jpeg",
     title: "WEB TASARIM",
   },
   {
-    img: analitikTwo,
+    img: "/images/AboutUsImg/analitikTwo.jpeg",
     title: "ANALITIK",
   },
   {
-    img: basvuru,
+    img: "/images/AboutUsImg/Basvuru.jpeg",
     title: "BASVURU",
   },
   {
-    img: iletisim,
+    img: "/images/AboutUsImg/iletisim.jpeg",
     title: "ILETISIM",
   },
   {
-    img: pazarlama,
+    img: "/images/AboutUsImg/pazarlama.jpeg",
     title: "PAZARLAMA",
   },
   {
-    img: strateji,
+    img: "/images/AboutUsImg/strateji.jpeg",
     title: "STRATEJI",
   },
   {
-    img: destek,
+    img: "/images/AboutUsImg/destek.jpeg",
     title: "DESTEK",
   },
 ];

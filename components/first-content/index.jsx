@@ -2,8 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import Slider from "@/assets/img/slider.webp";
-
 function FirstContent() {
   return (
     <div className="bg-primary pb-8 pt-16">
@@ -25,7 +23,10 @@ function FirstContent() {
           </Link>
         </div>
         <Image
-            src={Slider}
+            src="/images/slider.png"
+            width={500}
+            height={500}
+            quality={100}
             alt="Picture of the author"
             className="lg:max-w-lg max-w-xs object-contain"
         />

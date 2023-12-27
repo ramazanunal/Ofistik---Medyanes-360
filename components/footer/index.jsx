@@ -3,14 +3,6 @@ import React from "react";
 
 import Image from "next/image";
 
-//import img
-import appStore from "@/assets/img/app_store_download.webp";
-import googlePlay from "@/assets/img/google_play_download.webp";
-import huaweiApp from "@/assets/img/huawei_app_gallery_download.webp";
-import etbis from "@/assets/img/etbis.webp";
-import ssl from "@/assets/img/ssl.webp";
-import bitMap from "@/assets/img/bitmap.webp";
-
 //ICONS
 import terappin from "@/public/terappinWhite.svg";
 import {
@@ -95,17 +87,27 @@ function Footer() {
           <div className="hidden md:flex md:flex-col gap-2">
             <h5 className="font-bold mb-3">Uygulamayı İndir</h5>
             <Link href="/">
-              <Image src={appStore} alt="appstore" />
+              <Image
+                  width={200}
+                  height={100}
+                  objectFit='contain'
+                     src="/images/app_store_download.png"
+                     alt="appstore" />
             </Link>
             <Link href="/">
-              <Image src={googlePlay} alt="googleplay" />
+              <Image src="/images/google_play_download.png"
+                     width={200}
+                     height={100}
+                     objectFit='contain' alt="googleplay" />
             </Link>
             <Link href="/">
-              <Image src={huaweiApp} alt="huaweiapp" />
+              <Image src="/images/huawei_app_gallery.jpg"
+                     width={200}
+                     height={100}
+                     objectFit='contain' alt="huaweiapp" />
             </Link>
           </div>
           <div className="flex flex-col gap-3">
-            <Image src={terappin} alt="terappin" />
             <div className="flex gap-3">
               <Link href="/">
                 <BsInstagram />
@@ -123,16 +125,18 @@ function Footer() {
                 <BsYoutube />
               </Link>
             </div>
-            <div className="flex flex-col gap-3">
-              <Image src={etbis} className="hidden md:block" alt="etbis"/>
+            <div className="flex flex-col gap-3 w-fit h-fit">
+              <Image width={100}
+                     height={100}
+                     objectFit='contain' src="/images/etbis.webp" className="hidden md:block" alt="etbis"/>
               <p>Copyright © 2023</p>
               <p>Terappin Teknoloji A.Ş. Tüm hakları saklıdır.</p>
             </div>
           </div>
         </div>
         <div className="grid grid-cols-2 ">
-          <Image src={ssl} alt="ssl"/>
-          <Image className="justify-self-end" src={bitMap} alt="bitmap"/>
+          <Image width={100} height={100}
+                 objectFit='contain' src="/images/ssl.png" alt="ssl"/>
         </div>
       </div>
     </footer>
