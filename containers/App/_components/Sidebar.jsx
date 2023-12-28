@@ -1,6 +1,6 @@
 'use client'
+
 import React, {useEffect, useState, useRef} from 'react'
-import { useMediaQuery } from "@uidotdev/usehooks"
 import classNames from "classnames";
 import ChevronsLeft from "@/assets/icons/ChevronsLeft";
 import {usePathname} from "next/navigation";
@@ -9,6 +9,10 @@ import ButtonList from "@/containers/App/_components/ButtonList";
 import DefaultIcon from "@/assets/icons/DefaultIcon";
 import AnalyticsIcon from "@/assets/icons/AnalyticsIcon";
 import UserIcon from "@/assets/icons/UserIcon";
+import dynamic from "next/dynamic";
+const useDevice = dynamic(() => import("@/lib/useMediaQuery"), {
+    ssr: false
+});
 
 const buttons = [
     {
@@ -60,7 +64,7 @@ const buttons = [
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
     const pathname = usePathname()
-    const isMobile = useMediaQuery("(max-width: 768px)");
+    const isMobile = useDevice().isMobile
     const isResizingRef = useRef(false);
     const sidebarRef = useRef(null);
     const navbarRef = useRef(null);
