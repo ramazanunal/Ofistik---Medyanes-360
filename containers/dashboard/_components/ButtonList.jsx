@@ -2,7 +2,7 @@
 import {usePathname, useRouter} from "next/navigation";
 import {useState} from "react";
 import classNames from "classnames";
-import NavigationButton from "@/containers/App/_components/NavigationButton";
+import NavigationButton from "@/containers/dashboard/_components/NavigationButton";
 import {isRole} from "@/lib/useAuth"
 import {AnimatePresence, motion} from "framer-motion";
 

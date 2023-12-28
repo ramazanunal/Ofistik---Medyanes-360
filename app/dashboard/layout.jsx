@@ -1,6 +1,6 @@
 'use client'
-import Navbar from '@/containers/App/_components/Navbar'
-import Sidebar from '@/containers/App/_components/Sidebar'
+import Navbar from '@/containers/dashboard/_components/Navbar'
+import Sidebar from '@/containers/dashboard/_components/Sidebar'
 import React, { useState } from 'react'
 
 const MainLayout = ({ children }) => {
