@@ -12,7 +12,6 @@ export default function RootLayout({ children }) {
     <html lang='en' className='scroll-smooth focus:scroll-auto'>
       <body className='overflow-y-auto scroll-smooth overflow-x-hidden flex flex-col font-sans bg-primary'>
         <Provider store={store}>
-          <Header />
           {children}
           {/* Toastify */}
           <ToastContainer
@@ -27,7 +26,6 @@ export default function RootLayout({ children }) {
             pauseOnHover
             theme='colored'
           />
-          <Footer />
         </Provider>
       </body>
     </html>
