@@ -14,12 +14,10 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        primary: '#ABAAF3',
-        secondary: '#5D3FC2',
-        brandColor: '#322460',
-        primaryDark: '#2b4ec6',
-        secondaryDark: '#322460',
-        neutral: '#2a0f8f',
+        primary: '#3d7bf1',
+        secondary: '#313131',
+        brandColor: '#ec1b24',
+        primarydark: '#2b4ec6',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

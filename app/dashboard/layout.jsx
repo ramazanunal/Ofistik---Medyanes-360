@@ -11,13 +11,13 @@ const MainLayout = ({ children }) => {
     }
 
     return (
-        <div className="flex h-screen overflow-hidden background">
+        <div className="flex h-screen w-full overflow-hidden bg-white pb-4">
             <Sidebar/>
 
-            <div className="flex flex-1 flex-col h-full">
-                <Navbar changeOpen={changeSideBar}/>
+            <div className="flex flex-1 w-full flex-col h-full">
+                <Navbar/>
 
-                <div className="flex flex-1 h-full overflow-y-scroll pb-24 bg-gray-200 p-2 bg-fuchsia-50 mr-5 rounded-lg">
+                <div className="flex flex-1 h-full overflow-y-scroll px-2 pt-2 rounded-lg">
                     {children}
                 </div>
             </div>

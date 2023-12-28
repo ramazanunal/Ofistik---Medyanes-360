@@ -9,10 +9,8 @@ import ButtonList from "@/containers/dashboard/_components/ButtonList";
 import DefaultIcon from "@/assets/icons/DefaultIcon";
 import AnalyticsIcon from "@/assets/icons/AnalyticsIcon";
 import UserIcon from "@/assets/icons/UserIcon";
-import dynamic from "next/dynamic";
-const useDevice = dynamic(() => import("@/lib/useMediaQuery"), {
-    ssr: false
-});
+import BurgerIcon from "@/assets/icons/BurgerIcon";
+import {useMediaQuery} from "@/lib/useMediaQuery";
 
 const buttons = [
     {
@@ -64,7 +62,7 @@ const buttons = [
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
     const pathname = usePathname()
-    const isMobile = useDevice().isMobile
+    const isMobile = useMediaQuery(768);
     const isResizingRef = useRef(false);
     const sidebarRef = useRef(null);
     const navbarRef = useRef(null);
@@ -151,21 +149,22 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <aside
                   ref={sidebarRef}
                   className={classNames(
-                      "group/sidebar h-screen overflow-y-auto relative flex w-60 flex-col z-[99999] p-2 pt-8 shadow-sm",
+                      "group/sidebar h-screen overflow-y-auto bg-white relative flex w-60 flex-col z-[99999] p-2 pt-8 shadow-sm",
                       isResetting && "transition-all ease-in-out duration-300",
-                      isMobile && "w-0"
+                      isMobile && "!absolute",
+                      isMobile && isCollapsed && "!bg-transparent !shadow-none"
                   )}
               >
                   <div
                       onClick={isCollapsed ? resetWidth : collapse}
                       role="button"
                       className={classNames(
-                          "h-6 w-6 hover:bg-fuchsia-50 rounded-lg absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
-                          isMobile && "opacity-100"
+                          "h-6 w-6 hover:bg-fuchsia-50 rounded-lg absolute top-3 right-2 transition",
                       )}
                   >
                       {
-                          isCollapsed ? <ChevronsRight className="h-6 w-6" /> : <ChevronsLeft className="h-6 w-6" />
+                          isMobile && isCollapsed ? <BurgerIcon className="w-6 h-6" />
+                              : isCollapsed ? <ChevronsRight className="h-6 w-6" /> : <ChevronsLeft className="h-6 w-6" />
                       }
                   </div>
                   <div className={

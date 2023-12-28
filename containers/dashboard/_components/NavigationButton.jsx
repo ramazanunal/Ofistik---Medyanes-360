@@ -23,18 +23,16 @@ const NavigationButton = ({
     onExpand?.();
   };
 
-  console.log(level)
-
   return (
 <div
     key={id}
     id={id}
     onClick={onClick}
       className={classNames(
-        "flex items-center h-fit gap-4 rounded-lg py-3 relative px-4",
+        "flex items-center h-fit gap-4 rounded-lg py-3 relative px-4 text-sm font-medium",
         "cursor-pointer group",
         "transition-all duration-200 ease-in-out",
-        active ? "!bg-trans-purple" : "bg-white hover:bg-trans-purple",
+        active ? "!bg-secondary/20" : "bg-white hover:bg-trans-purple",
       )}
     >
       {Icon && <Icon className="stroke-gray" />}
@@ -45,7 +43,7 @@ const NavigationButton = ({
           role="button"
           className={
         classNames(
-            "h-full transition-all duration-200 hover:bg-fuchsia-50 mr-1 p-1 rounded-xl ml-auto",
+            "h-full transition-all duration-200 hover:bg-secondary/50 mr-1 p-1 rounded-xl ml-auto",
             expanded || active ? "rotate-90" : ""
         )
           }
