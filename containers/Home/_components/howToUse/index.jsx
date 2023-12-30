@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { BsCalendarDate } from "react-icons/bs";
 import { BsCameraVideoFill } from "react-icons/bs";
-import datas from "@/components/howToUse/data";
+import datas from "./data";
 
 function Section2() {
   const [selectImage, setSelectImage] = useState("/images/step1.jpg");
