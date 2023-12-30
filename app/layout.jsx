@@ -15,9 +15,9 @@ export default function RootLayout({children}) {
         <html lang='en' className='scroll-smooth focus:scroll-auto'>
         <body className='overflow-y-auto scroll-smooth overflow-x-hidden flex flex-col font-sans bg-primary'>
         <Provider store={store}>
-            {pathname === "/" && <Header/>}
+            <Header/>
             {children}
-            {pathname === "/" && <Footer/>}
+            <Footer/>
 
             {/* Toastify */}
             <ToastContainer
