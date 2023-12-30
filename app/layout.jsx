@@ -7,15 +7,15 @@ import {ToastContainer} from 'react-toastify';
 import {useRouter} from "next/navigation";
 import Header from "@/containers/Home/_components/header";
 import Footer from "@/containers/Home/_components/footer";
+import {headers} from "next/headers";
 
 export default function RootLayout({children}) {
+
     return (
         <html lang='en' className='scroll-smooth focus:scroll-auto'>
         <body className='overflow-y-auto scroll-smooth overflow-x-hidden flex flex-col font-sans bg-primary'>
         <Provider store={store}>
-            {location.pathname === "/" && <Header/>}
             {children}
-            {location.pathname === "/" && <Footer/>}
 
             {/* Toastify */}
             <ToastContainer
