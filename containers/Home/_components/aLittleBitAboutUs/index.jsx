@@ -6,7 +6,8 @@ import Card from "./card";
 
 function ALitleBitAboutUs() {
   return (
-    <div id="aLittleBitAboutUs" className="bg-[#4344E5]">
+      <div className="bg-[#4344E5] ">
+    <div id="aLittleBitAboutUs" className="w-3/4 mx-auto">
       <div className="container mx-auto px-[6%] py-[30px] xl:px-[3%]">
         <div className="text-white">
           <h3 className=" font-bold text-center lg:text-2xl">
@@ -23,6 +24,7 @@ function ALitleBitAboutUs() {
         </div>
       </div>
     </div>
+      </div>
   );
 }
 

@@ -15,8 +15,7 @@ function Section2() {
     setSelectItemId(data.id);
   };
   return (
-      <div className="bg-white">
-      <section className="container mx-auto flex md:flex-row flex-col justify-center items-center bg-white ">
+      <section className="w-3/4 mx-auto flex md:flex-row flex-col justify-center items-center bg-white ">
         <div>
           <h2 className="text-textColor text-center md:text-left text-[30px] mb-14 mt-5">
             Nasıl Kullanırım ?
@@ -58,7 +57,6 @@ function Section2() {
           </p>
         </div>
       </section>
-      </div>
   );
 }
 

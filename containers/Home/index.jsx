@@ -7,14 +7,14 @@ import CardSlider from "@/components/cardSlider";
 
 const HomeContainer = () => {
     return (
-        <>
+        <div className="flex flex-col h-full w-full bg-white">
             <FirstContent/>
             <HowToUse/>
             <ALitleBitAboutUs/>
             <Terapizone/>
             <CardSlider/>
             <Faq/>
-        </>
+        </div>
     );
 };
 

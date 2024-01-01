@@ -9,7 +9,7 @@ import {LuMessagesSquare} from "react-icons/lu";
 
 function Terapizone() {
   return (
-      <div className="flex flex-col md:flex-row justify-center bg-white py-8 gap-8">
+      <div className="flex w-3/4 mx-auto flex-col md:flex-row justify-center bg-white py-8 gap-8">
           {datas.map((data) => (
               <div
                   className=" md:p-5 pl-10 md:pl-0 md:mb-16 flex flex-row md:flex-col  items-center  md:max-w-[15rem] max-h-48 "
