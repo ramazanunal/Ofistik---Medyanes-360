@@ -5,7 +5,7 @@ import Image from "next/image";
 function FirstContent() {
   return (
       <div className="bg-[#4344E5]">
-      <div className="flex w-3/4 pt-16 flex-col lg:flex-row h-full mx-auto items-center justify-center lg:gap-[3%] lg:grid-cols-2 lg:px-[9%]">
+      <div className="flex w-3/4 pt-16 pb-8 flex-col lg:flex-row h-full mx-auto items-center justify-center ">
         <div className="flex flex-col items-center lg:items-start pt-12 gap-4">
           <div className="text-secondaryDark flex flex-col gap-4 text-center lg:text-start lg:self-end">
             <h1 className="font-bold mb-3 text-xl lg:text-[56px] lg:leading-[52px] lg:font-semibold ">

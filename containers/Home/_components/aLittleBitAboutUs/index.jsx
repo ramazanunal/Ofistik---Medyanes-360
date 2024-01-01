@@ -6,7 +6,7 @@ import Card from "./card";
 
 function ALitleBitAboutUs() {
   return (
-      <div className="bg-[#4344E5] ">
+      <div className="bg-[#4344E5] w-full">
     <div id="aLittleBitAboutUs" className="w-3/4 mx-auto">
       <div className="container mx-auto px-[6%] py-[30px] xl:px-[3%]">
         <div className="text-white">
@@ -17,7 +17,7 @@ function ALitleBitAboutUs() {
             yapmayı seviyoruz
           </p>
         </div>
-        <div className="grid justify-items-center gap-y-8 gap-x-4 md:px-24  md:grid-cols-2 xl:gap-x-0 lg:px-0 lg:grid-cols-4 2xl:px-32">
+        <div className="grid justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
           {data.map((item, idx) => (
             <Card item={item} key={idx} />
           ))}
