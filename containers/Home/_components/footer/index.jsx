@@ -14,7 +14,7 @@ import {
 
 function Footer() {
   return (
-    <footer className="bg-secondaryDark text-white ">
+    <footer className="bg-[#4344E5]  text-white ">
       <div className=" grid gap-14 pt-[6%] px-[5%] pb-[3%]">
         <div className="grid  md:grid-cols-2 lg:grid-cols-6">
           <div className="flex flex-col">
