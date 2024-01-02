@@ -9,8 +9,8 @@ const HomeContainer = () => {
     return (
         <div className="flex flex-col h-full w-full bg-white">
             <FirstContent/>
-            <HowToUse/>
             <ALitleBitAboutUs/>
+            <HowToUse/>
             <Terapizone/>
             <CardSlider/>
             <Faq/>
