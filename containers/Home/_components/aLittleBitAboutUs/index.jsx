@@ -17,7 +17,7 @@ function ALitleBitAboutUs() {
             yapmayı seviyoruz
           </p>
         </div>
-        <div className="grid justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
           {data.map((item, idx) => (
             <Card item={item} key={idx} />
           ))}

@@ -15,7 +15,7 @@ function Card({ item }) {
             alt={`${item.title} image`}
             className="object-contain mix-blend-multiply rounded-lg"
         />
-        <h5 className="text-2xl text-white absolute bottom-4 whitespace-nowrap z-20">{item.title}</h5>
+        <h5 className="text-sm md:text-xl lg:text-2xl text-white absolute bottom-4 whitespace-nowrap z-20">{item.title}</h5>
         <div className="absolute bottom-0 left-0 bg-gradient-to-t rounded-b-lg from-slate-800 to-transparent h-24 w-full z-10"/>
       </div>
   );

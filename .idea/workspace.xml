@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="biz yapmayı seviyoruz kısmı yukarı taşındı">
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/changeIslandHeader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/terappinPurple.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/terappinWhite.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/terrappin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;YusufStar&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="5ce94cdf-1f9b-41a2-90f4-02e6966a9420" />
+        <option name="url" value="https://github.com/Medyanes-360/Ofistik---Medyanes-360.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2a7eZ9kaHf0NGucwYAqql7sAIyP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/Ofistik---Medyanes-360/app/dashboard/default&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Yusuf\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\app\dashboard\default" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\app\dashboard" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\public\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\assets\icons" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\assets" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\styles" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\containers" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="" />
+      <created>1703674098260</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703674098260</updated>
+      <workItem from="1703674099292" duration="1916000" />
+      <workItem from="1703676304411" duration="3323000" />
+      <workItem from="1703749758777" duration="948000" />
+      <workItem from="1703753571904" duration="1918000" />
+      <workItem from="1703764262609" duration="2159000" />
+      <workItem from="1703835742182" duration="30000" />
+      <workItem from="1703849008225" duration="77000" />
+      <workItem from="1703849927691" duration="32000" />
+      <workItem from="1703934487121" duration="2204000" />
+      <workItem from="1703936718606" duration="197000" />
+      <workItem from="1703937026533" duration="309000" />
+      <workItem from="1703937384308" duration="705000" />
+      <workItem from="1703944015809" duration="49000" />
+      <workItem from="1704107071073" duration="1000000" />
+      <workItem from="1704108129150" duration="481000" />
+      <workItem from="1704108663810" duration="107000" />
+      <workItem from="1704109147825" duration="586000" />
+      <workItem from="1704116662263" duration="2000" />
+      <workItem from="1704201352210" duration="8000" />
+      <workItem from="1704201594370" duration="258000" />
+      <workItem from="1704205891845" duration="286000" />
+      <workItem from="1704271121073" duration="91000" />
+      <workItem from="1704277475241" duration="2227000" />
+    </task>
+    <task id="LOCAL-00001" summary="images -&gt; public/images">
+      <option name="closed" value="true" />
+      <created>1703680121389</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703680121389</updated>
+    </task>
+    <task id="LOCAL-00002" summary="images -&gt; public/images">
+      <option name="closed" value="true" />
+      <created>1703680208586</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703680208586</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added sidebar layour">
+      <option name="closed" value="true" />
+      <created>1703753685270</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1703753685270</updated>
+    </task>
+    <task id="LOCAL-00004" summary="bug fix">
+      <option name="closed" value="true" />
+      <created>1703754356653</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1703754356653</updated>
+    </task>
+    <task id="LOCAL-00005" summary="bug fix">
+      <option name="closed" value="true" />
+      <created>1703755383871</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1703755383871</updated>
+    </task>
+    <task id="LOCAL-00006" summary="mobile fix">
+      <option name="closed" value="true" />
+      <created>1703765866905</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1703765866905</updated>
+    </task>
+    <task id="LOCAL-00007" summary="my media query created">
+      <option name="closed" value="true" />
+      <created>1703765881494</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1703765881494</updated>
+    </task>
+    <task id="LOCAL-00008" summary="slider and slider snap fix">
+      <option name="closed" value="true" />
+      <created>1703936730239</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1703936730239</updated>
+    </task>
+    <task id="LOCAL-00009" summary="slider and slider snap fix">
+      <option name="closed" value="true" />
+      <created>1703936742213</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1703936742213</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fix bug">
+      <option name="closed" value="true" />
+      <created>1703937266898</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1703937266898</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix bug">
+      <option name="closed" value="true" />
+      <created>1703937272994</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1703937272994</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix bug">
+      <option name="closed" value="true" />
+      <created>1703937320039</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1703937320039</updated>
+    </task>
+    <task id="LOCAL-00013" summary="delete use client in RootLayout">
+      <option name="closed" value="true" />
+      <created>1703937439124</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1703937439124</updated>
+    </task>
+    <task id="LOCAL-00014" summary="redeploy">
+      <option name="closed" value="true" />
+      <created>1703938047295</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1703938047295</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix containers">
+      <option name="closed" value="true" />
+      <created>1704108027172</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1704108027172</updated>
+    </task>
+    <task id="LOCAL-00016" summary="footer arka planı değişti, gereksiz componentlar temizlendi">
+      <option name="closed" value="true" />
+      <created>1704108751529</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1704108751529</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix ui">
+      <option name="closed" value="true" />
+      <created>1704109542247</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1704109542247</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix mobile dashboard logo">
+      <option name="closed" value="true" />
+      <created>1704109720171</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1704109720171</updated>
+    </task>
+    <task id="LOCAL-00019" summary="biz yapmayı seviyoruz kısmı yukarı taşındı">
+      <option name="closed" value="true" />
+      <created>1704205979280</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1704205979280</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="images -&gt; public/images" />
+    <MESSAGE value="added sidebar layour" />
+    <MESSAGE value="bug fix" />
+    <MESSAGE value="mobile fix" />
+    <MESSAGE value="my media query created" />
+    <MESSAGE value="slider and slider snap fix" />
+    <MESSAGE value="fix bug" />
+    <MESSAGE value="delete use client in RootLayout" />
+    <MESSAGE value="redeploy" />
+    <MESSAGE value="fix containers" />
+    <MESSAGE value="footer arka planı değişti, gereksiz componentlar temizlendi" />
+    <MESSAGE value="fix ui" />
+    <MESSAGE value="fix mobile dashboard logo" />
+    <MESSAGE value="biz yapmayı seviyoruz kısmı yukarı taşındı" />
+    <option name="LAST_COMMIT_MESSAGE" value="biz yapmayı seviyoruz kısmı yukarı taşındı" />
+  </component>
+</project>

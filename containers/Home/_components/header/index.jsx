@@ -3,13 +3,14 @@ import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-//brand logo
-import terappinPurple from "@/public/terappinPurple.svg";
 //icons
 import {RxCross2} from "react-icons/rx";
 import {RxHamburgerMenu} from "react-icons/rx";
 import {TbWorld} from "react-icons/tb";
 import {MdKeyboardArrowDown} from "react-icons/md";
+import classNames from "classnames";
+import {useMediaQuery} from "@/lib/useMediaQuery";
+import Terrappin from "@/assets/icons/terrappin";
 
 function Header() {
     //hamburger meu button change
@@ -18,6 +19,8 @@ function Header() {
     const [offset, setOffset] = useState(0);
     //change language menu
     const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+
+    const isMobile = useMediaQuery(768);
 
     useEffect(() => {
         const onScroll = () => setOffset(Math.floor(window.scrollY));
@@ -36,7 +39,7 @@ function Header() {
             ></div>
             <header
                 id="header"
-                className={`fixed mx-auto left-0 right-0 flex flex-wrap justify-self-center  items-center justify-between  px-[2%]  transition-all  duration-500 text-secondaryDark  w-[90%] py-3 2xl:flex-nowrap 2xl:gap-16 rounded-3xl 2xl:rounded-full 2xl:py-6 z-50
+                className={`fixed mx-auto left-0 right-0 flex flex-wrap justify-self-center  items-center justify-between  px-[2%]  transition-all  duration-500 text-secondaryDark  w-[90%] py-3 xl:flex-nowrap xl:gap-16 rounded-3xl xl:rounded-full xl:py-6 z-50
        ${
                     isMenuOpen ? "min-h-fit  bg-[#fbfafa] mt-5 rounded-3xl mx-auto " : ""
                 }
@@ -47,47 +50,74 @@ function Header() {
                 }`}
             >
                 <Link href="#" className="flex items-center w-[110px] h-[47px]  ml-2">
-                    <Image className=" fill-primaryDark" src={terappinPurple} alt="Terappin"/>
+                    <Terrappin color={
+                        isMenuOpen ? "#322460" : offset >= 80 ? "#322460" : "#fff"
+                    }/>
                 </Link>
 
                 <button
                     id="hamburger"
-                    className="mr-2 2xl:hidden block"
+                    className="mr-2 xl:hidden block"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                     {isMenuOpen ? (
                         <RxCross2 className="font-medium"/>
                     ) : (
-                        <RxHamburgerMenu className="text-2xl"/>
+                        <RxHamburgerMenu className="text-xl"/>
                     )}
                 </button>
                 <nav
                     className={` justify-between items-center w-full ${
                         isMenuOpen ? "show" : "hidden"
-                    } 2xl:flex`}
+                    } xl:flex`}
                 >
                     <div
-                        className={`flex items-center gap-4 font-semibold ${
+                        className={`flex items-center gap-4 font-semibold mt-8 ${
                             isMenuOpen && "flex-col"
-                        } 2xl:flex-row `}
+                        } xl:flex-row xl:mt-0`}
                     >
-                        <Link href="#howToUse">NASIL ÇALIŞIR</Link>
-                        <Link href="#aLittleBitAboutUs">HAKKIMIZDA</Link>
-                        <Link href="#experts">PSİKOLOGLARIMIZ</Link>
-                        <Link href="#faq">S.S.S.</Link>
-                        <Link href="#" className="cursor-pointer">
-                            TESTLER
-                            <span className="bg-[#E8E9FD] px-[4px] py-[2px] rounded-full text-xs ml-1">
+                        <Link href="#howToUse" className={classNames(
+                            "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
+                            offset >= 80 ? "text-secondary" : "text-white",
+                            isMobile && "!text-secondary"
+                        )}>NASIL ÇALIŞIR</Link>
+                        <Link href="#aLittleBitAboutUs" className={classNames(
+                            "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
+                            offset >= 80 ? "text-secondary" : "text-white",
+                            isMobile && "!text-secondary"
+                        )}>HAKKIMIZDA</Link>
+                        <Link href="#experts" className={classNames(
+                            "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
+                            offset >= 80 ? "text-secondary" : "text-white",
+                            isMobile && "!text-secondary"
+                        )}>PSİKOLOGLARIMIZ</Link>
+                        <Link href="#faq" className={classNames(
+                            "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
+                            offset >= 80 ? "text-secondary" : "text-white",
+                            isMobile && "!text-secondary"
+                        )}>S.S.S.</Link>
+                        <Link href="#">
+                            <span className={classNames(
+                                "hover:underline underline-offset-4 text-sm 2xl:text-base",
+                                "transition-all duration-500 ease-in-out",
+                                offset >= 80 ? "text-secondary" : "text-white",
+                            isMobile && "!text-secondary"
+                            )}>TESTLER</span>
+                            <span className={classNames(
+                                "ml-1 rounded-full px-1.5 py-0.5 text-xs 2xl:text-sm",
+                                "transition-all duration-500 ease-in-out",
+                                offset >= 80 ? "bg-secondary text-white" : "bg-white text-secondary "
+                            )}>
                 Yeni
               </span>
                         </Link>
                     </div>
-                    <div className="flex relative flex-col gap-1 my-2 items-center 2xl:flex-row">
-                        <div className="flex justify-center 2xl:h-[55px] 2xl:w-[100px] mx-2">
+                    <div className="flex relative flex-col gap-1 my-2 items-center xl:flex-row">
+                        <div className="flex justify-center xl:h-[55px] xl:w-[100px] mx-2">
                             <div
-                                className={`border border-neutral text w-fit  rounded-2xl flex flex-col items-center justify-center overflow-hidden ${
+                                className={`border border-neutral text w-fit  rounded-xl flex flex-col items-center justify-center overflow-hidden ${
                                     isLanguageMenuOpen
-                                        ? "min-h-[100px] 2xl:absolute left-2 top-0 "
+                                        ? "min-h-[100px] xl:absolute left-2 top-0 "
                                         : "min-h-[50px]"
                                 }`}
                                 onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
@@ -112,13 +142,17 @@ function Header() {
                         </div>
                         <Link
                             href="#"
-                            className="text-secondary font-bold px-6 py-3 rounded-2xl"
+                            className={classNames(
+                                "font-bold px-6 py-3 rounded-xl text-sm 2xl:text-base",
+                                "transition-all duration-500 ease-in-out",
+                                offset >= 80 ? "text-secondary" : "text-white"
+                            )}
                         >
                             GİRİŞ YAP
                         </Link>
                         <Link
                             href="#"
-                            className="bg-secondary text-white font-bold px-6 py-3 rounded-2xl"
+                            className="bg-secondary text-white font-bold px-6 py-3 rounded-xl text-sm 2xl:text-base"
                         >
                             HEMEN KAYDOL
                         </Link>
