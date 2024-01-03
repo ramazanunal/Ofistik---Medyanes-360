@@ -56,7 +56,7 @@ function Card({
               ></i>
             </button>
             <button className="share text-favShare text-sm ml-3">
-              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+              <i className="fa-solid fa-arrow-up-from-bracket"></i>
             </button>
           </div>
         </div>

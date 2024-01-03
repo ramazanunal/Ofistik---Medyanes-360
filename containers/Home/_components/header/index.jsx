@@ -9,7 +9,6 @@ import {RxHamburgerMenu} from "react-icons/rx";
 import {TbWorld} from "react-icons/tb";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import classNames from "classnames";
-import {useMediaQuery} from "@/lib/useMediaQuery";
 import Terrappin from "@/assets/icons/terrappin";
 
 function Header() {
@@ -19,8 +18,6 @@ function Header() {
     const [offset, setOffset] = useState(0);
     //change language menu
     const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-
-    const isMobile = useMediaQuery(768);
 
     useEffect(() => {
         const onScroll = () => setOffset(Math.floor(window.scrollY));
@@ -57,15 +54,13 @@ function Header() {
 
                 <button
                     id="hamburger"
-                    className="mr-2 xl:hidden block"
+                    className="mr-2 xl:hidden block p-1.5 rounded-full bg-white"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                     {isMenuOpen ? (
                         <RxCross2 className="font-medium"/>
                     ) : (
-                        <button className="p-1.5 rounded-full bg-white">
                             <RxHamburgerMenu className="text-lg" color="#322460"/>
-                        </button>
                     )}
                 </button>
                 <nav
@@ -81,34 +76,35 @@ function Header() {
                         <Link href="#howToUse" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
                             offset >= 80 ? "text-secondary" : "text-white",
-                            isMobile && "!text-secondary"
+                            isMenuOpen && "!text-secondary"
                         )}>NASIL ÇALIŞIR</Link>
                         <Link href="#aLittleBitAboutUs" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
                             offset >= 80 ? "text-secondary" : "text-white",
-                            isMobile && "!text-secondary"
+                            isMenuOpen && "!text-secondary"
                         )}>HAKKIMIZDA</Link>
                         <Link href="#experts" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
                             offset >= 80 ? "text-secondary" : "text-white",
-                            isMobile && "!text-secondary"
+                            isMenuOpen && "!text-secondary"
                         )}>PSİKOLOGLARIMIZ</Link>
                         <Link href="#faq" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
                             offset >= 80 ? "text-secondary" : "text-white",
-                            isMobile && "!text-secondary"
+                            isMenuOpen && "!text-secondary"
                         )}>S.S.S.</Link>
                         <Link href="#">
                             <span className={classNames(
                                 "hover:underline underline-offset-4 text-sm 2xl:text-base",
                                 "transition-all duration-500 ease-in-out",
                                 offset >= 80 ? "text-secondary" : "text-white",
-                            isMobile && "!text-secondary"
+                                isMenuOpen && "!text-secondary"
                             )}>TESTLER</span>
                             <span className={classNames(
                                 "ml-1 rounded-full px-1.5 py-0.5 text-xs 2xl:text-sm",
                                 "transition-all duration-500 ease-in-out",
-                                offset >= 80 ? "bg-secondary text-white" : "bg-white text-secondary "
+                                offset >= 80 ? "bg-secondary text-white" : "bg-white text-secondary",
+                                isMenuOpen && "!bg-secondary !text-white"
                             )}>
                 Yeni
               </span>
@@ -147,7 +143,8 @@ function Header() {
                             className={classNames(
                                 "font-bold px-6 py-3 rounded-xl text-sm 2xl:text-base",
                                 "transition-all duration-500 ease-in-out",
-                                offset >= 80 ? "text-secondary" : "text-white"
+                                offset >= 80 ? "text-secondary" : "text-white",
+                                isMenuOpen && "!text-secondary"
                             )}
                         >
                             GİRİŞ YAP
