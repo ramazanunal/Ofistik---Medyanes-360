@@ -318,7 +318,7 @@ function CardSlider() {
                     ></i>
                 </button>
                 <div
-                    className="cardArea flex lg:overflow-hidden snap-x overflow-x-auto transition-all duration-1500 ease-in-out ml-auto mr-auto touch-pan-x max-w-screen-xl scroll-smooth select-none"
+                    className="cardArea flex lg:overflow-hidden snap-x overflow-x-auto overflow-y-scroll transition-all duration-1500 ease-in-out ml-auto mr-auto max-w-screen-xl scroll-smooth select-none"
                     ref={cardAreaRef}
                     onMouseDown={handleMouseDown}
                     onMouseMove={handleMouseMove}
