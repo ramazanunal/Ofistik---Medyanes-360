@@ -1,8 +1,8 @@
 'use client'
 import React, {useRef, useState} from "react";
-import Card from "@/components/card";
-import MenuArea from "@/components/menuArea";
-import PageHeader from "@/components/pageHeader";
+import Card from "@/components/slider/card";
+import MenuArea from "@/components/slider/menuArea";
+import PageHeader from "@/components/slider/pageHeader";
 
 function CardSlider() {
     const [clickedButtonId, setClickedButtonId] = useState(null);

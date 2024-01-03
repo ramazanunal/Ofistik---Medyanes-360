@@ -5,7 +5,7 @@ import classNames from "classnames";
 import ChevronsLeft from "@/assets/icons/ChevronsLeft";
 import {usePathname} from "next/navigation";
 import ChevronsRight from "@/assets/icons/ChevronsRight";
-import ButtonList from "@/containers/dashboard/_components/ButtonList";
+import ButtonList from "@/components/dashboard/ButtonList";
 import DefaultIcon from "@/assets/icons/DefaultIcon";
 import AnalyticsIcon from "@/assets/icons/AnalyticsIcon";
 import UserIcon from "@/assets/icons/UserIcon";

@@ -4,11 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="fix">
+    <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/default/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/default/page.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/terrappin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/terrappin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/cardSlider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/cardSlider.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/menuArea.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/menuArea.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/pageHeader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/pageHeader.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/ButtonList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/NavigationButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,11 +83,11 @@
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\public\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components\slider" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components\dashboard" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\assets\icons" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\assets" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\styles" />
-      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components" />
-      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\containers" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -112,7 +121,7 @@
       <workItem from="1704205891845" duration="286000" />
       <workItem from="1704271121073" duration="91000" />
       <workItem from="1704277475241" duration="2227000" />
-      <workItem from="1704279925530" duration="1316000" />
+      <workItem from="1704279925530" duration="1986000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
@@ -290,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704280578492</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="dashboard test">
+      <option name="closed" value="true" />
+      <created>1704281265067</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1704281265068</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,6 +330,7 @@
     <MESSAGE value="biz yapmayı seviyoruz kısmı yukarı taşındı" />
     <MESSAGE value="fix dashboard icon" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="dashboard test" />
+    <option name="LAST_COMMIT_MESSAGE" value="dashboard test" />
   </component>
 </project>

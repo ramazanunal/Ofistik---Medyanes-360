@@ -1,6 +1,9 @@
-const Terrappin = ({ color = "#fff", width, height }) => {
+import classNames from "classnames";
+
+const Terrappin = ({color = "#fff", width, height, className = ""}) => {
     return (
-        <svg width={width || 162} height={height || 47} viewBox="0 0 162 47" fill={color} className="transition-all duration-500"
+        <svg width={width || 162} height={height || 47} viewBox="0 0 162 47" fill={color}
+             className={classNames("transition-all duration-500", className)}
              xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
                   className="transition-all duration-300"
