@@ -33,7 +33,7 @@ function Header() {
     return (
         <>
             <div
-                className={`sticky w-full h-screen bg-gradient-to-b from-primaryDark transition-all delay-500 z-40 ${
+                className={`sticky w-full from-primaryDark transition-all delay-500 z-40 ${
                     isMenuOpen ? "show" : "hidden"
                 }`}
             ></div>
@@ -63,7 +63,9 @@ function Header() {
                     {isMenuOpen ? (
                         <RxCross2 className="font-medium"/>
                     ) : (
-                        <RxHamburgerMenu className="text-xl"/>
+                        <button className="p-1.5 rounded-full bg-white">
+                            <RxHamburgerMenu className="text-lg" color="#322460"/>
+                        </button>
                     )}
                 </button>
                 <nav

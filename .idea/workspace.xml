@@ -6,18 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/icons/terrappin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/terrappin.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/cardSlider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/cardSlider.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/menuArea.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/menuArea.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/pageHeader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/pageHeader.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/ButtonList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/NavigationButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/dashboard/_components/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +110,8 @@
       <workItem from="1704205891845" duration="286000" />
       <workItem from="1704271121073" duration="91000" />
       <workItem from="1704277475241" duration="2227000" />
-      <workItem from="1704279925530" duration="1986000" />
+      <workItem from="1704279925530" duration="2017000" />
+      <workItem from="1704281997667" duration="241000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
