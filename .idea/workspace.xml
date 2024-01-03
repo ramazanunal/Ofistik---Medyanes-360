@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="biz yapmayı seviyoruz kısmı yukarı taşındı">
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/changeIslandHeader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/terappinPurple.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/terappinWhite.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/terrappin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,6 +110,7 @@
       <workItem from="1704205891845" duration="286000" />
       <workItem from="1704271121073" duration="91000" />
       <workItem from="1704277475241" duration="2227000" />
+      <workItem from="1704279925530" duration="207000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
