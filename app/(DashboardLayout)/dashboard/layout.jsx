@@ -14,7 +14,7 @@ const MainLayout = ({ children }) => {
         <div className="flex h-screen w-full overflow-hidden bg-white pb-4">
             <Sidebar/>
 
-            <div className="flex flex-1 w-full flex-col h-full px-4 gap-4">
+            <div className="flex flex-1 w-full flex-col h-full px-4 gap-2">
                 <Navbar/>
 
                 <div className="flex flex-1 h-full overflow-y-scroll px-2 pt-2 rounded-lg bg-[#dedede]">
