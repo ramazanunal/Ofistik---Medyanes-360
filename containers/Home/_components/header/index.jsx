@@ -10,6 +10,7 @@ import {TbWorld} from "react-icons/tb";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import classNames from "classnames";
 import Terrappin from "@/assets/icons/terrappin";
+import {Button} from "@/components/ui/button";
 
 function Header() {
     //hamburger meu button change
@@ -30,15 +31,15 @@ function Header() {
     return (
         <>
             <div
-                className={`sticky w-full from-primaryDark transition-all delay-500 z-40 ${
+                className={`sticky w-full transition-all delay-500 z-40 ${
                     isMenuOpen ? "show" : "hidden"
                 }`}
             ></div>
             <header
                 id="header"
-                className={`fixed mx-auto left-0 right-0 flex flex-wrap justify-self-center  items-center justify-between  px-[2%]  transition-all  duration-500 text-secondaryDark  w-[90%] py-3 xl:flex-nowrap xl:gap-16 rounded-3xl xl:rounded-full xl:py-6 z-50
+                className={`fixed mx-auto left-0 right-0 border-2 border-transparent flex flex-wrap justify-self-center  items-center justify-between  px-[2%]  transition-all  duration-500 text-muted  w-[90%] py-3 xl:flex-nowrap xl:gap-16 rounded-3xl xl:rounded-full xl:py-6 z-50
        ${
-                    isMenuOpen ? "min-h-fit  bg-[#fbfafa] mt-5 rounded-3xl mx-auto " : ""
+                    isMenuOpen ? "min-h-fit bg-[#fbfafa] border-2 border-muted-foreground !shadow-2xl mt-5 rounded-3xl mx-auto " : ""
                 }
        ${
                     offset >= 80
@@ -58,9 +59,9 @@ function Header() {
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                     {isMenuOpen ? (
-                        <RxCross2 className="font-medium"/>
+                        <RxCross2 className="font-medium" color="#1f1f1f"/>
                     ) : (
-                            <RxHamburgerMenu className="text-lg" color="#322460"/>
+                        <RxHamburgerMenu className="text-lg" color="#322460"/>
                     )}
                 </button>
                 <nav
@@ -75,85 +76,49 @@ function Header() {
                     >
                         <Link href="#howToUse" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
-                            offset >= 80 ? "text-secondary" : "text-white",
-                            isMenuOpen && "!text-secondary"
+                            offset >= 80 ? "text-foreground" : "text-muted",
+                            isMenuOpen && "!text-foreground"
                         )}>NASIL ÇALIŞIR</Link>
                         <Link href="#aLittleBitAboutUs" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
-                            offset >= 80 ? "text-secondary" : "text-white",
-                            isMenuOpen && "!text-secondary"
+                            offset >= 80 ? "text-foreground" : "text-muted",
+                            isMenuOpen && "!text-foreground"
                         )}>HAKKIMIZDA</Link>
                         <Link href="#experts" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
-                            offset >= 80 ? "text-secondary" : "text-white",
-                            isMenuOpen && "!text-secondary"
+                            offset >= 80 ? "text-foreground" : "text-muted",
+                            isMenuOpen && "!text-foreground"
                         )}>PSİKOLOGLARIMIZ</Link>
                         <Link href="#faq" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
-                            offset >= 80 ? "text-secondary" : "text-white",
-                            isMenuOpen && "!text-secondary"
+                            offset >= 80 ? "text-foreground" : "text-muted",
+                            isMenuOpen && "!text-foreground"
                         )}>S.S.S.</Link>
                         <Link href="#">
                             <span className={classNames(
                                 "hover:underline underline-offset-4 text-sm 2xl:text-base",
                                 "transition-all duration-500 ease-in-out",
-                                offset >= 80 ? "text-secondary" : "text-white",
-                                isMenuOpen && "!text-secondary"
+                                offset >= 80 ? "text-foreground" : "text-muted",
+                                isMenuOpen && "!text-foreground"
                             )}>TESTLER</span>
                             <span className={classNames(
                                 "ml-1 rounded-full px-1.5 py-0.5 text-xs 2xl:text-sm",
                                 "transition-all duration-500 ease-in-out",
-                                offset >= 80 ? "bg-secondary text-white" : "bg-white text-secondary",
-                                isMenuOpen && "!bg-secondary !text-white"
+                                offset >= 80 ? "bg-foreground text-muted" : "bg-white text-foreground",
+                                isMenuOpen && "!bg-foreground !text-muted"
                             )}>
                 Yeni
               </span>
                         </Link>
                     </div>
-                    <div className="flex relative flex-col gap-1 my-2 items-center xl:flex-row">
-                        <div className="flex justify-center xl:h-[55px] xl:w-[100px] mx-2">
-                            <div
-                                className={`border border-neutral text w-fit  rounded-xl flex flex-col items-center justify-center overflow-hidden ${
-                                    isLanguageMenuOpen
-                                        ? "min-h-[100px] xl:absolute left-2 top-0 "
-                                        : "min-h-[50px]"
-                                }`}
-                                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-                            >
-                                <button
-                                    className={`flex w-full h-[50px] items-center px-2 gap-2 ${
-                                        isLanguageMenuOpen ? "bg-gray-100 " : ""
-                                    }`}
-                                >
-                                    <TbWorld className="stroke-1 scale-125 h-[20px]"/>
-                                    <span>TR</span>
-                                    <MdKeyboardArrowDown className="scale-105 w-[20px]"/>
-                                </button>
-                                <button
-                                    className={`w-full h-[50px] ${
-                                        isLanguageMenuOpen ? "border-t bg-white" : "hidden"
-                                    }`}
-                                >
-                                    EN
-                                </button>
-                            </div>
-                        </div>
-                        <Link
-                            href="#"
-                            className={classNames(
-                                "font-bold px-6 py-3 rounded-xl text-sm 2xl:text-base",
-                                "transition-all duration-500 ease-in-out",
-                                offset >= 80 ? "text-secondary" : "text-white",
-                                isMenuOpen && "!text-secondary"
-                            )}
-                        >
+                    <div className="flex relative flex-col gap-1 my-2 mt-6 items-center xl:flex-row">
+                        <Button>
                             GİRİŞ YAP
-                        </Link>
-                        <Link
-                            href="#"
-                            className="bg-secondary text-white font-bold px-6 py-3 rounded-xl text-sm 2xl:text-base"
-                        >
-                            HEMEN KAYDOL
+                        </Button>
+                        <Link href="#">
+                            <Button>
+                                HEMEN KAYDOL
+                            </Button>
                         </Link>
                     </div>
                 </nav>

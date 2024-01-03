@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {Button} from "@/components/ui/button";
 
 function FirstContent() {
   return (
@@ -15,12 +16,12 @@ function FirstContent() {
               psikolog ile eşleş ve değişime başla</p>
           </div>
 
-          <Link
+          <Button
               href="/"
-              className="text-white hidden lg:block w-fit bg-secondary px-7 py-4 rounded-xl font-semibold lg:text-xl "
+              className="hidden lg:block !w-48 !h-14"
           >
             Hemen Başla
-          </Link>
+          </Button>
         </div>
 
         <Image

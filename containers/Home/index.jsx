@@ -1,3 +1,4 @@
+'use client'
 import FirstContent from "@/containers/Home/_components/first-content";
 import HowToUse from "@/containers/Home/_components/howToUse";
 import ALitleBitAboutUs from "@/containers/Home/_components/aLittleBitAboutUs";
@@ -7,7 +8,7 @@ import CardSlider from "@/components/slider/cardSlider";
 
 const HomeContainer = () => {
     return (
-        <div className="flex flex-col h-full w-full bg-white">
+        <div className="flex flex-col h-full bg-white">
             <FirstContent/>
             <ALitleBitAboutUs/>
             <HowToUse/>

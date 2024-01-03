@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 import accordionData from "./accordiondata.js";
-import Accordion from "./accordion.jsx";
+import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 
 function Faq() {
   return (
@@ -22,9 +22,16 @@ function Faq() {
             </Link>
           </div>
           <div className="flex-auto col-span-2 row-span-2 mb-20 lg:w-[750px]">
-            {accordionData.map(({ title, content }, idx) => (
-              <Accordion title={title} content={content} key={idx}/>
-            ))}
+            <Accordion type="multiple" collapsible>
+              {accordionData.map(({ title, content }, idx) => (
+                  <AccordionItem value={title} key={idx}>
+                    <AccordionTrigger>{title}</AccordionTrigger>
+                    <AccordionContent>
+                      {content}
+                    </AccordionContent>
+                  </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </div>

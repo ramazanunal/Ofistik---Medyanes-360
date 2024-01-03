@@ -9,8 +9,8 @@ import Footer from '@/containers/Home/_components/footer';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en' className='scroll-smooth focus:scroll-auto'>
-      <body className='overflow-y-auto scroll-smooth overflow-x-hidden flex flex-col font-sans bg-primary'>
+    <html lang='en' className='scroll-smooth'>
+      <body className='scroll-smooth overflow-x-hidden flex flex-col font-sans bg-primary'>
         <Provider store={store}>
           {children}
           {/* Toastify */}

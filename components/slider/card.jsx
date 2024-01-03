@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import Link from "next/link";
+import {Button} from "@/components/ui/button";
 
 function Card({
   image,
@@ -40,7 +41,7 @@ function Card({
 
   return (
     <div>
-      <div className="generalCard snap-center ml-[20px] bg-white border-2 w-80 text-center max-[768px]:mb-[40px] rounded-xl h-full justify-between flex flex-col px-4 py-2 min-w-xs max-w-md mx-auto">
+      <div className="text-center justify-between flex flex-col">
         <div className="favAndShareArea ml-auto">
           <div className="favAndShareButtons">
             <button
@@ -148,36 +149,36 @@ function Card({
           </div>
         </div>
         <div className="priceArea flex text-center justify-center m-3 mb-0 mt-1">
-          <h4 className="font-semibold text-lg">₺{price}/Seans</h4>
-          <h4 className="ml-2 text-sm pt-1">
+          <h4 className="font-semibold text-sm md:text-base my-auto">₺{price}/Seans</h4>
+          <h4 className="ml-2 text-xs my-auto md:text-sm">
             {" "}
             {`(Minimum ${minSessionTime} dakika)`}
           </h4>
         </div>
-        <div className="appointmentButtonArea my-2">
+        <div className="my-2 flex flex-col gap-2">
           {status === 1 ? (
-            <button className="bg-secondary tracking-wider font-medium text-white w-72 py-2 rounded-3xl text-sm">
+            <Button className="flex flex-1">
               Hemen Randevu Al
-            </button>
+            </Button>
           ) : (
-            <button className="bg-secondary font-medium tracking-wider text-white w-72 py-2 rounded-3xl text-sm">
+            <Button className="flex flex-1">
               Randevu Al
-            </button>
+            </Button>
           )}
-          <div className="flex justify-between">
-            <button className="bg-secondary text-white font-medium tracking-wider w-[8.6rem] py-2 rounded-3xl text-sm mt-2">
+          <div className="flex justify-between gap-2">
+            <Button className="flex flex-1">
               Mesaj Gönder
-            </button>
-            <button className="bg-secondary text-white font-medium tracking-wider w-[8.6rem] py-2 rounded-3xl text-sm mt-2">
+            </Button>
+            <Button className="flex flex-1">
               Takip Et
-            </button>
+            </Button>
           </div>
         </div>
         <div className="infoTextArea">
           {status !== undefined && (
             <h5
               className={`${
-                status === 1 ? "text-greenText" : "text-redText"
+                status === 1 ? "text-muted-foreground" : "text-destructive"
               } text-xs font-medium`}
             >
               {status === 1
