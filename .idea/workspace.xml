@@ -5,18 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
+      <change afterPath="$PROJECT_DIR$/components/tabs/ChoseType.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/Search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/data/cities.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/data/suggestions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/slider/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/slider/cardSlider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/cardSlider.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/faq/accordion.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/containers/Home/_components/faq/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/faq/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/footer/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/footer/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
@@ -24,6 +25,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -58,7 +66,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/Ofistik---Medyanes-360/app/dashboard/default&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/test/new-berry&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -125,6 +133,13 @@
       <workItem from="1704279925530" duration="2017000" />
       <workItem from="1704281997667" duration="4847000" />
       <workItem from="1704290085346" duration="3678000" />
+      <workItem from="1704309584691" duration="400000" />
+      <workItem from="1704311899041" duration="67000" />
+      <workItem from="1704353601134" duration="1323000" />
+      <workItem from="1704356285816" duration="1315000" />
+      <workItem from="1704357710917" duration="284000" />
+      <workItem from="1704358015447" duration="240000" />
+      <workItem from="1704358791619" duration="600000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

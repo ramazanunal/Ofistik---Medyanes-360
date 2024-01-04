@@ -6,7 +6,7 @@ import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/co
 
 function Faq() {
   return (
-    <div id="faq" className="bg-[#EDF8F4]">
+    <div id="faq" className="bg-white">
       <div className="container mx-auto px-[6%] py-[40px] h-min-96 relative">
         <div className="flex flex-col gap-4 lg:flex-row lg:gap-28">
           <div className="flex flex-col gap-8 text-center mx-auto lg:w-56 lg:text-start lg:h-32">

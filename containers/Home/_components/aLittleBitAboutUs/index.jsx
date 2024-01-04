@@ -6,7 +6,7 @@ import Card from "./card";
 
 function ALitleBitAboutUs() {
   return (
-      <div className="bg-[#4344E5] w-full">
+      <div className="bg-deep-slate-blue w-full">
     <div id="aLittleBitAboutUs" className="w-3/4 mx-auto">
       <div className="container mx-auto px-[6%] py-[30px] xl:px-[3%]">
         <div className="text-white">
