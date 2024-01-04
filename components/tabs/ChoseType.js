@@ -38,7 +38,7 @@ function ChoseType({typeText1,typeText2,searchPlaceholder}) {
     return (
         <>
             <div
-                className="switch-container w-3/6 bg-switchBg text-headTxt1"
+                className="switch-container bg-switchBg w-full text-headTxt1"
             >
                 <div className={`switch-handle bg-switchHandleBg md:w-[210px] w-[120px] ${isActive ? "online-active" : ""}`}></div>
                 <div className="switch-button text-xs md:text-md left-button" onClick={() => toggleSwitch(true)}>{typeText1}</div>

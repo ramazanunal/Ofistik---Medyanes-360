@@ -111,7 +111,7 @@ function Header() {
               </span>
                         </Link>
                     </div>
-                    <div className="flex relative flex-col gap-1 my-2 mt-6 items-center md:flex-row">
+                    <div className="flex relative flex-col gap-1 items-center justify-center md:flex-row">
                         <Button>
                             GİRİŞ YAP
                         </Button>

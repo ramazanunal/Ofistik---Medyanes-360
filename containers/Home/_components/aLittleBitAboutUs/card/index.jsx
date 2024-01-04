@@ -1,16 +1,19 @@
-
+'use client'
 import React from "react";
 import Image from "next/image";
+import {useMediaQuery} from "@/lib/useMediaQuery";
 
 function Card({ item }) {
+    const imageScale = useMediaQuery(1280)
+
   return (
       <div
           className="flex hover:scale-95 transition-all duration-200 ease-in-out hover:opacity-90 hover:shadow-md flex-col relative items-center rounded-lg shadow-sm bg-slate-200 w-fit font-semibold gap-4"
       >
         <Image
             src={item.img}
-            width={500}
-            height={500}
+            width={300}
+            height={300}
             quality={100}
             alt={`${item.title} image`}
             className="object-contain mix-blend-multiply rounded-lg"
