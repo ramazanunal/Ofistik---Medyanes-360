@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/tabs/ChoseType.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabs/ChoseType.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/tabs/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabs/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -131,7 +127,7 @@
       <workItem from="1704357710917" duration="284000" />
       <workItem from="1704358015447" duration="240000" />
       <workItem from="1704358791619" duration="600000" />
-      <workItem from="1704364352326" duration="1149000" />
+      <workItem from="1704364352326" duration="1553000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

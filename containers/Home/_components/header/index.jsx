@@ -22,15 +22,20 @@ function Header() {
 
     useEffect(() => {
         const onScroll = () => setOffset(Math.floor(window.scrollY));
+
+        // first enter website - control scroll
+        onScroll()
+
         // clean up code
         window.removeEventListener("scroll", onScroll);
         window.addEventListener("scroll", onScroll, {passive: true});
         return () => window.removeEventListener("scroll", onScroll);
-    });
+    }, []);
 
     return (
         <>
             <div
+                id="header-animation"
                 className={`sticky w-full transition-all delay-500 z-40 ${
                     isMenuOpen ? "show" : "hidden"
                 }`}
