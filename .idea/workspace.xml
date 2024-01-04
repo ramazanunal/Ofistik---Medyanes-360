@@ -5,21 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
-      <change afterPath="$PROJECT_DIR$/components/tabs/ChoseType.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/Header.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/Search.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/data/cities.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/data/suggestions.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/faq/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/faq/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/footer/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/footer/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,6 +127,7 @@
       <workItem from="1704357710917" duration="284000" />
       <workItem from="1704358015447" duration="240000" />
       <workItem from="1704358791619" duration="600000" />
+      <workItem from="1704364352326" duration="301000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

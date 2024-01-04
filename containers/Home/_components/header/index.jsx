@@ -37,7 +37,7 @@ function Header() {
             ></div>
             <header
                 id="header"
-                className={`fixed mx-auto left-0 right-0 border-2 border-transparent flex flex-wrap justify-self-center  items-center justify-between  px-[2%]  transition-all  duration-500 text-muted  w-[90%] py-3 xl:flex-nowrap xl:gap-16 rounded-3xl xl:rounded-full xl:py-6 z-50
+                className={`fixed mx-auto left-0 right-0 border-2 border-transparent flex flex-wrap justify-self-center  items-center justify-between  px-[2%] transition-all  duration-500 text-muted  w-[90%] py-3 md:flex-nowrap md:gap-16 rounded-3xl md:rounded-full md:py-6 z-50
        ${
                     isMenuOpen ? "min-h-fit bg-[#fbfafa] border-2 border-muted-foreground !shadow-2xl mt-5 rounded-3xl mx-auto " : ""
                 }
@@ -55,7 +55,7 @@ function Header() {
 
                 <button
                     id="hamburger"
-                    className="mr-2 xl:hidden block p-1.5 rounded-full bg-white"
+                    className="mr-2 md:hidden block p-1.5 rounded-full bg-white"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                     {isMenuOpen ? (
@@ -67,12 +67,12 @@ function Header() {
                 <nav
                     className={` justify-between items-center w-full ${
                         isMenuOpen ? "show" : "hidden"
-                    } xl:flex`}
+                    } md:flex`}
                 >
                     <div
                         className={`flex items-center gap-4 font-semibold mt-8 ${
                             isMenuOpen && "flex-col"
-                        } xl:flex-row xl:mt-0`}
+                        } md:flex-row md:mt-0`}
                     >
                         <Link href="#howToUse" className={classNames(
                             "transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base",
@@ -111,7 +111,7 @@ function Header() {
               </span>
                         </Link>
                     </div>
-                    <div className="flex relative flex-col gap-1 my-2 mt-6 items-center xl:flex-row">
+                    <div className="flex relative flex-col gap-1 my-2 mt-6 items-center md:flex-row">
                         <Button>
                             GİRİŞ YAP
                         </Button>
