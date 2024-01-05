@@ -15,14 +15,8 @@ import EmployeeCard from "@/components/slider/card";
 function CardSlider() {
     const [clickedButtonId, setClickedButtonId] = useState(null);
     const cardAreaRef = useRef(null);
-    const [isAtLeftEdge, setIsAtLeftEdge] = useState(true);
-    const [isAtRightEdge, setIsAtRightEdge] = useState(false);
-    const handleButtonClick = (id) => {
-        setClickedButtonId(id);
-        if (cardAreaRef.current) {
-            cardAreaRef.current.scrollLeft = 0;
-        }
-    };
+
+    const handleButtonClick = (id) => setClickedButtonId(id);
 
     const employees = [
         {
@@ -277,7 +271,9 @@ function CardSlider() {
                 className="w-5/6 md:w-2/3 mx-auto"
             >
                 <CarouselContent>
-                    {employees.map((employee, index) => (
+                    {employees
+                        .filter((ft, idx) => clickedButtonId ? ft.job.toLowerCase().includes(clickedButtonId) : true)
+                        .map((employee, index) => (
                         <CarouselItem key={index} className="basis-auto">
                                     <EmployeeCard
                                         key={index}
@@ -299,6 +295,11 @@ function CardSlider() {
                                     />
                         </CarouselItem>
                     ))}
+                    {employees
+                        .filter((ft, idx) => clickedButtonId ? ft.job.toLowerCase().includes(clickedButtonId) : true).length <= 0
+                    && <CarouselItem key="empty" className="basis-auto">
+                            <h1>Empty not found</h1>
+                        </CarouselItem> }
                 </CarouselContent>
 
                 <CarouselNext className="hidden md:flex"/>
