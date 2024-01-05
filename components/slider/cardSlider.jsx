@@ -278,9 +278,7 @@ function CardSlider() {
             >
                 <CarouselContent>
                     {employees.map((employee, index) => (
-                        <CarouselItem key={index} className="md:basis-1/2 xl:basis-1/3 2xl:basis-1/4">
-                            <Card className="pt-4 bg-white">
-                                <CardContent>
+                        <CarouselItem key={index} className="basis-auto">
                                     <EmployeeCard
                                         key={index}
                                         image={employee.image}
@@ -299,8 +297,6 @@ function CardSlider() {
                                         commentNumber={employee.commentNumber}
                                         minSessionTime={employee.minSessionTime}
                                     />
-                                </CardContent>
-                            </Card>
                         </CarouselItem>
                     ))}
                 </CarouselContent>
