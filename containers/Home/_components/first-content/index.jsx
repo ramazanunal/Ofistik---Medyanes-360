@@ -14,11 +14,11 @@ function FirstContent() {
     const searchPlaceholder = "Doktor ve branş arayın..."
 
     return (
-        <div className="w-full h-fit pt-24 xl:pt-48 items-center flex flex-col bg-deep-slate-blue gap-6">
+        <div className="w-full h-fit pt-36 xl:pt-48 items-center flex flex-col bg-deep-slate-blue gap-6">
             <ChoseType headers={["Hizmet Al", "Hizmet ver"]}/>
 
             <div
-                className="flex flex-col xl:flex-row h-fit items-center gap-12">
+                className="flex flex-col md:flex-row h-fit items-center gap-12">
                 <div className="flex flex-col w-4/6 items-center xl:items-start pt-12 gap-8">
                     <div className="flex flex-col text-center xl:text-start gap-2.5">
                         <h3 className="text-4xl 2xl:text-6xl font-bold text-white">
