@@ -9,7 +9,7 @@ import {RxHamburgerMenu} from "react-icons/rx";
 import {TbWorld} from "react-icons/tb";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import classNames from "classnames";
-import Terrappin from "@/assets/icons/terrappin";
+import Logo from "@/assets/icons/logo";
 import {Button} from "@/components/ui/button";
 
 function Header() {
@@ -53,7 +53,7 @@ function Header() {
                 }`}
             >
                 <Link href="#" className="flex items-center w-[110px] h-[47px]  ml-2">
-                    <Terrappin color={
+                    <Logo color={
                         isMenuOpen ? "#322460" : offset >= 80 ? "#322460" : "#fff"
                     }/>
                 </Link>

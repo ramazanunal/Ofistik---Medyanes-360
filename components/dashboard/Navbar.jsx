@@ -1,12 +1,12 @@
 import React from 'react'
 import Image from "next/image";
-import Terrappin from "@/assets/icons/terrappin";
+import Logo from "@/assets/icons/logo";
 
 const Navbar = () => {
   return (
     <nav className='flex w-full items-center h-fit px-2'>
         <div className="ml-4 md:ml-0">
-            <Terrappin color="#322460" width={100}/>
+            <Logo color="#322460" width={100}/>
         </div>
     </nav>
   )
