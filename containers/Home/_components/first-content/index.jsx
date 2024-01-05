@@ -1,10 +1,9 @@
 import React from "react";
-import ChoseType from "@/components/tabs/ChoseType";
-import {Input} from "@/components/ui/input";
+import ChoseType from "@/components/ChoseType";
+import {Button} from "@/components/ui/button";
+import Image from "next/image"
 
 function FirstContent() {
-
-
     const headerText = "Doktor bul, randevu al,"
     const headerText2 = "online,"
     const headerText3 = "görüşme yap!"
@@ -15,24 +14,38 @@ function FirstContent() {
     const searchPlaceholder = "Doktor ve branş arayın..."
 
     return (
-        <div className="w-full h-screen justify-center items-center flex flex-col bg-deep-slate-blue">
-            <div className="flex flex-col items-center gap-2.5">
-                <h3 className="text-4xl 2xl:text-6xl font-bold text-white">
-                    Doktor bul, randevu al,
-                </h3>
-                <span className="fotext-2xl 2xl:text-4xl font-bold text-vivid-orange">
-                  online görüşme yap
-              </span>
+        <div className="w-full h-screen justify-center pt-24 items-center flex flex-col bg-deep-slate-blue">
+            <ChoseType headers={["Hizmet Al", "Hizmet ver"]}/>
+
+            <div
+                className="flex flex-col lg:flex-row h-fit items-center gap-12">
+                <div className="flex flex-col items-center lg:items-start pt-12 gap-8">
+                    <div className="text-white flex flex-col gap-4 text-center lg:text-start lg:self-end">
+                        <h1 className="font-bold text-xl lg:text-5xl lg:leading-[52px] lg:font-semibold ">
+                            Online terapi ile değişimi başlat!
+                        </h1>
+                        <p className="font-semibold text-sm max-w-sm lg:justify-self-start lg:text-xl">Hemen sana en
+                            uygun online
+                            psikolog ile eşleş ve değişime başla</p>
+                    </div>
+
+                    <Button
+                        href="/"
+                        className="hidden lg:block !w-48 !h-14"
+                    >
+                        Hemen Başla
+                    </Button>
+                </div>
+
+                <Image
+                    src="/images/slider.png"
+                    width={600}
+                    height={600}
+                    quality={100}
+                    alt="Picture of the author"
+                    className="lg:max-w-lg max-w-xs object-contain"
+                />
             </div>
-            <ChoseType headers={[{
-                title: "Hizmet Al",
-                component: <Input placeholder="Hizmet Al"/>
-            },
-                {
-                    title: "Hizmet ver",
-                    component: <Input placeholder="Hizmet Ver"/>
-                }
-            ]}/>
         </div>
     );
 }
