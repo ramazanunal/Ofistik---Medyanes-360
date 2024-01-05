@@ -14,7 +14,7 @@ function FirstContent() {
     const searchPlaceholder = "Doktor ve branş arayın..."
 
     return (
-        <div className="w-full h-fit pt-24 xl:pt-48 items-center flex flex-col bg-deep-slate-blue">
+        <div className="w-full h-fit pt-24 xl:pt-48 items-center flex flex-col bg-deep-slate-blue gap-6">
             <ChoseType headers={["Hizmet Al", "Hizmet ver"]}/>
 
             <div
@@ -39,8 +39,8 @@ function FirstContent() {
 
                 <Image
                     src="/images/slider.png"
-                    width={600}
-                    height={600}
+                    width={500}
+                    height={500}
                     quality={100}
                     alt="Picture of the author"
                     className="lg:max-w-lg max-w-xs object-contain"
