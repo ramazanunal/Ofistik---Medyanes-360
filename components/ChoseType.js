@@ -10,7 +10,7 @@ function ChoseType({
     return (
         <>
             <div
-                className="bg-white/50 p-2 rounded-md w-full my-8 flex flex-col md:flex-row"
+                className="bg-white/50 p-2 rounded-md w-full my-8 flex flex-row"
             >
                 {headers.map((header, idx) => (
                     <div
