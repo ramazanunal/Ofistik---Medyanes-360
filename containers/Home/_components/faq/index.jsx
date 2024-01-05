@@ -25,8 +25,8 @@ function Faq() {
             <Accordion type="multiple" collapsible>
               {accordionData.map(({ title, content }, idx) => (
                   <AccordionItem value={title} key={idx}>
-                    <AccordionTrigger>{title}</AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionTrigger className="text-start">{title}</AccordionTrigger>
+                    <AccordionContent className="text-start">
                       {content}
                     </AccordionContent>
                   </AccordionItem>

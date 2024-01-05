@@ -1,50 +1,33 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Search from "./Search";
-import "./style.css"
+import React, {useState, useEffect} from "react";
+import classnames from "classnames";
 
-function ChoseType({typeText1,typeText2,searchPlaceholder}) {
-    const [isActive, setIsActive] = useState(true);
-    const [showDropdown, setShowDropdown] = useState(false);
-
-    useEffect(() => {
-        if (isActive) {
-            document.querySelector('.switch-handle').style.left = '15px';
-        } else {
-            // 768 pikselden büyük ekranlar için 155px olarak ayarlandı.
-            const screenWidth = window.innerWidth;
-            if (screenWidth >= 768) {
-                document.querySelector('.switch-handle').style.left = '225px';
-            } else {
-                document.querySelector('.switch-handle').style.left = '155px';
-            }
-        }
-    }, [isActive]);
-
-
-    const toggleSwitch = (isOnline) => {
-        if (isOnline && !isActive) {
-            setIsActive(true);
-            setShowDropdown(false);
-        } else if (!isOnline && isActive) {
-            setIsActive(false);
-            setShowDropdown(false);
-        }
-    };
-    const handleDropdownClick = () => {
-        setShowDropdown((prev) => !prev);
-    };
+function ChoseType({
+                       headers
+                   }) {
+    const [activeIndex, setActiveIndex] = useState(0)
 
     return (
         <>
             <div
-                className="switch-container bg-switchBg w-full text-headTxt1"
+                className="bg-white/50 p-2 rounded-md w-4/6 lg:w-2/6 my-8 flex flex-col md:flex-row"
             >
-                <div className={`switch-handle bg-switchHandleBg md:w-[210px] w-[120px] ${isActive ? "online-active" : ""}`}></div>
-                <div className="switch-button text-xs md:text-md left-button" onClick={() => toggleSwitch(true)}>{typeText1}</div>
-                <div className="switch-button text-xs md:text-md right-button" onClick={() => toggleSwitch(false)}>{typeText2}</div>
+                {headers.map((header, idx) => (
+                    <div
+                        onClick={() => setActiveIndex(idx)}
+                        key={idx}
+                        className={classnames(
+                            "flex flex-1 items-center transition-all duration-200 ease-in-out cursor-pointer py-3 rounded-xl text-md font-semibold justify-center",
+                            activeIndex === idx && "bg-white/50 shadow-xl"
+                        )}>
+                        {header.title}
+                    </div>
+                ))}
             </div>
-            <Search searchPlaceholder={searchPlaceholder} isActive={isActive} showDropdown={showDropdown} setShowDropdown={setShowDropdown} handleDropdownClick={handleDropdownClick} />
+
+            <div className="w-4/6 lg:w-2/6">
+                {headers[activeIndex]?.component}
+            </div>
         </>
     );
 }
