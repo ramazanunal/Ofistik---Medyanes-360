@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/icons/terrappin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/logo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ChoseType.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ChoseType.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,6 +140,9 @@
       <workItem from="1704454623023" duration="1671000" />
       <workItem from="1704458225550" duration="85000" />
       <workItem from="1704460613635" duration="219000" />
+      <workItem from="1704625635232" duration="1002000" />
+      <workItem from="1704632838548" duration="101000" />
+      <workItem from="1704654271227" duration="357000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

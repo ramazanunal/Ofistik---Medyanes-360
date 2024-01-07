@@ -2,8 +2,7 @@ import React from "react";
 import ChoseType from "@/components/ChoseType";
 import Image from "next/image";
 
-function FirstContent() {
-
+function FirstContent({ changeComponent }) {
     return (
         <div className="w-full h-fit pt-36 xl:pt-48 items-center flex flex-col bg-deep-slate-blue gap-6">
             <div
@@ -17,7 +16,7 @@ function FirstContent() {
                   online görüşme yap
               </span>
                     </div>
-                    <ChoseType headers={["Hizmet Al", "Hizmet ver"]}/>
+                    <ChoseType changeComponent={changeComponent} headers={["Hizmet Al", "Hizmet Ver"]}/>
                 </div>
 
                 <Image
