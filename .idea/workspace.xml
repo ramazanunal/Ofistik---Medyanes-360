@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modal/auth/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modal/auth/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +144,7 @@
       <workItem from="1704654271227" duration="357000" />
       <workItem from="1704710821212" duration="569000" />
       <workItem from="1704713374466" duration="4616000" />
-      <workItem from="1704719182878" duration="631000" />
+      <workItem from="1704719182878" duration="923000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

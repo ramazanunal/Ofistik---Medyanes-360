@@ -6,6 +6,7 @@ import {RxHamburgerMenu} from "react-icons/rx";
 import classNames from "classnames";
 import Logo from "@/assets/icons/logo";
 import {Button} from "@/components/ui/button";
+import AuthModal from "@/components/modal/auth";
 
 function Header() {
     //hamburger meu button change
@@ -112,11 +113,7 @@ function Header() {
                         </Link>
                     </div>
                     <div className="flex relative flex-col gap-1 items-center justify-center md:flex-row">
-                        <Link href="#">
-                            <Button>
-                                Giriş Yap
-                            </Button>
-                        </Link>
+                        <AuthModal />
                         <Link href="#">
                             <Button>
                                 HEMEN KAYDOL

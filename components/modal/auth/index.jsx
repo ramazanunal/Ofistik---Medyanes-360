@@ -1,3 +1,4 @@
+'use client'
 import {
     Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
     DialogTrigger,
@@ -6,11 +7,11 @@ import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 
-export default function () {
+function AuthModal () {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Edit Profile</Button>
+                <Button>GİRİŞ YAP</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -40,3 +41,5 @@ export default function () {
         </Dialog>
     )
 }
+
+export default AuthModal

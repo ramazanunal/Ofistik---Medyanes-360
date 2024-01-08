@@ -17,7 +17,7 @@ function ChoseType({
                     <div
                         onClick={() => {
                             setActiveIndex(idx)
-                            changeComponent()
+                            changeComponent(header)
                         }}
                         key={idx}
                         className={classnames(

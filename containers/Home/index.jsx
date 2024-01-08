@@ -10,12 +10,8 @@ import {useState} from "react";
 const HomeContainer = () => {
     const [activeComponent, setActiveComponent] = useState("Hizmet Al")
 
-    const changeComponent = () => {
-        if(activeComponent === "Hizmet Al") {
-            setActiveComponent("Hizmet Ver")
-        } else if (activeComponent === "Hizmet Ver") {
-            setActiveComponent("Hizmet Al")
-        }
+    const changeComponent = (str) => {
+        setActiveComponent(str)
     }
 
     return (
