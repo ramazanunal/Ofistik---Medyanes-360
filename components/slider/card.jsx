@@ -39,8 +39,7 @@ function Card({
     };
 
     return (
-        <div>
-            <div className="generalCard ml-[20px] snap-center bg-white border-2 w-80 text-center rounded-xl h-full justify-between flex flex-col px-4 py-2 min-w-xs max-w-md mx-auto">
+            <div className="border-2 w-72 lg:w-80 text-center rounded-xl h-full justify-between flex flex-col px-4 py-2">
                 <div className="favAndShareArea ml-auto">
                     <div className="favAndShareButtons">
                         <button
@@ -156,19 +155,19 @@ function Card({
                 </div>
                 <div className="appointmentButtonArea">
                     {status === 1 ? (
-                        <button className="bg-appointmentColor tracking-wider font-medium text-white w-72 py-2 rounded-3xl text-sm">
+                        <button className="bg-appointmentColor tracking-wider font-medium text-white w-full py-2 rounded-3xl text-sm">
                             Hemen Randevu Al
                         </button>
                     ) : (
-                        <button className="bg-appointmentColor font-medium tracking-wider text-white w-72 py-2 rounded-3xl text-sm">
+                        <button className="bg-appointmentColor font-medium tracking-wider text-white w-full py-2 rounded-3xl text-sm">
                             Randevu Al
                         </button>
                     )}
                     <div className="flex justify-between">
-                        <button className="bg-grayButton text-white font-medium tracking-wider w-[8.6rem] py-2 rounded-3xl text-sm mt-2">
+                        <button className="bg-grayButton text-white font-medium tracking-wider w-[7.75rem] lg:w-[8.6rem] py-2 rounded-3xl text-xs lg:text-sm mt-2">
                             Mesaj Gönder
                         </button>
-                        <button className="bg-blueOne text-white font-medium tracking-wider w-[8.6rem] py-2 rounded-3xl text-sm mt-2">
+                        <button className="bg-blueOne text-white font-medium tracking-wider w-[7.75rem] lg:w-[8.6rem] py-2 rounded-3xl text-xs lg:text-sm mt-2">
                             Takip Et
                         </button>
                     </div>
@@ -187,7 +186,6 @@ function Card({
                     )}
                 </div>
             </div>
-        </div>
     );
 }
 
