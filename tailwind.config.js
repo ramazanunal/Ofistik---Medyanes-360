@@ -75,6 +75,11 @@ module.exports = {
         redText: "#d91512",
         favShare: "#39455d",
         appointmentColor: "#52b69a",
+
+        green: '#3ee0a1',
+        darkgreen: '#1dbab5',
+        grey: '#e5e7eb',
+        grey2: '#9999',
       },
       borderRadius: {
         lg: "var(--radius)",

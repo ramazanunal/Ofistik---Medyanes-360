@@ -1,13 +1,8 @@
 "use client";
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
-import Image from "next/image";
-
-//icons
 import {RxCross2} from "react-icons/rx";
 import {RxHamburgerMenu} from "react-icons/rx";
-import {TbWorld} from "react-icons/tb";
-import {MdKeyboardArrowDown} from "react-icons/md";
 import classNames from "classnames";
 import Logo from "@/assets/icons/logo";
 import {Button} from "@/components/ui/button";
@@ -117,9 +112,11 @@ function Header() {
                         </Link>
                     </div>
                     <div className="flex relative flex-col gap-1 items-center justify-center md:flex-row">
-                        <Button>
-                            GİRİŞ YAP
-                        </Button>
+                        <Link href="#">
+                            <Button>
+                                Giriş Yap
+                            </Button>
+                        </Link>
                         <Link href="#">
                             <Button>
                                 HEMEN KAYDOL
