@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
+      <change afterPath="$PROJECT_DIR$/containers/Home/_components/header/MOCK_DATA.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/levenshtein.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modal/auth/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modal/auth/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,11 +87,11 @@
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\public\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\containers\Home\_components\header" />
+      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\containers" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components\slider" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components\dashboard" />
-      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\assets\icons" />
-      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\assets" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -144,7 +148,10 @@
       <workItem from="1704654271227" duration="357000" />
       <workItem from="1704710821212" duration="569000" />
       <workItem from="1704713374466" duration="4616000" />
-      <workItem from="1704719182878" duration="923000" />
+      <workItem from="1704719182878" duration="1217000" />
+      <workItem from="1704720648645" duration="70000" />
+      <workItem from="1704810100546" duration="16000" />
+      <workItem from="1704886140399" duration="9238000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
