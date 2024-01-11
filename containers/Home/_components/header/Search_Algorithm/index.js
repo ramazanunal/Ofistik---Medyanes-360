@@ -1,4 +1,4 @@
-import levenshteinDistance from "@/containers/Home/_components/header/Search_Algorithm/levenshtein";
+import levenshteinDistance from "./levenshtein";
 
 const Search_Algorithm = (data, query, min_distance, keys, user_dt) => {
     const new_dt = [];
@@ -22,7 +22,7 @@ const Search_Algorithm = (data, query, min_distance, keys, user_dt) => {
         );
 
         matchingUserDt.forEach(() => {
-            max_distance += 0.1;
+            max_distance += 0.05;
         });
 
         if (max_distance >= min_distance) {

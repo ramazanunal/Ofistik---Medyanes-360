@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="dashboard test">
+    <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
+      <change afterPath="$PROJECT_DIR$/shadcn-preset.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +149,8 @@
       <workItem from="1704720648645" duration="70000" />
       <workItem from="1704810100546" duration="16000" />
       <workItem from="1704886140399" duration="9306000" />
-      <workItem from="1704920265256" duration="305000" />
+      <workItem from="1704920265256" duration="1235000" />
+      <workItem from="1704973370441" duration="940000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
@@ -333,7 +336,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704281265068</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="update search algorithm - user collect data">
+      <option name="closed" value="true" />
+      <created>1704920814779</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1704920814779</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,6 +379,7 @@
     <MESSAGE value="fix dashboard icon" />
     <MESSAGE value="fix" />
     <MESSAGE value="dashboard test" />
-    <option name="LAST_COMMIT_MESSAGE" value="dashboard test" />
+    <MESSAGE value="update search algorithm - user collect data" />
+    <option name="LAST_COMMIT_MESSAGE" value="update search algorithm - user collect data" />
   </component>
 </project>
