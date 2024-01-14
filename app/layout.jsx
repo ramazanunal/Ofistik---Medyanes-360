@@ -25,8 +25,8 @@ export default function RootLayout({ children }) {
           {children}
           {/* Toastify */}
           <ToastContainer
-            position='bottom-right'
-            autoClose={500}
+            position='top-right'
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme='colored'
+            theme='dark'
           />
         </Provider>
       </body>
