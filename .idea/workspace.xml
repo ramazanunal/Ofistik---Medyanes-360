@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
-      <change afterPath="$PROJECT_DIR$/shadcn-preset.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/datas.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/datas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/faq/accordiondata.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/faq/accordiondata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/howToUse/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/howToUse/data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/howToUse/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/howToUse/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +64,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/test/new-berry&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/medyanes/Ofistik---Medyanes-360&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -90,6 +96,13 @@
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components\slider" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components\dashboard" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-c44b541a36ca-JavaScript-WS-233.13135.92" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -150,7 +163,13 @@
       <workItem from="1704810100546" duration="16000" />
       <workItem from="1704886140399" duration="9306000" />
       <workItem from="1704920265256" duration="1235000" />
-      <workItem from="1704973370441" duration="940000" />
+      <workItem from="1704973370441" duration="1247000" />
+      <workItem from="1704976830325" duration="1525000" />
+      <workItem from="1705048504959" duration="139000" />
+      <workItem from="1705059724982" duration="198000" />
+      <workItem from="1705060629991" duration="41000" />
+      <workItem from="1705315553615" duration="1508000" />
+      <workItem from="1705321406864" duration="200000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

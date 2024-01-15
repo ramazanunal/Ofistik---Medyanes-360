@@ -4,14 +4,14 @@ import Image from 'next/image';
 
 function FeatureCard() {
   return (
-    <section className='container flex justify-center flex-col md:flex-row'>
+    <section className='container flex gap-6 my-6 justify-center flex-col md:flex-row'>
       {datas.map((data) => (
         <div
-          className=' pl-10  flex flex-row md:flex-col md:p-5 md:pl-0 md:mb-16  items-center  md:max-w-[15rem] max-h-48 '
+          className='pl-10  flex flex-row gap-4 md:flex-col md:p-5 md:pl-0 md:mb-16  items-center  md:max-w-[15rem] max-h-48 '
           key={data.id}
         >
           {/* Icon */}
-          <div className='flex justify-center items-center pr-4 pt-4 md:pr-0 md:pt-0'>
+          <div className='flex justify-center items-center  md:pr-0 md:pt-0'>
             {data.photoUrl ? (
               <Image
                 src='https://uxwing.com/wp-content/themes/uxwing/download/hand-gestures/good-icon.png'

@@ -1,23 +1,29 @@
 const accordionData = [
   {
-    title: "Bulutklinik nedir?",
+    title: "Ofistik Nedir?",
     content:
-      "Bulutklinik içerisinde binlerce doktorun bulunduğu bir sağlık platformudur. Danışanların doktorlar ile online olarak görüşebilmeleri, kişilerin tüm sağlık verilerini tek merkezden yönetebilmeleri, isterler ise bu sağlık verilerini diledikleri doktorlar ile paylaşabilecekleri özellikler barındırır. Bu sayede dilediğiniz yerden ve istediğiniz zaman sistem üzerindeki hekimlere erişim sağlayabilirsiniz.",
+      `Ofistik, ihtiyacınıza yönelik hizmeti sağlamak için birçok farklı kategoride alanında yetkin uzmanları bünyesine katarak hizmet alan ile hizmet vereni etkin ve kolay bir şekilde buluşturan online mesleki hizmet platformudur.`,
   },
   {
-    title: "Online doktor görüşmesini ne zaman kullanmalıyım?",
+    title: "Neden Ofistiği tercih etmeliyim?",
     content:
-      "Hastaneye gitmenize gerek olup olmadığına karar veremiyorsanız. Acil olmayan sebeplerle hastaneye gitmeyi düşündüğünüz zaman. Laboratuvar testlerinizin sonuçlarını doktorlara yorumlatmak istediğinizde. Sağlık sorunlarınız hakkında uzman doktorlardan görüş almak istediğinizde. Doktorunuz tarafından size konulan teşhisi ikinci bir doktora danışmak istediğinizder. Doktora gitmeyi aklınızdan geçiriyor ama vakit bulamıyorsanız. Sizin için en doğru doktoru arıyorsanız.",
+      "İhtiyacınız olan meslek grubunu ve o meslek grubunda hizmet veren birçok alternatif uzmanı saniyeler içerisinde bularak dilediğiniz saatte randevu alıp,randevunuza istediğiniz cihaz ile istediğiniz mekandan bağlanabilirsiniz.Online görüşme altyapımız sayesinde kesintisiz görüntülü,sesli,yazılı görüşmenin yanısıra akıllı tahta aracılığıyla dosya gönderme,alma,dosya üzerinde işaretleme,karalama,yazma gibi birçok özellik barındırır.Bu sayede fiziksel görüşme kalitesinde interaktif bir online hizmet sunarak zamandan ve mekandan tasarruf etmenizi,birçok alternatif uzman ve alternatif hizmet fiyatı sayesinde geniş bir seçim özgürlüğü ve tasarruf sunar.",
   },
   {
     title: "Bu sistem güvenli mi?",
     content:
-      "Bulutklinik sahip olduğu güvenlik sertifikaları ile dünya standartlarında bir veri güvenliği sağlamaktadır.KVKK ile tam uyumludur. Ayrıca tüm veriler Türkiye içerisinde bulunan veri merkezlerimizde güvenle saklanmaktadır.Özellikle yapılacak online görüntülü görüşmeler sistem tarafından asla kayıt altına alınamaz.P2P teknolojisi ile uçtan uca şifreli bir şekilde görüntü aktarımı sağlanır.",
+      "Ofistik sahip olduğu güvenlik sertifikaları ile dünya standartlarında bir veri güvenliği ve ödeme güvenliği sağlamaktadır.\n" +
+        "KVKK ile tam uyumludur. Ayrıca tüm veriler Türkiye içerisinde bulunan veri merkezlerimizde güvenle saklanmaktadır.\n" +
+        "Yapılacak online görüntülü görüşmeler sistem tarafından asla kayıt altına alınamaz.\n" +
+        "P2P teknolojisi ile uçtan uca şifreli bir şekilde görüntü,dosya,ses,yazı aktarımı sağlanır.Bu sayede Ofistik dahil kimsenin bu görüşmelere erişimi mümkün olmaz.",
   },
   {
     title: "Uzmanlardan nasıl randevu alabilirim?",
     content:
-      "Çok basit bir şekilde bu sistemden faydalanabilirsiniz. Üye Ol: Sistemde temel birkaç bilginiz ile kolaylıkla üye olabilirsiniz. Uygun Zaman Seç: Dilediğiniz hekimin uygun olduğu bir zaman için randevu almalısınız. Ödeme Yap: Hekimin belirlediği ücreti kredi kartınız ile güvenle ödeyebilirsiniz. Hekimin Aramasını Bekle: Randevu saatinizde hekim sizi mobil uygulamamız üzerinden arayacaktır. Uygulamayı indirdiğinizden ve kullanıcı girişi yaptığınızdan emin olun.",
+      "Çok basit bir şekilde bu sistemden faydalanabilirsiniz.\n" +
+        "Üye Ol: Sistemde temel birkaç bilginiz ile kolaylıkla üye olabilirsiniz.\n" +
+        "Randevu Oluştur: Dilediğiniz uzmanın uygun olduğu bir zaman seçerek veya kendi istediğiniz bir zamanı uzmanımızdan talep edebilirsiniz.\n" +
+        "Görüşmeye Başla: Oluşturduğunuz randevunuzu 'Randevularım' bölümünden takip edebilir, randevu saatiniz geldiğinde aktif olan görüşmeye başla butonu ile uzmanımız ile buluşabilirsiniz.",
   },
 ];
 export default accordionData;

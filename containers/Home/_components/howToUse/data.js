@@ -3,21 +3,21 @@ export default [
     "id": 1,
     "iconPath": "IoChatbubblesSharp",
     "image": "/images/step1.jpg",
-    "title": "Terapistinizle Eşleşin",
-    "desc": "Hangi konuda terapi almak istediğinizi belirleyin. Başvuru nedeninize özel olarak yardım edebilecek terapistlerimizin içinden, kendiniz için en uygun olanını ile eşleşin."
+    "title": "Hizmet Seçin",
+    "desc": "İhtiyacınıza yönelik size en iyi hizmeti sağlamak için alanında yetkin uzmanlarımızdan dilediğinizi seçin."
   },
   {
     "id": 2,
     "iconPath": "BsCalendarDate",
     "image": "/images/step2.jpg",
-    "title": "Seans Oluşturun",
-    "desc": "Terapi sesansın için en uygun tarih ve saati, seanslar sekmesinden kolayca seçerek oluşturun. Seansınıza 24 saat kalana kadar iptal edebilirsiniz."
+    "title": "Randevu Oluştur",
+    "desc": "Seçtiğiniz uzman profilinde sizin için en uygun tarih ve saati seçerek ve hizmet almak istediğiniz konuyu belirterek kolayca randevunuzu oluşturun."
   },
   {
     "id": 3,
     "iconPath": "BsCameraVideoFill",
     "image": "/images/step3.jpg",
     "title": "Görüşmeye Başlayın",
-    "desc": "İstediğiniz yerden hemen terapistiniz ile sınırsız mesajlaşmaya ve online terapiye başlayın."
+    "desc": "Randevu tarih ve saatinizde istediğiniz yerden ve istediğiniz cihazdan (bilgisayar,cep,telefonu,tablet,akıllı tahta) bağlanarak hizmet almaya başlayın."
   }
 ]

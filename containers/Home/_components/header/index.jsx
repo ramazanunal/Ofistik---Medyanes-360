@@ -34,8 +34,6 @@ function Header() {
   const [clickedKeys, setClickedKeys] = useState([]);
 
   const searching_keys = [
-    'first_name',
-    'last_name',
     'company_name',
     'job_title',
   ];

@@ -21,6 +21,10 @@ const Search_Algorithm = (data, query, min_distance, keys, user_dt) => {
             clicked.every((key, idx) => key === dt[keys[idx]])
         );
 
+        if(query?.length < 5 && max_distance >= min_distance * 0.75) {
+            max_distance*=1.2
+        }
+
         matchingUserDt.forEach(() => {
             max_distance += 0.05;
         });
