@@ -5,9 +5,9 @@ import { RxCross2 } from 'react-icons/rx';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import classNames from 'classnames';
 import Logo from '@/assets/icons/logo';
-import { Button } from '@/components/ui/button';
 import LoginModal from '@/components/modal/auth/Login';
 import RegisterModal from '@/components/modal/auth/Register';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 import { Input } from '@/components/ui/input';
 import Mock_data from './MOCK_DATA.json';
@@ -15,6 +15,7 @@ import { AnimatePresence } from 'framer-motion';
 import Search_Algorithm from '@/containers/Home/_components/header/Search_Algorithm';
 
 function Header() {
+  const { data: session } = useSession();
   //hamburger meu button change
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   //scroll event
@@ -282,9 +283,22 @@ function Header() {
               </>
             )}
           </div>
-          <div className='flex relative flex-col gap-1 items-center justify-center md:flex-row'>
-            <LoginModal />
-            <RegisterModal />
+          <div className='flex relative flex-col gap-1 items-center justify-center md:flex-row mt-4 md:mt-0 '>
+            {session ? (
+              <>
+                <button
+                  onClick={() => signOut()}
+                  className='w-[150px] text-sm 2xl:text-base font-semibold text-white bg-red-500 px-4 py-2 rounded-md transition-all duration-500 ease-in-out hover:bg-green-600'
+                >
+                  Çıkış Yap
+                </button>
+              </>
+            ) : (
+              <>
+                <LoginModal />
+                <RegisterModal />
+              </>
+            )}
           </div>
         </nav>
       </header>
