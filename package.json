@@ -18,6 +18,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@reduxjs/toolkit": "^1.9.7",
     "@uidotdev/usehooks": "^2.4.1",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.0",
     "clsx": "^2.1.0",
