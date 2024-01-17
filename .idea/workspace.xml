@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
-      <change afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +60,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/medyanes/Ofistik---Medyanes-360&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/medyanes/Ofistik---Medyanes-360/components/dashboard&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -77,6 +81,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Yusuf\Desktop\medyanes\Ofistik---Medyanes-360\components\dashboard" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\app\dashboard\default" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\app\dashboard" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\public\images" />
@@ -88,13 +93,6 @@
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\components\slider" />
     </key>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-c44b541a36ca-JavaScript-WS-233.13135.92" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -164,6 +162,11 @@
       <workItem from="1705321406864" duration="200000" />
       <workItem from="1705322328330" duration="427000" />
       <workItem from="1705388146299" duration="107000" />
+      <workItem from="1705500987525" duration="301000" />
+      <workItem from="1705501305078" duration="16000" />
+      <workItem from="1705501335188" duration="1832000" />
+      <workItem from="1705503698857" duration="104000" />
+      <workItem from="1705512658729" duration="28000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

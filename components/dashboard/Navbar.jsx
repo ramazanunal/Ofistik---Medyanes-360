@@ -1,12 +1,10 @@
 import React from 'react'
-import Image from "next/image";
-import Logo from "@/assets/icons/logo";
 
 const Navbar = () => {
   return (
-    <nav className='flex w-full items-center h-fit px-2'>
+    <nav className='flex w-full items-center h-fit p-2'>
         <div className="ml-4 md:ml-0">
-            <Logo color="#322460" width={100}/>
+            <img alt="" src="https://cdn2.hubspot.net/hubfs/53/image8-2.jpg" className="w-16 object-contain"/>
         </div>
     </nav>
   )

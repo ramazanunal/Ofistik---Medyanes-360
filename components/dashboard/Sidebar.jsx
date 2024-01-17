@@ -6,58 +6,58 @@ import ChevronsLeft from "@/assets/icons/ChevronsLeft";
 import {usePathname} from "next/navigation";
 import ChevronsRight from "@/assets/icons/ChevronsRight";
 import ButtonList from "@/components/dashboard/ButtonList";
-import DefaultIcon from "@/assets/icons/DefaultIcon";
-import AnalyticsIcon from "@/assets/icons/AnalyticsIcon";
 import UserIcon from "@/assets/icons/UserIcon";
 import BurgerIcon from "@/assets/icons/BurgerIcon";
 import {useMediaQuery} from "@/lib/useMediaQuery";
 
 const buttons = [
     {
-        id: "1",
-        label: "Default",
-        icon : DefaultIcon,
-        path: "/dashboard/default",
-        role: ["user", "guest", "admin"]
-    },
-    {
-        id: "2",
-        label: "Analytics",
-        icon: AnalyticsIcon,
-        path: "/dashboard/analytics",
-        role: ["admin"]
-    },
-    {
-        id: "3",
-        label: "Users",
-        icon: UserIcon,
-        path: "",
-        role: ["user", "guest"],
-        childs: [
+        title: "Dashboard",
+        buttons: [
             {
-                id: "3.1",
-                label: "Account Profile",
-                path: "",
-                childs: [
-                    {
-                        id: "3.1.1",
-                        label: "Profile 1",
-                        path: "/application/users/account-profile/profile-1",
-                    },
-                    {
-                        id: "3.1.2",
-                        label: "Profile 2",
-                        path: "/application/users/account-profile/profile-2",
-                    }
-                ]
+                id: "1.1",
+                icon: UserIcon,
+                label: "Add Company",
+                path: "/dashboard/addcompany",
             },
             {
-                id: "3.2",
-                label: "Social Profile",
-                path: "/application/users/social-profile"
-            }
-        ],
+                id: "1.2",
+                label: "Add Person",
+                icon: UserIcon,
+                path: "/dashboard/Addperson"
+            },
+            {
+                id: "1.3",
+                label: "Add Suplier",
+                icon: UserIcon,
+                path: "/dashboard/addsuplier"
+            },
+        ]
     },
+    {
+        title: "Others",
+        buttons: [
+            {
+                id: "1.4",
+                label: "Stock",
+                icon: UserIcon,
+                childs: [
+                    {
+                        id: "1.4.1",
+                        label: "Stock",
+                        icon: UserIcon,
+                        path: "/dashboard/Stock",
+                    },
+                    {
+                        id: "1.4.2",
+                        label: "Stock Control",
+                        path: "/dashboard/Stockcontrol",
+                        icon: UserIcon,
+                    }
+                ]
+            }
+        ]
+    }
 ]
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
@@ -144,55 +144,61 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         }
     }
 
-  return (
-          <>
-              <aside
-                  ref={sidebarRef}
-                  className={classNames(
-                      "group/sidebar h-screen overflow-y-auto bg-white relative flex w-60 flex-col z-[99999] p-2 pt-8 shadow-sm",
-                      isResetting && "transition-all ease-in-out duration-300",
-                      isMobile && "!absolute",
-                      isMobile && isCollapsed && "!bg-transparent !shadow-none"
-                  )}
-              >
-                  <div
-                      onClick={isCollapsed ? resetWidth : collapse}
-                      role="button"
-                      className={classNames(
-                          "h-6 w-6 hover:bg-fuchsia-50 rounded-lg absolute top-3 right-2 transition",
-                      )}
-                  >
-                      {
-                          isMobile && isCollapsed ? <BurgerIcon className="w-6 h-6" />
-                              : isCollapsed ? <ChevronsRight className="h-6 w-6" /> : <ChevronsLeft className="h-6 w-6" />
-                      }
-                  </div>
-                  <div className={
-                      classNames(
-                          !isCollapsed ? "mt-4 flex flex-col gap-2" : "hidden"
-                      )
-                  }>
-                      <ButtonList buttons={buttons} level={1}/>
-                  </div>
-                  {
-                      !isCollapsed && <div
-                          onMouseDown={handleMouseDown}
-                          onClick={resetWidth}
-                          className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-[#dedede] right-0 top-0"
-                      />
-                  }
-              </aside>
-              <div
-                  ref={navbarRef}
-                  className={classNames(
-                      "absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]",
-                      isResetting && "transition-all ease-in-out duration-300",
-                      isMobile && "left-0 w-full"
-                  )}
-              >
-              </div>
-          </>
-  )
+    return (
+        <>
+            <aside
+                ref={sidebarRef}
+                className={classNames(
+                    "group/sidebar h-screen overflow-y-auto bg-white relative flex w-60 flex-col z-[50] !bg-muted p-2 pt-8 shadow-sm",
+                    isResetting && "transition-all ease-in-out duration-300",
+                    isMobile && "!absolute",
+                    isMobile && isCollapsed && "!bg-transparent !shadow-none"
+                )}
+            >
+                <div
+                    onClick={isCollapsed ? resetWidth : collapse}
+                    role="button"
+                    className={classNames(
+                        "h-6 w-6 rounded-lg absolute top-3 right-2 transition",
+                    )}
+                >
+                    {
+                        isMobile && isCollapsed ? <BurgerIcon className="w-6 h-6 [&_path]:fill-muted-foreground"/>
+                            : isCollapsed ? <ChevronsRight className="h-6 w-6 [&_path]:fill-muted-foreground"/> :
+                                <ChevronsLeft className="h-6 w-6 [&_path]:fill-muted-foreground"/>
+                    }
+                </div>
+                <div className={
+                    classNames(
+                        !isCollapsed ? " p-4 flex flex-col gap-2" : "hidden"
+                    )
+                }>
+                    {buttons.map(({buttons: x, title}) => (
+                        <div className="flex flex-col gap-4">
+                            {!isMobile && <span className="text-sm font-semibold text-muted-foreground">{title}</span>}
+                            <ButtonList buttons={x} level={1}/>
+                        </div>
+                    ))}
+                </div>
+                {
+                    !isCollapsed && <div
+                        onMouseDown={handleMouseDown}
+                        onClick={resetWidth}
+                        className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-muted-foreground right-0 top-0"
+                    />
+                }
+            </aside>
+            <div
+                ref={navbarRef}
+                className={classNames(
+                    "absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]",
+                    isResetting && "transition-all ease-in-out duration-300",
+                    isMobile && "left-0 w-full"
+                )}
+            >
+            </div>
+        </>
+    )
 };
 
 export default Sidebar;
