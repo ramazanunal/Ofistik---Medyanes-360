@@ -5,17 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
+      <change afterPath="$PROJECT_DIR$/styles/theme.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="false" />
@@ -61,6 +66,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Yusuf/Desktop/medyanes/Ofistik---Medyanes-360/components/dashboard&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -167,6 +173,10 @@
       <workItem from="1705501335188" duration="1832000" />
       <workItem from="1705503698857" duration="104000" />
       <workItem from="1705512658729" duration="28000" />
+      <workItem from="1705513600600" duration="552000" />
+      <workItem from="1705565196098" duration="350000" />
+      <workItem from="1705572725710" duration="335000" />
+      <workItem from="1705574187830" duration="107000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
