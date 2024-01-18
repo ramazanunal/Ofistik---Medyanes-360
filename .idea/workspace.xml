@@ -5,10 +5,87 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
-      <change afterPath="$PROJECT_DIR$/styles/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Ofistik---Medyanes-360.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Ofistik---Medyanes-360.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/default/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/default/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(HomeLayout)/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(HomeLayout)/layout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(HomeLayout)/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(HomeLayout)/page.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/not-found.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/not-found.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/zustand/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/zustand/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/3.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/AnalyticsIcon.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/AnalyticsIcon.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/BurgerIcon.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/BurgerIcon.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/ChevronsLeft.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/ChevronsLeft.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/ChevronsRight.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/ChevronsRight.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/DefaultIcon.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/DefaultIcon.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/UserIcon.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/UserIcon.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icons/logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/logo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components.json" beforeDir="false" afterPath="$PROJECT_DIR$/components.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ChoseType.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ChoseType.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/NavigationButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modal/auth/Login/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modal/auth/Login/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modal/auth/Register/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modal/auth/Register/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/slider/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/slider/cardSlider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/cardSlider.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/slider/menuArea.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/menuArea.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/slider/pageHeader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/pageHeader.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/accordion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/accordion.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/button.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/carousel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/carousel.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/dialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/dialog.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/input.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/input.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/label.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/label.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/scroll-area.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/scroll-area.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/datas.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/datas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/faq/accordiondata.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/faq/accordiondata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/faq/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/faq/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/first-content/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/footer/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/footer/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/MOCK_DATA.json" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/MOCK_DATA.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/levenshtein.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/Search_Algorithm/levenshtein.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/header/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/howToUse/HowToUseCard/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/howToUse/HowToUseCard/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/howToUse/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/howToUse/data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/howToUse/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/howToUse/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/jsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decryptPassword.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/lib/decryptPassword.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/encryptPassword.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/lib/encryptPassword.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/prisma/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/prisma/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/useAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/useAuth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/useMediaQuery.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/lib/useMediaQuery.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].jsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/auth/register/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/register/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/terapizonelogoWhite.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/terapizonelogoWhite.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/fetchAPI/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/services/fetchAPI/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/BearCounter.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/BearCounter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/menuArea.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/menuArea.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,6 +254,7 @@
       <workItem from="1705565196098" duration="350000" />
       <workItem from="1705572725710" duration="335000" />
       <workItem from="1705574187830" duration="107000" />
+      <workItem from="1705576526289" duration="67000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
