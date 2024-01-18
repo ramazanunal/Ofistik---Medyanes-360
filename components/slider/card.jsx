@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import {useRouter} from "next/navigation";
+import {DotsHorizontalIcon} from "@radix-ui/react-icons";
 
 function Card({
   image,
@@ -19,6 +21,7 @@ function Card({
   commentNumber,
   minSessionTime,
 }) {
+  const router = useRouter()
   const [isHeartAnimating, setHeartAnimating] = useState(false);
 
   const heartAnimation = () => {
@@ -39,25 +42,9 @@ function Card({
   };
 
   return (
-    <div className='border-2 w-72 lg:w-80 text-center rounded-xl h-full justify-between flex flex-col px-4 py-2'>
-      <div className='favAndShareArea ml-auto'>
-        <div className='favAndShareButtons'>
-          <button
-            onClick={heartAnimation}
-            className={`fav  text-xs ${
-              isHeartAnimating ? 'animating text-redOne' : 'text-favShare'
-            }`}
-          >
-            <i
-              className={`fav text-xs ${
-                isHeartAnimating ? 'fa-solid fa-heart' : 'fa-regular fa-heart'
-              }`}
-            ></i>
-          </button>
-          <button className='share text-favShare text-sm ml-3'>
-            <i className='fa-solid fa-arrow-up-from-bracket'></i>
-          </button>
-        </div>
+    <div className='border-2 w-72 lg:w-80 text-center rounded-xl h-full justify-between flex flex-col px-4 py-2 cursor-pointer transition-all duration-200 ease-in-out hover:scale-[0.98]' onClick={() => router.push("/profile/" + name)}>
+      <div className='cursor-default ml-auto p-2' onClick={e => e.stopPropagation()}>
+          <DotsHorizontalIcon/>
       </div>
       <div className='flex h-full flex-col justify-between'>
         <div>
@@ -151,7 +138,9 @@ function Card({
           {`(Minimum ${minSessionTime} dakika)`}
         </h4>
       </div>
-      <div className='appointmentButtonArea'>
+      <div onClick={(e) => {
+        e.stopPropagation()
+      }} className='appointmentButtonArea'>
         {status === 1 ? (
           <button className='bg-appointmentColor tracking-wider font-medium text-white w-full py-2 rounded-3xl text-sm'>
             Hemen Randevu Al
