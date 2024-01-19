@@ -58,20 +58,18 @@ function RegisterModal() {
             <DialogTrigger asChild>
               <Button>KAYIT OL</Button>
             </DialogTrigger>
-            <DialogContent className='sm:max-w-[450px]'>
+            <DialogContent className='sm:max-w-[450px] !rounded-3xl'>
               <DialogHeader className='flex flex-row justify-between items-center'>
                 <DialogTitle>Ücretsiz Dene</DialogTitle>
                 <DialogClose>
-                  <div className='rounded-md p-4 cursor-pointer transition-all duration-700 relative  bg-red-500 hover:bg-green-500 group'>
+                  <div className='w-10 h-10 rounded-md p-4 cursor-pointer transition-all duration-700 relative  bg-gray-200/50 hover:bg-red-500 group'>
                     <IoClose
-                      size={25}
-                      color='#FFF'
-                      className='transition-all duration-700 rotate-180 flex absolute group-hover:opacity-0 group-hover:rotate-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+                      size={30}
+                      className='text-red-500 transition-all duration-700 rotate-180 flex absolute group-hover:opacity-0 group-hover:rotate-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
                     />
                     <GoDash
-                      size={25}
-                      color='#FFF'
-                      className='rotate-0 transition-all duration-700 opacity-0 group-hover:block group-hover:rotate-180 group-hover:opacity-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+                      size={30}
+                      className='text-white rotate-0 transition-all duration-700 opacity-0 group-hover:block group-hover:rotate-180 group-hover:opacity-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
                     />
                   </div>
                 </DialogClose>
@@ -79,7 +77,7 @@ function RegisterModal() {
               <hr />
               <Form>
                 {/* Ad Soyad */}
-                <div className='grid grid-cols-2 gap-3'>
+                <div className='grid grid-cols-2 gap-8 mb-3'>
                   <div className='flex flex-col'>
                     <Label
                       htmlFor='name'
@@ -94,7 +92,7 @@ function RegisterModal() {
                       placeholder='Adı'
                       onChange={props.handleChange}
                       value={props.values.name}
-                      className='outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 rounded-md transition-all duration-500'
+                      className='placeholder:text-gray-400 h-12 rounded-2xl px-4 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 transition-all duration-500'
                     />
                   </div>
                   <div className='flex flex-col'>
@@ -111,12 +109,12 @@ function RegisterModal() {
                       placeholder='Soyadı'
                       onChange={props.handleChange}
                       value={props.values.surname}
-                      className='outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 rounded-md transition-all duration-500'
+                      className='placeholder:text-gray-400 h-12 rounded-2xl px-4 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 transition-all duration-500'
                     />
                   </div>
                 </div>
                 {/* Email, Cep Telefonu */}
-                <div className='grid grid-cols-2 gap-3 mb-3'>
+                <div className='grid grid-cols-2 gap-8 mb-3'>
                   <div className='flex flex-col'>
                     <Label
                       htmlFor='email'
@@ -131,7 +129,7 @@ function RegisterModal() {
                       placeholder='E Posta'
                       onChange={props.handleChange}
                       value={props.values.email}
-                      className='outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 rounded-md transition-all duration-500'
+                      className='placeholder:text-gray-400 h-12 rounded-2xl px-4 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 transition-all duration-500'
                     />
                   </div>
                   <div className='flex flex-col'>
@@ -148,12 +146,12 @@ function RegisterModal() {
                       placeholder='Cep Numarası'
                       onChange={props.handleChange}
                       value={props.values.phone}
-                      className='outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 rounded-md transition-all duration-500'
+                      className='placeholder:text-gray-400 h-12 rounded-2xl px-4 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 transition-all duration-500'
                     />
                   </div>
                 </div>
                 {/* Şifre, Şifre Tekrar*/}
-                <div className='grid grid-cols-2 gap-3 mb-3'>
+                <div className='grid grid-cols-2 gap-8 mb-3'>
                   <div className='flex flex-col'>
                     <Label
                       htmlFor='password'
@@ -169,7 +167,7 @@ function RegisterModal() {
                         placeholder='Şifre'
                         onChange={props.handleChange}
                         value={props.values.password}
-                        className='outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 rounded-md transition-all duration-500'
+                        className='placeholder:text-gray-400 h-12 rounded-2xl px-4 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 transition-all duration-500'
                       />
                       <FaEye
                         onClick={() =>
@@ -204,7 +202,7 @@ function RegisterModal() {
                         placeholder='Şifre Tekrar'
                         onChange={props.handleChange}
                         value={props.values.passwordConfirm}
-                        className='outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 rounded-md transition-all duration-500'
+                        className='placeholder:text-gray-400 h-12 rounded-2xl px-4 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border-grey focus:border-green-500 hover:border-green-500 focus:ring-0 transition-all duration-500'
                       />
                       <FaEye
                         onClick={() =>
@@ -223,8 +221,21 @@ function RegisterModal() {
                     </div>
                   </div>
                 </div>
-                <DialogFooter className='mt-4 flex sm:justify-center'>
-                  <Button type='submit'>Kayıt Ol</Button>
+                <DialogFooter className='mt-8 flex sm:justify-center gap-6'>
+                  <DialogClose>
+                    <Button
+                      type='button'
+                      className='bg-gray-200 hover:bg-gray-300 rounded-xl text-black font-semibold text-md py-7 px-4 transition-all duration-500'
+                    >
+                      İptal Et
+                    </Button>
+                  </DialogClose>
+                  <Button
+                    type='submit'
+                    className='rounded-xl bg-green-500 hover:bg-green-600 text-white text-md py-7 px-4 transition-all duration-500'
+                  >
+                    Hemen Kaydol
+                  </Button>
                 </DialogFooter>
               </Form>
             </DialogContent>
