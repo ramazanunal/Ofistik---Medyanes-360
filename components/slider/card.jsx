@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {useRouter} from "next/navigation";
 import {DotsHorizontalIcon} from "@radix-ui/react-icons";
+import {FaShare} from "react-icons/fa6";
 
 function Card({
   image,
@@ -42,9 +43,14 @@ function Card({
   };
 
   return (
-    <div className='border-2 w-72 lg:w-80 text-center rounded-xl h-full justify-between flex flex-col px-4 py-2 cursor-pointer transition-all duration-200 ease-in-out hover:scale-[0.98]' onClick={() => router.push("/profile/" + name)}>
-      <div className='cursor-default ml-auto p-2' onClick={e => e.stopPropagation()}>
+    <div className='border-2 w-72 lg:w-80 text-center rounded-xl h-full justify-between flex flex-col px-4 py-2 transition-all duration-300 ease-in-out hover:shadow-2xl' onClick={() => router.push("/profile/" + name)}>
+      <div className='ml-auto flex z-10' onClick={e => e.stopPropagation()}>
+        <button className="p-2 text-muted-foreground cursor-pointer">
+          <FaShare className="text-xs"/>
+        </button>
+        <button className="p-2 cursor-pointer">
           <DotsHorizontalIcon/>
+        </button>
       </div>
       <div className='flex h-full flex-col justify-between'>
         <div>
@@ -141,15 +147,9 @@ function Card({
       <div onClick={(e) => {
         e.stopPropagation()
       }} className='appointmentButtonArea'>
-        {status === 1 ? (
-          <button className='bg-appointmentColor tracking-wider font-medium text-white w-full py-2 rounded-3xl text-sm'>
-            Hemen Randevu Al
-          </button>
-        ) : (
-          <button className='bg-appointmentColor font-medium tracking-wider text-white w-full py-2 rounded-3xl text-sm'>
-            Randevu Al
-          </button>
-        )}
+        <button className='bg-appointmentColor tracking-wider font-medium text-white w-full py-2 rounded-3xl text-sm'>
+          Randevu Al
+        </button>
         <div className='flex justify-between'>
           <button className='bg-grayButton text-white font-medium tracking-wider w-[7.75rem] lg:w-[8.6rem] py-2 rounded-3xl text-xs lg:text-sm mt-2'>
             Mesaj Gönder
@@ -158,19 +158,6 @@ function Card({
             Takip Et
           </button>
         </div>
-      </div>
-      <div className='infoTextArea'>
-        {status !== undefined && (
-          <h5
-            className={`${
-              status === 1 ? 'text-greenText' : 'text-redText'
-            } text-xs font-medium mt-2`}
-          >
-            {status === 1
-              ? `*${name} şuan musait, randevu al butonuna tıklayarak hemen hizmet alabilirsiniz.`
-              : `*${name} şuan musait değil, en yakın seansı: ${apointmentDate}`}
-          </h5>
-        )}
       </div>
     </div>
   );

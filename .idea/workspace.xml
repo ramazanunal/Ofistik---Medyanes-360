@@ -7,8 +7,6 @@
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/slider/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/slider/card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,6 +177,8 @@
       <workItem from="1705574187830" duration="107000" />
       <workItem from="1705576526289" duration="101000" />
       <workItem from="1705579504599" duration="361000" />
+      <workItem from="1705740646328" duration="8000" />
+      <workItem from="1706006623121" duration="357000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
