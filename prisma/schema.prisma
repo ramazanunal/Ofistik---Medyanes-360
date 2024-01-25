@@ -9,13 +9,22 @@ datasource db {
 
 model User {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    name      String
-    surname   String
     username  String   @unique
     email     String   @unique
-    phone     String
     password  String
     role      Role     @default(customer)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    profileId String?  @unique @db.ObjectId
+    profile   Profile? @relation(fields: [profileId], references: [id])
+}
+
+model Profile {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    surname   String
+    phone     String
+    user      User?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
