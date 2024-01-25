@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
 import Image from "next/image";
-import {useMediaQuery} from "@/lib/useMediaQuery";
+import {useMediaQuery} from "@/lib/hooks/useMediaQuery";
 
 function Card({ item }) {
     const imageScale = useMediaQuery(1280)

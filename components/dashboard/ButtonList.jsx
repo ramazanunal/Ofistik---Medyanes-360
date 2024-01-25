@@ -3,7 +3,7 @@ import {usePathname, useRouter} from "next/navigation";
 import {useState} from "react";
 import classNames from "classnames";
 import NavigationButton from "@/components/dashboard/NavigationButton";
-import {isRole} from "@/lib/useAuth"
+import {isRole} from "@/lib/hooks/useAuth"
 import {AnimatePresence, motion} from "framer-motion";
 
 const ButtonList = ({ buttons, level = 0, child = false }) => {

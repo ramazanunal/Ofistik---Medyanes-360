@@ -8,7 +8,7 @@ import ChevronsRight from "@/assets/icons/ChevronsRight";
 import ButtonList from "@/components/dashboard/ButtonList";
 import UserIcon from "@/assets/icons/UserIcon";
 import BurgerIcon from "@/assets/icons/BurgerIcon";
-import {useMediaQuery} from "@/lib/useMediaQuery";
+import {useMediaQuery} from "@/lib/hooks/useMediaQuery";
 
 const buttons = [
     {

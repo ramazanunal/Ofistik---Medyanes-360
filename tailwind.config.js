@@ -81,6 +81,16 @@ module.exports = {
   presets: [shadcn_preset],
   prefix: '',
   theme: {
+    screens: {
+      "miniTelefon":"380px",
+      "telefon": "578px",
+      "miniTablet": "768px",
+      'tablet': '992px',
+      'laptop': '1024px',
+      'desktop': '1280px',
+
+    },
+
     extend: {
       colors: {
         'royal-purple': 'hsl(330, 100%, 50%)',
@@ -108,6 +118,24 @@ module.exports = {
         darkgreen: '#1dbab5',
         grey: '#e5e7eb',
         grey2: '#9999',
+
+        customRed: '#E74B3C',
+        gabiGreen:'#51E7AD',
+        bgGray: '#F7FAFC',
+        primaryGray:"#999999",
+        textGray:"#757a81",
+        textBoldBlue:"#212529",
+        textBlue:"#353539",
+        primaryGreen: '#0ECA2D',
+        primaryBlue:"#033CAA",
+        primaryYellow:"#FACC15",
+        primaryRed:"#ff1a1a",
+        primaryPink:"#B181F8",
+        secondaryBlue:"#013089",
+        secondaryGray:"#1E1E1E",
+        secondaryRed:"#ffcccc",
+        tertiaryBlue:"#0F2557",
+        tertiaryRed:"#ff4d4d",
       },
     },
   },
