@@ -1,6 +1,8 @@
 import prisma from '@/lib/prisma';
 import EncryptPassword from '@/lib/encryptPassword';
+import schema from '@/validations/backend/RegisterValidation';
 import { getToken } from 'next-auth/jwt';
+import { transporter, mailOptions } from '@/pages/api/mail/nodemailer';
 
 export default async function handler(req, res) {
   try {
@@ -10,37 +12,47 @@ export default async function handler(req, res) {
     if (token && token?.user?.role !== 'admin') {
       return res.status(403).json({
         statusCode: 403,
-        message: 'Forbidden',
+        status: 'error',
+        message: 'Giriş yapmış kullanıcılar bu sayfaya erişemez.',
       });
     } else {
       if (req.method === 'POST') {
         const { name, surname, email, phone, password, passwordConfirm } =
           req.body;
-        //! Body'den gelen verileri kontrol et (Validation)
 
-        // Bu kullanıcı daha önce kayıt olmuş mu?
+        // Frontend'den gelen verileri kontrol et (Validation)
+        const { error } = schema.validate({
+          name,
+          surname,
+          email,
+          phone,
+          password,
+          passwordConfirm,
+        });
+
+        if (error) {
+          return res.status(400).json({
+            statusCode: 400,
+            status: 'error',
+            message: error.message,
+          });
+        }
+
+        // Bu kullanıcı daha önce kayıt olmuş mu? ve hesabını doğrulamış mı?
         const isUserExist = await prisma.user.findUnique({
           where: {
             email: email,
+            isVerified: true,
           },
         });
 
         // Eğer kullanıcı varsa hata döndür
         if (isUserExist) {
-          return res.status(400).json({
-            statusCode: 400,
+          return res.status(409).json({
+            statusCode: 409,
+            status: 'error',
             message:
               'Bu mail adresi zaten kayıtlı. Lütfen daha farklı bir mail adresi deneyin.',
-          });
-        }
-
-        // Password ve PasswordConfirm aynı mı?
-        const passwordsMatch = password === passwordConfirm;
-
-        if (!passwordsMatch) {
-          return res.status(400).json({
-            statusCode: 400,
-            message: 'Şifreler eşleşmiyor.',
           });
         }
 
@@ -52,8 +64,10 @@ export default async function handler(req, res) {
           );
         }
 
-        //Benzersiz kullanıcı adı oluştur.
+        // Benzersiz doğrulama kodu oluştur.
+        const uniqueCode = generateUniqueCode();
 
+        // Benzersiz kullanıcı adı oluştur.
         // Türkçe karakterleri temizle ve boşlukları düzenle
         const cleanedName = normalizeAndRemoveSpaces(name);
         const cleanedSurname = normalizeAndRemoveSpaces(surname);
@@ -61,6 +75,8 @@ export default async function handler(req, res) {
           cleanedName,
           cleanedSurname
         );
+
+        const expirationTime = generateExpirationTime();
 
         //Kullanıcıyı veritabanına kaydet
         const user = await prisma.user.create({
@@ -75,6 +91,12 @@ export default async function handler(req, res) {
                 phone: phone,
               },
             },
+            VerificationCode: {
+              create: {
+                code: uniqueCode,
+                validateTime: expirationTime,
+              },
+            },
           },
         });
 
@@ -83,10 +105,25 @@ export default async function handler(req, res) {
           throw new Error('Kullanıcı oluşturulamadı. Lütfen tekrar deneyin.');
         }
 
+        //mail gönderme işlemi
+        transporter.sendMail({
+          ...mailOptions,
+          subject: `${process.env.NEXT_PUBLIC_COMPANY_NAME} Kayıt işlemi`,
+          text: `${process.env.NEXT_PUBLIC_COMPANY_NAME} Kayıt işlemi`,
+          to: email,
+          html: `<p>Sevgili</p>
+                 <h3 style='color:green'>${name} ${surname}</h3>
+                 <p>${email} mail adresinin Kayıt işlemi -- tarihinde, -- saatinde başarıyla yapıldı!</p>
+                 <p>Kayıt edilen telefon: ${phone}</p>
+                 <p>Doğrulama Kodunuz: ${uniqueCode}</p>
+                `,
+        });
+
         // Kullanıcı oluşturulduysa başarılı mesajı döndür
         return res.status(201).json({
           statusCode: 201,
-          message: 'Kullanıcı başarıyla oluşturuldu.',
+          message:
+            'Kullanıcı başarıyla oluşturuldu. Mail adresinizi doğrulamak için lütfen mailinizi kontrol edin.',
         });
       } else {
         return res
@@ -136,4 +173,23 @@ async function getExistingUsernames(prefix) {
   });
 
   return new Set(existingUsers.map((user) => user.username));
+}
+
+function generateUniqueCode() {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  const code = Array.from({ length: 6 }, () => {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    return characters.charAt(randomIndex);
+  }).join('');
+
+  return code;
+}
+
+function generateExpirationTime() {
+  const currentTime = new Date();
+  const expirationTime = new Date(currentTime.getTime() + 5 * 60000); // 5 dakika = 5 * 60,000 milisaniye
+
+  return expirationTime;
 }
