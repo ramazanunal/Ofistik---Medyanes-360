@@ -23,14 +23,14 @@ const authOptions = {
 
           // email adresi veritabanında kayıtlı mı kontrol ediyoruz.
           const findUser = await prisma.user.findUnique({
-            where: { email: email },
+            where: { email: email, isVerified: true },
           });
 
           console.log(findUser);
 
           // email adresi veritabanında kayıtlı değilse hata fırlatıyoruz.
           if (!findUser) {
-            throw new Error('No user found');
+            throw new Error('Kullanıcı bulunamadı.');
           }
 
           // Veritabanındaki şifre ile giriş yapan kullanıcının girdiği şifreyi karşılaştırıyoruz.
@@ -41,7 +41,7 @@ const authOptions = {
 
           // Şifreler eşleşmiyorsa hata fırlatıyoruz.
           if (!passwordDecrypt) {
-            throw new Error('Password is wrong');
+            throw new Error('Şifre yanlış.');
           }
 
           // Kullanıcı bilgilerini döndürüyoruz.
