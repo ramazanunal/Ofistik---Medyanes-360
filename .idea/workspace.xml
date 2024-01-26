@@ -5,46 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
-      <change afterPath="$PROJECT_DIR$/app/(ProfileLayout)/layout.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Alert.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Loading.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Rating.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/ProfileContainer.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/assets/profile.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/Navbar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/Sidebar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileApoinment/DatePickerStep.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileApoinment/InformationForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileApoinment/KindOfTherapyStep.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileApoinment/MeetInformation.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileApoinment/Meeting.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileCardInfo/ProfileCardInfo.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/ProfileContentbar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/TabItemGeneral.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/TabsItemEvaluations.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/TabsItemSocial.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/hooks/useAlert.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utilities/dayGenerator.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utilities/maskedFullName.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/2.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/england.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/profileImage.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/turkey.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/video4.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/ButtonList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/accordion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/accordion.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/button.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/carousel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/carousel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/dialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/dialog.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/input.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/input.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/label.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/label.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/scroll-area.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/scroll-area.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/aLittleBitAboutUs/card/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/useAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks/useAuth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/useMediaQuery.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks/useMediaQuery.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utilities/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Profile/ProfileContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/ProfileContainer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +71,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Yusuf/Desktop/medyanes/Ofistik---Medyanes-360/containers/Profile",
+    "last_opened_file_path": "C:/Users/Yusuf/Desktop/medyanes/Ofistik---Medyanes-360/public",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -126,11 +93,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Yusuf\Desktop\medyanes\Ofistik---Medyanes-360\public" />
       <recent name="C:\Users\Yusuf\Desktop\medyanes\Ofistik---Medyanes-360\containers\Profile" />
       <recent name="C:\Users\Yusuf\Desktop\medyanes\Ofistik---Medyanes-360\components\dashboard" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\app\dashboard\default" />
       <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\app\dashboard" />
-      <recent name="C:\Users\Yusuf\Desktop\Ofistik---Medyanes-360\public\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Yusuf\Desktop\medyanes\Ofistik---Medyanes-360\containers\Profile\components" />
@@ -223,6 +190,7 @@
       <workItem from="1706006623121" duration="1138000" />
       <workItem from="1706098937530" duration="16000" />
       <workItem from="1706169311975" duration="936000" />
+      <workItem from="1706262956343" duration="197000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

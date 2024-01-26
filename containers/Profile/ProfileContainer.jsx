@@ -109,8 +109,7 @@ const ProfilePageLayout = () => {
                                         <img
                                             src={item.icon}
                                             alt={item.alt}
-                                            width={20}
-                                            height={20}
+                                            className="object-contain h-[20px]"
                                         />
                                         <IoCopy
                                             size={13}
