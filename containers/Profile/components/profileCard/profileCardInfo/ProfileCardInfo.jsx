@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useState, useRef, useEffect } from 'react'
 //Components
 import Rating from "@/components/Rating"
@@ -25,7 +26,8 @@ const ProfileCardHeader = (
         isCommented,
         isFollow,
         setIsFollow,
-        socialRef
+        socialRef,
+        data
     }) => {
     //Cebrail
     //cebrail salak mısımn ne kadar konuşuyosun şuan ne saçma bir şey yapıyoruz salak mıyız yazıyom devamlı birşeyler ne yazasam neyse zeki görüneyim hadi by :)
@@ -96,7 +98,7 @@ const ProfileCardHeader = (
                 </div>
                 <div className='relative w-full flex flex-col gap-5 justify-between '>
                     <div className='flex flex-col items-start gap-1' >
-                        <h1 className='text-start text-[20px] telefon:text-[22px]' >Seda <br /> Odabaşı Dinç</h1>
+                        <h1 className='text-start text-[20px] telefon:text-[22px]' >{data?.username}</h1>
                         <h3 className='text-textGray text-xs'>Uzman, Klinik Psikoloji</h3>
                         <div className=' flex items-center gap-2 miniTelefon:mt-4 telefon:mt-3 text-xs cursor-pointer' >
                             <button className='bg-primaryGreen w-20  hover:opacity-80 text-white  rounded-md  transition duration-300 ease-in-out flex items-center justify-center py-1  gap-1'>

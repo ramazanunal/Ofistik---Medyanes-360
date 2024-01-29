@@ -24,11 +24,46 @@ model Profile {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     name      String
     surname   String
+    onlineStatus  Boolean
+    jobStatus     String
+    languages     String[]
+    price           Int
+    totalAppointments Int
+    appointmentIntervals DateTime[]
+    resume        String
+    educationInfo EducationInfo[]
+    serviceAreas  String[]
+    comments      Comment[]
+    certificates Certificate[]
     phone     String
     userId    String?  @unique @db.ObjectId
     user      User?    @relation(fields: [userId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model EducationInfo {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    university String
+    year String
+    profileId String
+    profile   Profile @relation(fields: [profileId], references:[id])
+}
+
+model Certificate {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    certificate String
+    year String
+    profileId String
+    profile   Profile @relation(fields: [profileId], references:[id])
+}
+
+model Comment {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    text      String
+    stars     Int
+    profileId String
+    profile   Profile @relation(fields: [profileId], references:[id])
 }
 
 model VerificationCode {
