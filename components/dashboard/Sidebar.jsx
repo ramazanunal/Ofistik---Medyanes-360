@@ -174,7 +174,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                     )
                 }>
                     {buttons.map(({buttons: x, title}) => (
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 border-b border-border pb-4">
                             {!isMobile && <span className="text-sm font-semibold text-muted-foreground">{title}</span>}
                             <ButtonList buttons={x} level={1}/>
                         </div>

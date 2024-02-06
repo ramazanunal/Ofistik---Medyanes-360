@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
+      <change afterPath="$PROJECT_DIR$/app/(DashboardLayout)/layout.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Profile/ProfileContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/ProfileContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileCardInfo/ProfileCardInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileCardInfo/ProfileCardInfo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/ProfileContentbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/ProfileContentbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/TabItemGeneral.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/TabItemGeneral.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +200,9 @@
       <workItem from="1706519891299" duration="5000" />
       <workItem from="1706526600286" duration="743000" />
       <workItem from="1706531320797" duration="6000" />
-      <workItem from="1707216722776" duration="84000" />
+      <workItem from="1707216722776" duration="256000" />
+      <workItem from="1707217020154" duration="130000" />
+      <workItem from="1707217936745" duration="226000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
@@ -436,5 +433,17 @@
     <MESSAGE value="dashboard test" />
     <MESSAGE value="update search algorithm - user collect data" />
     <option name="LAST_COMMIT_MESSAGE" value="update search algorithm - user collect data" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/components/dashboard/ButtonList.jsx</url>
+          <line>1</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
