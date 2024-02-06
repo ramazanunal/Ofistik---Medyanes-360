@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
-      <change afterPath="$PROJECT_DIR$/app/(DashboardLayout)/layout.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/_components/FeatureCard/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +201,9 @@
       <workItem from="1706531320797" duration="6000" />
       <workItem from="1707216722776" duration="256000" />
       <workItem from="1707217020154" duration="130000" />
-      <workItem from="1707217936745" duration="226000" />
+      <workItem from="1707217936745" duration="236000" />
+      <workItem from="1707223229713" duration="35000" />
+      <workItem from="1707239911489" duration="76000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />
@@ -440,7 +441,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/components/dashboard/ButtonList.jsx</url>
           <line>1</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
