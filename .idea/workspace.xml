@@ -6,6 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="227fcb84-d76a-4280-a500-36b163ebe22d" name="Changes" comment="update search algorithm - user collect data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(DashboardLayout)/dashboard/layout.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Profile/ProfileContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/ProfileContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileCardInfo/ProfileCardInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/components/profileCard/profileCardInfo/ProfileCardInfo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/ProfileContentbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/ProfileContentbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/TabItemGeneral.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Profile/components/profileContentbar/TabItemGeneral.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,6 +203,9 @@
       <workItem from="1706516588112" duration="957000" />
       <workItem from="1706519560089" duration="305000" />
       <workItem from="1706519891299" duration="5000" />
+      <workItem from="1706526600286" duration="743000" />
+      <workItem from="1706531320797" duration="6000" />
+      <workItem from="1707216722776" duration="84000" />
     </task>
     <task id="LOCAL-00001" summary="images -&gt; public/images">
       <option name="closed" value="true" />

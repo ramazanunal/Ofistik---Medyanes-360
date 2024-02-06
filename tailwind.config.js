@@ -81,16 +81,6 @@ module.exports = {
   presets: [shadcn_preset],
   prefix: '',
   theme: {
-    screens: {
-      "miniTelefon":"380px",
-      "telefon": "578px",
-      "miniTablet": "768px",
-      'tablet': '992px',
-      'laptop': '1024px',
-      'desktop': '1280px',
-
-    },
-
     extend: {
       colors: {
         'royal-purple': 'hsl(330, 100%, 50%)',

@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import useAlert from "@/lib/hooks/useAlert";
-import Image from 'next/image';
 
 // Components
 import ProfileDetail from "./components/profileContentbar/ProfileContentbar";
@@ -137,6 +136,7 @@ const ProfilePageLayout = ({ data }) => {
                 </div>
                 <div className='w-full tablet:w-3/5 flex items-center justify-center pt-3 text-tertiaryBlue'>
                     <ProfileDetail
+                        data={data}
                         detailControl={detailControl}
                         setDetailControl={setDetailControl}
                         setIsCommented={setIsCommented}

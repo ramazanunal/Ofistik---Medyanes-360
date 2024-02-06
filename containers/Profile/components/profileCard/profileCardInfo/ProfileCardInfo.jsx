@@ -98,8 +98,8 @@ const ProfileCardHeader = (
                 </div>
                 <div className='relative w-full flex flex-col gap-5 justify-between '>
                     <div className='flex flex-col items-start gap-1' >
-                        <h1 className='text-start text-[20px] telefon:text-[22px]' >{data?.username}</h1>
-                        <h3 className='text-textGray text-xs'>Uzman, Klinik Psikoloji</h3>
+                        <h1 className='text-start text-[20px] telefon:text-[22px]' >{data?.profile?.name} {data?.profile?.surname}</h1>
+                        <h3 className='text-textGray text-xs'>{data?.profile?.jobStatus}, Klinik Psikoloji</h3>
                         <div className=' flex items-center gap-2 miniTelefon:mt-4 telefon:mt-3 text-xs cursor-pointer' >
                             <button className='bg-primaryGreen w-20  hover:opacity-80 text-white  rounded-md  transition duration-300 ease-in-out flex items-center justify-center py-1  gap-1'>
                                 <FaMessage className='text-gray-100 hover:opacity-90 ' />
@@ -184,21 +184,21 @@ const ProfileCardHeader = (
                     <h1 className='text-[14px]' >Görüşme</h1>
                     <div className='flex items-center gap-2' >
                         <HiVideoCamera size={20} />
-                        <h6 className='text-[12px]' >28</h6>
+                        <h6 className='text-[12px]' >{data?.profile?.totalAppointments}</h6>
                     </div>
                 </div>
                 <div className='col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue ' >
                     <h1 className='text-[14px] ' >Diller</h1>
                     <div className='flex items-center justify-center gap-2' >
                         <GrLanguage />
-                        <h6 className='text-[12px] ' >Tr</h6>
+                        <h6 className='text-[12px] ' >{data?.profile?.languages[0]}</h6>
                     </div>
                 </div>
                 <div className='col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue rounded-e-xl' >
                     <h1 className='text-[14px] ' >Ücret</h1>
                     <div className='flex items-center justify-center gap-2' >
                         <IoMdWallet />
-                        <h6 className='text-[12px] ' >8₺/dk</h6>
+                        <h6 className='text-[12px] ' >{data?.profile?.price}₺/dk</h6>
                     </div>
                 </div>
             </div>

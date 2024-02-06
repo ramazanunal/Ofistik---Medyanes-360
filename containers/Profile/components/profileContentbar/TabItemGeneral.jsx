@@ -5,7 +5,7 @@ import { LiaHospital } from "react-icons/lia";
 import { LiaCertificateSolid } from "react-icons/lia";
 import { GrLanguage } from "react-icons/gr";
 import { TfiWrite } from "react-icons/tfi";
-const TabItemsGeneral = () => {
+const TabItemsGeneral = ({ data }) => {
     return (
         <div className='laptop:h-[calc(100vh_-_200px)] w-full mx-auto laptop:overflow-y-scroll top-0 bottom-0  flex flex-col gap-3 pt-5   '>
             <div className='flex items-center gap-2' >
@@ -13,17 +13,8 @@ const TabItemsGeneral = () => {
                 <h1 className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium' >Özgeçmiş</h1>
             </div>
             <div className='bg-white p-5 rounded-md shadow-xl text-start text-[11px]' >
-                <p>               
-                    Merhaba,
-                    Ben Minur Özçelik, 1997 tarihinde dünyaya geldim. Eğitim hayatıma [Mezun Olduğunuz Okul/Üniversite] okulunda başladım ve [Öğrenim Gördüğünüz Bölüm] bölümünden [Mezuniyet Yılınız] yılında mezun oldum.
-                    İş hayatına adımımı attığım ilk deneyimim, [Şirket İsmi] şirketinde [Çalıştığınız Pozisyon] pozisyonunda çalıştığım [İşe Başlama Tarihi] tarihine dayanıyor. Bu süre zarfında, [Yaptığınız İşler ve Elde Ettiğiniz Başarılar] gibi çeşitli sorumlulukları başarıyla yerine getirdim.
-                    Yeteneklerim arasında  gibi konular bulunmaktadır. Ayrıca, [Referansın Adı Soyadı] gibi alanında uzman referanslarım bulunmaktadır. [Referansın İletişim Bilgisi] üzerinden ulaşabilirsiniz.
-                    Proje deneyimlerim arasında öne çıkan bir örnek, [Projenin Adı] adlı projede yer aldım. Bu projede [Proje Hakkında Kısa Bir Açıklama] gibi önemli bir rol oynadım ve [Proje Gerçekleştirme Tarihi] tarihinde başarıyla tamamlandı.
-                    Hobilerim arasında kitap okumak gezmek, kitap okumak gezmek, gibi ilgi alanları bulunmaktadır. Ayrıca, [Aldığınız Ödül veya Başarılar] gibi çeşitli ödüller ve başarılar da elde ettim.
-                    İletişim kurmak için benimle  e-posta adresi veya  telefon numarası üzerinden iletişime geçebilirsiniz. Ayrıca, LinkedIn profilime [LinkedIn Profil Bağlantınız] ve GitHub profilime [GitHub Profil Bağlantınız] üzerinden ulaşabilirsiniz.
-                    Teşekkür ederim.
-                    Saygılarımla,
-                    Minur Özçelik
+                <p>
+                    {data?.profile?.resume}
                 </p>
             </div>
             <div className='flex items-center gap-2 mt-5' >

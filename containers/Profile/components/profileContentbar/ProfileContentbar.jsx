@@ -28,13 +28,14 @@ const ProfileContentbar = ({
     setIsCommented,
     isCommented,
     isFollow,
-    setIsFollow
+    setIsFollow,
+    data
 }) => {
 
     const MenuItems = ({ detailControl, isCommented }) => {
         switch (detailControl) {
             case "general":
-                return <TabItemGeneral />;
+                return <TabItemGeneral data={data} />;
             case "social":
                 return <TabsItemSocial  isFollow={isFollow} setIsFollow={setIsFollow} />;
             case "evaluation":
