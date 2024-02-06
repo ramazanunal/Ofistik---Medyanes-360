@@ -137,6 +137,9 @@ module.exports = {
         tertiaryBlue:"#0F2557",
         tertiaryRed:"#ff4d4d",
       },
+      gridTemplateRows: {
+        'layout': 'min-content 1fr min-content',
+      }
     },
   },
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar')],
