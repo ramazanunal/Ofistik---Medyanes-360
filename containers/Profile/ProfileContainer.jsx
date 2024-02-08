@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import useAlert from "@/lib/hooks/useAlert";
+import Image from 'next/image';
 
 // Components
 import ProfileDetail from "./components/profileContentbar/ProfileContentbar";
@@ -71,9 +72,9 @@ const ProfilePageLayout = ({ data }) => {
     };
 
     return (
-        <div className=' tablet:fixed bg-bgGray w-full  mx-auto  z-0 pt-20 tablet:pt-28 pb-10'>
-            <div className=' max-w-[584px] w-full  miniTablet:max-w-[768px] tablet:max-w-[1920px] mx-auto flex  flex-col items-center telefon:items-start tablet:flex-row  gap-5 text-center px-5 laptop:px-10'>
-                <div id='fake-window' className=' tablet:h-[calc(100vh_-_140px)] overflow-y-auto bg-white w-full tablet:w-2/5 laptop:max-w-[600px] p-3 border shadow-lg rounded-3xl'>
+        <div className=' md:fixed bg-bgGray w-full  mx-auto  z-0 pt-20 sm:pt-28  pb-10'>
+            <div className='  w-full  flex  flex-col items-center md:items-start md:flex-row  gap-5 text-center px-5 lg:px-10'>
+                <div id='fake-window' className=' md:h-[calc(100vh_-_140px)] overflow-y-auto bg-white w-full md:w-2/5  p-3 border shadow-lg rounded-3xl'>
                     <ProfileCardInfo
                         data={data}
                         isHearted={isHearted}
@@ -123,7 +124,7 @@ const ProfilePageLayout = ({ data }) => {
                                     </div>
                                     <h1
                                         ref={textRef}
-                                        className='text-[8px] miniTelefon:text-xs font-semibold hover:scale-100'
+                                        className='text-[8px] sm:text-xs font-semibold hover:scale-100'
                                     >
                                         {item.nickname}
                                     </h1>
@@ -134,9 +135,8 @@ const ProfilePageLayout = ({ data }) => {
                     </div>
                     <Meeting />
                 </div>
-                <div className='w-full tablet:w-3/5 flex items-center justify-center pt-3 text-tertiaryBlue'>
+                <div className='w-full md:w-3/5 flex items-center justify-center pt-3 text-tertiaryBlue'>
                     <ProfileDetail
-                        data={data}
                         detailControl={detailControl}
                         setDetailControl={setDetailControl}
                         setIsCommented={setIsCommented}

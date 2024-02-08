@@ -52,7 +52,7 @@ const DatePickerStep = ({ selectedTime, setSelectedTime, selectedDate, setSelect
           ) : null
         ))}
       </div>
-      <div className='w-full flex items-center justify-center miniTelefon:p-5'>
+      <div className='w-full flex items-center justify-center sm:p-5'>
         <Calendar className={'custom-calendar'} onChange={handleSelectDate} />
       </div>
       <div className='text-xs text-textGray'>*** Randevu Süresi 60 dk</div>

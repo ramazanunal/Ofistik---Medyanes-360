@@ -40,9 +40,9 @@ const Meeting = () => {
 
     return (
         <div className='flex flex-col gap-2' >
-            <h1 className='text-start pt-10 text-2xl text-textBlue font-semibold'>Randevu Al</h1>
+            <h1 className='text-start pt-8 text-2xl text-textBlue font-semibold'>Randevu Al</h1>
 
-            <div className="flex items-center w-full max-w-xs mx-auto justify-between px-10 miniTelefon:px-10 py-5 ">
+            <div className="flex items-center w-full max-w-xs mx-auto justify-between px-10 sm:px-10 py-5 ">
                 <span onClick={() => setSelectStep(1)} className={`flex items-center justify-center w-8 h-8 border  rounded-full cursor-pointer  ${selectStep === 1 ? "bg-blue-600 text-white" : ""}`}>
                     1
                 </span>

@@ -182,16 +182,16 @@ export default function TabsItemSocial() {
   }
 
   return (
-    <div className="flex flex-col  relative overflow-x-hidden w-full overflow-hidden h-[79vh]">
-      <div className="text-center mt-5">
+    <div className="flex flex-col gap-5 py-5 relative overflow-x-hidden  overflow-hidden h-[79vh]">
+      <div className="text-center w-full flex flex-row flex-wrap justify-center ">
         {categories?.sort().map((category, index) => (
           <button id={category} key={index} onClick={() => handleCategory(category)} className="px-2 [text-shadow:1px_1px_2px_rgba(0,0,0,0.6)]">
             {category}
           </button>
         ))}
       </div>
-      <div className="flex justify-center my-10 h-full">
-        <div className="w-full miniTablet:w-10/12 miniTablet:px-5 laptop:px-0">
+      <div className="flex justify-center  h-full w-full">
+        <div className="w-full md:w-10/12 mx-auto">
           <Carousel
             className="w-full">
             <CarouselContent className="">
@@ -199,14 +199,14 @@ export default function TabsItemSocial() {
                 updatePosts.map((updatePost) =>
                 (
                   updatePost == post && (
-                    <CarouselItem key={index} className=" basis-3/4 telefon:basis-2/3 miniTablet:basis-1/2 laptop:basis-1/2">
-                      <div className={` bg-primary rounded-lg  h-fit telefon:h-full`}>
+                    <CarouselItem key={index} className=" basis-3/4 sm:basis-2/3 md:basis-1/2 lg:basis-1/2">
+                      <div className={` bg-primary rounded-lg  h-fit sm:h-full`}>
                         <CarouselCardHeader post={post} usersData={usersData} setUsersData={setUsersData} />
                         {/* tıklandığında horizontal carousel açılacak */}
                         <button className="relative group w-full h-fit" onClick={() => handleClick(index)}>
                           <Image
                             src={post.image_url.src}
-                            className=" w-full h-full miniTablet:h-full desktop:h-full cursor-pointer  laptop:rounded-md"
+                            className=" w-full h-full md:h-full xl:h-full cursor-pointer  lg:rounded-md"
                             alt="Picture of the author"
                             width={700}
                             height={700}
@@ -218,7 +218,7 @@ export default function TabsItemSocial() {
                           {
                             post.video_url && <MdOutlineVideoLibrary size={30} className=" absolute top-2 right-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" />
                           }
-                          <div className="absolute hidden  justify-center items-center w-full h-full top-0 left-0 font-semibold miniTablet:text-desktop text-white group-hover:flex">
+                          <div className="absolute hidden  justify-center items-center w-full h-full top-0 left-0 font-semibold md:text-desktop text-white group-hover:flex">
                             click to view
                           </div>
                         </button>
@@ -237,13 +237,13 @@ export default function TabsItemSocial() {
       <div className={`w-full h-full  absolute  top-0 left-0 bg-white/60 backdrop-blur-telefon flex justify-center items-start ${openPageId != null ? "block" : "hidden"}`}>
         <div
           id="openCarousel"
-          className="w-full max-w-fit  laptop:max-w-full relative laptop:rounded-lg pt-12 telefon:mt-0"
+          className="w-full max-w-fit  lg:max-w-full relative lg:rounded-lg pt-12 sm:mt-0"
           ref={openCarouselRef}
         >
-          <div className={` flex flex-col overflow-y-auto laptop:gap-6 w-full max-w-[500px] h-full telefon:w-full max-h-[70vh] laptop:max-h-[74vh] rounded-2xl  telefon:max-w-full laptop:w-full mt-0 miniTablet:-mt-1`} >
+          <div className={` flex flex-col overflow-y-auto lg:gap-6 w-full max-w-[500px] h-full sm:w-full max-h-[70vh] lg:max-h-[74vh] rounded-2xl  sm:max-w-full lg:w-full mt-0 md:-mt-1`} >
             {mainPosts.map((post, index) => (
-              <div key={index} className={` pt-1 basis-1 relative h-full laptop:`}>
-                <div className={`telefon:grid grid-cols-2 grid-rows-layout    bg-primary rounded-lg   `}>
+              <div key={index} className={` pt-1 basis-1 relative h-full lg:`}>
+                <div className={`sm:grid grid-cols-2 grid-rows-layout    bg-primary rounded-lg   `}>
                   <CarouselCardHeader
                     post={post}
                     usersData={usersData}
@@ -253,8 +253,8 @@ export default function TabsItemSocial() {
                     type={"horizontalPage"}
                     popoverRef={popoverRef}
                     dialogContentRef={dialogContentRef}
-                    className={"h-fit flex col-start-2 laptop:border-b miniTablet:items-center px-4 desktop:px-5"} />
-                  <div className={`post flex items-center relative row-span-3 h-full row-start-1 self-start  laptop:rounded-lg row- `} id={index} >
+                    className={"h-fit flex col-start-2 lg:border-b md:items-center px-4 xl:px-5"} />
+                  <div className={`post flex items-center relative row-span-3 h-full row-start-1 self-start  lg:rounded-lg row- `} id={index} >
                     {post.video_url ? (
                       <VideoPlayer
                         url={post.video_url}
@@ -267,7 +267,7 @@ export default function TabsItemSocial() {
                     ) : (
                       <Image
                         src={post.image_url}
-                        className="w-full h-full cursor-pointer laptop:rounded-md"
+                        className="w-full h-full cursor-pointer lg:rounded-md"
                         alt="Picture of the author"
                         width={1000}
                         height={1000}
@@ -290,7 +290,7 @@ export default function TabsItemSocial() {
                        opacity-80
                        `} />
                   </div>
-                  <div className="hidden telefon:flex flex-col h text-start px-4 desktop:px-5 py-4 max-h-[15vh] self-start desktop:max-h-[25vh] overflow-x-hidden overflow-y-auto col-start-2 ">
+                  <div className="hidden sm:flex flex-col h text-start px-4 xl:px-5 py-4 max-h-[15vh] self-start xl:max-h-[25vh] overflow-x-hidden overflow-y-auto col-start-2 ">
                     <div className=" ">
                       <div className={`h-fit `} id={post.comments[0]?.id} >
                         <span className="mr-2 text-white ">{post.username}</span>
@@ -326,29 +326,29 @@ export default function TabsItemSocial() {
                     </div>
                   </div>
                   <div className="flex flex-col gap-3 text-white h-fit py-2 col-start-2 self-end border-t  col-span-1 ">
-                    <div className="flex justify-between desktop:text-desktop 2xl:text-2xl px-2 ">
+                    <div className="flex justify-between xl:text-desktop 2xl:text-2xl px-2 ">
                       <div className="flex gap-3 ">
                         <button className="cursor-pointer active:scale-90 transition-all duration-150" onClick={() => handleLiked(index)}>
-                          {post.isLiked ? <AiFillHeart className="miniTablet:stroke-1 stroke-red-500  text-red-500" size={24} /> : <BiHeart className="miniTablet:stroke-1" size={24} />}
+                          {post.isLiked ? <AiFillHeart className="md:stroke-1 stroke-red-500  text-red-500" size={24} /> : <BiHeart className="md:stroke-1" size={24} />}
                         </button>
                         <button className="cursor-pointer active:scale-90" onClick={() => { setOpenCommentPage(index); handleFocus(index) }}>
-                          <BiComment className="miniTablet:stroke-1" size={24} />
+                          <BiComment className="md:stroke-1" size={24} />
                         </button>
                         <button className="cursor-pointer active:scale-90">
-                          <BiShare className="miniTablet:stroke-1" size={24} />
+                          <BiShare className="md:stroke-1" size={24} />
                         </button>
                       </div>
                       <div>
                         <button className="cursor-pointer active:scale-90" onClick={() => handleSave(index)}>
-                          {post.saveBook ? <BiSolidBookmark className="miniTablet:stroke-1" size={24} />
-                            : <BiBookmark className="miniTablet:stroke-1" size={24} />}
+                          {post.saveBook ? <BiSolidBookmark className="md:stroke-1" size={24} />
+                            : <BiBookmark className="md:stroke-1" size={24} />}
                         </button >
                       </div>
                     </div>
                     <div className="text-white px-2 text-start">
                       <span>{post.likes} beğenme,</span> <button onClick={() => { setOpenCommentPage(index); handleFocus(index) }}>{post.comments.length} yorum</button>
                     </div>
-                    <div className={`block telefon:hidden h-fit px-2 text-start `} id={post.comments[0]?.id} >
+                    <div className={`block sm:hidden h-fit px-2 text-start `} id={post.comments[0]?.id} >
                       <span className="mr-2 text-start">{post.username}</span>
                       <span
                         className={`text-white/80 whitespace-wrap text-start`}>
@@ -365,7 +365,7 @@ export default function TabsItemSocial() {
                     <div className="text-white px-2 text-start">
                       {timeStamp(post.timestamp)}
                     </div>
-                    <div className="hidden telefon:block border-t">
+                    <div className="hidden sm:block border-t">
                       <CommentForm posts={mainPosts} index={index} setMainPosts={setMainPosts} />
                     </div>
                   </div>
@@ -385,7 +385,7 @@ export default function TabsItemSocial() {
             hover:text-accent-foreground
             w-8 h-8
             rounded-full
-            desktop:scale-110
+            xl:scale-110
             2xl:scale-125"
 
             onClick={handleClose}>
@@ -395,7 +395,7 @@ export default function TabsItemSocial() {
 
         </div>
       </div>
-      <div className={`${openCommentPage != undefined ? "flex telefon:hidden backdrop-blur-[2px]  " : "hidden"} flex-col absolute justify-center  items-center  w-full  h-screen text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}>
+      <div className={`${openCommentPage != undefined ? "flex sm:hidden backdrop-blur-[2px]  " : "hidden"} flex-col absolute justify-center  items-center  w-full  h-screen text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}>
         <div ref={commentRef} className="relative bg-black w-10/12 rounded-md max-w-[400px]">
           <div className="flex justify-between p-3 border-b border-input items-center">
             <span>

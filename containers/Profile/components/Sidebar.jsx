@@ -8,7 +8,7 @@ import { RiEditBoxLine } from "react-icons/ri";
 
 const SidebarMenu = ({ isOpenSideMenu, setIsOpenSideMenu }) => {
     return (
-        <div className={!isOpenSideMenu ? 'border block ld:hidden fixed top-0 right-0 w-[100%] telefon:w-[60%] h-full bg-white duration-1000  ' : "fixed h-full w-[60%] top-0 right-[-100%] duration-1000  "}>
+        <div className={!isOpenSideMenu ? 'border block ld:hidden fixed top-0 right-0 w-[100%] sm:w-[60%] h-full bg-white duration-1000  ' : "fixed h-full w-[60%] top-0 right-[-100%] duration-1000  "}>
             <div className='flex items-center justify-between p-7' >
                 <h1 className='text-xl font-semibold text-gray-800'>Menu</h1>
                 <IoMdClose onClick={()=>{setIsOpenSideMenu(true)}} className='text-customRed opacity-90' size={35} />

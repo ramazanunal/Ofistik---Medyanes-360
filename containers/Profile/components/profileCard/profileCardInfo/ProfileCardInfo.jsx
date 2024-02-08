@@ -70,7 +70,7 @@ const ProfileCardHeader = (
 
     return (
         <>
-            <div className='relative max-w-full flex flex-col miniTelefon:flex-row items-center  miniTelefon:items-start gap-3'>
+            <div className='relative max-w-full flex flex-col sm:flex-row items-center  sm:items-start gap-3'>
                 <div className="relative imageArea min-w-[115px] flex flex-col items-center justify-center">
                     <span
                         className={`absolute h-5 w-5 ${1 === 1 ? "bg-blueOne" : "bg-redOne"
@@ -98,15 +98,15 @@ const ProfileCardHeader = (
                 </div>
                 <div className='relative w-full flex flex-col gap-5 justify-between '>
                     <div className='flex flex-col items-start gap-1' >
-                        <h1 className='text-start text-[20px] telefon:text-[22px]' >{data?.profile?.name} {data?.profile?.surname}</h1>
-                        <h3 className='text-textGray text-xs'>{data?.profile?.jobStatus}, Klinik Psikoloji</h3>
-                        <div className=' flex items-center gap-2 miniTelefon:mt-4 telefon:mt-3 text-xs cursor-pointer' >
+                        <h1 className='text-start text-[20px] sm:text-[22px]' >{data?.username}</h1>
+                        <h3 className='text-textGray text-xs'>Uzman, Klinik Psikoloji</h3>
+                        <div className=' flex items-center gap-2 }}mt-4 sm:mt-3 text-xs cursor-pointer' >
                             <button className='bg-primaryGreen w-20  hover:opacity-80 text-white  rounded-md  transition duration-300 ease-in-out flex items-center justify-center py-1  gap-1'>
                                 <FaMessage className='text-gray-100 hover:opacity-90 ' />
                                 <h1 className='hover:opacity-90 text-[10px]' >Mesaj</h1>
                             </button>
                             {isHearted ? (
-                                <div onClick={() => setIsHearted(!isHearted)} className='hidden miniTelefon:flex items-center justify-center w-20 gap-1 bg-primaryBlue text-white border rounded-md py-1 ' >
+                                <div onClick={() => setIsHearted(!isHearted)} className='hidden sm:flex items-center justify-center w-20 gap-1 bg-primaryBlue text-white border rounded-md py-1 ' >
                                     <BsCheck
                                         size={16}
                                         className={`heart-icon ${isHearted ? 'hearted text-white  animate-heart ' : ''}`}
@@ -114,7 +114,7 @@ const ProfileCardHeader = (
                                     <h1 className='text-[11px]' >Takip</h1>
                                 </div>
                             ) : (
-                                <div onClick={() => setIsHearted(!isHearted)} className='hidden miniTelefon:flex items-center justify-center  gap-1 w-20 bg-primaryBlue text-white  border rounded-md py-1' >
+                                <div onClick={() => setIsHearted(!isHearted)} className='hidden sm:flex items-center justify-center  gap-1 w-20 bg-primaryBlue text-white  border rounded-md py-1' >
                                     <FiPlus
                                         size={14}
                                         className={`heart-icon ${isHearted ? 'heartedmb-1 animate-heart' : ''}`}
@@ -126,7 +126,7 @@ const ProfileCardHeader = (
                     </div>
                     <div ref={socialRef} className=' absolute top-0 w-full flex gap-3  items-center justify-end cursor-pointer'>
                         {isHearted ? (
-                            <div onClick={() => setIsHearted(!isHearted)} className='w-20 flex miniTelefon:hidden  items-center justify-center py-1 gap-1 bg-primaryBlue text-white border rounded-md  ' >
+                            <div onClick={() => setIsHearted(!isHearted)} className='w-20 flex sm:hidden  items-center justify-center py-1 gap-1 bg-primaryBlue text-white border rounded-md  ' >
                                 <BsCheck
                                     size={18}
                                     className={`heart-icon ${isHearted ? 'hearted text-white  animate-heart ' : ''}`}
@@ -134,17 +134,17 @@ const ProfileCardHeader = (
                                 <h1 className='text-[11px]' >Takip</h1>
                             </div>
                         ) : (
-                            <div onClick={() => setIsHearted(!isHearted)} className='w-20 flex miniTelefon:hidden  items-center justify-center py-1  border rounded-md
+                            <div onClick={() => setIsHearted(!isHearted)} className='w-20 flex sm:hidden  items-center justify-center py-1  border rounded-md
                         text-white bg-primaryBlue' >
                                 <FiPlus
                                     size={14}
                                     className={`heart-icon ${isHearted ? 'heartedmb-1 animate-heart' : ''}`}
                                 />
-                                <h1 className='text-[11px] miniTelefon:hidden telefon:block ' >Takip Et</h1>
+                                <h1 className='text-[11px] sm:hidden telefon:block ' >Takip Et</h1>
                             </div>
                         )}
                         <BsBoxArrowUp onClick={() => { setIsFollow(!isFollow) }} className={`${isFollow ? "text-primaryBlue" : ""} hover:opacity-60`} />
-                        <div className='relative group z-50 '>
+                        <div className='relative group'>
                             <SlOptionsVertical onClick={() => setShowOptions(!showOptions)} className='group-hover:opacity-60 ' />
                             <div ref={optionsRef} className={`absolute top-4 right-0 ${showOptions ? "flex" : "hidden"} flex-col w-32 pt-2`} >
                                 <div className='py-2  w-full p-3 border rounded-lg text-[10px] bg-lighBlue  text-black' >
@@ -184,31 +184,31 @@ const ProfileCardHeader = (
                     <h1 className='text-[14px]' >Görüşme</h1>
                     <div className='flex items-center gap-2' >
                         <HiVideoCamera size={20} />
-                        <h6 className='text-[12px]' >{data?.profile?.totalAppointments}</h6>
+                        <h6 className='text-[12px]' >28</h6>
                     </div>
                 </div>
                 <div className='col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue ' >
                     <h1 className='text-[14px] ' >Diller</h1>
                     <div className='flex items-center justify-center gap-2' >
                         <GrLanguage />
-                        <h6 className='text-[12px] ' >{data?.profile?.languages[0]}</h6>
+                        <h6 className='text-[12px] ' >Tr</h6>
                     </div>
                 </div>
                 <div className='col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue rounded-e-xl' >
                     <h1 className='text-[14px] ' >Ücret</h1>
                     <div className='flex items-center justify-center gap-2' >
                         <IoMdWallet />
-                        <h6 className='text-[12px] ' >{data?.profile?.price}₺/dk</h6>
+                        <h6 className='text-[12px] ' >8₺/dk</h6>
                     </div>
                 </div>
             </div>
             {wideScreenImg && (
                 <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50'>
 
-                    <IoIosCloseCircleOutline onClick={() => setWideScreenImg(false)} size={35} className='absolute top-20 tablet:top-28 right-4 text-white hover:opacity-80 cursor-pointer' />
+                    <IoIosCloseCircleOutline onClick={() => setWideScreenImg(false)} size={35} className='absolute top-20 md:top-28 right-4 text-white hover:opacity-80 cursor-pointer' />
                     <img
                         src="/profileImage.jpg"
-                        className={`rounded-full w-4/5 p-2 telefon:w-3/5 miniTablet:w-2/5 tablet:w-auto tablet:h-2/3`}
+                        className={`rounded-full w-4/5 p-2 sm:w-3/5 md:w-2/5 md:w-auto md:h-2/3`}
                         alt=""
                     />
 
