@@ -172,7 +172,7 @@ const VideoPlayer = ({ url, index, handleLiked,isVideoMuted, setIsVideoMuted}) =
                         ref={volumeControlsRef}
                     >
                         <input
-                            className={`hidden ${showVolumeControls ? "miniTablet:block" : "hidden"} absolute    -top-12 rotate-[270deg] w-20 h-2`}
+                            className={`hidden ${showVolumeControls ? "md:block" : "hidden"} absolute    -top-12 rotate-[270deg] w-20 h-2`}
                             type="range"
                             min="0"
                             max="1"

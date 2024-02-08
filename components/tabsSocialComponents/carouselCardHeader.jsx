@@ -140,7 +140,7 @@ function CarouselCardHeader({
             <div className="flex items-center gap-3 text-white py-1 ">
                 <Image
                     src={usersData.find((user) => user.username == post.username)?.profile_picture.src}
-                    className="rounded-full w-[35px] h-[35px] telefon:w-[40px] telefon:h-[40px] desktop:w-[50px] desktop:h-[50px]"
+                    className="rounded-full w-[35px] h-[35px] sm:w-[40px] sm:h-[40px] xl:w-[50px] xl:h-[50px]"
                     width={60}
                     height={60}
                     loading='lazy'
@@ -148,18 +148,18 @@ function CarouselCardHeader({
                 />
                 <div className="flex flex-col items-start">
                     {/* signup tarafında belirli bir uzunluktan sonra kabul etmemesi gerekir */}
-                    <span className="text-sm telefon:text-base desktop:text-xl">{post.username}</span>
-                    <span className="text-white/70 text-xs telefon:text-sm font-light desktop:text-lg">Lorem ipsum.</span>
+                    <span className="text-sm sm:text-base xl:text-xl">{post.username}</span>
+                    <span className="text-white/70 text-xs sm:text-sm font-light xl:text-lg">Lorem ipsum.</span>
                 </div>
             </div>
             <div className='flex gap-2'>
                 {/* tıklandığında follow && unfollow işlemi yapılacak */}
-                <button onClick={() => handleFollow(post.username)} className="flex flex-nowrap justify-center items-center gap-2 miniTablet:gap-1 desktop:gap-2 text-white border text-sm h-fit w-fit p-1 rounded-lg transition-all ease-in-out duration-200 hover:text-black hover:bg-white/80 miniTablet:scale-90 desktop:scale-100">
+                <button onClick={() => handleFollow(post.username)} className="flex flex-nowrap justify-center items-center gap-2 md:gap-1 xl:gap-2 text-white border text-sm h-fit w-fit p-1 rounded-lg transition-all ease-in-out duration-200 hover:text-black hover:bg-white/80 md:scale-90 xl:scale-100">
                     {(usersData.find((user) => user.username == post.username)?.follow == true)
                         ?
-                        <><span className="hidden miniTablet:block whitespace-nowrap">Takip ediliyor</span> <FaCheck /></>
+                        <><span className="hidden md:block whitespace-nowrap">Takip ediliyor</span> <FaCheck /></>
                         :
-                        <><span className="hidden miniTablet:block">Takip et</span> <FaPlus /> </>
+                        <><span className="hidden md:block">Takip et</span> <FaPlus /> </>
                     }
                 </button>
                 {type == "horizontalPage" &&
@@ -171,8 +171,8 @@ function CarouselCardHeader({
                                     <RiSpam2Fill />
                                     <span>Şikayet et</span>
                                 </DialogTrigger>
-                                <DialogContent onClick={handleClose}
-                                    className="bg-primary border-none  w-full max-w-screen-[450px]" ref={dialogContentRef}>
+                                <DialogContent 
+                                    className="bg-primary border-none  w-full max-w-screen-[450px] p-0" ref={dialogContentRef}>
                                     <DialogHeader >
                                         {<DialogTitle className={`text-white flex justify-between border-b px-6 py-4`}>
                                             {<button className={`disabled:opacity-100 opacity-0}`} disabled={(valueIdInDialog != undefined && valueIdInDialog.child == undefined) ? true : false}
@@ -197,7 +197,7 @@ function CarouselCardHeader({
                                                                 setReportHeader(report.name);
                                                                 setValueIdInDialog(reports[report.id]?.child);
                                                             }}
-                                                                className='flex items-center miniTablet:gap-4 py-1 px-[5px] justify-between w-full text-white text-base '>
+                                                                className='flex items-center md:gap-4 py-1 px-[5px] justify-between w-full text-white text-base '>
                                                                 <span className='text-start  '>{report.name}</span>
                                                                 <span className='text-gray-400'><IoIosArrowForward /></span>
                                                             </button>
@@ -238,7 +238,7 @@ function CarouselCardHeader({
                                                                 <RadioGroup className="text-white border p-4 my-2" onValueChange={(value) => setRadioSelectedValue(value)} >
                                                                     {valueIdInDialog.radioList.map((radio) => (
                                                                         <div key={radio.id} className="flex items-center space-x-2">
-                                                                            <RadioGroupItem value={radio.name} id={`r${radio.id}`} />
+                                                                            <RadioGroupItem className=" border-white text-white" value={radio.name} id={`r${radio.id}`} />
                                                                             <label htmlFor={`r${radio.id}`}>{radio.name}</label>
                                                                         </div>
                                                                     ))}
@@ -246,16 +246,20 @@ function CarouselCardHeader({
                                                             }
                                                             {valueIdInDialog.listTitle && <div className='text-white my-1'>{valueIdInDialog.listTitle}</div>}
                                                             {valueIdInDialog.listSubtitle && <div className='text-gray-400 font-semibold my-1'>{valueIdInDialog.listSubtitle}</div>}
-                                                            {valueIdInDialog.listItems && <ul className='text-gray-400 list-disc list-inside my-1'>
-                                                                {valueIdInDialog.listItems.map((item, index) => (
-                                                                    <li key={index}>{item}</li>
-                                                                ))}
-                                                            </ul>}
+                                                            {valueIdInDialog.listItems &&
+                                                                <ul className='text-gray-400 list-disc list-inside my-1'>
+                                                                    {valueIdInDialog.listItems.map((item, index) => (
+                                                                        <li key={index}>
+                                                                            {item}
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            }
                                                             {valueIdInDialog.buttons &&
                                                                 <div className='flex flex-col gap-4 my-4 w-full'>
                                                                     {valueIdInDialog.buttons.map((button, index) => (
                                                                         <button type='button' key={index}
-                                                                            className='flex items-center miniTablet:gap-4 justify-between w-full text-white'
+                                                                            className='flex items-center md:gap-4 justify-between w-full text-white'
                                                                             onClick={() => {
                                                                                 setValueIdInDialog(valueIdInDialog.child);
                                                                                 setRadioSelectedValue(button.name)

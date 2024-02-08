@@ -7,7 +7,7 @@ const Alert = ({ alertType, alertVisible, alertMessage }) => {
     return (
         <div>
             {alertVisible && (
-                <div className={`z-50 fixed top-20 miniTablet:top-28 left-5 text-white  mx-auto ${alertType === "warning"
+                <div className={`z-50 fixed top-20 md:top-28 left-5 text-white  mx-auto ${alertType === "warning"
                     ?
                     "px-4 py-1 bg-tertiaryRed text-white"
                     : alertType === "success"

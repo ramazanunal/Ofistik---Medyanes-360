@@ -7,10 +7,10 @@ import { GrLanguage } from "react-icons/gr";
 import { TfiWrite } from "react-icons/tfi";
 const TabItemsGeneral = () => {
     return (
-        <div className='laptop:h-[calc(100vh_-_200px)] w-full mx-auto laptop:overflow-y-scroll top-0 bottom-0  flex flex-col gap-3 pt-5   '>
+        <div className='lg:h-[calc(100vh_-_200px)] w-full mx-auto lg:overflow-y-scroll top-0 bottom-0  flex flex-col gap-3 pt-5   '>
             <div className='flex items-center gap-2' >
-                <TfiWrite className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px]'/>
-                <h1 className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium' >Özgeçmiş</h1>
+                <TfiWrite className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px]'/>
+                <h1 className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium' >Özgeçmiş</h1>
             </div>
             <div className='bg-white p-5 rounded-md shadow-xl text-start text-[11px]' >
                 <p>               
@@ -27,8 +27,8 @@ const TabItemsGeneral = () => {
                 </p>
             </div>
             <div className='flex items-center gap-2 mt-5' >
-                <FaUserGraduate className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px]' />
-                <h1 className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium' >Eğitim Bilgileri</h1>
+                <FaUserGraduate className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px]' />
+                <h1 className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium' >Eğitim Bilgileri</h1>
             </div>
             <div className='bg-white p-5 rounded-md shadow-lg ' >
                 <ul className='w-full flex flex-col gap-3 items-start text-[11px]' >
@@ -43,8 +43,8 @@ const TabItemsGeneral = () => {
                 </ul>
             </div>
             <div className='flex items-center gap-2 mt-5' >
-                <LiaCertificateSolid className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium'/>
-                <h1 className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium' >Sertifikalar</h1>
+                <LiaCertificateSolid className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium'/>
+                <h1 className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium' >Sertifikalar</h1>
             </div>
             <div className='bg-white p-5 rounded-md shadow-lg ' >
                 <ul className='w-full flex flex-col gap-3 items-start text-[11px]' >
@@ -59,8 +59,8 @@ const TabItemsGeneral = () => {
                 </ul>
             </div>
             <div className='flex items-center gap-2 mt-5'  >
-                <PiStethoscopeFill className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium' />
-                <h1 className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium' >Hizmet Alanı</h1>
+                <PiStethoscopeFill className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium' />
+                <h1 className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium' >Hizmet Alanı</h1>
             </div>
             <div className='bg-white p-5 rounded-md shadow-xl' >
                 <ul className='flex flex-col gap-[10px] items-start text-[11px]' >
@@ -81,8 +81,8 @@ const TabItemsGeneral = () => {
                 </ul>
             </div>
             <div className='flex items-center gap-2 mt-5'  >
-                <GrLanguage className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium'/>
-                <h1 className='text-[11px] miniTelefon:text-sm telefon:text-lg miniTablet:text-[15px] font-medium' >Diller</h1>
+                <GrLanguage className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium'/>
+                <h1 className='text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium' >Diller</h1>
             </div>
             <div className='bg-white p-5 rounded-md shadow-xl' >
                 <ul className='w-full flex flex-col gap-3 items-start text-[11px]' >

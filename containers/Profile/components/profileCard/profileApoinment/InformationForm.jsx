@@ -23,7 +23,7 @@ const InformationForm = ({ setInformationSponsee, informationSponsee, handleNext
   return (
     <div className='flex flex-col gap-5'>
       <h1 className='text-tertiaryBlue font-semibold text-start'>Kişisel Bilgiler:</h1>
-      <form className='flex flex-col items-center gap-3 w-full miniTelefon:px-5 max-w-[500px] mx-auto laptop:px-10' onSubmit={handleNextStep}>
+      <form className='flex flex-col items-center gap-3 w-full sm:px-5 max-w-[500px] mx-auto lg:px-10' onSubmit={handleNextStep}>
         <input
           type='text'
           name='fullName'
