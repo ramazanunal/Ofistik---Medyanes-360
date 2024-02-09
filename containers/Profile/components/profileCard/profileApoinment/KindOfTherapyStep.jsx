@@ -15,7 +15,7 @@ const KindOfTherapyStep = ({setKindOfTherapy}) => {
   return (
     <div>
       <h1 className='text-tertiaryBlue font-semibold text-start pb-5' >Terapi Türünü Seçiniz:</h1>
-      <div className='grid grid-cols-1 px- sm:grid-cols-2 gap-5 '>
+      <div className='grid grid-cols-1 px- telefon:grid-cols-2 gap-5 '>
         {typesOfRelationships &&
           typesOfRelationships.map((item, i) => (
             <div
