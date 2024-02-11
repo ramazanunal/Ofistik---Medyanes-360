@@ -13,12 +13,19 @@ function FirstContent({ changeComponent }) {
                             Dilediğin hizmeti seç,randevu al,
                         </h3>
                         <span className="text-2xl 2xl:text-4xl font-bold text-vivid-orange">
-                  online görüşme yap
-              </span>
+                            online görüşme yap
+                        </span>
                     </div>
-                    <ChoseType changeComponent={changeComponent} headers={["Hizmet Al", "Hizmet Ver"]}/>
+                    <ChoseType changeComponent={changeComponent} headers={["Hizmet Al", "Hizmet Ver"]} />
+                    <div className="text-md lg:text-2xl font-bold">
+                        <h3 className=" text-white">
+                            Dilediğin kadar çalış, dilediğin kadar kazan.
+                        </h3>
+                        <span className="text-vivid-orange">
+                            Ücretsiz kaydol, hemen başla.
+                        </span>
+                    </div>
                 </div>
-
                 <Image
                     src="/images/slider.png"
                     width={500}

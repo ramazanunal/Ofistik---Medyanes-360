@@ -6,14 +6,14 @@ import { LuMessagesSquare } from 'react-icons/lu';
 export default [
   {
     id: 1,
-    title: 'ONAYLI UZMAN KADRO',
-    desc: 'Uzmanlarımız,Ofistik tarafından mesleki tüm belge ve evraklarının detaylı incelenmesi sonucu onaylanarak hizmet vermeye  başlar.',
+    title: 'ÜYELİK ÜCRETİ YOK',
+    desc: "Ofistik'de herhangi bir kayıt,üyelik,aylık gibi düzenli bir ücret ödemezsiniz. Sadece gerçekleşen randevularınız üzerinden kazancınız oranında komisyon alınır.",
     icon: <GrValidate className='text-[40px] lg:text-[60px] text-primary opacity-70' />,
   },
   {
     id: 2,
-    title: 'GÜVENDESİNİZ,ENDİŞELENMEYİN',
-    desc: 'Online görüşmeleriniz,mesajlarınız esnasında hizmet veren ile paylaştığınız ses,fotoğraf,video,belge ve yazışmalara Ofistik erişim sağlayamaz ve kayıt altına almaz.',
+    title: 'GÜVENDESİNİZ, ENDİŞELENMEYİN',
+    desc: 'Online görüşmeleriniz, mesajlarınız esnasında hizmet veren ile paylaştığınız ses, fotoğraf, video, belge ve yazışmalara Ofistik erişim sağlayamaz ve kayıt altına almaz.',
     icon: <BsCameraVideoOff className='text-[40px] lg:text-[60px] text-primary opacity-70' />,
     photoUrl: '',
   },

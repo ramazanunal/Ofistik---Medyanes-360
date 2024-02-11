@@ -5,6 +5,7 @@ import ALitleBitAboutUs from '@/containers/Home/_components/aLittleBitAboutUs';
 import FeatureCard from '@/containers/Home/_components/FeatureCard';
 import Faq from '@/containers/Home/_components/faq';
 import CardSlider from '@/components/slider/cardSlider';
+import WhatDoesThinks from './_components/whatDoesThinks';
 import { useState } from 'react';
 
 const HomeContainer = () => {
@@ -24,6 +25,7 @@ const HomeContainer = () => {
           <HowToUse />
           <FeatureCard />
           <CardSlider />
+          <WhatDoesThinks />
           <Faq />
         </>
       )}

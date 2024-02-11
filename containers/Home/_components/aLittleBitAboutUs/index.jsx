@@ -10,8 +10,8 @@ function ALitleBitAboutUs() {
              className="bg-deep-slate-blue w-full h-fit pt-36 py-20 flex items-center justify-center">
             <div className="mx-auto h-full flex flex-col w-4/6">
                 <div className="text-white">
-                    <p className="font-bold text-center pb-8 text-3xl 2xl:pb-12 2xl:text-5xl">
-                        HİZMETLERİMİZ
+                    <p className="font-bold text-center pb-8 text-xl  md:text-3xl 2xl:pb-12 2xl:text-5xl">
+                    HİZMET VERECEĞİN SEKTÖRÜNÜ BUL
                     </p>
                 </div>
                 <div

@@ -23,7 +23,7 @@ const TabsItemEvaluations = () => {
 
   return (
     <>
-      <section className="tablet:h-[calc(100vh_-_200px)] tablet:overflow-y-auto pt-2 px-2">
+      <section className="md:h-[calc(100vh_-_200px)] md:overflow-y-auto pt-2 px-2">
         <div className='flex items-center gap-2  pb-5 mt-3 ' >
           <RiTodoLine size={25} />
           <h1 className='text-[15px] font-medium ' >Değerlendirmeler ({reviews.length})</h1>
@@ -32,7 +32,7 @@ const TabsItemEvaluations = () => {
           <>
             {reviews.map((review, index) => (
 
-              < article key={index} className="p-1 miniTelefon:p-6 text-xs bg-white border-b" >
+              < article key={index} className="p-1 sm:p-6 text-xs bg-white border-b" >
                 <div className="flex items-center justify-start border-b gap-2 pb-10">
                   <div className="text-xl text-white bg-gabiGreen p-5 rounded-md">{review.rating}</div>
                   <div className="flex flex-col items-start gap-1">

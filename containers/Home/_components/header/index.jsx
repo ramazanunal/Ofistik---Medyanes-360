@@ -122,12 +122,12 @@ function Header() {
           } md:flex`}
         >
           <div
-            className={`flex w-full items-center gap-4 font-semibold mt-4 ${
+            className={`flex w-full items-center gap-4 font-semibold mt-8 ${
               isMenuOpen && 'flex-col'
             } md:flex-row md:mt-0`}
           >
             {isAuthenticated ? (
-              <div className='w-full h-auto flex items-center relative'>
+              <div className='w-2/4 h-auto flex items-center relative'>
                 <Input
                   onChange={(e) => setSearchTerm(e.target.value)}
                   value={searchTerm}
@@ -281,7 +281,7 @@ function Header() {
               </>
             )}
           </div>
-          <div className='flex relative flex-row gap-1 items-center justify-center md:flex-row mt-4 md:mt-0 '>
+          <div className='flex relative flex-col gap-1 items-center justify-center md:flex-row mt-4 md:mt-0 '>
             {session ? (
               <>
                 <button

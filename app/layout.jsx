@@ -16,7 +16,7 @@ export default function RootLayout({children, session}) {
             crossOrigin="anonymous"
         ></script>
     </head>
-    <body>
+    <body className=''>
     <SessionProvider session={session}>
         {children}
         {/* Toastify */}
