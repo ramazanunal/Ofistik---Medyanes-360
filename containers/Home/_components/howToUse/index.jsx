@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { BsCalendarDate } from "react-icons/bs";
 import { BsCameraVideoFill } from "react-icons/bs";
-import datas from "./data";
+import { howToUseHizmetAl, howToUseHizmetVer } from "./data";
 
-function Section2() {
+function Section2({ activeComponent }) {
+  const [datas, setDatas] = useState(activeComponent == 'Hizmet Al' ? howToUseHizmetAl : howToUseHizmetVer);
   const [selectImage, setSelectImage] = useState("/images/step1.jpg");
   const [selectItemId, setSelectItemId] = useState(datas[0].id);
 

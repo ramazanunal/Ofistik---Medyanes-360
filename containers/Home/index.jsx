@@ -17,24 +17,24 @@ const HomeContainer = () => {
 
   return (
     <div className='flex flex-col h-full bg-white'>
-      <FirstContent changeComponent={changeComponent} />
+      <FirstContent activeComponent={activeComponent} changeComponent={changeComponent} />
+      <ALitleBitAboutUs activeComponent={activeComponent} />
+      <HowToUse activeComponent={activeComponent} />
+      <FeatureCard activeComponent={activeComponent} />
+      <WhatDoesThinks />
 
       {activeComponent === 'Hizmet Al' && (
         <>
-          <ALitleBitAboutUs />
-          <HowToUse />
-          <FeatureCard />
           <CardSlider />
-          <WhatDoesThinks />
-          <Faq />
         </>
       )}
 
       {activeComponent === 'Hizmet Ver' && (
         <>
-          <h1>Hizmet Ver</h1>
         </>
       )}
+
+      <Faq activeComponent={activeComponent} />
     </div>
   );
 };

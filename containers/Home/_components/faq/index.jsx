@@ -1,7 +1,8 @@
+"use client"
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import accordionData from './accordiondata.js';
+import { AccordionHizmetAlData, AccordionHizmetVerData } from './accordiondata.js';
 import {
   Accordion,
   AccordionContent,
@@ -9,7 +10,9 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-function Faq() {
+function Faq({ activeComponent }) {
+  const accordionData = (activeComponent == "Hizmet Al" ? AccordionHizmetAlData : AccordionHizmetVerData)
+
   return (
     <div id='faq' className='bg-white'>
       <div className='container mx-auto px-[6%] py-[40px] h-min-96 relative'>
@@ -28,7 +31,7 @@ function Faq() {
           </div>
           <div className='flex-auto col-span-2 row-span-2 mb-20 lg:w-[750px]'>
             <Accordion type='single' collapsible='true'>
-              {accordionData.map(({ title, content }, idx) => (
+              {accordionData && accordionData.map(({ title, content }, idx) => (
                 <AccordionItem value={title} key={idx}>
                   <AccordionTrigger className='text-start'>
                     {title}
