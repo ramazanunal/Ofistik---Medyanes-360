@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function FirstContent({ activeComponent, changeComponent }) {
     return (
-        <div className="w-full h-fit pt-36 xl:pt-48 items-center flex flex-col bg-deep-slate-blue gap-6">
+        <div href="#first-content" className="w-full h-fit pt-36 xl:pt-48 items-center flex flex-col bg-deep-slate-blue gap-6">
             <div
                 className="flex flex-col md:flex-row h-fit items-center gap-0 md:gap-24">
                 <div className="flex flex-col items-center xl:items-start pt-12 gap-8">

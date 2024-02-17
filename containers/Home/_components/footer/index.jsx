@@ -23,7 +23,7 @@ function Footer() {
               Nasıl Çalışır?
             </Link>
             <Link href='#aLittleBitAboutUs' className='mb-2'>
-              Hakkımızda
+              Hizmetlerimiz
             </Link>
             <Link href='/' className='mb-2'>
               Psikologlarımız

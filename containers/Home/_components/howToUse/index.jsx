@@ -16,7 +16,7 @@ function Section2({ activeComponent }) {
     setSelectItemId(data.id);
   };
   return (
-    <section className="container flex gap-6 justify-center flex-col md:flex-row">
+    <section id="howToUse" className="container flex gap-6 justify-center flex-col md:flex-row">
       <div>
         <h2 className="text-textColor text-center md:text-left text-[30px] mb-14 mt-5">
           NASIL KULLANIRIM?

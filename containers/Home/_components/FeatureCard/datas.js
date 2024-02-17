@@ -46,7 +46,7 @@ export const featureCardHizmetAl = [
   },
   {
     id: 2,
-    title: 'GÜVENDESİNİZ,ENDİŞELENMEYİN',
+    title: 'GÜVENDESİNİZ, ENDİŞELENMEYİN',
     desc: 'Online görüşmeleriniz,mesajlarınız esnasında hizmet veren ile paylaştığınız ses,fotoğraf,video,belge ve yazışmalara Ofistik erişim sağlayamaz ve kayıt altına almaz.',
     icon: <BsCameraVideoOff className='text-[40px] lg:text-[60px] text-primary opacity-70' />,
     photoUrl: '',
