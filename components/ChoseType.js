@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import classnames from "classnames";
 
-function ChoseType({ headers, changeComponent }) {
-    const [activeIndex, setActiveIndex] = useState(0)
+function ChoseType({ headers, changeComponent,activeComponent }) {
+    const [activeIndex, setActiveIndex] = useState(headers.indexOf(activeComponent))
 
     return (
         <div className="bg-white/50 p-2 rounded-md w-11/12 sm:w-full my-8 flex flex-row">

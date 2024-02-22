@@ -1,5 +1,4 @@
-'use client';
-import { useState } from 'react';
+"use client"
 import FirstContent from '@/containers/Home/_components/first-content';
 import HowToUse from '@/containers/Home/_components/howToUse';
 import ALitleBitAboutUs from '@/containers/Home/_components/aLittleBitAboutUs';
@@ -8,13 +7,11 @@ import Faq from '@/containers/Home/_components/faq';
 import CardSlider from '@/components/slider/cardSlider';
 import WhatDoesThinks from './_components/whatDoesThinks';
 import MainFeatures from './_components/MainFeatures';
+import { useHomeStore } from '@/store/HomeStore';
 
-const HomeContainer = () => {
-  const [activeComponent, setActiveComponent] = useState('Hizmet Al');
-
-  const changeComponent = (str) => {
-    setActiveComponent(str);
-  };
+const  HomeContainer =  () => {
+   const activeComponent =  useHomeStore((state) => state.activeComponent);
+  const changeComponent =  useHomeStore((state) => state.setActiveComponent);
 
   return (
     <div className='flex flex-col h-full bg-white'>

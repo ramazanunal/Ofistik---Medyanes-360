@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { RxCross2 } from 'react-icons/rx';
 import { RxHamburgerMenu } from 'react-icons/rx';
@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import Mock_data from './MOCK_DATA.json';
 import { AnimatePresence } from 'framer-motion';
 import Search_Algorithm from '@/containers/Home/_components/header/Search_Algorithm';
+import { useHomeStore } from '@/store/HomeStore';
 
 function Header() {
   const { data: session } = useSession();
@@ -32,6 +33,8 @@ function Header() {
   const [data, setData] = useState(Mock_data);
   // clicked keys
   const [clickedKeys, setClickedKeys] = useState([]);
+
+  const activeComponent = useHomeStore((state) => state.activeComponent);
 
   const searching_keys = [
     'company_name',
@@ -79,6 +82,57 @@ function Header() {
 
   const isAuthenticated = false;
 
+  const navLinks = activeComponent == "Hizmet Al" ? [
+    {
+      href: '#aLittleBitAboutUs',
+      title: 'Hizmetlerimiz',
+    },
+    {
+      href: '#howToUse',
+      title: 'Nasıl Kullanırım',
+    },
+    {
+      href: '#mainFeatures',
+      title: 'Öne Çıkan Özellikler',
+    },
+    {
+      href: '#faq',
+      title: 'S.S.S.',
+    },
+  ] : [
+    {
+      href: '#aLittleBitAboutUs',
+      title: 'Sektörünü bul',
+    },
+    {
+      href: '#howToUse',
+      title: 'Nasıl Kullanırım',
+    },
+    {
+      href: '#mainFeatures',
+      title: 'Öne Çıkan Özellikler',
+    },
+    {
+      href: '#faq',
+      title: 'S.S.S.',
+    },
+  ]
+
+  const NavLinkButton = ({ href, title }) => {
+    return (
+      <Link
+        href={href}
+        className={classNames(
+          'transition-all duration-500 ease-in-out hover:underline underline-offset-4 whitespace-nowrap text-sm 2xl:text-base',
+          offset >= 80 ? 'text-foreground' : 'text-muted',
+          isMenuOpen && '!text-foreground'
+        )}
+      >
+        {title.toUpperCase()}
+      </Link>
+    )
+  }
+
   return (
     <>
       <div
@@ -88,7 +142,7 @@ function Header() {
       ></div>
       <header
         id='header'
-        className={`fixed mx-auto left-0 right-0 border-2 border-transparent flex flex-wrap justify-self-center  items-center justify-between  px-[2%] transition-all  duration-500 text-muted  w-[90%] py-3 md:flex-nowrap md:gap-16 rounded-3xl md:rounded-full md:py-6 z-50
+        className={`fixed mx-auto left-0 right-0 border-2 border-transparent flex flex-wrap justify-self-center  items-center justify-between  px-[2%] transition-all  duration-500 text-muted  w-[90%] py-3 lg:flex-nowrap lg:gap-16 rounded-3xl lg:rounded-full lg:py-6 z-50
        ${isMenuOpen
             ? 'min-h-fit bg-[#fbfafa] border-2 border-muted-foreground !shadow-2xl mt-5 rounded-3xl mx-auto '
             : ''
@@ -104,7 +158,7 @@ function Header() {
 
         <button
           id='hamburger'
-          className='mr-2 md:hidden block p-1.5 rounded-full bg-white'
+          className='mr-2 lg:hidden block p-1.5 rounded-full bg-white'
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? (
@@ -115,11 +169,11 @@ function Header() {
         </button>
         <nav
           className={` justify-between items-center w-full ${isMenuOpen ? 'show' : 'hidden'
-            } md:flex`}
+            } lg:flex`}
         >
           <div
             className={`flex w-full items-center gap-4 font-semibold mt-8 ${isMenuOpen && 'flex-col'
-              } md:flex-row md:mt-0`}
+              } lg:flex-row lg:mt-0 `}
           >
             {isAuthenticated ? (
               <div className='w-2/4 h-auto flex items-center relative'>
@@ -209,70 +263,33 @@ function Header() {
               </div>
             ) : (
               <>
-               <Link
-                  href='#aLittleBitAboutUs'
-                  className={classNames(
-                    'transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base',
-                    offset >= 80 ? 'text-foreground' : 'text-muted',
-                    isMenuOpen && '!text-foreground'
-                  )}
-                >
-                  HİZMETLERİMİZ
-                </Link>
-                <Link
-                  href='#howToUse'
-                  className={classNames(
-                    'transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base',
-                    offset >= 80 ? 'text-foreground' : 'text-muted',
-                    isMenuOpen && '!text-foreground'
-                  )}
-                >
-                  NASIL ÇALIŞIR
-                </Link>
-                <Link
-                  href='#mainFeatures'
-                  className={classNames(
-                    'transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base',
-                    offset >= 80 ? 'text-foreground' : 'text-muted',
-                    isMenuOpen && '!text-foreground'
-                  )}
-                >
-                 ÖNE ÇIKAN ÖZELLİKLER
-                </Link>
-                <Link
-                  href='#faq'
-                  className={classNames(
-                    'transition-all duration-500 ease-in-out hover:underline underline-offset-4 text-sm 2xl:text-base',
-                    offset >= 80 ? 'text-foreground' : 'text-muted',
-                    isMenuOpen && '!text-foreground'
-                  )}
-                >
-                  S.S.S.
-                </Link>
+                {navLinks.map((link, idx) => (
+                  <NavLinkButton key={idx} href={link.href} title={link.title} />
+                ))}
                 {/* <Link href='#'>
-                  <span
-                    className={classNames(
-                      'hover:underline underline-offset-4 text-sm 2xl:text-base',
-                      'transition-all duration-500 ease-in-out',
-                      offset >= 80 ? 'text-foreground' : 'text-muted',
-                      isMenuOpen && '!text-foreground'
-                    )}
-                  >
-                    TESTLER
-                  </span>
-                  <span
-                    className={classNames(
-                      'ml-1 rounded-full px-1.5 py-0.5 text-xs 2xl:text-sm',
-                      'transition-all duration-500 ease-in-out',
-                      offset >= 80
-                        ? 'bg-foreground text-muted'
-                        : 'bg-white text-foreground',
-                      isMenuOpen && '!bg-foreground !text-muted'
-                    )}
-                  >
-                    Yeni
-                  </span>
-                </Link> */}
+                   <span
+                     className={classNames(
+                       'hover:underline underline-offset-4 text-sm 2xl:text-base',
+                       'transition-all duration-500 ease-in-out',
+                       offset >= 80 ? 'text-foreground' : 'text-muted',
+                       isMenuOpen && '!text-foreground'
+                     )}
+                   >
+                     TESTLER
+                   </span>
+                   <span
+                     className={classNames(
+                       'ml-1 rounded-full px-1.5 py-0.5 text-xs 2xl:text-sm',
+                       'transition-all duration-500 ease-in-out',
+                       offset >= 80
+                         ? 'bg-foreground text-muted'
+                         : 'bg-white text-foreground',
+                       isMenuOpen && '!bg-foreground !text-muted'
+                     )}
+                   >
+                     Yeni
+                   </span>
+                 </Link> */}
               </>
             )}
           </div>

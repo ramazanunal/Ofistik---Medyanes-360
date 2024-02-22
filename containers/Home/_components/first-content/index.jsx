@@ -19,7 +19,7 @@ function FirstContent({ activeComponent, changeComponent }) {
                             {activeComponent == 'Hizmet Al' ? "online görüşme yap" : "Ücretsiz kaydol, hemen başla."}
                         </span>
                     </div>
-                    <ChoseType changeComponent={changeComponent} headers={["Hizmet Al", "Hizmet Ver"]} />
+                    <ChoseType changeComponent={changeComponent} headers={["Hizmet Al", "Hizmet Ver"]} activeComponent={activeComponent} />
                 </div>
                 <Image
                     src="/images/slider.png"
