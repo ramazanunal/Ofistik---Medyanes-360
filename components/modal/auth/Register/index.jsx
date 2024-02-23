@@ -22,8 +22,9 @@ import { FaEye } from 'react-icons/fa';
 import { postAPI } from '@/services/fetchAPI';
 import { Formik, Form } from 'formik';
 import { toast } from 'react-toastify';
+import { twMerge } from "tailwind-merge";
 
-function RegisterModal() {
+function RegisterModal({ className }) {
   const [showPassword, setShowPassword] = useState({
     password: false,
     passwordConfirm: false,
@@ -56,7 +57,7 @@ function RegisterModal() {
         {(props) => (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button>KAYIT OL</Button>
+              <Button className={twMerge("", className)}>KAYIT OL</Button>
             </DialogTrigger>
             <DialogContent className='sm:max-w-[450px] !rounded-3xl'>
               <DialogHeader className='flex flex-row justify-between items-center'>
@@ -176,11 +177,10 @@ function RegisterModal() {
                             password: !showPassword.password,
                           })
                         }
-                        className={`absolute right-[16px] ${
-                          showPassword.password
-                            ? 'text-green-500'
-                            : 'text-gray-200'
-                        } hover:text-green-500 cursor-pointer transition-all duration-500`}
+                        className={`absolute right-[16px] ${showPassword.password
+                          ? 'text-green-500'
+                          : 'text-gray-200'
+                          } hover:text-green-500 cursor-pointer transition-all duration-500`}
                         size={25}
                       />
                     </div>
@@ -196,9 +196,8 @@ function RegisterModal() {
                       <Input
                         id='passwordConfirm'
                         name='passwordConfirm'
-                        type={`${
-                          showPassword.passwordConfirm ? 'text' : 'password'
-                        }`}
+                        type={`${showPassword.passwordConfirm ? 'text' : 'password'
+                          }`}
                         placeholder='Şifre Tekrar'
                         onChange={props.handleChange}
                         value={props.values.passwordConfirm}
@@ -211,11 +210,10 @@ function RegisterModal() {
                             passwordConfirm: !showPassword.passwordConfirm,
                           })
                         }
-                        className={`absolute right-[16px] ${
-                          showPassword.passwordConfirm
-                            ? 'text-green-500'
-                            : 'text-gray-200'
-                        } hover:text-green-500 cursor-pointer transition-all duration-500`}
+                        className={`absolute right-[16px] ${showPassword.passwordConfirm
+                          ? 'text-green-500'
+                          : 'text-gray-200'
+                          } hover:text-green-500 cursor-pointer transition-all duration-500`}
                         size={25}
                       />
                     </div>
