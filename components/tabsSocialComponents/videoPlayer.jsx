@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FaPlay, FaPause, FaRedo, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
-const VideoPlayer = ({ url, index, handleLiked,isVideoMuted, setIsVideoMuted}) => {
+const VideoPlayer = ({ url, index, handleLiked, isVideoMuted, setIsVideoMuted }) => {
     const [playing, setPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -128,7 +128,7 @@ const VideoPlayer = ({ url, index, handleLiked,isVideoMuted, setIsVideoMuted}) =
             videoRef.current.pause();
         }
     }, [isVisible]);
-    console.log(videoRef)
+
     return (
         <div className="relative rounded-lg object-cover w-full h-full overflow-hidden shadow-lg " onClick={handleDoubleClick}>
             <video

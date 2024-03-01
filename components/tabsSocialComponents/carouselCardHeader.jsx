@@ -15,12 +15,11 @@ import {
 } from "@/components/ui/dialog"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import reports from './mock/reports';
+import { useProfileStore } from '@/store/useProfileStore';
 
 
 function CarouselCardHeader({
     post,
-    usersData,
-    setUsersData,
     className,
     type,
     popoverRef,
@@ -32,13 +31,16 @@ function CarouselCardHeader({
     const [valueIdInDialog, setValueIdInDialog] = useState(undefined);
     const [radioSelectedValue, setRadioSelectedValue] = useState(null);
     const [reportHeader, setReportHeader] = useState(null)
+    const setUsersData = useProfileStore((state) => state.setUsers)
+    const usersData = useProfileStore((state) => state.users)
+
     const footerData = [
         {
             id: 1,
             name: "Takibi bırak",
             onclick: (userName) => {
-                setUsersData((prevUsers) =>
-                    prevUsers.map((user) =>
+                setUsersData(
+                    usersData.map((user) =>
                         user.username === userName ? { ...user, follow: false } : user
                     )
                 );
@@ -47,8 +49,8 @@ function CarouselCardHeader({
     ]
 
     const handleFollow = (userName) => {
-        setUsersData((prevUsers) =>
-            prevUsers.map((user) =>
+        setUsersData(
+            usersData.map((user) =>
                 user.username === userName ? { ...user, follow: !user.follow } : user
             )
         );
@@ -163,16 +165,16 @@ function CarouselCardHeader({
                     }
                 </button>
                 {type == "horizontalPage" &&
-                    <Popover open={open} >
+                    <Popover open={open} className="" >
                         <PopoverTrigger onClick={() => setOpen(!open)}><BsThreeDots className="text-white" /></PopoverTrigger>
-                        <PopoverContent ref={popoverRef} className="flex flex-col gap-2 p-0 w-fit hover:bg-gray-100" >
+                        <PopoverContent ref={popoverRef} className="flex flex-col gap-2 p-0 w-fit hover:bg-gray-100 z-[46]" >
                             <Dialog className="" >
                                 <DialogTrigger className='flex items-center  gap-2 p-3 '>
                                     <RiSpam2Fill />
                                     <span>Şikayet et</span>
                                 </DialogTrigger>
-                                <DialogContent 
-                                    className="bg-primary border-none  w-full max-w-screen-[450px] p-0" ref={dialogContentRef}>
+                                <DialogContent
+                                    className="bg-primary border-none  w-full max-w-screen-[450px] p-0 z-[80]" ref={dialogContentRef}>
                                     <DialogHeader >
                                         {<DialogTitle className={`text-white flex justify-between border-b px-6 py-4`}>
                                             {<button className={`disabled:opacity-100 opacity-0}`} disabled={(valueIdInDialog != undefined && valueIdInDialog.child == undefined) ? true : false}

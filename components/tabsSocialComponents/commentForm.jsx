@@ -6,16 +6,15 @@ function CommentForm({ posts, index, setMainPosts }) {
 
     const handleSubmit = (index) => {
         if (addCommentInputValue != "") {
-            setMainPosts((prevPosts) =>
-                prevPosts.map((post, i) =>
-                    i === index ? {
-                        ...post, comments: [...(post.comments), {
-                            "id": (index * 100) + posts[index].comments.length + 1,
-                            "username": "anonim",
-                            "comment": addCommentInputValue,
-                        }]
-                    } : post
-                ))
+            setMainPosts(posts.map((post, i) =>
+                i === index ? {
+                    ...post, comments: [...(post.comments), {
+                        "id": (index * 100) + posts[index].comments.length + 1,
+                        "username": "anonim",
+                        "comment": addCommentInputValue,
+                    }]
+                } : post
+            ))
             setAddCommentInputValue("");
         }
     }
