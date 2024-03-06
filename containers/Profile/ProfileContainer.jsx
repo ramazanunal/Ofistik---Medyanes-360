@@ -14,6 +14,7 @@ import Alert from "@/components/Alert";
 //Icons
 import { IoCopy } from 'react-icons/io5';
 import AddPostComp from '@/components/tabsSocialComponents/AddPostComp';
+import AppointmentComponent from '@/components/appointmentModule/appointmentComponent';
 
 
 const socialMediaItems = [
@@ -145,7 +146,7 @@ const ProfilePageLayout = ({ data }) => {
                                 ))}
                             </div>
                         </div>
-                        <Meeting />
+                        <AppointmentComponent />
                     </div>
                     <div className='w-full md:w-3/5 flex items-center justify-center pt-3 text-tertiaryBlue'>
                         <ProfileDetail

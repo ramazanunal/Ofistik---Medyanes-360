@@ -55,18 +55,18 @@ const ProfileCardHeader = (
 
     useEffect(() => {
         const checkIfClickedOutside = e => {
-          if (showOptions && optionsRef.current && !optionsRef.current.contains(e.target)) {
-            setShowOptions(false)
-          }
+            if (showOptions && optionsRef.current && !optionsRef.current.contains(e.target)) {
+                setShowOptions(false)
+            }
         }
 
         document.addEventListener("mousedown", checkIfClickedOutside)
 
         return () => {
-          // Cleanup the event listener
-          document.removeEventListener("mousedown", checkIfClickedOutside)
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", checkIfClickedOutside)
         }
-      }, [showOptions])
+    }, [showOptions])
 
     return (
         <>
@@ -214,9 +214,6 @@ const ProfileCardHeader = (
 
                 </div>
             )}
-
-
-
         </>
     )
 }
