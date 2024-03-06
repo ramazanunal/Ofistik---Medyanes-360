@@ -297,7 +297,7 @@ function AppointmentComponent() {
         />
       )}
       {!showFinishScreen && (
-        <div className="bg-grayBg generalDiv w-full ml-auto mr-auto h-[100vh] flex flex-col items-center ">
+        <div className="generalDiv w-full h-fit flex flex-col items-center">
           <Steps active={step} />
           {step === 2 && (
             <ServiceComponent

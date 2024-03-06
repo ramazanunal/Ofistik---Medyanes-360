@@ -87,7 +87,7 @@ const ProfilePageLayout = ({ data }) => {
         <>
             <div className=' md:fixed bg-bgGray w-full  mx-auto  z-0 pt-20 sm:pt-28  pb-10'>
                 <div className='  w-full  flex  flex-col items-center md:items-start md:flex-row  gap-5 text-center px-5 lg:px-10'>
-                    <div id='fake-window' className=' md:h-[calc(100vh_-_140px)] overflow-y-auto bg-white w-full md:w-2/5  p-3 border shadow-lg rounded-3xl'>
+                    <div id='fake-window' className='md:h-[calc(100vh_-_140px)] overflow-y-auto bg-white w-full md:w-2/5 p-3 border shadow-lg rounded-3xl'>
                         <ProfileCardInfo
                             data={data}
                             isHearted={isHearted}

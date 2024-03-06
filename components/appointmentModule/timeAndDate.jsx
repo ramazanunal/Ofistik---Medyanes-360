@@ -130,9 +130,8 @@ function TimeAndDate({
         const swiperSlide = (
           <SwiperSlide key={i}>
             <div
-              className={`flex flex-wrap items-center justify-center ${
-                timedRequestSelectedTime !== "" ? "hidden" : "block"
-              }  appointmentBoxArea mr-auto ml-auto`}
+              className={`flex flex-wrap items-center justify-center ${timedRequestSelectedTime !== "" ? "hidden" : "block"
+                }  appointmentBoxArea mr-auto ml-auto`}
             >
               {sortedTimes.map((time, index) => {
                 const currentTime = moment(`${time.date} ${time.time}`);
@@ -170,9 +169,8 @@ function TimeAndDate({
         const swiperSlide = (
           <SwiperSlide key={i}>
             <div
-              className={`flex flex-wrap items-center justify-center ${
-                timedRequestSelectedTime !== "" ? "hidden" : "block"
-              }  appointmentBoxArea mr-auto ml-auto`}
+              className={`flex flex-wrap items-center justify-center ${timedRequestSelectedTime !== "" ? "hidden" : "block"
+                }  appointmentBoxArea mr-auto ml-auto`}
             >
               {sortedTimes.map((time, index) => (
                 <>
@@ -202,20 +200,20 @@ function TimeAndDate({
         pagination={
           isMobile
             ? {
-                clickable: true,
-                dynamicBullets: true,
-              }
+              clickable: true,
+              dynamicBullets: true,
+            }
             : {
-                clickable: true,
-                dynamicBullets: true,
-              }
+              clickable: true,
+              dynamicBullets: true,
+            }
         }
         navigation={
           isMobile
             ? {
-                prevEl: ".custom-swiper-button-prev",
-                nextEl: ".custom-swiper-button-next",
-              }
+              prevEl: ".custom-swiper-button-prev",
+              nextEl: ".custom-swiper-button-next",
+            }
             : ""
         }
         modules={isMobile ? [Pagination, Navigation] : [Pagination, Mousewheel]}
@@ -332,8 +330,8 @@ function TimeAndDate({
             Ortalama randevu süresi {appoinmentDuration} dakikadır
           </h2>
         </div>
-        <div className="bg-grayBg dayComponent flex flex-col md:flex-row md:h-[20rem] m-3 lg:w-[34rem] lg:h-[20rem] md:w-[25rem] sm:w-[25rem]  sm:h-[40rem]">
-          <div className="flex flex-col items-center justify-between lg:order-1  max-[768px]:order-2 lg:w-[10rem]  rounded-2xl shadow-xl md:mr-3 bg-white rightMobile md:w-[25rem] max-[768px]:h-auto">
+        <div className="dayComponent flex flex-col md:flex-row md:h-[20rem] m-3 lg:w-[34rem] lg:h-[20rem] md:w-[25rem] sm:w-[25rem]  sm:h-[40rem]">
+          <div className="flex flex-col items-center justify-between lg:order-1  max-[768px]:order-2 w-fit px-4 rounded-2xl shadow-xl md:mr-3 bg-white rightMobile max-[768px]:h-auto">
             <div className="choosenDate h-[62px]">
               <div className="dateText m-2">
                 <h2 className="text-center  text-md font-semibold  w-[90px]">
@@ -394,13 +392,12 @@ function TimeAndDate({
                 )}
               </div>
             )}
-            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] max-[768px]:w-[24rem] max-[768px]:h-auto">
+            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-full max-[768px]:h-auto">
               <div
-                className={`appointmentTimes relative lg:w-[10rem] ${
-                  appointmentTimesForSelectedDate.length > 0
+                className={`appointmentTimes relative lg:w-[10rem] ${appointmentTimesForSelectedDate.length > 0
                     ? "lg:h-[10rem]"
                     : "lg:h-[13rem]"
-                } flex flex-col items-center justify-center max-[768px]:w-[24rem] max-[768px]:h-auto`}
+                  } flex flex-col items-center justify-center w-full max-[768px]:h-auto`}
               >
                 {isMobile && appointmentTimesForSelectedDate.length > 9 && (
                   <>
@@ -417,9 +414,8 @@ function TimeAndDate({
                 ) : (
                   <>
                     <div
-                      className={`${
-                        requestSelectedTime === "" ? "flex" : "block"
-                      } flex-wrap items-center justify-center lg:w-[10rem] appointmentBoxArea mr-auto ml-auto`}
+                      className={`${requestSelectedTime === "" ? "flex" : "block"
+                        } flex-wrap items-center justify-center lg:w-[10rem] appointmentBoxArea mr-auto ml-auto`}
                     >
                       {requestSelectedTime === "" && (
                         <>
@@ -445,7 +441,7 @@ function TimeAndDate({
                       )}
                       {requestSelectedTime !== "" &&
                         formatDate(selectedDate) ===
-                          currentDateDisplayNotDay && (
+                        currentDateDisplayNotDay && (
                           <>
                             <h2 className="text-sm text-gray-600 text-center font-semibold mt-[8px]">
                               Seçtiğiniz randevu talebi saati
@@ -482,7 +478,7 @@ function TimeAndDate({
               </div>
             </div>
           </div>
-          <div className="max-[768px]:mb-[10px] rightArea max-[768px]:flex-1 flex items-center justify-center md:order-2  rounded-2xl shadow-xl bg-white md:h-[20rem]">
+          <div className="max-[768px]:mb-[10px] rightArea max-[768px]:flex-1 flex items-center justify-center md:order-2 rounded-2xl shadow-xl bg-white md:h-[20rem]">
             <CalendarBox
               selectedDate={selectedDate}
               onDateChange={(value) => {
