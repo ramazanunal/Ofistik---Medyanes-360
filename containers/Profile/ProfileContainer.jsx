@@ -1,20 +1,22 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import useAlert from "@/lib/hooks/useAlert";
-import Image from 'next/image';
 import HorizontalCarousel from "@/components/tabsSocialComponents/HorizontalCarousel";
 import { useProfileStore } from "@/store/useProfileStore";
+import dynamic from 'next/dynamic';
 
 // Components
 import ProfileDetail from "./components/profileContentbar/ProfileContentbar";
-import Meeting from "./components/profileCard/profileApoinment/Meeting";
 import ProfileCardInfo from "./components/profileCard/profileCardInfo/ProfileCardInfo";
 import Alert from "@/components/Alert";
+const AppointmentComponent = dynamic(
+    () => import('@/components/appointmentModule/appointmentComponent'),
+    { ssr: false }
+)
 
 //Icons
 import { IoCopy } from 'react-icons/io5';
 import AddPostComp from '@/components/tabsSocialComponents/AddPostComp';
-import AppointmentComponent from '@/components/appointmentModule/appointmentComponent';
 
 
 const socialMediaItems = [
