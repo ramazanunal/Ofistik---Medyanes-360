@@ -25,7 +25,7 @@ function TimeAndDate({
   const [currentDateDisplay, setCurrentDateDisplay] = useState(""); //GÜNCEL DATE İ ATADIĞIMIZ DEĞİŞKEN
   const [currentDateDisplayNotDay, setCurrentDateDisplayNotDay] = useState(""); //GÜNCEL DATE İ GÜN OLMADAN ATADIĞIMIZ DEĞİŞKEN
   const [selectedTime, setSelectedTime] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // EKRANIN MOBİL OLUP OLMADIĞINI ATADIĞIMIZ DEĞİŞKEN
+  const [isMobile, setIsMobile] = useState(false); // EKRANIN MOBİL OLUP OLMADIĞINI ATADIĞIMIZ DEĞİŞKEN
   const [requestForTimedDays, setRequestForTimedDays] = useState(false); // RANDEVU SAATİ OLAN GÜNLERDE TALEP OLUŞUTURUP OLUŞTURMADIĞMIZI ATADIĞIMIZ DEĞİŞKEN
 
   const [appointmentRequestNormal, setAppointmentRequestNormal] =
@@ -42,6 +42,8 @@ function TimeAndDate({
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
+
+    handleResize
 
     window.addEventListener("resize", handleResize);
 

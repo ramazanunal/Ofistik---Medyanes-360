@@ -1,12 +1,26 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendarComponent from "../bigCalendarModule/fullCalendar";
 import SetAppointmentTime from "../settingAppointmentTimeModule/setAppointmentTime";
 import AppointmentInfos from "../generalInfosModule/appointmentInfos";
 import Agenda from "../agendaModule/agenda";
 
 function Dashboard() {
-  const isMobile = window.innerWidth <= 768;
+  const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize()
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       <div className="bg-grayBg">

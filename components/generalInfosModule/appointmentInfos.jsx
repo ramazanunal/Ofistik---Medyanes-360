@@ -11,7 +11,21 @@ import AllDetails from "./allDetails";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 function AppointmentInfos() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+
+    handleResize()
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   Chart.register(...registerables);
   Chart.register(CategoryScale);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -767,10 +781,10 @@ function AppointmentInfos() {
                                       (acc, currentValue) => acc + currentValue,
                                       0
                                     ) >
-                                    graph.datasets[1].data.reduce(
-                                      (acc, currentValue) => acc + currentValue,
-                                      0
-                                    ) ? (
+                                      graph.datasets[1].data.reduce(
+                                        (acc, currentValue) => acc + currentValue,
+                                        0
+                                      ) ? (
                                       <FaArrowTrendUp className=" text-green-600 text-2xl ml-3 font-bold " />
                                     ) : (
                                       <FaArrowTrendDown className=" text-red-600 text-2xl ml-3 font-bold " />

@@ -12,12 +12,14 @@ import ServiceBox from "./serviceBox";
 
 function ServiceComponent({ services, setReturnService }) {
   const [selectedService, setSelectedService] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
+  const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
+
+    handleResize()
 
     window.addEventListener("resize", handleResize);
 
