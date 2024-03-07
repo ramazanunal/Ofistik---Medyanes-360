@@ -1,17 +1,15 @@
-import {useCallback, useEffect, useState} from "react";
+'use clients'
+import { useCallback, useEffect, useState } from "react";
 
-export const useMediaQuery = (width) =>
-{
+export const useMediaQuery = (width) => {
     const [targetReached, setTargetReached] = useState(false)
 
-    const updateTarget = useCallback((e) =>
-    {
+    const updateTarget = useCallback((e) => {
         if (e.matches) setTargetReached(true)
         else setTargetReached(false)
     }, [])
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const media = window.matchMedia(`(max-width: ${width}px)`)
         media.addEventListener('change', updateTarget)
 

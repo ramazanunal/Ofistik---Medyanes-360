@@ -67,19 +67,19 @@ const EventModalForCalendar = ({ isOpen, onClose, event }) => {
                     <div className="generalNameAreaSomeOne mr-5">
                       <div className="flex flex-col justify-start items-start ml-2">
                         <div className="flex">
-                          <i class="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
+                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
                           <h1 className="text-sm lg:text-md font-semibold my-1 text-gray-600">
                             {event.name} ({event.gender})
                           </h1>
                         </div>
                         <div className="flex">
-                          <i class="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
+                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
                           <h1 className="text-sm lg:text-md font-semibold my-1 text-gray-600">
                             {event.title}
                           </h1>
                         </div>
                         <div className="flex">
-                          <i class="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
+                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
                           <h1 className="text-sm lg:text-md my-1 text-gray-600">
                             {formatTimeInterval(event.start, event.end)}
                           </h1>
@@ -91,7 +91,7 @@ const EventModalForCalendar = ({ isOpen, onClose, event }) => {
                 <div className="flex w-full mt-5 justify-around">
                   <div className="serviceNameArea">
                     <div className="service flex">
-                      <i class="fa-solid fa-cake-candles text-premiumOrange flex items-center justify-center"></i>
+                      <i className="fa-solid fa-cake-candles text-premiumOrange flex items-center justify-center"></i>
                       <h2 className="text-sm font-bold ml-[8px] text-center text-gray-600">
                         Doğum Tarihi
                       </h2>
@@ -104,7 +104,7 @@ const EventModalForCalendar = ({ isOpen, onClose, event }) => {
                   </div>
                   <div className="languageArea">
                     <div className="textLogoArea flex">
-                      <i class="fa-solid fa-earth-americas text-premiumOrange flex items-center justify-center"></i>
+                      <i className="fa-solid fa-earth-americas text-premiumOrange flex items-center justify-center"></i>
                       <h5 className="text-sm font-semibold ml-[8px] mt-auto mb-auto text-center text-gray-600">
                         Dil
                       </h5>
@@ -117,7 +117,7 @@ const EventModalForCalendar = ({ isOpen, onClose, event }) => {
                   </div>
                   <div className="generalAppointmentNumber">
                     <div className="birthdayAreaSomeone flex">
-                      <i class="fa-solid fa-calendar-check text-premiumOrange flex items-center justify-center"></i>
+                      <i className="fa-solid fa-calendar-check text-premiumOrange flex items-center justify-center"></i>
                       <h2 className="text-sm font-bold ml-[8px] text-center text-gray-600">
                         Randevu Numarası
                       </h2>

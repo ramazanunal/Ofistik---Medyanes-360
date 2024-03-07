@@ -59,13 +59,13 @@ function FullCalendarAppointmentBox({ image, infos, onDelete }) {
               </h1>
             )}
             <div className="forWho flex">
-              <i class="fa-solid fa-circle mt-[3px] text-[15px] text-premiumOrange"></i>
+              <i className="fa-solid fa-circle mt-[3px] text-[15px] text-premiumOrange"></i>
               <h2 className="text-[14px] font-bold ml-2">
                 {infos["kimIçin"]} İçin
               </h2>
             </div>
             <div className="flex ">
-              <i class="fa-regular fa-clock mt-[9px] text-premiumOrange text-[15px]"></i>
+              <i className="fa-regular fa-clock mt-[9px] text-premiumOrange text-[15px]"></i>
               <h1 className="text-xs  p-1 text-left font-semibold m-1">
                 {extractTimeFromDate(infos["time"])} - {endTime}
               </h1>
@@ -74,7 +74,7 @@ function FullCalendarAppointmentBox({ image, infos, onDelete }) {
               </h1>
             </div>
             <div className="flex">
-              <i class="fa-solid fa-hospital-user  mt-[9px] text-premiumOrange text-[15px]"></i>
+              <i className="fa-solid fa-hospital-user  mt-[9px] text-premiumOrange text-[15px]"></i>
               <h1 className="text-xs  p-1 text-left font-semibold m-1">
                 {infos["service"]}
               </h1>
@@ -84,13 +84,13 @@ function FullCalendarAppointmentBox({ image, infos, onDelete }) {
         {infos["kimIçin"] === "Başkası" && (
           <div className="infoAreaForSomeOne w-2/3">
             <div className="forWho flex">
-              <i class="fa-solid fa-circle mt-[3px] text-[15px] text-premiumOrange"></i>
+              <i className="fa-solid fa-circle mt-[3px] text-[15px] text-premiumOrange"></i>
               <h2 className="text-[14px] font-bold ml-2">
                 {infos["kimIçin"]} İçin
               </h2>
             </div>
             <div className="personalInfo flex">
-              <i class="fa-solid fa-user mt-[8px] text-[15px] text-premiumOrange"></i>
+              <i className="fa-solid fa-user mt-[8px] text-[15px] text-premiumOrange"></i>
               <h1 className="text-xs  p-1 text-left font-semibold m-1">
                 {infos["firstName"]} {infos["lastName"]} ({infos["gender"]})
                 (Doğum Tarihi :{infos["dateOfBirth"]})
@@ -98,7 +98,7 @@ function FullCalendarAppointmentBox({ image, infos, onDelete }) {
             </div>
 
             <div className="flex">
-              <i class="fa-regular fa-clock mt-[9px] text-premiumOrange text-[15px]"></i>
+              <i className="fa-regular fa-clock mt-[9px] text-premiumOrange text-[15px]"></i>
               <h1 className="text-xs  p-1 text-left font-semibold m-1">
                 {extractTimeFromDate(infos["time"])} - {endTime}
               </h1>
@@ -107,7 +107,7 @@ function FullCalendarAppointmentBox({ image, infos, onDelete }) {
               </h1>
             </div>
             <div className="flex">
-              <i class="fa-solid fa-hospital-user  mt-[9px] text-premiumOrange text-[15px]"></i>
+              <i className="fa-solid fa-hospital-user  mt-[9px] text-premiumOrange text-[15px]"></i>
               <h1 className="text-xs  p-1 text-left font-semibold m-1">
                 {infos["service"]}
               </h1>

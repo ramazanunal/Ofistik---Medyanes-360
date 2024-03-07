@@ -10,22 +10,9 @@ import { CategoryScale, Chart, registerables } from "chart.js";
 import AllDetails from "./allDetails";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 function AppointmentInfos() {
-  const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024);
-    };
-
-    handleResize()
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const isMobile = useMediaQuery(1024);
   Chart.register(...registerables);
   Chart.register(CategoryScale);
   const [currentDate, setCurrentDate] = useState(new Date());

@@ -10,7 +10,6 @@ export default () => {
     async function getProfileData() {
         const response = await postAPI("/auth", {email: "example@ofistik.com"} ,"POST")
 
-        console.log(response)
         setData(response)
     }
 

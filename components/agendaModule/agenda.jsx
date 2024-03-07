@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import CardMobile from "./cardMobile";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 function Agenda() {
   const [formData, setFormData] = useState([]);
@@ -20,6 +21,8 @@ function Agenda() {
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const [showTooltip, setShowTooltip] = useState(false);
   const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
+  const isMobileForAnimation = useMediaQuery(768);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -509,7 +512,7 @@ function Agenda() {
               className="bg-lightGray rounded-full cursor-pointer threePoint"
               onClick={() => toggleButtonsArea(formEntry)}
             >
-              <i class="fa-solid fa-ellipsis-vertical p-1"></i>
+              <i className="fa-solid fa-ellipsis-vertical p-1"></i>
             </div>
             {showButtonsArea &&
               selectedAppointment &&
@@ -526,7 +529,7 @@ function Agenda() {
                           className={`bg-lightGray text-black
                   rounded-md flex text-xs 2xl:text-sm w-40 p-2 items-center justify-start`}
                         >
-                          <i class="fa-solid fa-ban mr-2 text-gray-600 font-semibold"></i>
+                          <i className="fa-solid fa-ban mr-2 text-gray-600 font-semibold"></i>
                           İptal Et
                         </button>
                       </div>
@@ -538,7 +541,7 @@ function Agenda() {
                           className={`bg-lightGray text-black
                    rounded-md flex text-xs 2xl:text-sm w-40 p-2 items-center justify-start`}
                         >
-                          <i class="fa-regular fa-user mr-2 text-gray-600 font-semibold"></i>
+                          <i className="fa-regular fa-user mr-2 text-gray-600 font-semibold"></i>
                           Katıl
                         </button>
                       </div>
@@ -553,7 +556,7 @@ function Agenda() {
                             className={`bg-lightGray text-black
                                       rounded-md flex text-xs 2xl:text-sm w-40 p-2 items-center justify-start`}
                           >
-                            <i class="fa-solid fa-check mr-2 text-gray-600 font-semibold"></i>
+                            <i className="fa-solid fa-check mr-2 text-gray-600 font-semibold"></i>
                             Onayla
                           </button>
                         </div>
@@ -565,7 +568,7 @@ function Agenda() {
                             className={`bg-lightGray text-black
                                       rounded-md flex text-xs 2xl:text-sm w-40 p-2 items-center justify-start`}
                           >
-                            <i class="fa-solid fa-check mr-2 text-gray-600 font-semibold"></i>
+                            <i className="fa-solid fa-check mr-2 text-gray-600 font-semibold"></i>
                             İşleme Al
                           </button>
                         </div>
@@ -576,7 +579,7 @@ function Agenda() {
                           className={`bg-lightGray text-black
                       rounded-md flex text-xs 2xl:text-sm w-40 p-2 items-center justify-start`}
                         >
-                          <i class="fa-solid fa-xmark mr-2 text-gray-600 font-semibold"></i>
+                          <i className="fa-solid fa-xmark mr-2 text-gray-600 font-semibold"></i>
                           Reddet
                         </button>
                       </div>
@@ -588,7 +591,7 @@ function Agenda() {
                       className={`bg-lightGray text-black
                     rounded-md flex text-xs 2xl:text-sm w-40 p-2 items-center justify-start`}
                     >
-                      <i class="fa-solid fa-message mr-2 text-gray-600 font-semibold"></i>
+                      <i className="fa-solid fa-message mr-2 text-gray-600 font-semibold"></i>
                       Mesaj Gönder
                     </button>
                   </div>
@@ -598,7 +601,7 @@ function Agenda() {
                       className={`bg-lightGray text-black
                     rounded-md flex text-xs 2xl:text-sm w-40 p-2 items-center justify-start`}
                     >
-                      <i class="fa-solid fa-circle-info mr-2 text-gray-600 font-semibold"></i>
+                      <i className="fa-solid fa-circle-info mr-2 text-gray-600 font-semibold"></i>
                       Detaylar
                     </button>
                   </div>
@@ -995,8 +998,7 @@ function Agenda() {
   const handlePageNumberChange = (event) => {
     setItemsPerPage(event.target.value);
   };
-  const isMobileForAnimation = window.innerWidth <= 768;
-
+  
   const handleOpenFilter = () => {
     setShowTooltip(!showTooltip);
   };
@@ -1018,7 +1020,7 @@ function Agenda() {
                   onClick={handleOpenFilter}
                   className="py-2 px-4 bg-gray-100 text-gray-500 rounded-lg"
                 >
-                  <i class="fa-solid fa-filter text-premiumOrange"></i> Sırala
+                  <i className="fa-solid fa-filter text-premiumOrange"></i> Sırala
                 </button>
                 {showTooltip && (
                   <div className="tooltip filters animate__animated animate__zoomIn z-[3] bg-white border border-gray-300 p-2 rounded-xl shadow-lg absolute transform -translate-x-0 lg:top-16 lg:right-56 transition duration-300 top-24 ">
@@ -1031,7 +1033,7 @@ function Agenda() {
                           className="bg-gray-100 text-gray-600 py-2 px-8 rounded-lg w-full flex justify-start"
                           onClick={() => handleFilter("az")}
                         >
-                          <i class="fa-solid fa-arrow-up-a-z mr-2"></i>Ad Soyad
+                          <i className="fa-solid fa-arrow-up-a-z mr-2"></i>Ad Soyad
                           (A-Z)
                         </button>
                       </div>
@@ -1040,7 +1042,7 @@ function Agenda() {
                           className="bg-gray-100 text-gray-600 py-2 px-8 rounded-lg w-full  flex justify-start"
                           onClick={() => handleFilter("za")}
                         >
-                          <i class="fa-solid fa-arrow-down-z-a mr-2"></i>Ad
+                          <i className="fa-solid fa-arrow-down-z-a mr-2"></i>Ad
                           Soyad (Z-A)
                         </button>
                       </div>
@@ -1049,7 +1051,7 @@ function Agenda() {
                           className="bg-gray-100 text-gray-600 py-2 px-8 rounded-lg w-full  flex justify-start"
                           onClick={() => handleFilter("old")}
                         >
-                          <i class="fa-solid fa-arrow-up-wide-short mr-2"></i>
+                          <i className="fa-solid fa-arrow-up-wide-short mr-2"></i>
                           Tarih (Yeni - Eski)
                         </button>
                       </div>
@@ -1058,7 +1060,7 @@ function Agenda() {
                           className="bg-gray-100 text-gray-600 py-2 px-8 rounded-lg w-full  flex justify-start"
                           onClick={() => handleFilter("new")}
                         >
-                          <i class="fa-solid fa-arrow-down-short-wide mr-2"></i>
+                          <i className="fa-solid fa-arrow-down-short-wide mr-2"></i>
                           Tarih (Eski - Yeni)
                         </button>
                       </div>

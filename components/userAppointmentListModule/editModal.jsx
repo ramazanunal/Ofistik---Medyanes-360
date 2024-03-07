@@ -212,7 +212,7 @@ const EditModal = ({ isOpen, onClose, event }) => {
                       </div>
                       <div className="generalAppointmentTime mt-3 flex flex-col items-center justify-center">
                         <div className="appointmentTimeArea flex">
-                          <i class="fa-regular fa-calendar-check text-deepSlateBlue flex items-center justify-center"></i>
+                          <i className="fa-regular fa-calendar-check text-deepSlateBlue flex items-center justify-center"></i>
                           <h2 className="text-sm font-bold ml-[8px] text-center">
                             Randevu Tarihi
                           </h2>

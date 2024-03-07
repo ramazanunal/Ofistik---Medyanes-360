@@ -387,7 +387,7 @@ function TimeAndDate({
                         onClick={() => setAppointmentRequest(true)}
                         className="bg-premiumOrange font-semibold text-sm text-white p-1 px-6 rounded-2xl"
                       >
-                        <i class="fa-solid fa-file-pen"></i> Düzenle
+                        <i className="fa-solid fa-file-pen"></i> Düzenle
                       </button>
                     </div>
                   </>
@@ -469,7 +469,7 @@ function TimeAndDate({
                               onClick={() => setAppointmentRequest(true)}
                               className="bg-gray-100 font-semibold text-sm text-gray-600 p-1 px-6 rounded-lg"
                             >
-                              <i class="fa-solid fa-file-pen"></i> Düzenle
+                              <i className="fa-solid fa-file-pen"></i> Düzenle
                             </button>
                           </div>
                         </>
