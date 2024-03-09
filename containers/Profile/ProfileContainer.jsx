@@ -46,7 +46,6 @@ const socialMediaItems = [
     },
 ];
 
-
 const ProfilePageLayout = ({ data }) => {
     const users = useProfileStore((state) => state.users)
     const setUsers = useProfileStore((state) => state.setUsers)
