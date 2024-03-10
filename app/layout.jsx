@@ -1,6 +1,7 @@
 'use client'
 import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-calendar/dist/Calendar.css';
 import { ToastContainer } from 'react-toastify';
 import { SessionProvider } from "next-auth/react";
 
