@@ -11,6 +11,7 @@ import AllDetails from "./allDetails";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+
 function AppointmentInfos() {
   const isMobile = useMediaQuery(1024);
   Chart.register(...registerables);
@@ -768,10 +769,10 @@ function AppointmentInfos() {
                                       (acc, currentValue) => acc + currentValue,
                                       0
                                     ) >
-                                      graph.datasets[1].data.reduce(
-                                        (acc, currentValue) => acc + currentValue,
-                                        0
-                                      ) ? (
+                                    graph.datasets[1].data.reduce(
+                                      (acc, currentValue) => acc + currentValue,
+                                      0
+                                    ) ? (
                                       <FaArrowTrendUp className=" text-green-600 text-2xl ml-3 font-bold " />
                                     ) : (
                                       <FaArrowTrendDown className=" text-red-600 text-2xl ml-3 font-bold " />

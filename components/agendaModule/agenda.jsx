@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import CardMobile from "./cardMobile";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 function Agenda() {
   const [formData, setFormData] = useState([]);
