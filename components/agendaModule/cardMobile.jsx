@@ -1,4 +1,3 @@
-"use client"
 import React from "react";
 function CardMobile({
   appointmentNumber,
@@ -14,6 +13,7 @@ function CardMobile({
   isPastAppointment,
   isCancelDisabled,
   isCancelled,
+  reject,
   joinFunction,
   formEntry,
   remainingHours,
@@ -29,7 +29,7 @@ function CardMobile({
       <div className="downSide">
         <div className="m-1">
           <div className="dateAndTimeArea text-gray-500 pb-0 p-1 flex">
-            <i className="fa-solid fa-clock text-gray-500 p-2 flex items-center justify-center"></i>
+            <i class="fa-solid fa-clock text-gray-500 p-2 flex items-center justify-center"></i>
             <div>
               <h1 className="text-xs text-gray-500 p-1 pb-0">Tarih & Zaman</h1>
               <h1 className="text-sm text-gray-700 p-1">
@@ -40,7 +40,7 @@ function CardMobile({
           <div className="flex">
             {" "}
             <div className="appointmentStatus text-gray-500 p-1 flex">
-              <i className="fa-solid fa-calendar-days text-gray-500 p-2 flex items-center justify-center"></i>
+              <i class="fa-solid fa-calendar-days text-gray-500 p-2 flex items-center justify-center"></i>
               <div>
                 <h1 className="text-xs text-gray-500 p-1 pb-0">
                   Randevu Durumu
@@ -100,7 +100,7 @@ function CardMobile({
               </div>
             </div>
             <div className="dateAndTimeArea text-gray-500 pb-0 p-1 pl-0 flex">
-              <i className="fa-solid fa-hourglass-half text-gray-500 p-2 flex items-center justify-center"></i>
+              <i class="fa-solid fa-hourglass-half text-gray-500 p-2 flex items-center justify-center"></i>
               <div>
                 <h1 className="text-xs text-gray-500 p-1 pb-0">Kalan Süre</h1>
                 <h1 className="text-sm text-gray-700 p-1">{remainingTime}</h1>
@@ -135,7 +135,7 @@ function CardMobile({
                   İşleme Al
                 </button>
                 <button
-                  onClick={() => deleteFunction()}
+                  onClick={() => reject()}
                   className="bg-lightRed2 text-red-500 py-2 px-1 text-xs  rounded-lg mx-1 w-full"
                 >
                   Reddet

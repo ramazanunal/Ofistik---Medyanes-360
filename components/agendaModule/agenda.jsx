@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState } from "react";
 import EventModal from "../commonModules/eventModal";
 import "../../style/agenda.css";
@@ -9,19 +8,20 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import CardMobile from "./cardMobile";
-import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 function Agenda() {
   const [formData, setFormData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("");
   const [alphabetic, setAlphabetic] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
   const isMobileForAnimation = useMediaQuery(768);
-
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [pendingAppointments, setPendingAppointments] = useState([]);
+  const [comingAppointments, setComingAppointments] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +37,6 @@ function Agenda() {
     };
   }, []);
 
-  const [showTooltip, setShowTooltip] = useState(false);
   const handleOpenModal = (event) => {
     setSelectedEvent({
       ...event,
@@ -57,6 +56,22 @@ function Agenda() {
     setAlphabetic(selectedFilter);
   };
   const filterFormData = (formData, filter, alphabetic) => {
+    setPendingAppointments(
+      formData.filter(
+        (formEntry) =>
+          formEntry.confirm === false &&
+          isFutureAppointment(formEntry.time) &&
+          formEntry.delete === false
+      )
+    );
+    setComingAppointments(
+      formData.filter(
+        (formEntry) =>
+          formEntry.confirm === true &&
+          isFutureAppointment(formEntry.time) &&
+          formEntry.delete === false
+      )
+    );
     const currentDate = new Date();
     const filteredData = formData.filter((data) => {
       const timeArray = data.time.split(" ");
@@ -70,6 +85,8 @@ function Agenda() {
         currentDate.getDate()
       );
       switch (filter) {
+        case "all":
+          return true;
         case "cancelled":
           return data.delete === true;
         case "notConfirmed":
@@ -113,8 +130,32 @@ function Agenda() {
                   ))) &&
             data.delete === false
           );
+
         default:
-          return true;
+          if (pendingAppointments.length > 0) {
+            return (
+              (appointmentDate > currentDate ||
+                (appointmentDate.getDate() === currentDate.getDate() &&
+                  new Date(`1970-01-01T${timeArray[2]}`) <
+                    new Date(
+                      `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                    ))) &&
+              data.confirm === false &&
+              data.delete === false
+            );
+          } else if (comingAppointments.length > 0) {
+            return (
+              (appointmentDate > currentDate ||
+                (appointmentDate.getDate() === currentDate.getDate() &&
+                  new Date(`1970-01-01T${timeArray[2]}`) >
+                    new Date(
+                      `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                    ))) &&
+              data.delete === false
+            );
+          } else if (pendingAppointments.length === 0) {
+            return true;
+          }
       }
     });
 
@@ -124,11 +165,44 @@ function Agenda() {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-
+  useEffect(() => {
+    // localStorage'dan formData'yı al
+    setPendingAppointments(
+      formData.filter(
+        (formEntry) =>
+          formEntry.confirm === false &&
+          isFutureAppointment(formEntry.time) &&
+          formEntry.delete === false
+      )
+    );
+    setComingAppointments(
+      formData.filter(
+        (formEntry) =>
+          formEntry.confirm === true &&
+          isFutureAppointment(formEntry.time) &&
+          formEntry.delete === false
+      )
+    );
+  }, [formData]); // formData değiştiğinde tekrar çalışacak
   useEffect(() => {
     // localStorage'dan formData'yı al
     const storedFormData = localStorage.getItem("formData");
-
+    setPendingAppointments(
+      formData.filter(
+        (formEntry) =>
+          formEntry.confirm === false &&
+          isFutureAppointment(formEntry.time) &&
+          formEntry.delete === false
+      )
+    );
+    setComingAppointments(
+      formData.filter(
+        (formEntry) =>
+          formEntry.confirm === true &&
+          isFutureAppointment(formEntry.time) &&
+          formEntry.delete === false
+      )
+    );
     if (storedFormData) {
       const parsedFormData = JSON.parse(storedFormData);
       const filteredFormData = filterFormData(
@@ -271,20 +345,6 @@ function Agenda() {
 
   function convertFormDataToTable() {
     return paginatedFormData.map((formEntry, index) => {
-      const last12Hours = (remainingTime) => {
-        try {
-          const hourAndMin = remainingTime.split(" ");
-
-          const hour = parseInt(hourAndMin[0]);
-          const min = parseInt(hourAndMin[2]);
-
-          const totalHours = hour + min / 60;
-
-          const isLast12Hours = totalHours < 12;
-
-          return isLast12Hours;
-        } catch (err) {}
-      };
       const status = formEntry.confirm;
       const { time, duration, service } = formEntry;
       const parsedInfos = time.split(/\s+/);
@@ -381,11 +441,10 @@ function Agenda() {
                 const formData = JSON.parse(formDataString);
 
                 const index = formData.findIndex(
-                  (obj) => obj.time === obje.time
+                  (obj) => obj.appointmentNumber === obje.appointmentNumber
                 );
 
                 if (index !== -1) {
-                  // Set the 'delete' property to true
                   formData[index].delete = true;
 
                   localStorage.setItem("formData", JSON.stringify(formData));
@@ -412,12 +471,13 @@ function Agenda() {
 
         const formData = JSON.parse(formDataString);
 
-        const foundObject = formData.find((obj) => obj.time === timeObject);
-        console.log(foundObject);
+        const foundObject = formData.find(
+          (obj) => obj.appointmentNumber === timeObject
+        );
         return foundObject || null;
       };
 
-      const timeObject = formEntry.time;
+      const timeObject = formEntry.appointmentNumber;
       const isCancelDisabled = remainingTime.remainingHours < 12;
       const actualIndex = (currentPage - 1) * itemsPerPage + index;
       const isCancelled = formEntry.delete === true;
@@ -802,13 +862,6 @@ function Agenda() {
 
   const totalPages = Math.ceil(formData.length / itemsPerPage);
 
-  const pendingAppointments = formData.filter(
-    (formEntry) =>
-      formEntry.confirm === false &&
-      isFutureAppointment(formEntry.time) &&
-      formEntry.delete === false
-  );
-
   function isFutureAppointment(time) {
     const currentDate = new Date();
     const appointmentDate = new Date(
@@ -821,22 +874,20 @@ function Agenda() {
   const renderSwiper = (times) => {
     const itemsPerSlide = 2;
     const swiperSlides = [];
-    const findObjectByTime = (timeObject) => {
-      //TIKLADIĞIMIZ OBJEYİ ALIYORUZ
-      const formDataString = localStorage.getItem("formData");
 
+    const findObjectByTime = (timeObject) => {
+      const formDataString = localStorage.getItem("formData");
       if (!formDataString) {
         return [];
       }
-
       const formData = JSON.parse(formDataString);
-
-      const foundObject = formData.find((obj) => obj.time === timeObject);
-      console.log(foundObject);
+      const foundObject = formData.find(
+        (obj) => obj.appointmentNumber === timeObject
+      );
       return foundObject || null;
     };
+
     const onAccept = async (timeObject) => {
-      // RANDEVU TALEBİNİ KABUL ETME FONKSİYONUNU request değerini false yapıyor
       const originalObje = findObjectByTime(timeObject);
       Swal.fire({
         title: "Emin misiniz!",
@@ -850,24 +901,18 @@ function Agenda() {
           if (originalObje) {
             const falseValue2 = originalObje.confirm;
             const updatedValue2 = falseValue2 === false ? true : "";
-
             const updatedObje = {
               ...originalObje,
               confirm: updatedValue2,
             };
-
             const formDataString = localStorage.getItem("formData");
-
             if (formDataString) {
               const formData = JSON.parse(formDataString);
-
               const index = formData.findIndex(
                 (obj) => obj.time === originalObje.time
               );
-
               if (index !== -1) {
                 formData[index] = updatedObje;
-
                 localStorage.setItem("formData", JSON.stringify(formData));
                 Swal.fire({
                   title: "Başarılı !",
@@ -881,9 +926,43 @@ function Agenda() {
           }
         }
       });
-
       return null;
     };
+
+    const onReject = (timeObject) => {
+      const obje = findObjectByTime(timeObject);
+      Swal.fire({
+        title: "Emin misiniz!",
+        text: "Randevu talebini silmek istediğinize emin misiniz?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Evet",
+        cancelButtonText: "Hayır",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (obje) {
+            const formDataString = localStorage.getItem("formData");
+            if (formDataString) {
+              const formData = JSON.parse(formDataString);
+              const index = formData.findIndex(
+                (obj) => obj.appointmentNumber === obje.appointmentNumber
+              );
+              if (index !== -1) {
+                formData[index].delete = true;
+                localStorage.setItem("formData", JSON.stringify(formData));
+                Swal.fire({
+                  title: "Başarılı !",
+                  text: "Randevu talebi başarılı bir şekilde reddedildi.",
+                  icon: "success",
+                  confirmButtonText: "Kapat",
+                });
+              }
+            }
+          }
+        }
+      });
+    };
+
     for (let i = 0; i < times.length; i += itemsPerSlide) {
       const currentTimes = times.slice(i, i + itemsPerSlide);
       const swiperSlide = (
@@ -903,6 +982,7 @@ function Agenda() {
                   " " +
                   time.split(" ")[2]
               );
+              const timeObject = formEntry.appointmentNumber;
               const isCancelDisabled = remainingTime.remainingHours < 12;
               const isPastAppointment =
                 appointmentDate < currentDate ||
@@ -922,6 +1002,7 @@ function Agenda() {
                 <CardMobile
                   joinFunction={joinMeet}
                   joinMeet={joinMeet}
+                  reject={() => onReject(timeObject)}
                   formEntry={formEntry}
                   remainingHours={remainingTime.remainingHours}
                   isToday={isToday}
@@ -941,7 +1022,7 @@ function Agenda() {
                   isPastAppointment={isPastAppointment}
                   requestStatus={requestStatus}
                   service={service}
-                  onAccept={onAccept}
+                  onAccept={() => onAccept(timeObject)}
                   status={status}
                   time={timeInfo}
                   date={dateInfo}
@@ -992,15 +1073,25 @@ function Agenda() {
         return "Gelecek Randevularım";
       case "coming":
         return "Yaklaşan Randevularım";
-      default:
+      case "notConfirmed":
+        return "İşlem Bekleyen Randevularım";
+      case "all":
         return "Tüm Randevularım";
+      default:
+        if (pendingAppointments.length > 0) {
+          return "İşlem Bekleyen Randevularım";
+        } else if (comingAppointments.length > 0) {
+          return "Yaklaşan Randevularım";
+        } else if (pendingAppointments.length === 0) {
+          return "Tüm Randevularım";
+        }
     }
   }
 
   const handlePageNumberChange = (event) => {
     setItemsPerPage(event.target.value);
   };
-
+  
   const handleOpenFilter = () => {
     setShowTooltip(!showTooltip);
   };
@@ -1153,12 +1244,38 @@ function Agenda() {
                       value={filter}
                       className="p-1 border-b-2 border-gray-100 outline-none m-2 text-gray-500 cursor-pointer w-[50%]"
                     >
-                      <option value="all">Tümü</option>
-                      <option value="coming">Yaklaşan</option>
-                      <option value="past">Geçmiş</option>
-                      <option value="today">Bugünkü</option>
-                      <option value="cancelled">İptal Edilen</option>
-                      <option value="notConfirmed">İşlem Bekleyen</option>
+                      {pendingAppointments.length > 0 && (
+                        <>
+                          <option value="notConfirmed">İşlem Bekleyen</option>
+                          <option value="all">Tümü</option>
+                          <option value="coming">Yaklaşan</option>
+                          <option value="past">Geçmiş</option>
+                          <option value="today">Bugünkü</option>
+                          <option value="cancelled">İptal Edilen</option>
+                        </>
+                      )}
+                      {pendingAppointments.length === 0 &&
+                        comingAppointments.length > 0 && (
+                          <>
+                            <option value="coming">Yaklaşan</option>
+                            <option value="all">Tümü</option>
+                            <option value="past">Geçmiş</option>
+                            <option value="today">Bugünkü</option>
+                            <option value="cancelled">İptal Edilen</option>
+                            <option value="notConfirmed">İşlem Bekleyen</option>
+                          </>
+                        )}
+                      {pendingAppointments.length === 0 &&
+                        comingAppointments.length === 0 && (
+                          <>
+                            <option value="all">Tümü</option>
+                            <option value="coming">Yaklaşan</option>
+                            <option value="past">Geçmiş</option>
+                            <option value="today">Bugünkü</option>
+                            <option value="cancelled">İptal Edilen</option>
+                            <option value="notConfirmed">İşlem Bekleyen</option>
+                          </>
+                        )}
                     </select>
                     {pendingAppointments.length > 0 && (
                       <i className="fa-solid fa-circle text-premiumOrange text-[0.5rem] flashing-text text-center flex items-center justify-center mr-2"></i>

@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { Line } from "react-chartjs-2";
 import { CategoryScale, Chart, registerables } from "chart.js";
 import AllDetails from "./allDetails";
@@ -690,7 +690,6 @@ function AppointmentInfos() {
   const toggleAllDetailsModal = () => {
     setIsAllDetailsOpen(!isAllDetailsOpen);
   };
-  console.log(graph.datasets[0]);
   return (
     <>
       <div className="w-full my-4 bg-white mx-auto rounded-lg max-[768px]:max-w-[370px]">
@@ -709,19 +708,6 @@ function AppointmentInfos() {
               >
                 Tüm İstatistikler
               </button>
-            </div>
-          )}
-          {isMobile && (
-            <div className="block lg:flex items-center justify-center">
-              <button
-                onClick={toggleAllDetailsModal}
-                className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold h-[5vw] mt-2 mx-auto  transition duration-[400ms]"
-              >
-                Tüm İstatistikler
-              </button>
-              <h1 className="text-xs lg:text-[0.8vw] text-gray-500 font-semibold flex items-center justify-center pt-2">
-                Son Güncelleme : {guncelTarih}
-              </h1>
             </div>
           )}
         </div>
@@ -840,6 +826,26 @@ function AppointmentInfos() {
                 <Line data={graph} options={options} className="lg:pb-10" />
               </div>
             </div>
+            {isMobile && (
+              <div className="flex items-center justify-center">
+                <div className="flex flex-col justify-center items-center mx-auto w-1/2">
+                  <h1 className="text-xs lg:text-[0.8vw] text-gray-500 font-semibold flex items-center justify-center pt-2">
+                    Son Güncelleme
+                  </h1>
+                  <h1 className="text-xs lg:text-[0.8vw] text-gray-500 font-semibold flex items-center justify-center">
+                    {guncelTarih}
+                  </h1>
+                </div>
+                <div className="w-1/2">
+                  <button
+                    onClick={toggleAllDetailsModal}
+                    className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold h-[7vw] mt-2 mx-auto  transition duration-[400ms] "
+                  >
+                    Tüm İstatistikler
+                  </button>
+                </div>
+              </div>
+            )}
             <div className="infosArea flex items-center justify-end w-full lg:w-[50%] mx-auto">
               {renderSwiper(boxes)}
             </div>
