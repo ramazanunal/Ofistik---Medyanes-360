@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
-import pp from "../../images/pp.png";
 import moment from "moment-timezone";
+import Image from "next/image";
 
 const EventModalForCalendar = ({ isOpen, onClose, event }) => {
   if (!event) {
@@ -61,7 +61,7 @@ const EventModalForCalendar = ({ isOpen, onClose, event }) => {
               <div className="appointmentNotes">
                 <div className="flex">
                   <div className="imgArea w-[120px] p-2">
-                    <img src={pp} alt="" />
+                  <Image src="/images/pp.png" width={30} height={30} quality={100} className="ml-[3px]" alt="" />
                   </div>
                   <div className="forSomeone flex flex-wrap items-center justify-center">
                     <div className="generalNameAreaSomeOne mr-5">

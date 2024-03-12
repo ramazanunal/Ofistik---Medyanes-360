@@ -1,6 +1,6 @@
 "use client"
+import Image from "next/image";
 import React from "react";
-import pp from "../../images/pp.png";
 
 function AgendaCard({
   appointmentNumber,
@@ -67,7 +67,7 @@ function AgendaCard({
             <h1 className="text-[11px] text-center">{appointmentNumber}</h1>
           </div>
           <div className="flex items-center justify-center">
-            <img src={pp} className="w-[30px] ml-[3px]" alt="" />
+            <Image src="/images/pp.png" width={30} height={30} quality={100} className="ml-[3px]" alt="" />
             <h1 className="text-[10px] text-center ml-[3px]">{name}</h1>
           </div>
         </div>

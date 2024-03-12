@@ -1,5 +1,5 @@
 "use client"
-import serviceImage from "../../images/person.jpg";
+import Image from "next/image";
 import "../../style/appointmentView.css";
 
 function AppointmentView({
@@ -81,9 +81,10 @@ function AppointmentView({
             </div>
             <div>
               <div className="serviceProviderArea w-auto flex m-3">
-                <div className="profileImg w-1/4 bg-cover h-[100px]">
-                  <img
-                    src={serviceImage}
+                <div className="profileImg w-1/4 relative bg-cover h-[100px]">
+                  <Image
+                    fill
+                    src="/images/person.jpg"
                     alt=""
                     className="p-[5px] rounded-2xl w-full object-cover h-full"
                   />

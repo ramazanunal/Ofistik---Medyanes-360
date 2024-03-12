@@ -4,8 +4,6 @@ import Steps from "../commonModules/steps";
 import TimeAndDate from "./timeAndDate";
 import ContactForm from "./contactInfo";
 import ServiceComponent from "./serviceComponent";
-import turkish from "../../images/turkish.png";
-import english from "../../images/english.png";
 import Swal from "sweetalert2";
 import AppointmentView from "./appointmentView";
 
@@ -327,11 +325,11 @@ function AppointmentComponent() {
                 languages={[
                   {
                     language: "English",
-                    flagImg: english,
+                    flagImg: "/images/english.png",
                   },
                   {
                     language: "Turkish",
-                    flagImg: turkish,
+                    flagImg: "/images/turkish.png",
                   },
                 ]}
               />

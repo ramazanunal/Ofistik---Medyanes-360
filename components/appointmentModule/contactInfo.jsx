@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import "../../style/contactInfo.css";
+import Image from "next/image";
 
 function ContactForm({
   onFormSubmit,
@@ -27,25 +28,21 @@ function ContactForm({
         <div className="choosePerson">
           <button
             onClick={() => handleOptionChange(true)}
-            className={` p-2  tex-sm rounded-lg m-3 px-7 ${
-              isOwn === true ? "selected" : ""
-            } ${
-              isOwn === true
+            className={` p-2  tex-sm rounded-lg m-3 px-7 ${isOwn === true ? "selected" : ""
+              } ${isOwn === true
                 ? " bg-premiumOrange text-white"
                 : "bg-gray-200  text-gray-600"
-            }`}
+              }`}
           >
             Kendim İçin
           </button>
           <button
             onClick={() => handleOptionChange(false)}
-            className={` p-2  tex-sm rounded-lg m-3 px-7 ${
-              isOwn === false ? "selected" : ""
-            } ${
-              isOwn === false
+            className={` p-2  tex-sm rounded-lg m-3 px-7 ${isOwn === false ? "selected" : ""
+              } ${isOwn === false
                 ? "bg-premiumOrange text-white"
                 : "bg-gray-200  text-gray-600"
-            }`}
+              }`}
           >
             Başkası İçin
           </button>
@@ -100,10 +97,13 @@ function ContactForm({
                         htmlFor={lang.language.toLowerCase()}
                         className="text-stepBorder1 flex mr-[3rem]"
                       >
-                        <img
+                        <Image
+                          width={32}
+                          height={24}
+                          quality={100}
                           src={lang.flagImg}
                           alt={lang.language}
-                          className="w-8 h-6 mr-2 inline-block"
+                          className="mr-2 inline-block"
                         />
                         {lang.language}
                       </label>

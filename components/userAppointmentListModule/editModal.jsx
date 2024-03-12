@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
-import pp from "../../images/pp.png";
 import Swal from "sweetalert2";
+import Image from "next/image";
 
 const EditModal = ({ isOpen, onClose, event }) => {
   if (!event) {
@@ -168,7 +168,7 @@ const EditModal = ({ isOpen, onClose, event }) => {
                     <div className="">
                       <div className="flex justify-around">
                         <div className="imgArea w-[100px] p-2">
-                          <img src={pp} alt="" />
+                        <Image src="/images/pp.png" width={30} height={30} quality={100} className="ml-[3px]" alt="" />
                         </div>
                         <div className="forSomeone flex mt-3 flex-wrap items-center justify-center">
                           <div className="generalNameAreaSomeOne">
