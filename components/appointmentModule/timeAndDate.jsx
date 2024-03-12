@@ -332,8 +332,8 @@ function TimeAndDate({
             Ortalama randevu süresi {appoinmentDuration} dakikadır
           </h2>
         </div>
-        <div className="dayComponent flex flex-col md:flex-row md:h-[20rem] m-3 lg:w-[34rem] lg:h-[20rem] md:w-[25rem] sm:w-[25rem]  sm:h-[40rem]">
-          <div className="flex flex-col items-center justify-between lg:order-1  max-[768px]:order-2 w-fit px-4 rounded-2xl shadow-xl md:mr-3 bg-white rightMobile max-[768px]:h-auto">
+        <div className="dayComponent flex flex-col 2xl:flex-row h-fit">
+          <div className="flex flex-col items-center justify-between lg:order-1  max-[768px]:order-2 w-full mb-3 2xl:mb-0 2xl:w-fit px-4 rounded-2xl shadow-xl md:mr-3 bg-white rightMobile h-fit">
             <div className="choosenDate h-[62px]">
               <div className="dateText m-2">
                 <h2 className="text-center  text-md font-semibold  w-[90px]">
