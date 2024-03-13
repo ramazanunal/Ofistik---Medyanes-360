@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import AppointmentBox from "./appointmentBox";
 import CalendarBox from "./calendar";
@@ -43,7 +43,7 @@ function TimeAndDate({
       setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize
+    handleResize;
 
     window.addEventListener("resize", handleResize);
 
@@ -132,8 +132,9 @@ function TimeAndDate({
         const swiperSlide = (
           <SwiperSlide key={i}>
             <div
-              className={`flex flex-wrap items-center justify-center ${timedRequestSelectedTime !== "" ? "hidden" : "block"
-                }  appointmentBoxArea mr-auto ml-auto`}
+              className={`flex flex-wrap items-center justify-center ${
+                timedRequestSelectedTime !== "" ? "hidden" : "block"
+              }  appointmentBoxArea mr-auto ml-auto`}
             >
               {sortedTimes.map((time, index) => {
                 const currentTime = moment(`${time.date} ${time.time}`);
@@ -171,8 +172,9 @@ function TimeAndDate({
         const swiperSlide = (
           <SwiperSlide key={i}>
             <div
-              className={`flex flex-wrap items-center justify-center ${timedRequestSelectedTime !== "" ? "hidden" : "block"
-                }  appointmentBoxArea mr-auto ml-auto`}
+              className={`flex flex-wrap items-center justify-center ${
+                timedRequestSelectedTime !== "" ? "hidden" : "block"
+              }  appointmentBoxArea mr-auto ml-auto`}
             >
               {sortedTimes.map((time, index) => (
                 <>
@@ -202,20 +204,20 @@ function TimeAndDate({
         pagination={
           isMobile
             ? {
-              clickable: true,
-              dynamicBullets: true,
-            }
+                clickable: true,
+                dynamicBullets: true,
+              }
             : {
-              clickable: true,
-              dynamicBullets: true,
-            }
+                clickable: true,
+                dynamicBullets: true,
+              }
         }
         navigation={
           isMobile
             ? {
-              prevEl: ".custom-swiper-button-prev",
-              nextEl: ".custom-swiper-button-next",
-            }
+                prevEl: ".custom-swiper-button-prev",
+                nextEl: ".custom-swiper-button-next",
+              }
             : ""
         }
         modules={isMobile ? [Pagination, Navigation] : [Pagination, Mousewheel]}
@@ -396,10 +398,11 @@ function TimeAndDate({
             )}
             <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-full max-[768px]:h-auto">
               <div
-                className={`appointmentTimes relative lg:w-[10rem] ${appointmentTimesForSelectedDate.length > 0
+                className={`appointmentTimes relative lg:w-[10rem] ${
+                  appointmentTimesForSelectedDate.length > 0
                     ? "lg:h-[10rem]"
                     : "lg:h-[13rem]"
-                  } flex flex-col items-center justify-center w-full max-[768px]:h-auto`}
+                } flex flex-col items-center justify-center w-full max-[768px]:h-auto`}
               >
                 {isMobile && appointmentTimesForSelectedDate.length > 9 && (
                   <>
@@ -416,8 +419,9 @@ function TimeAndDate({
                 ) : (
                   <>
                     <div
-                      className={`${requestSelectedTime === "" ? "flex" : "block"
-                        } flex-wrap items-center justify-center lg:w-[10rem] appointmentBoxArea mr-auto ml-auto`}
+                      className={`${
+                        requestSelectedTime === "" ? "flex" : "block"
+                      } flex-wrap items-center justify-center lg:w-[10rem] appointmentBoxArea mr-auto ml-auto`}
                     >
                       {requestSelectedTime === "" && (
                         <>
@@ -443,13 +447,10 @@ function TimeAndDate({
                       )}
                       {requestSelectedTime !== "" &&
                         formatDate(selectedDate) ===
-                        currentDateDisplayNotDay && (
+                          currentDateDisplayNotDay && (
                           <>
                             <h2 className="text-sm text-gray-600 text-center font-semibold mt-[8px]">
                               Seçtiğiniz randevu talebi saati
-                            </h2>
-                            <h2 className="text-sm text-gray-600 text-center font-semibold mb-[8px] ml-auto mr-auto">
-                              (Lütfen aşağıdan seçiniz ! )
                             </h2>
                             <RequestTimeBox
                               isMobile={isMobile}
@@ -458,7 +459,6 @@ function TimeAndDate({
                               time={requestSelectedTime}
                               date={formatDate(selectedDate)}
                               selectedTime={selectedTime}
-                              onTimeClick={handleAppointmentBoxClick}
                             />
                           </>
                         )}
@@ -495,6 +495,7 @@ function TimeAndDate({
           date={selectedDate}
           isOpen={openModalRequest}
           onClose={closeModalRequest}
+          confirm={handleAppointmentBoxClickTimed}
           handleFormSubmit={handleFormSubmit}
         />
       )}
