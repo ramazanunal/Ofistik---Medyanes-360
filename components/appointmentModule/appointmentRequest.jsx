@@ -1,8 +1,14 @@
-"use client"
+"use client";
 import React from "react";
 import { Formik, Form, Field } from "formik";
 
-function AppointmentRequest({ isOpen, onClose, handleFormSubmit, date }) {
+function AppointmentRequest({
+  isOpen,
+  onClose,
+  handleFormSubmit,
+  date,
+  confirm,
+}) {
   const modalClass = isOpen
     ? "fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-gray-600 bg-opacity-50 "
     : "hidden";
@@ -84,6 +90,7 @@ function AppointmentRequest({ isOpen, onClose, handleFormSubmit, date }) {
                     </div>
 
                     <button
+                      onClick={() => confirm()}
                       type="submit"
                       className="bg-premiumOrange rounded-lg p-1 px-6 text-white text-sm mt-[15px]"
                     >
