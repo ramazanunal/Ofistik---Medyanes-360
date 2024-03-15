@@ -8,62 +8,99 @@ datasource db {
 }
 
 model User {
-    id               String            @id @default(auto()) @map("_id") @db.ObjectId
-    username         String            @unique
-    email            String            @unique
-    password         String
-    isVerified       Boolean           @default(false)
-    role             Role              @default(customer)
-    profile          Profile?
+    id         String  @id @default(auto()) @map("_id") @db.ObjectId
+    username   String  @unique
+    email      String  @unique
+    password   String
+    isVerified Boolean @default(false)
+    role       Role    @default(customer)
+
+    hizmetAlan  HizmetAlan?
+    hizmetVeren HizmetVeren?
+
     VerificationCode VerificationCode?
     createdAt        DateTime          @default(now())
     updatedAt        DateTime          @updatedAt
 }
 
-model Profile {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    name      String
-    surname   String
-    onlineStatus  Boolean
-    jobStatus     String
-    languages     String[]
-    price           Int
-    totalAppointments Int
+model HizmetAlan {
+    id                   String          @id @default(auto()) @map("_id") @db.ObjectId
+    name                 String
+    surname              String
+    onlineStatus         Boolean
+    jobStatus            String
+    languages            String[]
+    price                Int
+    totalAppointments    Int
     appointmentIntervals DateTime[]
-    resume        String
-    educationInfo EducationInfo[]
-    serviceAreas  String[]
-    comments      Comment[]
-    certificates Certificate[]
+    resume               String
+    educationInfo        EducationInfo[]
+    serviceAreas         String[]
+    comments             Comment[]
+    certificates         Certificate[]
+
     phone     String
     userId    String?  @unique @db.ObjectId
     user      User?    @relation(fields: [userId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    Date      Date?
+}
+
+model HizmetVeren {
+    id                   String          @id @default(auto()) @map("_id") @db.ObjectId
+    name                 String
+    surname              String
+    onlineStatus         Boolean
+    jobStatus            String
+    languages            String[]
+    price                Int
+    totalAppointments    Int
+    appointmentIntervals DateTime[]
+    resume               String
+    educationInfo        EducationInfo[]
+    serviceAreas         String[]
+    comments             Comment[]
+    certificates         Certificate[]
+
+    SelectedTimes SelectedTimes?
+
+    phone     String
+    userId    String?  @unique @db.ObjectId
+    user      User?    @relation(fields: [userId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    Date      Date?
 }
 
 model EducationInfo {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    university String
-    year String
-    profileId String
-    profile   Profile @relation(fields: [profileId], references:[id])
+    id            String       @id @default(auto()) @map("_id") @db.ObjectId
+    university    String
+    year          String
+    profileId     String
+    profile       HizmetAlan   @relation(fields: [profileId], references: [id])
+    HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    hizmetVerenId String?      @db.ObjectId
 }
 
 model Certificate {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    certificate String
-    year String
-    profileId String
-    profile   Profile @relation(fields: [profileId], references:[id])
+    id            String       @id @default(auto()) @map("_id") @db.ObjectId
+    certificate   String
+    year          String
+    profileId     String
+    profile       HizmetAlan   @relation(fields: [profileId], references: [id])
+    HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    hizmetVerenId String?      @db.ObjectId
 }
 
 model Comment {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    text      String
-    stars     Int
-    profileId String
-    profile   Profile @relation(fields: [profileId], references:[id])
+    id            String       @id @default(auto()) @map("_id") @db.ObjectId
+    text          String
+    stars         Int
+    profileId     String
+    profile       HizmetAlan   @relation(fields: [profileId], references: [id])
+    HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    hizmetVerenId String?      @db.ObjectId
 }
 
 model VerificationCode {
@@ -80,4 +117,39 @@ enum Role {
     customer
     admin
     partner
+}
+
+model Date {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    confirm       Boolean  @default(false)
+    date_of_birth DateTime
+    delete        Boolean  @default(false)
+    duration      Int
+    service       String
+    notes         String
+    language      String
+    kim_icin      String
+    gender        String?
+    firstName     String?
+    lastName      String?
+
+    hizmetAlanId String?     @unique @db.ObjectId
+    hizmetAlan   HizmetAlan? @relation(fields: [hizmetAlanId], references: [id])
+
+    hizmetVerenId String?      @unique @db.ObjectId
+    hizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model SelectedTimes {
+    id       String  @id @default(auto()) @map("_id") @db.ObjectId
+    active   Boolean @default(true)
+    duration Int
+
+    hizmetVerenId String?      @unique @db.ObjectId
+    hizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+
+    time String
 }

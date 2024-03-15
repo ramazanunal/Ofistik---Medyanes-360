@@ -397,8 +397,8 @@ function TimeAndDate({
             <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-full max-[768px]:h-auto">
               <div
                 className={`appointmentTimes relative lg:w-[10rem] ${appointmentTimesForSelectedDate.length > 0
-                    ? "lg:h-[10rem]"
-                    : "lg:h-[13rem]"
+                  ? "lg:h-[10rem]"
+                  : "lg:h-[13rem]"
                   } flex flex-col items-center justify-center w-full max-[768px]:h-auto`}
               >
                 {isMobile && appointmentTimesForSelectedDate.length > 9 && (
