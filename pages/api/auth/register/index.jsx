@@ -98,7 +98,7 @@ export default async function handler(req, res) {
                         email: email,
                         password: hashPassword,
                         username: username,
-                        HizmetAlan: {
+                        hizmetAlan: {
                             create: {
                                 name: name,
                                 surname: surname,

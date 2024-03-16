@@ -24,27 +24,21 @@ model User {
 }
 
 model HizmetAlan {
-    id                   String          @id @default(auto()) @map("_id") @db.ObjectId
+    id                   String     @id @default(auto()) @map("_id") @db.ObjectId
     name                 String
     surname              String
     onlineStatus         Boolean
-    jobStatus            String
-    languages            String[]
-    price                Int
     totalAppointments    Int
     appointmentIntervals DateTime[]
-    resume               String
-    educationInfo        EducationInfo[]
-    serviceAreas         String[]
     comments             Comment[]
-    certificates         Certificate[]
 
-    phone     String
-    userId    String?  @unique @db.ObjectId
-    user      User?    @relation(fields: [userId], references: [id])
+    phone  String
+    userId String? @unique @db.ObjectId
+    user   User?   @relation(fields: [userId], references: [id])
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    Date      Date?
+    Date      Date[]
 }
 
 model HizmetVeren {
@@ -70,7 +64,7 @@ model HizmetVeren {
     user      User?    @relation(fields: [userId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    Date      Date?
+    Date      Date[]
 }
 
 model EducationInfo {
@@ -78,27 +72,27 @@ model EducationInfo {
     university    String
     year          String
     profileId     String
-    profile       HizmetAlan   @relation(fields: [profileId], references: [id])
     HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
     hizmetVerenId String?      @db.ObjectId
 }
 
 model Certificate {
-    id            String       @id @default(auto()) @map("_id") @db.ObjectId
-    certificate   String
-    year          String
-    profileId     String
-    profile       HizmetAlan   @relation(fields: [profileId], references: [id])
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    certificate String
+    year        String
+
     HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
     hizmetVerenId String?      @db.ObjectId
 }
 
 model Comment {
-    id            String       @id @default(auto()) @map("_id") @db.ObjectId
-    text          String
-    stars         Int
-    profileId     String
-    profile       HizmetAlan   @relation(fields: [profileId], references: [id])
+    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    text  String
+    stars Int
+
+    profileId String
+    profile   HizmetAlan @relation(fields: [profileId], references: [id])
+
     HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
     hizmetVerenId String?      @db.ObjectId
 }

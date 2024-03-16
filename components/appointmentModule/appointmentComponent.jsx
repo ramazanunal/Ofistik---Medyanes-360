@@ -6,6 +6,7 @@ import ContactForm from "./contactInfo";
 import ServiceComponent from "./serviceComponent";
 import Swal from "sweetalert2";
 import AppointmentView from "./appointmentView";
+import prisma from "@/lib/prisma";
 
 function AppointmentComponent() {
   const [step, setStep] = useState(1); // en üstte gözüken stepleri tutan değişken

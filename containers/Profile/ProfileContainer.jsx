@@ -102,11 +102,10 @@ const ProfilePageLayout = ({ data }) => {
               socialRef={socialRef}
             />
             <div
-              className={`${
-                isFollow
+              className={`${isFollow
                   ? "flex flex-col items-center justify-center shadow-lg p-3 w-full transition-all duration-300 ease-in-out bg-white text-black rounded-lg z-50 mt-3"
                   : "overflow-hidden transition-all h-0 duration-300 ease-in-out"
-              }`}
+                }`}
             >
               <Alert
                 alertVisible={alertVisible}
@@ -114,9 +113,8 @@ const ProfilePageLayout = ({ data }) => {
                 alertType={alertType}
               />
               <div
-                className={`flex items-center justify-around overflow-x-auto gap-1 w-full ${
-                  isFollow ? "h-20" : "overflow-hidden transition h-0"
-                }`}
+                className={`flex items-center justify-around overflow-x-auto gap-1 w-full ${isFollow ? "h-20" : "overflow-hidden transition h-0"
+                  }`}
               >
                 {socialMediaItems &&
                   socialMediaItems.map((item, index) => (
