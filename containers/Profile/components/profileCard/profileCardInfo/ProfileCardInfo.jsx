@@ -77,7 +77,7 @@ const ProfileCardHeader = ({
         <div className="relative imageArea min-w-[115px] flex flex-col items-center justify-center">
           <span
             className={`absolute h-5 w-5 ${
-              1 === 1 ? "bg-premiumOrange" : "bg-redOne"
+              1 === 1 ? "bg-green-600" : "bg-redOne"
             } rounded-full top-4 point right-0 border-white border-4`}
           ></span>
           <img
@@ -85,19 +85,17 @@ const ProfileCardHeader = ({
             src="/profileImage.jpg"
             className={`cursor-pointer w-28 h-28 rounded-full ${
               1 !== undefined
-                ? `border-2 ${
-                    1 === 1 ? "border-premiumOrange" : "border-redOne"
-                  }`
+                ? `border-2 ${1 === 1 ? "border-green-600" : "border-redOne"}`
                 : ""
             }`}
             alt=""
           />
           {1 !== undefined && (
             <span
-              className={`status bg-lightOrange2  ${
-                1 === 1 ? "text-premiumOrange" : "text-redOne"
+              className={`status bg-lightGreen  ${
+                1 === 1 ? "text-green-600" : "text-redOne"
               } px-3 py-1 rounded-2xl text-sm border-${
-                1 === 1 ? "premiumOrange" : "redOne"
+                1 === 1 ? "green-600" : "redOne"
               } border relative bottom-3.5 font-semibold`}
             >
               {1 === 1 ? "Çevrim içi" : "Meşgul"}
@@ -120,12 +118,14 @@ const ProfileCardHeader = ({
               {isHearted ? (
                 <div
                   onClick={() => setIsHearted(!isHearted)}
-                  className="hidden sm:flex items-center justify-center w-20 gap-1 bg-premiumOrange text-white border-2 border-premiumOrange rounded-md py-1 "
+                  className="hidden sm:flex items-center justify-center w-20 gap-1 bg-white text-premiumOrange border-2 border-premiumOrange rounded-md py-1 "
                 >
                   <BsCheck
                     size={16}
                     className={`heart-icon ${
-                      isHearted ? "hearted text-white  animate-heart " : ""
+                      isHearted
+                        ? "hearted text-premiumOrange  animate-heart "
+                        : ""
                     }`}
                   />
                   <h1 className="text-[11px] font-semibold">Takip</h1>

@@ -10,7 +10,7 @@ const TabItemsGeneral = () => {
     <div className="lg:h-[calc(100vh_-_200px)] w-full mx-auto lg:overflow-y-scroll top-0 bottom-0  flex flex-col gap-3 pt-5   ">
       <div className="flex items-center gap-2">
         <TfiWrite className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] text-premiumOrange" />
-        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange">
+        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-gray-700">
           Özgeçmiş
         </h1>
       </div>
@@ -41,7 +41,7 @@ const TabItemsGeneral = () => {
       </div>
       <div className="flex items-center gap-2 mt-5">
         <FaUserGraduate className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] text-premiumOrange" />
-        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange">
+        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-gray-700">
           Eğitim Bilgileri
         </h1>
       </div>
@@ -59,7 +59,7 @@ const TabItemsGeneral = () => {
       </div>
       <div className="flex items-center gap-2 mt-5">
         <LiaCertificateSolid className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange" />
-        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange">
+        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-gray-700">
           Sertifikalar
         </h1>
       </div>
@@ -77,7 +77,7 @@ const TabItemsGeneral = () => {
       </div>
       <div className="flex items-center gap-2 mt-5">
         <PiStethoscopeFill className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange" />
-        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange">
+        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-gray-700">
           Hizmet Alanı
         </h1>
       </div>
@@ -107,7 +107,7 @@ const TabItemsGeneral = () => {
       </div>
       <div className="flex items-center gap-2 mt-5">
         <GrLanguage className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange" />
-        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-premiumOrange">
+        <h1 className="text-[11px] sm:text-sm telefon:text-lg md:text-[15px] font-medium text-gray-700">
           Diller
         </h1>
       </div>
