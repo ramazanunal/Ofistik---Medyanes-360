@@ -1,14 +1,14 @@
 'use client'
 import ProfileContainer from "@/containers/Profile/ProfileContainer";
-import { useEffect, useState } from "react";
-import { postAPI } from "@/services/fetchAPI";
+import {useEffect, useState} from "react";
+import {postAPI} from "@/services/fetchAPI";
 
 export default () => {
     const [data, setData] = useState(null)
 
     //"example@ofistik.com"
     async function getProfileData() {
-        const response = await postAPI("/auth", { email: "example@ofistik.com" }, "POST")
+        const response = await postAPI("/auth", {email: "example@ofistik.com"} ,"POST")
 
         setData(response)
     }
@@ -17,5 +17,5 @@ export default () => {
         getProfileData()
     }, [])
 
-    return <ProfileContainer data={data?.data} />
+    return <ProfileContainer data={data?.data}/>
 }

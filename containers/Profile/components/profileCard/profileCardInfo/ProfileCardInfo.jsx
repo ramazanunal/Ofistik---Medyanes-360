@@ -13,7 +13,6 @@ import { BsCheck } from "react-icons/bs";
 import { IoMdWallet } from "react-icons/io";
 import { CiHeart } from "react-icons/ci";
 import { GrLanguage } from "react-icons/gr";
-import { FaUser } from "react-icons/fa";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { SlOptionsVertical } from "react-icons/sl";
 //This props came from <ProfilePageLayout/>  component
@@ -28,8 +27,6 @@ const ProfileCardHeader = ({
   setIsFollow,
   socialRef,
   data,
-  price,
-  minSessionTime,
 }) => {
   //Cebrail
   //cebrail salak mısımn ne kadar konuşuyosun şuan ne saçma bir şey yapıyoruz salak mıyız yazıyom devamlı birşeyler ne yazasam neyse zeki görüneyim hadi by :)
@@ -251,31 +248,24 @@ const ProfileCardHeader = ({
         <div className="col-span-4 flex flex-col items-center justify-start w-full gap-1 py-5 px- bg-lighBlue rounded-s-xl ">
           <h1 className="text-[14px]">Görüşme</h1>
           <div className="flex items-center gap-2">
-            <HiVideoCamera className="text-gray-600" size={20} />
+            <HiVideoCamera size={20} />
             <h6 className="text-[12px]">28</h6>
           </div>
         </div>
         <div className="col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue ">
-          <h1 className="text-[14px] ">Takipçi</h1>
-          <div className="flex items-center justify-center gap-2">
-            <FaUser className="text-gray-600" />
-            <h6 className="text-[12px] ">523</h6>
-          </div>
-        </div>
-        <div className="col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue rounded-e-xl">
           <h1 className="text-[14px] ">Diller</h1>
           <div className="flex items-center justify-center gap-2">
-            <GrLanguage className="text-gray-600" />
+            <GrLanguage />
             <h6 className="text-[12px] ">Tr</h6>
           </div>
         </div>
-      </div>
-      <div className="priceArea flex text-center justify-center mx-3 ">
-        <h4 className="font-semibold text-lg">₺{price}/Seans</h4>
-        <h4 className="ml-2 text-sm pt-1">
-          {" "}
-          {`(Minimum ${minSessionTime} dakika)`}
-        </h4>
+        <div className="col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue rounded-e-xl">
+          <h1 className="text-[14px] ">Ücret</h1>
+          <div className="flex items-center justify-center gap-2">
+            <IoMdWallet />
+            <h6 className="text-[12px] ">8₺/dk</h6>
+          </div>
+        </div>
       </div>
       {wideScreenImg && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
