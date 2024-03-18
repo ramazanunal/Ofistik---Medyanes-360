@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import "../../style/contactInfo.css";
@@ -22,33 +22,27 @@ function ContactForm({
   return (
     <div className="contactComponent animate__animated animate__fadeInLeft lg:w-[35rem] lg:h-auto md:w-[24rem] sm:w-[24rem] md:h-auto sm:h-auto">
       <div className="title">
-        <h2 className="text-center text-lg md:text-[2.8vh] lg:text-[2.6vh] xl:text-[2.4vh] text-gray-700 font-bold p-3">
-          Ön Bilgi Formu
-        </h2>
+        <h2 className="text-center text-3xl font-bold p-3">Ön Bilgi Formu</h2>
       </div>
-      <div className="flex flex-col items-center justify-center h-auto px-8 lg:px-0">
+      <div className="flex flex-col items-center justify-center h-auto">
         <div className="choosePerson">
           <button
             onClick={() => handleOptionChange(true)}
-            className={` p-2  text-sm rounded-lg m-3 px-7 ${
-              isOwn === true ? "selected" : ""
-            } ${
-              isOwn === true
+            className={` p-2  tex-sm rounded-lg m-3 px-7 ${isOwn === true ? "selected" : ""
+              } ${isOwn === true
                 ? " bg-premiumOrange text-white"
                 : "bg-gray-200  text-gray-600"
-            }`}
+              }`}
           >
             Kendim İçin
           </button>
           <button
             onClick={() => handleOptionChange(false)}
-            className={` p-2  text-sm rounded-lg m-3 px-7 ${
-              isOwn === false ? "selected" : ""
-            } ${
-              isOwn === false
+            className={` p-2  tex-sm rounded-lg m-3 px-7 ${isOwn === false ? "selected" : ""
+              } ${isOwn === false
                 ? "bg-premiumOrange text-white"
                 : "bg-gray-200  text-gray-600"
-            }`}
+              }`}
           >
             Başkası İçin
           </button>
@@ -84,7 +78,7 @@ function ContactForm({
                     as="textarea"
                     rows="4"
                     cols="50"
-                    className="lg:w-[30rem] max-[768px]:w-[20rem] p-3 outline-none border-gray-100 border-2 rounded-xl"
+                    className="lg:w-[30rem] max-[768px]:w-[22rem] p-3 outline-none border-gray-100 border-2 rounded-xl"
                     placeholder="Notlar (Size daha iyi bir hizmet verebilmemiz için lütfen almak istediğiniz hizmetin içeriğini birkaç cümleyle açıklayınız.)"
                     name="notes"
                   />
@@ -148,7 +142,7 @@ function ContactForm({
               >
                 <div className="m-3">
                   <Field
-                    className="lg:w-[30rem] max-[768px]:w-[20rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
+                    className="lg:w-[30rem] max-[768px]:w-[22rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
                     type="text"
                     placeholder="İsim"
                     name="firstName"
@@ -156,7 +150,7 @@ function ContactForm({
                 </div>
                 <div className="m-3">
                   <Field
-                    className="lg:w-[30rem] max-[768px]:w-[20rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
+                    className="lg:w-[30rem] max-[768px]:w-[22rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
                     type="text"
                     placeholder="Soyisim"
                     name="lastName"
@@ -188,7 +182,7 @@ function ContactForm({
                   <Field
                     id="birthdaypicker"
                     type="date"
-                    className={` before:content-'Doğum Tarihi:' before:mr-1 before:text-gray-600 p-3  outline-none text-stepBorder1 lg:w-[30rem] max-[768px]:w-[20rem] border-gray-100 border-2 rounded-xl `}
+                    className={` before:content-'Doğum Tarihi:' before:mr-1 before:text-gray-600 p-3  outline-none text-stepBorder1 lg:w-[30rem] max-[768px]:w-[22rem] border-gray-100 border-2 rounded-xl `}
                     name="dateOfBirth"
                   />
                 </div>
@@ -197,7 +191,7 @@ function ContactForm({
                     as="textarea"
                     rows="4"
                     cols="50"
-                    className="p-3  outline-none lg:w-[30rem] max-[768px]:w-[20rem] border-gray-100 border-2 rounded-xl"
+                    className="p-3  outline-none lg:w-[30rem] max-[768px]:w-[22rem] border-gray-100 border-2 rounded-xl"
                     placeholder="Notlar (Size daha iyi bir hizmet verebilmemiz için lütfen almak istediğiniz hizmetin içeriğini birkaç cümleyle açıklayınız.)"
                     name="notes"
                   />

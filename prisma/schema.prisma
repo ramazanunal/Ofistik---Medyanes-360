@@ -38,7 +38,7 @@ model HizmetAlan {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    Date      Date[]
+    // Date      Date[]
 }
 
 model HizmetVeren {
@@ -57,14 +57,12 @@ model HizmetVeren {
     comments             Comment[]
     certificates         Certificate[]
 
-    SelectedTimes SelectedTimes?
-
     phone     String
     userId    String?  @unique @db.ObjectId
     user      User?    @relation(fields: [userId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    Date      Date[]
+    // Date      Date[]
 }
 
 model EducationInfo {
@@ -114,10 +112,10 @@ enum Role {
 }
 
 model Date {
-    id            String   @id @default(auto()) @map("_id") @db.ObjectId
-    confirm       Boolean  @default(false)
-    date_of_birth DateTime
-    delete        Boolean  @default(false)
+    id            String  @id @default(auto()) @map("_id") @db.ObjectId
+    confirm       Boolean @default(false)
+    date_of_birth String?
+    delete        Boolean @default(false)
     duration      Int
     service       String
     notes         String
@@ -126,12 +124,13 @@ model Date {
     gender        String?
     firstName     String?
     lastName      String?
+    time          String?
 
-    hizmetAlanId String?     @unique @db.ObjectId
-    hizmetAlan   HizmetAlan? @relation(fields: [hizmetAlanId], references: [id])
+    // hizmetAlanId String?     @unique @db.ObjectId
+    // hizmetAlan   HizmetAlan? @relation(fields: [hizmetAlanId], references: [id])
 
-    hizmetVerenId String?      @unique @db.ObjectId
-    hizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    // hizmetVerenId String?      @unique @db.ObjectId
+    // hizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -141,9 +140,11 @@ model SelectedTimes {
     id       String  @id @default(auto()) @map("_id") @db.ObjectId
     active   Boolean @default(true)
     duration Int
+    date     String
+    time     String
+}
 
-    hizmetVerenId String?      @unique @db.ObjectId
-    hizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
-
+model SavedTimes {
+    id   String   @id @default(auto()) @map("_id") @db.ObjectId
     time String
 }

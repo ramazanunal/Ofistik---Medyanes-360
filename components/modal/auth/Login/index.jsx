@@ -42,7 +42,6 @@ function LoginModal() {
             redirect: false,
           });
           if (result.error) {
-            console.log(result.error)
             return toast.error(result.error);
           }
           toast.success('Giriş başarılı');

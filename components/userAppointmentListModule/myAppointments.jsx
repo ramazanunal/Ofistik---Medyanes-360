@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import EditModal from "./editModal";
 import Swal from "sweetalert2";
+import { getAPI } from "@/services/fetchAPI";
 
 function MyAppointments() {
   const [formData, setFormData] = useState([]); // tüm randevuleri atadığımız array
@@ -94,16 +95,7 @@ function MyAppointments() {
         localStorage.setItem("formData", JSON.stringify(updatedFormData)); // GÜNCELLENMİŞ RANDEVULERİ formData (randevular) DATABASE İNE GÖNDERECEĞİZ
       }
     });
-  };
-
-  useEffect(() => {
-    // kaydedilen randevuları localStorage dan alan hooks
-    const storedFormData = localStorage.getItem("formData"); //RANDEVULARI DATEBASE DEN ALIĞIMIZ HOOKS
-    if (storedFormData) {
-      const parsedFormData = JSON.parse(storedFormData);
-      setFormData(parsedFormData);
-    }
-  }, []);
+  };  
 
   const renderSwiper = (appointments) => {
     //en fazla alt alta 3 tane randevu görüntülememizi sağlayan kod

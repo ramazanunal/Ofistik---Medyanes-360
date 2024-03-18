@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect } from "react";
 import Steps from "../commonModules/steps";
 import TimeAndDate from "./timeAndDate";
@@ -6,7 +6,7 @@ import ContactForm from "./contactInfo";
 import ServiceComponent from "./serviceComponent";
 import Swal from "sweetalert2";
 import AppointmentView from "./appointmentView";
-import prisma from "@/lib/prisma";
+import { getAPI, postAPI } from "@/services/fetchAPI";
 
 function AppointmentComponent() {
   const [step, setStep] = useState(1); // en üstte gözüken stepleri tutan değişken
@@ -31,6 +31,12 @@ function AppointmentComponent() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const getSelectedTimes = async () => {
+    const times = await getAPI("/selectedtimes")
+    setSelectedTimes(times);
+    return times
+  }
 
   const handleNext = () => {
     // ileri butonu fonksiyonu (seçim yapmadan ileri gitmeye çalıştığımızda hata veriyor)
@@ -70,9 +76,7 @@ function AppointmentComponent() {
 
   useEffect(() => {
     //DATABASE DEN OKUCAAK SAATLER
-    const storedTimes = localStorage.getItem("selectedTimes");
-    const parsedTimes = storedTimes ? JSON.parse(storedTimes) : [];
-    setSelectedTimes(parsedTimes);
+    getSelectedTimes()
   }, []);
 
   const obje = [
@@ -112,7 +116,7 @@ function AppointmentComponent() {
     },
   ];
 
-  const handleFinish = (formDataa) => {
+  const handleFinish = async (formDataa) => {
     // randevuyu tamamlamamızı sağlayan fonksiyon
     setForWho(formDataa.kimIçin);
     setNotes(formDataa.notes);
@@ -128,60 +132,46 @@ function AppointmentComponent() {
       );
 
       if (isFormValid) {
-        const existingSelectedTimes =
-          JSON.parse(localStorage.getItem("selectedTimes")) || [];
+        const existingSelectedTimes = await getSelectedTimes()
 
         const selectedDateTime = returnDate.split(" ")[2];
         const selectedDate = returnDate.split(" ")[0];
 
-        console.log(selectedDate);
+        console.log(formDataa);
 
         // Gününüze bir gün ekleyin
         const parts = selectedDate.split(".");
         const formattedDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
         formattedDate.setDate(formattedDate.getDate() + 1);
 
-        console.log(formattedDate.toISOString().split("T")[0]);
-        console.log(selectedDateTime);
-
         const timeIndex = existingSelectedTimes.findIndex(
           (timeObj) =>
             timeObj.time === selectedDateTime &&
             timeObj.date === formattedDate.toISOString().split("T")[0]
         );
-        console.log(timeIndex);
 
         if (timeIndex !== -1) {
-          existingSelectedTimes[timeIndex].active = false;
-          localStorage.setItem(
-            "selectedTimes",
-            JSON.stringify(existingSelectedTimes)
-          );
+          await postAPI(`/selectedtimes?id=${existingSelectedTimes[timeIndex].id}`, {
+            active: false
+          }, "PUT")
+
+          await getSelectedTimes()
         }
 
-        let existingFormData =
-          JSON.parse(localStorage.getItem("formData")) || [];
-
-        const circularReplacer = () => {
-          const seen = new WeakSet();
-          return (_, value) => {
-            if (typeof value === "object" && value !== null) {
-              if (seen.has(value)) {
-                return;
-              }
-              seen.add(value);
-            }
-            return value;
-          };
-        };
-
-        existingFormData.push(formDataa);
-
-        // Update the 'formData' in localStorage using the replacer function
-        localStorage.setItem(
-          "formData",
-          JSON.stringify(existingFormData, circularReplacer())
-        );
+        postAPI("/date", {
+          confirm: formDataa["confirm"],
+          date_of_birth: formDataa["dateOfBirth"],
+          delete: formDataa["delete"],
+          duration: formDataa["duration"],
+          service: formDataa["service"],
+          notes: formDataa["notes"],
+          language: formDataa["language"],
+          kim_icin: formDataa["kimIçin"],
+          gender: formDataa["gender"],
+          firstName: formDataa["firstName"],
+          lastName: formDataa["lastName"],
+          time: formDataa["time"]
+        }, "POST")
 
         setShowFinishScreen(true);
         openModal();
@@ -202,15 +192,15 @@ function AppointmentComponent() {
       title: "Başarılı",
       html: request
         ? '<h2 className="text-center text-base font-semibold p-4">' +
-          "Randevu talebiniz başarılı bir şekilde oluşturuldu." +
-          '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
-          "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
-          "</h2>"
+        "Randevu talebiniz başarılı bir şekilde oluşturuldu." +
+        '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
+        "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
+        "</h2>"
         : '<h2 className="text-center text-base font-semibold p-4">' +
-          "Sizinle buluşmayı büyük bir heyecan ile bekliyoruz." +
-          '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
-          "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
-          "</h2>",
+        "Sizinle buluşmayı büyük bir heyecan ile bekliyoruz." +
+        '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
+        "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
+        "</h2>",
       icon: "success",
       confirmButtonText: "Kapat",
     });
@@ -221,17 +211,6 @@ function AppointmentComponent() {
     // forOwn ve forSomeone ögeleri arasında değişimi sağlıyor
     setIsOwn(option);
   };
-
-  const [formData2, setFormData2] = useState({
-    kimIçin: "başkası",
-    time: "",
-    service: "",
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    notes: "",
-    gender: "",
-  });
 
   const parseDateTime = (returnDate) => {
     // date i day.month.year formuna dönüştüren fonksiyon
@@ -341,9 +320,9 @@ function AppointmentComponent() {
               <div className="nextStep flex items-center justify-center m-3 mb-5">
                 <button
                   onClick={handleBack}
-                  className="border-premiumOrange bg-white border-2 rounded-lg flex items-center justify-center w-[8rem] buttons"
+                  className="border-premiumOrange bg-white border-2 rounded-lg flex items-center justify-center w-[9rem] buttons"
                 >
-                  <h4 className="text-premiumOrange p-2 text-sm lg:text-md tracking-wider">
+                  <h4 className="text-premiumOrange p-2 text-md tracking-wider">
                     <i className="mr-2 fa-solid fa-chevron-left"></i> Geri
                   </h4>
                 </button>
@@ -354,9 +333,9 @@ function AppointmentComponent() {
                 <div className="nextStep flex items-center justify-center m-3 mb-5">
                   <button
                     onClick={handleNext}
-                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[8rem] buttons"
+                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[9rem] buttons"
                   >
-                    <h4 className="text-white p-2 text-sm lg:text-md  tracking-wider">
+                    <h4 className="text-white p-2 text-md tracking-wider">
                       İleri <i className="ml-2 fa-solid fa-chevron-right"></i>
                     </h4>
                   </button>
@@ -367,9 +346,9 @@ function AppointmentComponent() {
               <div className="nextStep flex items-center justify-center m-3 mb-5">
                 <button
                   onClick={handleNext}
-                  className="bg-premiumOrange rounded-lg flex items-center justify-center w-[8rem] buttons"
+                  className="bg-premiumOrange rounded-lg flex items-center justify-center w-[9rem] buttons"
                 >
-                  <h4 className="text-white p-2 text-sm lg:text-md tracking-wider">
+                  <h4 className="text-white p-2 text-md tracking-wider">
                     İleri<i className="ml-2 fa-solid fa-chevron-right"></i>
                   </h4>
                 </button>
@@ -382,9 +361,9 @@ function AppointmentComponent() {
                     value="Submit"
                     form="myform"
                     type="submit"
-                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[8rem] buttons"
+                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[9rem] buttons"
                   >
-                    <h4 className="text-white p-2 text-sm lg:text-md  tracking-wider">
+                    <h4 className="text-white p-2 text-md tracking-wider">
                       Bitir<i className="ml-2 fa-solid fa-check"></i>
                     </h4>
                   </button>

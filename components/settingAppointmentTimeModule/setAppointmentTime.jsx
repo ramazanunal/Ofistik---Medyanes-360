@@ -14,6 +14,7 @@ import "swiper/css/navigation";
 
 import { Navigation, Pagination } from "swiper/modules";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { getAPI, postAPI } from "@/services/fetchAPI";
 
 function SetAppointmentTime() {
   const [datesData, setDatesData] = useState([]); // TAKVİMDEN SEÇTİĞİMİZ TARİHLERİ TUTAN ARRAY
@@ -25,19 +26,23 @@ function SetAppointmentTime() {
   const appointmentPrice = 1000; // BU KISIM KULLANICI PROFİLİNDEN ALINAN RANDEVU ÜCRETİ YERİ
   const isMobileForAnimation = useMediaQuery(768)
 
-  useEffect(() => {
-    const localStorageSavedTimes =
-      JSON.parse(localStorage.getItem("savedTimes")) || [];
+  const getSavedTimes = async () => {
+    const data = await getAPI("/savedtimes")
+
     const timeSortingFunction = (a, b) => {
       const timeA = new Date("1970-01-01T" + a + ":00");
       const timeB = new Date("1970-01-01T" + b + ":00");
 
       return timeA - timeB;
     };
-    const sortedSavedTimes = localStorageSavedTimes.sort(timeSortingFunction);
+    const sortedSavedTimes = data?.sort(timeSortingFunction);
 
     setSavedTimesArray(sortedSavedTimes);
-  });
+  }
+
+  useEffect(() => {
+    getSavedTimes()
+  }, []);
 
   const getSelectedDate = (selectedDate) => {
     // TAKVİMDEKİ DEĞİŞİKLİKLERE GÖRE SEÇİLEN TARİHLERİ AYARLAYAN FONKSİYON
@@ -45,7 +50,12 @@ function SetAppointmentTime() {
     setSelectedTimes([]);
   };
 
-  const handleSetTime = (values, { resetForm }) => {
+  const getSelectedTimes = async () => {
+    const data = await getAPI("/selectedtimes")
+    return data
+  }
+
+  const handleSetTime = async (values, { resetForm }) => {
     // RANDEVU SAATİ EKLEMEMİZİ SAĞLAYAN FONKSİYON
     setSelectedDuration(appointmentDuration);
     if (savedTimes === true) {
@@ -59,8 +69,8 @@ function SetAppointmentTime() {
         });
         return;
       }
-      const existingTimes =
-        JSON.parse(localStorage.getItem("selectedTimes")) || []; // DATABASE DEN RANDEVU SAATLERİNİ ALACAĞIZ (selectedTimes) BEN BURDA DİREK LOCAL DEN ALDIM
+      const existingTimes = await getSelectedTimes()
+
       // Check for conflicts
       const conflictingAppointments = existingTimes.some((item) => {
         const existingStartDateTime = moment(`${item.date} ${item.time}`);
@@ -101,7 +111,7 @@ function SetAppointmentTime() {
           existingTimes.push(dateTimeObject);
         });
       });
-      localStorage.setItem("selectedTimes", JSON.stringify(existingTimes)); //DATABASE E GÜNCELLENMİŞ RANDEVU SAATLERİNİ GÖNDERECEĞİMİZ YER
+      await postAPI("/selectedtimes", existingTimes)
       resetForm();
       setSelectedTimes([]);
       Swal.fire({
@@ -121,8 +131,7 @@ function SetAppointmentTime() {
         });
         return;
       }
-      const existingTimes =
-        JSON.parse(localStorage.getItem("selectedTimes")) || []; // DATABASE DEN RANDEVU SAATLERİNİ ALACAĞIZ (selectedTimes) BEN BURDA DİREK LOCAL DEN ALDIM
+      const existingTimes = await getSelectedTimes()
       // Her bir tarihi, seçilen saatle birlikte ekleyin
       datesData.forEach((chosenDate) => {
         const [hour, minute] = time.split(":");
@@ -142,7 +151,7 @@ function SetAppointmentTime() {
           existingTimes.push(dateTimeObject);
         }
       });
-      localStorage.setItem("selectedTimes", JSON.stringify(existingTimes)); //DATABASE E GÜNCELLENMİŞ RANDEVU SAATLERİNİ GÖNDERECEĞİMİZ YER
+      await postAPI("/selectedtimes", existingTimes)
       resetForm();
       Swal.fire({
         title: "Başarılı",
@@ -272,7 +281,7 @@ function SetAppointmentTime() {
     });
   };
 
-  const handleSaveTime = (values) => {
+  const handleSaveTime = async (values) => {
     const { time } = values;
     if (!time) {
       Swal.fire({
@@ -283,11 +292,13 @@ function SetAppointmentTime() {
       });
       return;
     }
-    const existingSavedTimes =
-      JSON.parse(localStorage.getItem("savedTimes")) || []; //DATABASE DEN savedTime TABLOSUNU OKUYACAĞIMIZ YER BEN BURDA DİREK LOCAL DEN ALDIM
-    const isDuplicate = existingSavedTimes.some(
-      (savedTime) => savedTime === time
-    );
+    const existingSavedTimes = await getAPI("/savedtimes")
+    let isDuplicate = false;
+    if (existingSavedTimes.length > 0) {
+      isDuplicate = existingSavedTimes?.some(
+        (savedTime) => savedTime === time
+      );
+    }
     if (isDuplicate) {
       Swal.fire({
         title: "Hata !",
@@ -297,8 +308,9 @@ function SetAppointmentTime() {
       });
       return;
     }
-    existingSavedTimes.push(time);
-    localStorage.setItem("savedTimes", JSON.stringify(existingSavedTimes)); // GÜNCELLEMİŞ SAATLERİ DATABASE E GÖNDERECEĞİMİZ YER BEN BURDA DİREK LOCAL A GÖNDERDİM
+    await postAPI("/savedtimes", {
+      time: time
+    })
     Swal.fire({
       title: "Başarılı !",
       text: "Zaman başarıyla kaydedildi.",
@@ -477,8 +489,8 @@ function SetAppointmentTime() {
                   <button
                     type="submit"
                     className={` hover:bg-premiumOrange ${selectedTimes.length > 0
-                        ? "bg-premiumOrange"
-                        : "bg-gray-400"
+                      ? "bg-premiumOrange"
+                      : "bg-gray-400"
                       } hover:text-white text-gray-100 rounded-lg flex items-center justify-center w-56 buttons mt-4 mb-4 transition duration-[400ms]`}
                   >
                     <h4 className="text-white p-2 px-6 tracking-wider">
@@ -492,8 +504,8 @@ function SetAppointmentTime() {
                   <button
                     type="submit"
                     className={`${formikProps.values.time
-                        ? "bg-premiumOrange text-white"
-                        : "bg-gray-400 text-gray-100"
+                      ? "bg-premiumOrange text-white"
+                      : "bg-gray-400 text-gray-100"
                       } rounded-lg flex items-center justify-center w-56 buttons mt-4 mb-4`}
                   >
                     <h4 className="text-white p-2 px-6 tracking-wider">

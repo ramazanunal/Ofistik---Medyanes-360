@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import EventModal from "../commonModules/eventModal";
 import "../../style/agenda.css";
@@ -9,6 +10,7 @@ import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import CardMobile from "./cardMobile";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { getAPI, postAPI } from "@/services/fetchAPI";
 
 function Agenda() {
   const [formData, setFormData] = useState([]);
@@ -185,9 +187,84 @@ function Agenda() {
       )
     );
   }, [formData]); // formData değiştiğinde tekrar çalışacak
+
+  // kaydedilen randevuları databaseden
+  const getDatas = async (easy = false) => {
+    const parsedFormData = await getAPI("/date")
+
+    if (easy) {
+      return parsedFormData
+    }
+
+    const filteredFormData = filterFormData(
+      parsedFormData,
+      filter,
+      alphabetic
+    );
+
+    if (filteredFormData) {
+      let sortedFormData;
+
+      if (alphabetic === "az") {
+        sortedFormData = filteredFormData.sort((a, b) =>
+          a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase())
+        );
+      } else if (alphabetic === "za") {
+        sortedFormData = filteredFormData.sort((a, b) =>
+          b.firstName.toLowerCase().localeCompare(a.firstName.toLowerCase())
+        );
+      } else if (alphabetic === "new") {
+        sortedFormData = filteredFormData.sort((a, b) => {
+          const dateA = new Date(
+            a.time.split(" ")[0].split(".").reverse().join("-") +
+            " " +
+            a.time.split(" ")[2]
+          );
+          const dateB = new Date(
+            b.time.split(" ")[0].split(".").reverse().join("-") +
+            " " +
+            b.time.split(" ")[2]
+          );
+
+          return dateA - dateB;
+        });
+      } else if (alphabetic === "old") {
+        sortedFormData = filteredFormData.sort((a, b) => {
+          const dateA = new Date(
+            a.time.split(" ")[0].split(".").reverse().join("-") +
+            " " +
+            a.time.split(" ")[2]
+          );
+          const dateB = new Date(
+            b.time.split(" ")[0].split(".").reverse().join("-") +
+            " " +
+            b.time.split(" ")[2]
+          );
+
+          return dateB - dateA;
+        });
+      } else {
+        sortedFormData = filteredFormData.sort((a, b) => {
+          const dateA = new Date(
+            a.time.split(" ")[0].split(".").reverse().join("-") +
+            " " +
+            a.time.split(" ")[2]
+          );
+          const dateB = new Date(
+            b.time.split(" ")[0].split(".").reverse().join("-") +
+            " " +
+            b.time.split(" ")[2]
+          );
+
+          return dateA - dateB;
+        });
+      }
+
+      setFormData(sortedFormData);
+    }
+  }
+
   useEffect(() => {
-    // localStorage'dan formData'yı al
-    const storedFormData = localStorage.getItem("formData");
     setPendingAppointments(
       formData.filter(
         (formEntry) =>
@@ -204,76 +281,11 @@ function Agenda() {
           formEntry.delete === false
       )
     );
-    if (storedFormData) {
-      const parsedFormData = JSON.parse(storedFormData);
-      const filteredFormData = filterFormData(
-        parsedFormData,
-        filter,
-        alphabetic
-      );
-
-      if (filteredFormData) {
-        let sortedFormData;
-
-        if (alphabetic === "az") {
-          sortedFormData = filteredFormData.sort((a, b) =>
-            a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase())
-          );
-        } else if (alphabetic === "za") {
-          sortedFormData = filteredFormData.sort((a, b) =>
-            b.firstName.toLowerCase().localeCompare(a.firstName.toLowerCase())
-          );
-        } else if (alphabetic === "new") {
-          sortedFormData = filteredFormData.sort((a, b) => {
-            const dateA = new Date(
-              a.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              a.time.split(" ")[2]
-            );
-            const dateB = new Date(
-              b.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              b.time.split(" ")[2]
-            );
-
-            return dateA - dateB;
-          });
-        } else if (alphabetic === "old") {
-          sortedFormData = filteredFormData.sort((a, b) => {
-            const dateA = new Date(
-              a.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              a.time.split(" ")[2]
-            );
-            const dateB = new Date(
-              b.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              b.time.split(" ")[2]
-            );
-
-            return dateB - dateA;
-          });
-        } else {
-          sortedFormData = filteredFormData.sort((a, b) => {
-            const dateA = new Date(
-              a.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              a.time.split(" ")[2]
-            );
-            const dateB = new Date(
-              b.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              b.time.split(" ")[2]
-            );
-
-            return dateA - dateB;
-          });
-        }
-
-        setFormData(sortedFormData);
-      }
-    }
   }, [formData, alphabetic]);
+
+  useEffect(() => {
+    getDatas()
+  }, [])
 
   useEffect(() => {
     const buttons = document.querySelectorAll(".rbc-button-link");
@@ -372,9 +384,11 @@ function Agenda() {
           new Date(
             `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
           ));
+
       const onAccept = async (timeObject) => {
         // RANDEVU TALEBİNİ KABUL ETME FONKSİYONUNU request değerini false yapıyor
-        const originalObje = findObjectByTime(timeObject);
+        const data = await getDatas(true)
+        const originalObje = data.filter(({ id }) => id === timeObject)[0]
         Swal.fire({
           title: "Emin misiniz!",
           text: "Randevu talebini kabul etmek istediğinize emin misiniz?",
@@ -382,42 +396,23 @@ function Agenda() {
           showCancelButton: true,
           confirmButtonText: "Evet",
           cancelButtonText: "Hayır",
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.isConfirmed) {
             if (originalObje) {
               const falseValue2 = originalObje.confirm;
               const updatedValue2 = falseValue2 === false ? true : "";
 
-              const updatedObje = {
-                ...originalObje,
-                confirm: updatedValue2,
-              };
-
-              const formDataString = localStorage.getItem("formData");
-
-              if (formDataString) {
-                const formData = JSON.parse(formDataString);
-
-                const index = formData.findIndex(
-                  (obj) => obj.time === originalObje.time
-                );
-
-                if (index !== -1) {
-                  formData[index] = updatedObje;
-
-                  localStorage.setItem("formData", JSON.stringify(formData));
-                  Swal.fire({
-                    title: "Başarılı !",
-                    text: "Randevu talebi başarılı bir şekilde onaylandı ve kullanıcıya bildirildi.",
-                    icon: "success",
-                    confirmButtonText: "Kapat",
-                  });
-                  return updatedObje;
+              await postAPI("/date", {
+                id: timeObject,
+                data: {
+                  confirm: updatedValue2
                 }
-              }
+              }, "PUT")
             }
           }
         });
+
+        const updated = await getDatas()
 
         return null;
       };
@@ -431,37 +426,26 @@ function Agenda() {
           showCancelButton: true,
           confirmButtonText: "Evet",
           cancelButtonText: "Hayır",
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.isConfirmed) {
-            const obje = findObjectByTime(timeObject);
+            const data = await getDatas(true)
+            const originalObje = data.filter(({ id }) => id === timeObject)[0]
 
-            if (obje) {
-              const formDataString = localStorage.getItem("formData");
-
-              if (formDataString) {
-                const formData = JSON.parse(formDataString);
-
-                const index = formData.findIndex(
-                  (obj) => obj.appointmentNumber === obje.appointmentNumber
-                );
-
-                if (index !== -1) {
-                  formData[index].delete = true;
-
-                  localStorage.setItem("formData", JSON.stringify(formData));
-
-                  Swal.fire({
-                    title: "Başarılı !",
-                    text: "Randevu talebi başarılı bir şekilde reddedildi.",
-                    icon: "success",
-                    confirmButtonText: "Kapat",
-                  });
+            if (originalObje) {
+              await postAPI("/date", {
+                id: timeObject,
+                data: {
+                  delete: true,
+                  confirm: false
                 }
-              }
+              }, "PUT").then(async () => {
+                await getDatas()
+              })
             }
           }
         });
       };
+
       const findObjectByTime = (timeObject) => {
         //TIKLADIĞIMIZ OBJEYİ ALIYORUZ
         const formDataString = localStorage.getItem("formData");
@@ -478,7 +462,7 @@ function Agenda() {
         return foundObject || null;
       };
 
-      const timeObject = formEntry.appointmentNumber;
+      const timeObject = formEntry.id;
       const isCancelDisabled = remainingTime.remainingHours < 12;
       const actualIndex = (currentPage - 1) * itemsPerPage + index;
       const isCancelled = formEntry.delete === true;
@@ -673,6 +657,7 @@ function Agenda() {
       );
     });
   }
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       const isOutsideButtonsArea =
@@ -690,6 +675,7 @@ function Agenda() {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [setShowTooltip]);
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       const isOutsideButtonsArea =
@@ -708,6 +694,7 @@ function Agenda() {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [setShowButtonsArea, setSelectedAppointment]);
+
   function getTime(start, duration) {
     const durationMinutes = parseInt(duration, 10);
     const [hours, minutes] = start.split(":").map(Number);
@@ -779,6 +766,7 @@ function Agenda() {
       cancelButtonText: "Hayır",
     }).then((result) => {
       if (result.isConfirmed) {
+
         const selectedTimes =
           JSON.parse(localStorage.getItem("selectedTimes")) || []; // BU İŞLEMİ DATABASE DEN YAPACAĞIZ BEN BURDA RANDEVUYU SİLERKEN AYNI ZAMANDA selectedTimes (randevu saatleri) ögesindeki o saatin active değerini false dan true ya çeviriyorum randevu silindiği için
 
@@ -1383,8 +1371,8 @@ function Agenda() {
               <li
                 onClick={() => handlePageChange(currentPage - 1)}
                 className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${currentPage === 1
-                    ? "bg-grayBg text-gray-600 font-semibold"
-                    : "border-grayBg"
+                  ? "bg-grayBg text-gray-600 font-semibold"
+                  : "border-grayBg"
                   }`}
               >
                 <button
@@ -1400,8 +1388,8 @@ function Agenda() {
                   key={page + 1}
                   onClick={() => handlePageChange(page + 1)}
                   className={`px-3 py-2 border w-[40px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${page + 1 === currentPage
-                      ? "bg-grayBg text-gray-600 font-semibold"
-                      : "border-grayBg"
+                    ? "bg-grayBg text-gray-600 font-semibold"
+                    : "border-grayBg"
                     }`}
                 >
                   <button onClick={() => handlePageChange(page + 1)}>
@@ -1412,8 +1400,8 @@ function Agenda() {
               <li
                 onClick={() => handlePageChange(currentPage + 1)}
                 className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${currentPage === totalPages
-                    ? "bg-grayBg text-gray-600 font-semibold"
-                    : "border-grayBg"
+                  ? "bg-grayBg text-gray-600 font-semibold"
+                  : "border-grayBg"
                   }`}
               >
                 <button

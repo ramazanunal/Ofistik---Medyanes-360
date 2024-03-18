@@ -4,6 +4,7 @@ import FullCalendarComponent from "../bigCalendarModule/fullCalendar";
 import SetAppointmentTime from "../settingAppointmentTimeModule/setAppointmentTime";
 import AppointmentInfos from "../generalInfosModule/appointmentInfos";
 import Agenda from "../agendaModule/agenda";
+import { getAPI } from "@/services/fetchAPI";
 
 function Dashboard() {
   const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
@@ -21,6 +22,7 @@ function Dashboard() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <>
       <div className="bg-grayBg">
