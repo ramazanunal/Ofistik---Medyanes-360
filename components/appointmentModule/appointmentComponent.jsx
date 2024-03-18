@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import Steps from "../commonModules/steps";
 import TimeAndDate from "./timeAndDate";
@@ -202,15 +202,15 @@ function AppointmentComponent() {
       title: "Başarılı",
       html: request
         ? '<h2 className="text-center text-base font-semibold p-4">' +
-        "Randevu talebiniz başarılı bir şekilde oluşturuldu." +
-        '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
-        "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
-        "</h2>"
+          "Randevu talebiniz başarılı bir şekilde oluşturuldu." +
+          '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
+          "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
+          "</h2>"
         : '<h2 className="text-center text-base font-semibold p-4">' +
-        "Sizinle buluşmayı büyük bir heyecan ile bekliyoruz." +
-        '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
-        "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
-        "</h2>",
+          "Sizinle buluşmayı büyük bir heyecan ile bekliyoruz." +
+          '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
+          "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
+          "</h2>",
       icon: "success",
       confirmButtonText: "Kapat",
     });
@@ -341,9 +341,9 @@ function AppointmentComponent() {
               <div className="nextStep flex items-center justify-center m-3 mb-5">
                 <button
                   onClick={handleBack}
-                  className="border-premiumOrange bg-white border-2 rounded-lg flex items-center justify-center w-[9rem] buttons"
+                  className="border-premiumOrange bg-white border-2 rounded-lg flex items-center justify-center w-[8rem] buttons"
                 >
-                  <h4 className="text-premiumOrange p-2 text-md tracking-wider">
+                  <h4 className="text-premiumOrange p-2 text-sm lg:text-md tracking-wider">
                     <i className="mr-2 fa-solid fa-chevron-left"></i> Geri
                   </h4>
                 </button>
@@ -354,9 +354,9 @@ function AppointmentComponent() {
                 <div className="nextStep flex items-center justify-center m-3 mb-5">
                   <button
                     onClick={handleNext}
-                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[9rem] buttons"
+                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[8rem] buttons"
                   >
-                    <h4 className="text-white p-2 text-md tracking-wider">
+                    <h4 className="text-white p-2 text-sm lg:text-md  tracking-wider">
                       İleri <i className="ml-2 fa-solid fa-chevron-right"></i>
                     </h4>
                   </button>
@@ -367,9 +367,9 @@ function AppointmentComponent() {
               <div className="nextStep flex items-center justify-center m-3 mb-5">
                 <button
                   onClick={handleNext}
-                  className="bg-premiumOrange rounded-lg flex items-center justify-center w-[9rem] buttons"
+                  className="bg-premiumOrange rounded-lg flex items-center justify-center w-[8rem] buttons"
                 >
-                  <h4 className="text-white p-2 text-md tracking-wider">
+                  <h4 className="text-white p-2 text-sm lg:text-md tracking-wider">
                     İleri<i className="ml-2 fa-solid fa-chevron-right"></i>
                   </h4>
                 </button>
@@ -382,9 +382,9 @@ function AppointmentComponent() {
                     value="Submit"
                     form="myform"
                     type="submit"
-                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[9rem] buttons"
+                    className="bg-premiumOrange rounded-lg flex items-center justify-center w-[8rem] buttons"
                   >
-                    <h4 className="text-white p-2 text-md tracking-wider">
+                    <h4 className="text-white p-2 text-sm lg:text-md  tracking-wider">
                       Bitir<i className="ml-2 fa-solid fa-check"></i>
                     </h4>
                   </button>

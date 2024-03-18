@@ -327,15 +327,15 @@ function TimeAndDate({
     <>
       <div className="animate__animated animate__fadeInLeft">
         <div className="title">
-          <h2 className=" text-center text-3xl font-bold p-3">
+          <h2 className=" text-center text-lg md:text-[2.4vh] lg:text-[2.2vh] xl:text-[2.4vh] text-gray-700 font-bold px-3">
             Tarih ve Zaman Seçiniz
           </h2>
-          <h2 className="text-premiumOrange text-center text-md font-bold">
+          <h2 className="text-premiumOrange text-center font-bold text-sm md:text-[1.6vh] lg:text-[1.4vh] xl:text-[1.6vh]">
             Ortalama randevu süresi {appoinmentDuration} dakikadır
           </h2>
         </div>
-        <div className="dayComponent flex flex-col xl:flex-row h-fit">
-          <div className="flex flex-col items-center justify-between lg:order-1  max-[768px]:order-2 w-full mb-3 2xl:mb-0 2xl:w-fit px-4 rounded-2xl shadow-xl md:mr-3 bg-white rightMobile h-fit">
+        <div className="dayComponent flex flex-col xl:flex-row h-fit w-full xl:px-10">
+          <div className="flex flex-col items-center justify-between lg:order-1  max-[768px]:order-2 w-full mb-3 xl:mb-0 2xl:mb-0 2xl:w-fit px-4 rounded-2xl shadow-xl md:mr-3 bg-white rightMobile h-auto clockArea">
             <div className="choosenDate h-[62px]">
               <div className="dateText m-2">
                 <h2 className="text-center  text-md font-semibold  w-[90px]">
@@ -365,11 +365,8 @@ function TimeAndDate({
                 {timedRequestSelectedTime !== "" &&
                   formatDate(selectedDate) === currentDateDisplayNotDay && (
                     <>
-                      <h2 className="text-sm text-gray-400 text-center font-semibold mt-[8px]">
+                      <h2 className="text-sm text-gray-400 text-center font-semibold my-[8px]">
                         Seçtiğiniz randevu talebi saati
-                      </h2>
-                      <h2 className="text-sm text-gray-400 text-center font-semibold mb-[8px] ml-auto mr-auto">
-                        (Lütfen aşağıdan seçiniz ! )
                       </h2>
                       <RequestTimeBox
                         isMobile={isMobile}
@@ -449,11 +446,8 @@ function TimeAndDate({
                         formatDate(selectedDate) ===
                           currentDateDisplayNotDay && (
                           <>
-                            <h2 className="text-sm text-gray-600 text-center font-semibold mt-[8px]">
+                            <h2 className="text-sm text-gray-600 text-center font-semibold my-[8px]">
                               Seçtiğiniz randevu talebi saati
-                            </h2>
-                            <h2 className="text-sm text-gray-600 text-center font-semibold mb-[8px] ml-auto mr-auto">
-                              (Lütfen aşağıdan seçiniz ! )
                             </h2>
                             <RequestTimeBox
                               isMobile={isMobile}
@@ -484,7 +478,7 @@ function TimeAndDate({
               </div>
             </div>
           </div>
-          <div className="max-[768px]:mb-[10px] rightArea max-[768px]:flex-1 flex items-center justify-center md:order-2 rounded-2xl shadow-xl bg-white md:h-[20rem]">
+          <div className="max-[768px]:mb-[10px] rightArea flex-1 flex items-center justify-center h-auto md:order-2 rounded-2xl shadow-xl bg-white md:h-[20rem] calendarArea">
             <CalendarBox
               selectedDate={selectedDate}
               onDateChange={(value) => {
@@ -500,6 +494,7 @@ function TimeAndDate({
           isOpen={openModalRequest}
           onClose={closeModalRequest}
           handleFormSubmit={handleFormSubmit}
+          confirm={handleAppointmentBoxClickTimed}
         />
       )}
     </>
