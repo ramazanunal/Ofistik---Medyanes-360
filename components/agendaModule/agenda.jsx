@@ -851,20 +851,85 @@ function Agenda() {
     const itemsPerSlide = 2;
     const swiperSlides = [];
 
-    const findObjectByTime = (timeObject) => {
-      const formDataString = localStorage.getItem("formData");
-      if (!formDataString) {
-        return [];
+    const getDatas = async (easy = false) => {
+      const parsedFormData = await getAPI("/date")
+
+      if (easy) {
+        return parsedFormData
       }
-      const formData = JSON.parse(formDataString);
-      const foundObject = formData.find(
-        (obj) => obj.id === timeObject
+
+      const filteredFormData = filterFormData(
+        parsedFormData,
+        filter,
+        alphabetic
       );
-      return foundObject || null;
-    };
+
+      if (filteredFormData) {
+        let sortedFormData;
+
+        if (alphabetic === "az") {
+          sortedFormData = filteredFormData.sort((a, b) =>
+            a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase())
+          );
+        } else if (alphabetic === "za") {
+          sortedFormData = filteredFormData.sort((a, b) =>
+            b.firstName.toLowerCase().localeCompare(a.firstName.toLowerCase())
+          );
+        } else if (alphabetic === "new") {
+          sortedFormData = filteredFormData.sort((a, b) => {
+            const dateA = new Date(
+              a.time.split(" ")[0].split(".").reverse().join("-") +
+              " " +
+              a.time.split(" ")[2]
+            );
+            const dateB = new Date(
+              b.time.split(" ")[0].split(".").reverse().join("-") +
+              " " +
+              b.time.split(" ")[2]
+            );
+
+            return dateA - dateB;
+          });
+        } else if (alphabetic === "old") {
+          sortedFormData = filteredFormData.sort((a, b) => {
+            const dateA = new Date(
+              a.time.split(" ")[0].split(".").reverse().join("-") +
+              " " +
+              a.time.split(" ")[2]
+            );
+            const dateB = new Date(
+              b.time.split(" ")[0].split(".").reverse().join("-") +
+              " " +
+              b.time.split(" ")[2]
+            );
+
+            return dateB - dateA;
+          });
+        } else {
+          sortedFormData = filteredFormData.sort((a, b) => {
+            const dateA = new Date(
+              a.time.split(" ")[0].split(".").reverse().join("-") +
+              " " +
+              a.time.split(" ")[2]
+            );
+            const dateB = new Date(
+              b.time.split(" ")[0].split(".").reverse().join("-") +
+              " " +
+              b.time.split(" ")[2]
+            );
+
+            return dateA - dateB;
+          });
+        }
+
+        setFormData(sortedFormData);
+      }
+    }
 
     const onAccept = async (timeObject) => {
-      const originalObje = findObjectByTime(timeObject);
+      // RANDEVU TALEBİNİ KABUL ETME FONKSİYONUNU request değerini false yapıyor
+      const data = await getDatas(true)
+      const originalObje = data.filter(({ id }) => id === timeObject)[0]
       Swal.fire({
         title: "Emin misiniz!",
         text: "Randevu talebini kabul etmek istediğinize emin misiniz?",
@@ -872,41 +937,29 @@ function Agenda() {
         showCancelButton: true,
         confirmButtonText: "Evet",
         cancelButtonText: "Hayır",
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           if (originalObje) {
             const falseValue2 = originalObje.confirm;
             const updatedValue2 = falseValue2 === false ? true : "";
-            const updatedObje = {
-              ...originalObje,
-              confirm: updatedValue2,
-            };
-            const formDataString = localStorage.getItem("formData");
-            if (formDataString) {
-              const formData = JSON.parse(formDataString);
-              const index = formData.findIndex(
-                (obj) => obj.time === originalObje.time
-              );
-              if (index !== -1) {
-                formData[index] = updatedObje;
-                localStorage.setItem("formData", JSON.stringify(formData));
-                Swal.fire({
-                  title: "Başarılı !",
-                  text: "Randevu talebi başarılı bir şekilde onaylandı ve kullanıcıya bildirildi.",
-                  icon: "success",
-                  confirmButtonText: "Kapat",
-                });
-                return updatedObje;
+
+            await postAPI("/date", {
+              id: timeObject,
+              data: {
+                confirm: updatedValue2
               }
-            }
+            }, "PUT")
           }
         }
       });
+
+      await getDatas()
+
       return null;
     };
 
-    const onReject = (timeObject) => {
-      const obje = findObjectByTime(timeObject);
+    const onReject = () => {
+      // RANDEVU TALEBİNİ RED ETME FONKSİYONUNU DİREK FORMDATA DAN O ÖGEYİ SİLİYOR
       Swal.fire({
         title: "Emin misiniz!",
         text: "Randevu talebini silmek istediğinize emin misiniz?",
@@ -914,26 +967,21 @@ function Agenda() {
         showCancelButton: true,
         confirmButtonText: "Evet",
         cancelButtonText: "Hayır",
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
-          if (obje) {
-            const formDataString = localStorage.getItem("formData");
-            if (formDataString) {
-              const formData = JSON.parse(formDataString);
-              const index = formData.findIndex(
-                (obj) => obj.id === obje.id
-              );
-              if (index !== -1) {
-                formData[index].delete = true;
-                localStorage.setItem("formData", JSON.stringify(formData));
-                Swal.fire({
-                  title: "Başarılı !",
-                  text: "Randevu talebi başarılı bir şekilde reddedildi.",
-                  icon: "success",
-                  confirmButtonText: "Kapat",
-                });
+          const data = await getDatas(true)
+          const originalObje = data.filter(({ id }) => id === timeObject)[0]
+
+          if (originalObje) {
+            await postAPI("/date", {
+              id: timeObject,
+              data: {
+                delete: true,
+                confirm: false
               }
-            }
+            }, "PUT").then(async () => {
+              await getDatas()
+            })
           }
         }
       });

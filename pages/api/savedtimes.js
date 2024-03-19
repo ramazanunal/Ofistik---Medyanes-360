@@ -39,11 +39,13 @@ export default async function handler(req, res) {
             res.status(500).json({ error: 'Saved times update failed' });
         }
     } else if (req.method === 'DELETE') {
-        const { id } = req.query;
+        const { time } = req.query;
         try {
+            const times = await prisma.savedTimes.findMany()
+            const deleTime = times.filter((saved) => saved.time === time)[0];
             await prisma.savedTimes.delete({
                 where: {
-                    id: id,
+                    id: deleTime.id,
                 },
             });
             res.json({ message: 'Saved times deleted successfully' });

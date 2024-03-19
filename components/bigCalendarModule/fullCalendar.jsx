@@ -9,6 +9,7 @@ import "moment-timezone";
 import EventModalForCalendar from "../commonModules/eventModalForBigCalendar";
 import Swal from "sweetalert2";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { getAPI } from "@/services/fetchAPI";
 const localizer = momentLocalizer(moment);
 
 const convertToISOFormat = (inputDate, onRequestChange) => {
@@ -99,19 +100,22 @@ function FullCalendarComponent() {
     };
   }, []);
 
-  useEffect(() => {
-    const storedFormData = localStorage.getItem("formData");
-    if (storedFormData) {
-      const parsedFormData = JSON.parse(storedFormData);
-      setFormData(parsedFormData);
-    }
+  const getSelectedTimes = async () => {
+    const times = await getAPI("/selectedtimes");
+    setSelectedTimes(times);
+    return times;
+  };
 
-    const storedSelectedTimes = localStorage.getItem("selectedTimes");
-    if (storedSelectedTimes) {
-      const parsedSelectedTimes = JSON.parse(storedSelectedTimes);
-      setSelectedTimes(parsedSelectedTimes);
-    }
-  });
+  const getDatas = async () => {
+    const dates = await getAPI("/date");
+    setFormData(dates);
+    return dates;
+  };
+
+  useEffect(() => {
+    getSelectedTimes();
+    getDatas();
+  }, []);
 
   const eventsFromSessionStorage = getSessionStorageData(formData, setRequest);
 
@@ -180,14 +184,14 @@ function FullCalendarComponent() {
     };
     return months[monthName];
   };
-  const deleteSelectedTime = (date, time) => {
+  const deleteSelectedTime = async (date, time) => {
     console.log(date);
     console.log(time);
     const updatedSelectedTimes = selectedTimes.filter(
       (timeObj) => !(timeObj.date === date && timeObj.time === time)
     );
-    setSelectedTimes(updatedSelectedTimes);
-    localStorage.setItem("selectedTimes", JSON.stringify(updatedSelectedTimes));
+    await postAPI("/selectedtimes", updatedSelectedTimes, "POST")
+    await getSelectedTimes()
   };
   const onSelectEvent = (event) => {
     if (event.title === "Boş Randevu") {

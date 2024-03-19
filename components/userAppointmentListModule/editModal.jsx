@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Field, Form } from "formik";
 import Swal from "sweetalert2";
 import Image from "next/image";
+import { getAPI, postAPI } from "@/services/fetchAPI";
 
 const EditModal = ({ isOpen, onClose, event }) => {
   if (!event) {
@@ -51,7 +52,7 @@ const EditModal = ({ isOpen, onClose, event }) => {
     // Create a separate variable to store the converted time for validation
     const convertedTime = convertTime(values.time);
 
-    const storedEvents = JSON.parse(localStorage.getItem("formData")) || [];
+    const storedEvents = await getAPI("/date");
 
     const isDuplicate = storedEvents.some(
       (storedEvent) =>
@@ -97,12 +98,11 @@ const EditModal = ({ isOpen, onClose, event }) => {
       }
     } else {
       values.time = convertedTime;
-      const updatedEvents = storedEvents.map((storedEvent) =>
-        storedEvent.id === values.id
-          ? { ...storedEvent, ...values }
-          : storedEvent
-      );
-      localStorage.setItem("formData", JSON.stringify(updatedEvents));
+      storedEvents.forEach(async (storedEvent) => {
+        if (storedEvent.id === values.id) {
+          await postAPI("/date", { ...storedEvent, ...values }, "PUT")
+        }
+      });
       onClose();
     }
   };

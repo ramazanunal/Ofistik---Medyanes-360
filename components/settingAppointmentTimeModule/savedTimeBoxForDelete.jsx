@@ -1,3 +1,4 @@
+import { getAPI, postAPI } from "@/services/fetchAPI";
 import React from "react";
 import Swal from "sweetalert2";
 
@@ -10,14 +11,13 @@ function SavedTimesForDeletion({ time }) {
       showCancelButton: true,
       confirmButtonText: "Evet",
       cancelButtonText: "Hayır",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        const savedTimesString = localStorage.getItem("savedTimes");
-        let savedTimes = savedTimesString ? JSON.parse(savedTimesString) : [];
+        const savedTimes = await getAPI("/savedtimes")
 
-        savedTimes = savedTimes.filter((saved) => saved !== time);
+        const deleTime = savedTimes.filter((saved) => saved === time)[0];
 
-        localStorage.setItem("savedTimes", JSON.stringify(savedTimes));
+        await postAPI(`/savedtimes?time=${deleTime}`, "", "DELETE")
         Swal.fire({
           title: "Başarılı !",
           text: "Seçilen saat başarılı bir şekilde silindi.",
