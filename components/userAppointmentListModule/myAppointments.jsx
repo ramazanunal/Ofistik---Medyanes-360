@@ -25,18 +25,18 @@ function MyAppointments() {
     setOpenEditModal(false);
   };
 
-  const handleDelete = (selectedAppointment) => {
+  const handleDelete = async (selectedAppointment) => {
     Swal.fire({
       title: "Emin misiniz!",
-      text: "Randevuyu silmek istediğinize emin misiniz?",
+      text: "Randevuyu iptal etmek istediğinize emin misiniz?",
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Evet",
       cancelButtonText: "Hayır",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        const selectedTimes =
-          JSON.parse(localStorage.getItem("selectedTimes")) || []; // BU İŞLEMİ DATABASE DEN YAPACAĞIZ BEN BURDA RANDEVUYU SİLERKEN AYNI ZAMANDA selectedTimes (randevu saatleri) ögesindeki o saatin active değerini false dan true ya çeviriyorum randevu silindiği için
+
+        const selectedTimes = await getSelectedTimes()
 
         const dateParts = selectedAppointment.time.split(" ");
         const datePart = dateParts[0].split(".");
@@ -58,7 +58,7 @@ function MyAppointments() {
           minute: "2-digit",
         });
 
-        const result = {
+        const result1 = {
           date: formattedDate,
           time: formattedTime,
         };
@@ -72,30 +72,36 @@ function MyAppointments() {
 
         const updatedSelectedTimes = selectedTimes.map((appointment) => {
           if (
-            appointment.date === result.date &&
-            appointment.time === result.time
+            appointment.date === result1.date &&
+            appointment.time === result1.time
           ) {
             return { ...appointment, active: true };
           }
           return appointment;
         });
 
-        localStorage.setItem(
-          "selectedTimes",
-          JSON.stringify(updatedSelectedTimes)
-        ); // GÜNCELLENMİŞ SAATLERİ YENİDEN DATABASE E GÖNDERECEĞİZ
+        await postAPI("/selectedtimes", updatedSelectedTimes, "POST") // GÜNCELLENMİŞ SAATLERİ YENİDEN DATABASE E GÖNDERECEĞİZ
 
         // Form datayı güncelle
-        const updatedFormData = formData.filter(
-          (appointment) =>
+        const dates = await getDatas(true)
+        dates.forEach(async (appointment) => {
+          if (
             appointment.date !== selectedAppointment.date ||
             appointment.time !== selectedAppointment.time
-        );
-        setFormData(updatedFormData);
-        localStorage.setItem("formData", JSON.stringify(updatedFormData)); // GÜNCELLENMİŞ RANDEVULERİ formData (randevular) DATABASE İNE GÖNDERECEĞİZ
+          ) {
+            await postAPI("/date", {
+              id: appointment.id,
+              data: {
+                delete: true
+              }
+            }, "PUT")
+          }
+        });
+
+        await getDatas()
       }
     });
-  };  
+  };
 
   const renderSwiper = (appointments) => {
     //en fazla alt alta 3 tane randevu görüntülememizi sağlayan kod
