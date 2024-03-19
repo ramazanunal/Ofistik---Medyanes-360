@@ -87,7 +87,7 @@ const ProfilePageLayout = ({ data }) => {
         <div className="  w-full  flex  flex-col items-center md:items-start md:flex-row  gap-5 text-center px-5 lg:px-10">
           <div
             id="fake-window"
-            className="md:h-[calc(100vh_-_140px)] overflow-y-auto bg-white w-full md:w-[35%] p-3 border shadow-lg rounded-3xl"
+            className="md:h-[calc(100vh_-_140px)] overflow-y-auto bg-white w-full md:w-[33%] p-3 border shadow-lg rounded-3xl"
           >
             <ProfileCardInfo
               data={data}
