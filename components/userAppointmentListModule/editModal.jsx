@@ -55,12 +55,12 @@ const EditModal = ({ isOpen, onClose, event }) => {
 
     const isDuplicate = storedEvents.some(
       (storedEvent) =>
-        storedEvent.appointmentNumber !== values.appointmentNumber &&
+        storedEvent.id !== values.id &&
         storedEvent.time === convertedTime
     );
 
     const isOverlapping = storedEvents.some((storedEvent) => {
-      if (storedEvent.appointmentNumber !== values.appointmentNumber) {
+      if (storedEvent.id !== values.id) {
         const newDate = convertedTime.split(" ")[0];
         const newTime = convertedTime.split(" ")[2];
         const oldDate = storedEvent.time.split(" ")[0];
@@ -98,7 +98,7 @@ const EditModal = ({ isOpen, onClose, event }) => {
     } else {
       values.time = convertedTime;
       const updatedEvents = storedEvents.map((storedEvent) =>
-        storedEvent.appointmentNumber === values.appointmentNumber
+        storedEvent.id === values.id
           ? { ...storedEvent, ...values }
           : storedEvent
       );
@@ -124,7 +124,7 @@ const EditModal = ({ isOpen, onClose, event }) => {
               service: event.service || "",
               language: event.language || "",
               duration: event.duration,
-              appointmentNumber: event.appointmentNumber || "",
+              id: event.id || "",
               notes: event.notes || "",
               time: {
                 date: formatDate(event.time.split(" ")[0]) || "",
@@ -257,7 +257,7 @@ const EditModal = ({ isOpen, onClose, event }) => {
                         <div>
                           <Field
                             type="text"
-                            name="appointmentNumber"
+                            name="id"
                             className="text-sm text-center w-[200px] p-1 border-2 border-stepBorder1 rounded-xl mx-[auto]"
                           />
                         </div>

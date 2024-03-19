@@ -124,7 +124,7 @@ const EventModalForCalendar = ({ isOpen, onClose, event }) => {
                     </div>
                     <div>
                       <h2 className="text-sm text-center text-gray-600">
-                        {event.appointmentNumber}
+                        {event.id}
                       </h2>
                     </div>
                   </div>

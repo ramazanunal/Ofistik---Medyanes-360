@@ -66,7 +66,7 @@ function ContactForm({
                 service: service,
                 notes: "",
                 language: "",
-                appointmentNumber:
+                id:
                   time.split(" ")[0].split(".").join("") +
                   time.split(" ")[2].split(":").join(""),
                 duration: duration,
@@ -133,7 +133,7 @@ function ContactForm({
                 service: service,
                 time: time,
                 duration: duration,
-                appointmentNumber:
+                id:
                   time.split(" ")[0].split(".").join("") +
                   time.split(" ")[2].split(":").join(""),
                 language: "",

@@ -139,7 +139,7 @@ const RequestModal = ({
                     </div>
                     <div>
                       <h2 className="text-sm text-center">
-                        {event.appointmentNumber}
+                        {event.id}
                       </h2>
                     </div>
                   </div>

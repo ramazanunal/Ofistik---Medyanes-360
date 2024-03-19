@@ -46,7 +46,7 @@ const getSessionStorageData = (formData, setRequest) => {
     const service = formEntry.service;
     const deleteStatus = formEntry.delete;
     const requestInfo = formEntry.time.split(" ")[3];
-    const appointmentNumber = formEntry.appointmentNumber;
+    const id = formEntry.id;
 
     let request = false;
 
@@ -61,7 +61,7 @@ const getSessionStorageData = (formData, setRequest) => {
     return {
       requestInfo: requestInfo,
       name: name,
-      appointmentNumber: appointmentNumber,
+      id: id,
       gender: gender,
       birthday: birthday,
       language: language,

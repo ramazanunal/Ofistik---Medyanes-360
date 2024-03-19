@@ -169,7 +169,6 @@ function Agenda() {
     setOpenModal(false);
   };
   useEffect(() => {
-    // localStorage'dan formData'yı al
     setPendingAppointments(
       formData.filter(
         (formEntry) =>
@@ -188,7 +187,7 @@ function Agenda() {
     );
   }, [formData]); // formData değiştiğinde tekrar çalışacak
 
-  // kaydedilen randevuları databaseden
+  // kaydedilen randevuları databaseden al
   const getDatas = async (easy = false) => {
     const parsedFormData = await getAPI("/date")
 
@@ -337,7 +336,7 @@ function Agenda() {
           confirmButtonText: "Kapat",
         });
       } else {
-        window.location.href = `/meet/${formEntry.appointmentNumber}`; //RANDEVU EKRANINA YÖNLENDİRME LİNKİ RANDEVU NUMARASI KULLANARAK
+        window.location.href = `/meet/${formEntry.id}`; //RANDEVU EKRANINA YÖNLENDİRME LİNKİ RANDEVU NUMARASI KULLANARAK
       }
     }
   };
@@ -347,7 +346,7 @@ function Agenda() {
   const toggleButtonsArea = (formEntry) => {
     if (
       selectedAppointment &&
-      selectedAppointment.appointmentNumber === formEntry.appointmentNumber
+      selectedAppointment.id === formEntry.id
     ) {
       setSelectedAppointment(null);
     } else {
@@ -446,22 +445,6 @@ function Agenda() {
         });
       };
 
-      const findObjectByTime = (timeObject) => {
-        //TIKLADIĞIMIZ OBJEYİ ALIYORUZ
-        const formDataString = localStorage.getItem("formData");
-
-        if (!formDataString) {
-          return [];
-        }
-
-        const formData = JSON.parse(formDataString);
-
-        const foundObject = formData.find(
-          (obj) => obj.appointmentNumber === timeObject
-        );
-        return foundObject || null;
-      };
-
       const timeObject = formEntry.id;
       const isCancelDisabled = remainingTime.remainingHours < 12;
       const actualIndex = (currentPage - 1) * itemsPerPage + index;
@@ -481,7 +464,7 @@ function Agenda() {
             {actualIndex + 1}
           </td>
           <td className="text-center p-3 text-black font-medium">
-            {formEntry.appointmentNumber}
+            {formEntry.id}
           </td>
           <td className="text-center p-3 text-black font-medium">
             {nameSurname}
@@ -561,8 +544,8 @@ function Agenda() {
             </div>
             {showButtonsArea &&
               selectedAppointment &&
-              selectedAppointment.appointmentNumber ===
-              formEntry.appointmentNumber && (
+              selectedAppointment.id ===
+              formEntry.id && (
                 <div className="absolute z-20 right-[8px] buttonsArea border-2 border-lightGray rounded-md bg-white animate__animated animate__zoomIn">
                   {!isCancelled && !isPastAppointment && status && (
                     <div className="items-center justify-center">
@@ -746,7 +729,12 @@ function Agenda() {
     );
   }
 
-  const handleDelete = (selectedAppointment, isCancelDisabled) => {
+  const getSelectedTimes = async () => {
+    const times = await getAPI("/selectedtimes")
+    return times
+  }
+
+  const handleDelete = async (selectedAppointment, isCancelDisabled) => {
     //SİLME FONKSİYONU
     if (isCancelDisabled) {
       Swal.fire({
@@ -764,11 +752,10 @@ function Agenda() {
       showCancelButton: true,
       confirmButtonText: "Evet",
       cancelButtonText: "Hayır",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
 
-        const selectedTimes =
-          JSON.parse(localStorage.getItem("selectedTimes")) || []; // BU İŞLEMİ DATABASE DEN YAPACAĞIZ BEN BURDA RANDEVUYU SİLERKEN AYNI ZAMANDA selectedTimes (randevu saatleri) ögesindeki o saatin active değerini false dan true ya çeviriyorum randevu silindiği için
+        const selectedTimes = await getSelectedTimes()
 
         const dateParts = selectedAppointment.time.split(" ");
         const datePart = dateParts[0].split(".");
@@ -812,24 +799,25 @@ function Agenda() {
           return appointment;
         });
 
-        localStorage.setItem(
-          "selectedTimes",
-          JSON.stringify(updatedSelectedTimes)
-        ); // GÜNCELLENMİŞ SAATLERİ YENİDEN DATABASE E GÖNDERECEĞİZ
+        await postAPI("/selectedtimes", updatedSelectedTimes, "POST") // GÜNCELLENMİŞ SAATLERİ YENİDEN DATABASE E GÖNDERECEĞİZ
 
         // Form datayı güncelle
-        const updatedFormData = formData.map((appointment) => {
+        const dates = await getDatas(true)
+        dates.forEach(async (appointment) => {
           if (
             appointment.date === selectedAppointment.date &&
             appointment.time === selectedAppointment.time
           ) {
-            return { ...appointment, delete: true };
+            await postAPI("/date", {
+              id: appointment.id,
+              data: {
+                delete: true
+              }
+            }, "PUT")
           }
-          return appointment;
         });
 
-        setFormData(updatedFormData);
-        localStorage.setItem("formData", JSON.stringify(updatedFormData)); // GÜNCELLENMİŞ RANDEVULERİ formData (randevular) DATABASE İNE GÖNDERECEĞİZ
+        await getDatas()
       }
     });
   };
@@ -870,7 +858,7 @@ function Agenda() {
       }
       const formData = JSON.parse(formDataString);
       const foundObject = formData.find(
-        (obj) => obj.appointmentNumber === timeObject
+        (obj) => obj.id === timeObject
       );
       return foundObject || null;
     };
@@ -933,7 +921,7 @@ function Agenda() {
             if (formDataString) {
               const formData = JSON.parse(formDataString);
               const index = formData.findIndex(
-                (obj) => obj.appointmentNumber === obje.appointmentNumber
+                (obj) => obj.id === obje.id
               );
               if (index !== -1) {
                 formData[index].delete = true;
@@ -970,7 +958,7 @@ function Agenda() {
                 " " +
                 time.split(" ")[2]
               );
-              const timeObject = formEntry.appointmentNumber;
+              const timeObject = formEntry.id;
               const isCancelDisabled = remainingTime.remainingHours < 12;
               const isPastAppointment =
                 appointmentDate < currentDate ||
@@ -995,7 +983,7 @@ function Agenda() {
                   isToday={isToday}
                   isCancelled={isCancelled}
                   key={index}
-                  appointmentNumber={formEntry.appointmentNumber}
+                  id={formEntry.id}
                   name={name}
                   remainingTime={
                     remainingTime.remainingHours > 0 ? (

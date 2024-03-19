@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 function AgendaCard({
-  appointmentNumber,
+  id,
   name,
   service,
   status,
@@ -63,8 +63,8 @@ function AgendaCard({
           }
           } justify-center border-r-2  text-white rounded-s-[0.8rem]`}
         >
-          <div className="appointmentNumber">
-            <h1 className="text-[11px] text-center">{appointmentNumber}</h1>
+          <div className="id">
+            <h1 className="text-[11px] text-center">{id}</h1>
           </div>
           <div className="flex items-center justify-center">
             <Image src="/images/pp.png" width={30} height={30} quality={100} className="ml-[3px]" alt="" />

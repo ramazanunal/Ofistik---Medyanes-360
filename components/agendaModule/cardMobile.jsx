@@ -1,6 +1,6 @@
 import React from "react";
 function CardMobile({
-  appointmentNumber,
+  id,
   name,
   service,
   status,
