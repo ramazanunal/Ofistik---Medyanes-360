@@ -38,7 +38,7 @@ export default function TabsItemSocial() {
 
   return (
     <>
-      <div className="flex  items-center justify-between flex-row py-5 md:py-0">
+      {/* <div className="flex  items-center justify-between flex-row py-5 md:py-0">
         <div className="md:px-5 w-full lg:w-1/2">
           <ChoseType
             headers={["Takip ettiklerim", "Keşfet", "Arşiv"]}
@@ -59,14 +59,14 @@ export default function TabsItemSocial() {
             <FaPlus />
           </button>
         </div>
-      </div>
-      <div className="flex flex-col gap-5 pb-5 relative overflow-x-hidden  overflow-hidden  md:h-[calc(100vh_-_302px)]">
+      </div> */}
+      <div className="flex flex-col gap-5 pb-5 relative overflow-x-hidden  overflow-hidden  md:h-[calc(100vh_-_302px)] mt-10">
         <div className=" overflow-y-auto ">
           <div className="flex justify-center flex-wrap gap-4">
             {posts.map((post, index) => (
               <button
                 key={index}
-                className="relative group w-[130px] h-[130px]  md:w-[300px] md:h-[300px]"
+                className="relative group w-[130px] h-[130px]  md:w-[250px] md:h-[250px]"
                 onClick={() => handleClick(index)}
               >
                 <Image
