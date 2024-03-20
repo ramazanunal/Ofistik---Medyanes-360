@@ -58,6 +58,7 @@ function Agenda() {
   const handleFilter = (selectedFilter) => {
     setAlphabetic(selectedFilter);
   };
+
   const filterFormData = (formData, filter, alphabetic) => {
     setPendingAppointments(
       formData.filter(
@@ -161,13 +162,13 @@ function Agenda() {
           }
       }
     });
-
     return filteredData;
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
   useEffect(() => {
     setPendingAppointments(
       formData.filter(
@@ -264,6 +265,10 @@ function Agenda() {
   }
 
   useEffect(() => {
+    getDatas()
+  }, [filter])
+
+  useEffect(() => {
     setPendingAppointments(
       formData.filter(
         (formEntry) =>
@@ -281,10 +286,6 @@ function Agenda() {
       )
     );
   }, [formData, alphabetic]);
-
-  useEffect(() => {
-    getDatas()
-  }, [])
 
   useEffect(() => {
     const buttons = document.querySelectorAll(".rbc-button-link");
