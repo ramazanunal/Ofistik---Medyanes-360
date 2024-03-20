@@ -30,7 +30,7 @@ function ContactForm({
         <div className="choosePerson">
           <button
             onClick={() => handleOptionChange(true)}
-            className={` p-2  tex-sm rounded-lg m-3 px-7 ${
+            className={` p-2  text-sm rounded-lg m-3 px-7 ${
               isOwn === true ? "selected" : ""
             } ${
               isOwn === true
@@ -42,7 +42,7 @@ function ContactForm({
           </button>
           <button
             onClick={() => handleOptionChange(false)}
-            className={` p-2  tex-sm rounded-lg m-3 px-7 ${
+            className={` p-2  text-sm rounded-lg m-3 px-7 ${
               isOwn === false ? "selected" : ""
             } ${
               isOwn === false
@@ -84,7 +84,7 @@ function ContactForm({
                     as="textarea"
                     rows="4"
                     cols="50"
-                    className="lg:w-[30rem] max-[768px]:w-[22rem] p-3 outline-none border-gray-100 border-2 rounded-xl"
+                    className="lg:w-[30rem] max-[768px]:w-[20rem] p-3 outline-none border-gray-100 border-2 rounded-xl"
                     placeholder="Notlar (Size daha iyi bir hizmet verebilmemiz için lütfen almak istediğiniz hizmetin içeriğini birkaç cümleyle açıklayınız.)"
                     name="notes"
                   />
@@ -148,7 +148,7 @@ function ContactForm({
               >
                 <div className="m-3">
                   <Field
-                    className="lg:w-[30rem] max-[768px]:w-[22rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
+                    className="lg:w-[30rem] max-[768px]:w-[20rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
                     type="text"
                     placeholder="İsim"
                     name="firstName"
@@ -156,7 +156,7 @@ function ContactForm({
                 </div>
                 <div className="m-3">
                   <Field
-                    className="lg:w-[30rem] max-[768px]:w-[22rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
+                    className="lg:w-[30rem] max-[768px]:w-[20rem] p-3  outline-none border-gray-100 border-2 rounded-xl"
                     type="text"
                     placeholder="Soyisim"
                     name="lastName"
@@ -165,7 +165,7 @@ function ContactForm({
                 <div className="m-3 flex w-44">
                   <Field
                     type="radio"
-                    className="text-stepBorder1 lg:w-[30rem] max-[768px]:w-[22rem]"
+                    className="text-stepBorder1 lg:w-[30rem] max-[768px]:w-[20rem]"
                     id="erkek"
                     name="gender"
                     value="erkek"
@@ -175,7 +175,7 @@ function ContactForm({
                   </label>
                   <Field
                     type="radio"
-                    className="text-stepBorder1 lg:w-[30rem] max-[768px]:w-[22rem]"
+                    className="text-stepBorder1 lg:w-[30rem] max-[768px]:w-[20rem]"
                     id="kadın"
                     name="gender"
                     value="kadın"
@@ -188,7 +188,7 @@ function ContactForm({
                   <Field
                     id="birthdaypicker"
                     type="date"
-                    className={` before:content-'Doğum Tarihi:' before:mr-1 before:text-gray-600 p-3  outline-none text-stepBorder1 lg:w-[30rem] max-[768px]:w-[22rem] border-gray-100 border-2 rounded-xl `}
+                    className={` before:content-'Doğum Tarihi:' before:mr-1 before:text-gray-600 p-3  outline-none text-stepBorder1 lg:w-[30rem] max-[768px]:w-[20rem] border-gray-100 border-2 rounded-xl `}
                     name="dateOfBirth"
                   />
                 </div>
@@ -197,7 +197,7 @@ function ContactForm({
                     as="textarea"
                     rows="4"
                     cols="50"
-                    className="p-3  outline-none lg:w-[30rem] max-[768px]:w-[22rem] border-gray-100 border-2 rounded-xl"
+                    className="p-3  outline-none lg:w-[30rem] max-[768px]:w-[20rem] border-gray-100 border-2 rounded-xl"
                     placeholder="Notlar (Size daha iyi bir hizmet verebilmemiz için lütfen almak istediğiniz hizmetin içeriğini birkaç cümleyle açıklayınız.)"
                     name="notes"
                   />

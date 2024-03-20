@@ -335,7 +335,7 @@ function TimeAndDate({
           </h2>
         </div>
         <div className="dayComponent flex flex-col xl:flex-row h-fit w-full xl:px-10">
-          <div className="flex flex-col items-center justify-between lg:order-1  max-[768px]:order-2 w-full mb-3 xl:mb-0 2xl:mb-0 2xl:w-fit px-4 rounded-2xl shadow-xl md:mr-3 bg-white rightMobile h-auto clockArea">
+          <div className="flex flex-col items-center justify-between lg:order-1 max-[768px]:order-2 mb-3 xl:mb-0 2xl:mb-0 xl:w-min px-4 rounded-2xl shadow-xl xl:mr-3 bg-white rightMobile h-auto clockArea">
             <div className="choosenDate h-[62px]">
               <div className="dateText m-2">
                 <h2 className="text-center  text-md font-semibold  w-[90px]">
@@ -393,13 +393,13 @@ function TimeAndDate({
                 )}
               </div>
             )}
-            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-full max-[768px]:h-auto">
+            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-[8rem] max-[768px]:h-min">
               <div
                 className={`appointmentTimes relative lg:w-[10rem] ${
                   appointmentTimesForSelectedDate.length > 0
                     ? "lg:h-[10rem]"
                     : "lg:h-[13rem]"
-                } flex flex-col items-center justify-center w-full max-[768px]:h-auto`}
+                } flex flex-col items-center justify-center w-[8rem] max-[768px]:h-auto`}
               >
                 {isMobile && appointmentTimesForSelectedDate.length > 9 && (
                   <>
