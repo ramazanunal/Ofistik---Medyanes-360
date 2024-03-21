@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 
-function AppointmentInfoBox({
-  number,
-  title,
-  lastOne,
-  changeGraph,
-  description,
-}) {
+function InfoBox({ number, title, lastOne, changeGraph, description }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  const changeRate = (((number - lastOne) / lastOne) * 100).toFixed(0);
 
   const handleInfoIconHover = () => {
     setShowTooltip(true);
   };
-
+  const changeRate = (((number - lastOne) / lastOne) * 100).toFixed(0);
   const handleInfoIconLeave = () => {
     setShowTooltip(false);
   };
@@ -36,13 +29,13 @@ function AppointmentInfoBox({
       </div>
       <div className={`px-[0.3vw]  2xl:px-[0.5vw] py-[0.5vw] 2xl:py-[1.2vw] `}>
         <div className="titleArea flex justify-center m-2 ">
-          <h1 className="text-sm lg:text-[0.8vw] text-gray-600 font-semibold">
+          <h1 className="text-sm lg:text-[0.65vw] text-gray-600 font-semibold">
             {title}
           </h1>
         </div>
-        <div className="rateArea flex justify-center m-2">
+        <div className="rateArea flex justify-center mx-2">
           <div className="rate font-semibold flex items-center justify-center">
-            <h1 className="text-sm lg:text-[2.2vw]">{number}</h1>
+            <h1 className="text-sm lg:text-[1.6vw]">{number}</h1>
             {changeRate > 0 && (
               <i className="fa-solid fa-caret-up  text-greenStatus ml-2 text-2xl"></i>
             )}
@@ -72,4 +65,4 @@ function AppointmentInfoBox({
   );
 }
 
-export default AppointmentInfoBox;
+export default InfoBox;
