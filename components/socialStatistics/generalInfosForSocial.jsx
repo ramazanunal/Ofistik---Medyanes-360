@@ -636,7 +636,7 @@ function GeneralInfosForSocial() {
   };
   return (
     <>
-      <div className=" mx-10 pb-3 mb-4 bg-white  rounded-lg max-[768px]:max-w-[370px]">
+      <div className=" lg:mx-10 lg:pb-3 lg:mb-4 my-3 mx-auto lg:my-0 bg-white  rounded-lg max-[768px]:max-w-[370px]">
         <div className="m-4 mb-0 block lg:flex items-center justify-center lg:justify-between">
           <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
             İstatistikler
@@ -714,7 +714,7 @@ function GeneralInfosForSocial() {
                         </div>
                       </div>
                       <div className="h-full mb-auto">
-                        <h1 className=" text-premiumOrange text font-semibold ml-3 text-3xl">
+                        <h1 className=" text-premiumOrange text-lg font-semibold ml-3 lg:text-3xl">
                           {graph.datasets[0].data.reduce(
                             (acc, currentValue) => acc + currentValue,
                             0
