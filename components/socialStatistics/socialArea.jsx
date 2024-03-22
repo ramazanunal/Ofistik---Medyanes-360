@@ -6,15 +6,19 @@ import { MdOutlineVideoLibrary } from "react-icons/md";
 import Image from "next/image";
 import Loading from "@/components/Loading";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import ChoseType from "@/components/ChoseType";
+import { FaPlus } from "react-icons/fa6";
 import { useProfileStore } from "@/store/useProfileStore";
 
-export default function TabsItemSocial() {
+export default function SocialArea() {
   const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
   const setPosts = useProfileStore((state) => state.setPosts);
   const posts = useProfileStore((state) => state.posts);
   const setUsers = useProfileStore((state) => state.setUsers);
+  const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost);
   const [loading, setLoading] = useState(true);
   const isMobile = useMediaQuery(768);
+  const [activeComponent, setActiveComponent] = useState("Takip ettiklerim");
 
   useEffect(() => {
     setPosts(mockPosts);
@@ -28,8 +32,34 @@ export default function TabsItemSocial() {
     setOpenpageId(index);
   };
 
+  const changeComponent = (header) => {
+    setActiveComponent(header);
+  };
+
   return (
     <>
+      <div className="flex mx-5 items-center lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-8">
+        <div className="md:px-5 w-[80%] flex-wrap">
+          <ChoseType
+            headers={["Takip ettiklerim", "Keşfet", "Kaydedilenler"]}
+            changeComponent={changeComponent}
+            activeComponent={activeComponent}
+            className="w-full"
+          />
+        </div>
+        <div className=" mx-1">
+          <button
+            onClick={() => {
+              setOpenAddPost(true);
+            }}
+            type="button"
+            className="flex items-center gap-2 font-semibold px-3 md:px-5 py-1 md:py-1 rounded-xl transition-colors duration-150 bg-white border-2 border-premiumOrange text-premiumOrange hover:bg-premiumOrange hover:text-white "
+          >
+            <span>Ekle</span>
+            <FaPlus />
+          </button>
+        </div>
+      </div>
       <div className="flex flex-col gap-5 pb-5 relative overflow-x-hidden  overflow-hidden  md:h-[calc(100vh_-_302px)] mt-10">
         <div className=" overflow-y-auto ">
           <div className="flex justify-center flex-wrap gap-4">

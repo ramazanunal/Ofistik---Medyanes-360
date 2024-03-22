@@ -637,7 +637,7 @@ function GeneralInfosForSocial() {
   return (
     <>
       <div className=" lg:mx-10 lg:pb-3 lg:mb-4 my-3 mx-auto lg:my-0 bg-white  rounded-lg max-[768px]:max-w-[370px]">
-        <div className="m-4 mb-0 block lg:flex items-center justify-center lg:justify-between">
+        <div className="mx-4 block lg:flex items-center justify-center lg:justify-between">
           <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
             İstatistikler
           </h1>

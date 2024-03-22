@@ -2,8 +2,17 @@
 import React, { useState } from "react";
 import classnames from "classnames";
 import { twMerge } from "tailwind-merge";
+import { FaUserFriends } from "react-icons/fa";
+import { FaRegCompass } from "react-icons/fa";
+import { FaRegSave } from "react-icons/fa";
 
-function ChoseType({ headers, changeComponent, activeComponent, className }) {
+function ChoseType({
+  headers,
+  changeComponent,
+  activeComponent,
+  className,
+  icon,
+}) {
   const [activeIndex, setActiveIndex] = useState(
     headers.indexOf(activeComponent)
   );
@@ -11,7 +20,7 @@ function ChoseType({ headers, changeComponent, activeComponent, className }) {
   return (
     <div
       className={twMerge(
-        "bg-white/50 p-2 rounded-md w-11/12 sm:w-full my-8 flex flex-row",
+        " p-2 rounded-md sm:w-full my-8 flex flex-row items-center justify-around",
         className
       )}
     >
@@ -23,11 +32,17 @@ function ChoseType({ headers, changeComponent, activeComponent, className }) {
           }}
           key={idx}
           className={classnames(
-            "flex flex-1 items-center transition-all duration-200 ease-in-out cursor-pointer py-3 rounded-xl text-md font-semibold justify-center whitespace-nowrap",
-            activeIndex === idx && "bg-white/50 shadow-xl text-premiumOrange",
-            activeIndex !== idx && " text-gray-600"
+            "flex flex-1 items-center mx-3 lg:mx-5 transition-all duration-200 ease-in-out cursor-pointer py-3 text-sm lg:text-lg font-normal justify-center whitespace-nowrap",
+            activeIndex === idx &&
+              " text-premiumOrange border-b-2 border-premiumOrange",
+            activeIndex !== idx && " text-gray-600 border-b-2 border-gray-400"
           )}
         >
+          {header === "Takip ettiklerim" && (
+            <FaUserFriends className="mr-3 text-xl" />
+          )}
+          {header === "Keşfet" && <FaRegCompass className="mr-3 text-xl" />}
+          {header === "Kaydedilenler" && <FaRegSave className="mr-3 text-xl" />}
           {header}
         </div>
       ))}
