@@ -6,7 +6,7 @@ import { MdOutlineVideoLibrary } from "react-icons/md";
 import Image from "next/image";
 import Loading from "@/components/Loading";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import ChoseType from "@/components/ChoseType";
+import ChoseType2 from "../ChooseType2";
 import { FaPlus } from "react-icons/fa6";
 import { useProfileStore } from "@/store/useProfileStore";
 
@@ -40,7 +40,7 @@ export default function SocialArea() {
     <>
       <div className="flex mx-5 items-center lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-8">
         <div className="md:px-5 w-[80%] flex-wrap">
-          <ChoseType
+          <ChoseType2
             headers={["Takip ettiklerim", "Keşfet", "Kaydedilenler"]}
             changeComponent={changeComponent}
             activeComponent={activeComponent}
