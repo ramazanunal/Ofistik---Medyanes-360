@@ -9,16 +9,18 @@ import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import ChoseType2 from "../ChooseType2";
 import { FaPlus } from "react-icons/fa6";
 import { useProfileStore } from "@/store/useProfileStore";
+import AddPostComp from "../tabsSocialComponents/AddPostComp";
 
 export default function SocialArea() {
   const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
   const setPosts = useProfileStore((state) => state.setPosts);
   const posts = useProfileStore((state) => state.posts);
   const setUsers = useProfileStore((state) => state.setUsers);
-  const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost);
   const [loading, setLoading] = useState(true);
   const isMobile = useMediaQuery(768);
   const [activeComponent, setActiveComponent] = useState("Takip ettiklerim");
+  const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost);
+  const openAddPost = useProfileStore((state) => state.openAddPost);
 
   useEffect(() => {
     setPosts(mockPosts);
@@ -93,6 +95,7 @@ export default function SocialArea() {
           </div>
         </div>
       </div>
+      {openAddPost && <AddPostComp openAddPost={openAddPost} />}
     </>
   );
 }
