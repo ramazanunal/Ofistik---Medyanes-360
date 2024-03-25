@@ -6,7 +6,6 @@ import { MdOutlineVideoLibrary } from "react-icons/md";
 import Image from "next/image";
 import Loading from "@/components/Loading";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import ChoseType2 from "../ChooseType2";
 import { FaPlus } from "react-icons/fa6";
 import { useProfileStore } from "@/store/useProfileStore";
 import AddPostComp from "../tabsSocialComponents/AddPostComp";
@@ -18,7 +17,6 @@ export default function SocialArea() {
   const setUsers = useProfileStore((state) => state.setUsers);
   const [loading, setLoading] = useState(true);
   const isMobile = useMediaQuery(768);
-  const [activeComponent, setActiveComponent] = useState("Takip ettiklerim");
   const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost);
   const openAddPost = useProfileStore((state) => state.openAddPost);
 
@@ -34,22 +32,10 @@ export default function SocialArea() {
     setOpenpageId(index);
   };
 
-  const changeComponent = (header) => {
-    setActiveComponent(header);
-  };
-
   return (
     <>
-      <div className="flex mx-5 items-center lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-8">
-        <div className="md:px-5 w-[80%] flex-wrap">
-          <ChoseType2
-            headers={["Takip ettiklerim", "Keşfet", "Kaydedilenler"]}
-            changeComponent={changeComponent}
-            activeComponent={activeComponent}
-            className="w-full"
-          />
-        </div>
-        <div className=" mx-1">
+      <div className="flex mx-5 items-center p-5 lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-8">
+        <div className="ml-auto">
           <button
             onClick={() => {
               setOpenAddPost(true);

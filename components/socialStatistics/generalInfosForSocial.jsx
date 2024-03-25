@@ -8,7 +8,6 @@ import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
 import { Line } from "react-chartjs-2";
 import { CategoryScale, Chart, registerables } from "chart.js";
-import AllDetails from "../generalInfosModule/allDetails";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
@@ -629,11 +628,6 @@ function GeneralInfosForSocial() {
       </Swiper>
     );
   };
-  const [isAllDetailsOpen, setIsAllDetailsOpen] = useState(false);
-
-  const toggleAllDetailsModal = () => {
-    setIsAllDetailsOpen(!isAllDetailsOpen);
-  };
   return (
     <>
       <div className=" lg:mx-10 lg:pb-3 lg:mb-4 my-3 mx-auto lg:my-0 bg-white  rounded-lg max-[768px]:max-w-[370px]">
@@ -646,12 +640,6 @@ function GeneralInfosForSocial() {
               <h1 className="text-xs lg:text-[0.8vw] text-gray-500 font-semibold flex items-center justify-center pt-4">
                 Son Güncelleme : {guncelTarih}
               </h1>
-              <button
-                onClick={toggleAllDetailsModal}
-                className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold lg:text-[0.8vw] h-[5vw] lg:h-[2vw] mt-4 lg:ml-5 mx-auto lg:mx-0 transition duration-[400ms]"
-              >
-                Tüm İstatistikler
-              </button>
             </div>
           )}
         </div>
@@ -780,14 +768,6 @@ function GeneralInfosForSocial() {
                     {guncelTarih}
                   </h1>
                 </div>
-                <div className="w-1/2">
-                  <button
-                    onClick={toggleAllDetailsModal}
-                    className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold h-[7vw] mt-2 mx-auto  transition duration-[400ms] "
-                  >
-                    Tüm İstatistikler
-                  </button>
-                </div>
               </div>
             )}
             <div className="infosArea flex items-center justify-end w-full lg:w-[50%] mx-auto">
@@ -796,7 +776,6 @@ function GeneralInfosForSocial() {
           </>
         </div>
       </div>
-      <AllDetails isOpen={isAllDetailsOpen} onClose={toggleAllDetailsModal} />
     </>
   );
 }

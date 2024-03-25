@@ -1,0 +1,116 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import mockPosts from "@/components/tabsSocialComponents/mock/posts";
+import mockUsers from "@/components/tabsSocialComponents/mock/users";
+import { MdOutlineVideoLibrary } from "react-icons/md";
+import Image from "next/image";
+import Loading from "@/components/Loading";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import ChoseType2 from "../ChooseType2";
+import { useProfileStore } from "@/store/useProfileStore";
+import HorizontalCarousel from "../tabsSocialComponents/HorizontalCarousel";
+import HorizontalSocial from "./socialHorizontal";
+
+export default function SocialAreaForUser() {
+  const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
+  const setPosts = useProfileStore((state) => state.setPosts);
+  const posts = useProfileStore((state) => state.posts);
+  const setUsers = useProfileStore((state) => state.setUsers);
+  const [loading, setLoading] = useState(true);
+  const users = useProfileStore((state) => state.users);
+  const openPageId = useProfileStore((state) => state.openPageId);
+  const isMobile = useMediaQuery(768);
+  const [activeComponent, setActiveComponent] = useState("Takip ettiklerim");
+
+  useEffect(() => {
+    setPosts(mockPosts);
+    setUsers(mockUsers);
+    setLoading(false);
+  }, []);
+
+  if (loading) return <Loading />;
+
+  const handleClick = (index) => {
+    setOpenpageId(index);
+  };
+
+  const changeComponent = (header) => {
+    setActiveComponent(header);
+    console.log(activeComponent);
+  };
+
+  return (
+    <>
+      <div className="flex mx-5 items-center lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-8 w-full">
+        <div className="md:px-5 flex-wrap">
+          <ChoseType2
+            headers={["Takip ettiklerim", "Keşfet", "Kaydedilenler"]}
+            changeComponent={changeComponent}
+            activeComponent={activeComponent}
+            className="w-full"
+          />
+        </div>
+      </div>
+      <div className="flex flex-col lg:mx-10 relative overflow-x-hidden  overflow-hidden  md:h-[calc(100vh_-_200px)]">
+        <div className=" overflow-y-auto ">
+          <div className="flex justify-center flex-wrap gap-4">
+            {activeComponent === "Takip ettiklerim" && (
+              <HorizontalSocial
+                usersData={users}
+                setUsersData={setUsers}
+                mainPosts={posts}
+                setMainPosts={setPosts}
+              />
+            )}
+            {activeComponent === "Kaydedilenler" && (
+              <HorizontalSocial
+                usersData={users}
+                setUsersData={setUsers}
+                mainPosts={posts}
+                setMainPosts={setPosts}
+              />
+            )}
+            {activeComponent === "Keşfet" &&
+              posts.map((post, index) => (
+                <button
+                  key={index}
+                  className="relative group w-[130px] h-[130px]  md:w-[250px] md:h-[250px]"
+                  onClick={() => handleClick(index)}
+                >
+                  <Image
+                    src={post.image_url.src}
+                    className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
+                    alt="Picture of the author"
+                    width={700}
+                    height={700}
+                    loading="lazy"
+                    id={index}
+                    draggable={false}
+                  />
+                  {post.video_url && (
+                    <MdOutlineVideoLibrary
+                      size={isMobile ? 20 : 30}
+                      className=" absolute top-2 right-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]"
+                    />
+                  )}
+                  <div className="absolute hidden  justify-center items-center w-full h-full top-0 left-0 font-semibold md:text-desktop text-white group-hover:flex">
+                    click to view
+                  </div>
+                </button>
+              ))}
+          </div>
+        </div>
+      </div>
+      {setOpenpageId && (
+        <HorizontalCarousel
+          usersData={users}
+          setUsersData={setUsers}
+          mainPosts={posts}
+          openPageId={openPageId}
+          setOpenpageId={setOpenpageId}
+          setMainPosts={setPosts}
+        />
+      )}
+    </>
+  );
+}

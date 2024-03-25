@@ -1,8 +1,8 @@
 import React from "react";
-import SocialPageComponent from "@/components/socialStatistics/socialPage";
+import SocialAreaForUser from "@/components/socialStatistics/socialAreaForUser";
 
 const SocialPage = () => {
-  return <SocialPageComponent />;
+  return <SocialAreaForUser />;
 };
 
 export default SocialPage;
