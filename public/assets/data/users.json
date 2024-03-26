@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "name": "Ahmet",
+    "email": "ahmet@ahmet.com",
+    "phone": "05385186969",
+    "avatar": "/assets/images/avatar.jpeg ",
+    "messages": [
+      { "message": "Merhaba Nasılsın", "time": "02/02/24","hour":"10:22" },
+      { "message": "Merhaba ", "time": "03/02/24","hour":"10:22" },
+      { "message": " Nasılsın", "time": "04/02/24","hour":"10:22" }
+    ],
+    "unreadMessages": 18,
+    "stuation": "Online",
+    "status": "A professional profile is a brief summary of your skills, strengths, and key experiences",
+    "locationCity": "Ankara",
+    "locationCountry": "TR",
+    "isMuted": true,
+    "sendMessage":true,
+    "unsendMessage":false,
+    "readMessage":false
+  },
+  {
+    "id": 2,
+    "name": "Ayşe",
+    "email": "ayse@ayse.com",
+    "phone": "053495216969",
+    "avatar": "/assets/images/avatar2.jpeg",
+    "messages": [
+      { "message": "Merhaba Nasılsın", "time": "02/02/24","hour":"10:22" },
+      { "message": "Merhaba ", "time": "03/02/24","hour":"10:22" },
+      { "message": " Nasılsın", "time": "04/02/24","hour":"10:22" }
+    ],
+    "unreadMessages": 11,
+    "stuation": "Online",
+    "status": "A professional profile is a brief summary of my and  your  skills, strengths, and key experiences",
+    "locationCity": "Mersin",
+    "locationCountry": "TR",
+    "isMuted": true,
+    "sendMessage":false,
+    "unsendMessage":false,
+    "readMessage":true
+  },
+  {
+    "id": 3,
+    "name": "Berk",
+    "email": "berk@berk.com",
+    "phone": "053497865879",
+    "avatar": "/assets/images/avatar.jpeg ",
+    "messages": [
+      { "message": "Merhaba Nasılsın", "time": "02/02/24","hour":"10:22" },
+      { "message": "Merhaba ", "time": "03/02/24","hour":"10:22" },
+      { "message": " Nasılsın", "time": "04/02/24","hour":"Dün" }
+    ],
+    "unreadMessages": 0,
+    "stuation": "Online",
+    "status": "A professional profile is a brief summary of your ummary of your ummary of your skills, strengths, and key experiences",
+    "locationCity": "Çanakkale",
+    "locationCountry": "TR",
+    "isMuted": false,
+    "sendMessage":false,
+    "unsendMessage":false,
+    "readMessage":true
+  },
+  {
+    "id": 4,
+    "name": "Buse",
+    "email": "buse@buse.com",
+    "phone": "05349786989",
+    "avatar": "/assets/images/icon.jpeg",
+    "messages": [
+      { "message": "Merhaba Nasılsın", "time": "02/02/24","hour":"10:22" },
+      { "message": "Merhaba ", "time": "03/02/24","hour":"10:22"},
+      { "message": " Nasılsın", "time": "04/02/24","hour":"Dün" }
+    ],
+    "unreadMessages": 0,
+    "stuation": "Online",
+    "status": "A professional profile is a brief summary of your skills, strengths, and key experiences",
+    "locationCity": "Hatay",
+    "locationCountry": "TR",
+    "isMuted": false,
+    "sendMessage":true,
+    "unsendMessage":false,
+    "readMessage":false
+  },
+  {
+    "id": 5,
+    "name": "Emrah",
+    "email": "emrah@emrah.com",
+    "phone": "05349786969",
+    "avatar": "/assets/images/emrah.jpg ",
+    "messages": [
+      { "message": "Merhaba Nasılsın", "time": "02/02/24","hour":"10:22" },
+      { "message": "Merhaba ", "time": "03/02/24","hour":"10:22" },
+      { "message": " Nasılsın", "time": "04/02/24","hour":"Pazartesi" }
+    ],
+    "unreadMessages": 0,
+    "stuation": "Online",
+    "status": "A professional profile is a brief summary of your skills, strengths, and key experiences",
+    "locationCity": "Ankara",
+    "locationCountry": "TR",
+    "isMuted": false,
+    "sendMessage":false,
+    "unsendMessage":true,
+    "readMessage":false
+  },
+  {
+    "id": 6,
+    "name": "Zeliha",
+    "email": "zeliha@zeliha.com",
+    "phone": "05345686969",
+    "avatar": "/assets/images/avatar2.jpeg",
+    "messages": [
+      { "message": "Merhaba Nasılsın", "time": "02/02/24","hour":"10:22" },
+      { "message": "Merhaba ", "time": "03/02/24","hour":"10:22" },
+      { "message": " Nasılsın", "time": "04/02/24","hour":"Salı" }
+    ],
+    "unreadMessages": 9,
+    "stuation": "Online",
+    "status": "A professional profile is a brief summary of your skills, strengths, and key experiences",
+    "locationCity": "Muğla",
+    "locationCountry": "TR",
+    "isMuted": false,
+    "sendMessage":false,
+    "unsendMessage":false,
+    "readMessage":true
+  }
+]

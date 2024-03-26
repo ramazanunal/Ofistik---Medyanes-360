@@ -1,0 +1,111 @@
+/* styles.module.css */
+
+.messagesContainer {
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+    max-height: 90vh;
+    min-height: 104vh;
+    margin-bottom: 120px;
+  }
+  .scrollStyles{
+    scrollbar-width: thin;
+    scrollbar-color: #6b7280 #e5e7eb;
+  }
+  
+  .messageArea {
+    flex: 1;
+    padding: 20px;
+    margin-top: 240px;
+    margin-bottom: 140px;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  
+  .myMessage {
+    justify-content: flex-end;
+   
+  }
+  
+  .avatar {
+    margin-right: 10px;
+  }
+  
+  .avatarImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .messageText {
+    padding: 10px;
+    background-color: #d1d5db;
+    color:#020617;
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+ 
+  }
+  .myMessageText{
+    padding: 10px;
+    background-color: hsl(7, 90%, 64%, 0.5);
+    color: #000;
+    border-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    max-width: 90%;
+  }
+  
+
+.sentImage{
+  width: auto;
+  height: 100px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.documentLink{
+  padding: 10px;
+  background-color: #005246;
+  color: #dbe4e3;
+  border-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  display: flex;
+  
+  flex-direction: column;
+}
+.imageWithDownload {
+  position: relative; 
+  display: inline-block; 
+}
+
+/* İndirme bağlantısının varsayılan stilini gizliyoruz */
+.downloadLink {
+  display: none;
+  position: absolute; 
+  top: 5px; 
+  right: 5px; 
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff; 
+  padding: 5px;
+  border-radius: 5px; 
+  text-decoration: none;
+}
+
+/* Resmin üzerine gelindiğinde indirme bağlantısını gösteriyoruz */
+.imageWithDownload:hover .downloadLink {
+  display: block;
+}
