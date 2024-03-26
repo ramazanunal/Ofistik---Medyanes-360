@@ -1,5 +1,6 @@
+"use client";
 import React, { useEffect, useState } from "react";
-import AppointmentInfoBox from "./appointmentInfoBox";
+import InfoBox from "./infoBox";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -7,12 +8,11 @@ import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
 import { Line } from "react-chartjs-2";
 import { CategoryScale, Chart, registerables } from "chart.js";
-import AllDetails from "./allDetails";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
-function AppointmentInfos() {
+function GeneralInfosForSocial() {
   const isMobile = useMediaQuery(1024);
   Chart.register(...registerables);
   Chart.register(CategoryScale);
@@ -41,54 +41,100 @@ function AppointmentInfos() {
     "Pazar",
   ];
 
-  const stateDay = {
-    //GUNLÜK RANDEVU SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+  const stateWeeklyView = {
+    //GUNLÜK Görüntülenme SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
     labels: days,
     datasets: [
       {
         type: "line",
-        label: "Günlük Randevu",
-        data: [5, 8, 12, 3, 7, 1, 9],
+        label: "Günlük Görüntülenme",
+        data: [652, 856, 112, 314, 796, 113, 932],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
       },
       {
         type: "line",
-        label: "Geçen Hafta Günlük Randevu",
-        data: [3, 5, 8, 1, 6, 7, 10],
+        label: "Geçen Hafta Günlük Görüntülenme",
+        data: [324, 514, 895, 114, 636, 714, 1014],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
       },
     ],
   };
 
-  const stateToday = {
-    //BUGÜNKÜ RANDEVU SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+  const stateWeeklyLike = {
+    //GUNLÜK beğeni SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: days,
+    datasets: [
+      {
+        type: "line",
+        label: "Günlük Beğeni",
+        data: [138, 85, 112, 31, 96, 113, 32],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "line",
+        label: "Geçen Hafta Günlük Beğeni",
+        data: [34, 54, 95, 114, 36, 74, 114],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+
+  const stateTodayView = {
+    //BUGÜNKÜ Görüntülenme SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
     labels: hoursArray,
     datasets: [
       {
         type: "bar",
-        label: "Bugünkü Randevu",
+        label: "Bugünkü Görüntülenme",
         data: [
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-          0,
+          12, 56, 14, 36, 46, 16, 96, 47, 63, 46, 64, 32, 19, 14, 40, 49, 13,
+          66, 14, 60, 40, 79, 12, 16,
         ],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
       },
       {
         type: "bar",
-        label: "Dünkü Randevu",
+        label: "Dünkü Görüntülenme",
         data: [
-          0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0,
-          1,
+          19, 64, 53, 31, 53, 16, 54, 65, 69, 15, 46, 37, 7, 46, 49, 39, 31, 46,
+          14, 46, 76, 16, 18, 16,
         ],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
       },
     ],
   };
-
+  const stateTodayLike = {
+    //BUGÜNKÜ like SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: hoursArray,
+    datasets: [
+      {
+        type: "bar",
+        label: "Bugünkü Beğenme",
+        data: [
+          4, 14, 14, 32, 18, 11, 26, 17, 23, 36, 14, 22, 19, 17, 26, 19, 14, 16,
+          34, 26, 24, 19, 12, 16,
+        ],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "bar",
+        label: "Dünkü Beğenme",
+        data: [
+          14, 13, 7, 24, 23, 17, 16, 27, 33, 26, 16, 22, 23, 18, 1, 16, 8, 17,
+          16, 32, 14, 6, 3, 13,
+        ],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
   const months = [
     "Ocak",
     "Şubat",
@@ -106,46 +152,74 @@ function AppointmentInfos() {
 
   const daysInMonth = new Array(31).fill().map((_, i) => i + 1);
 
-  const stateYearly = {
-    //YILLIK RANDEVU SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+  const stateYearlyView = {
+    //YILLIK görüntülenme SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
     labels: months,
     datasets: [
       {
         type: "line",
-        label: "Bu Yıl Randevu",
-        data: [135, 180, 122, 91, 178, 160, 96, 45, 169, 110, 157, 83],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "line",
-        label: "Geçen Yıl Randevu",
-        data: [165, 120, 182, 191, 118, 160, 196, 145, 129, 70, 127, 43],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-
-  const stateMonthly = {
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "line",
-        label: "Bu Ay Randevu",
+        label: "Bu Yıl Görüntülenme",
         data: [
-          3, 4, 1, 5, 6, 7, 1, 1, 2, 3, 3, 4, 1, 5, 6, 7, 1, 1, 2, 3, 3, 4, 1,
-          5, 6, 7, 1, 1, 2, 3, 3,
+          1365, 1580, 3122, 5491, 1678, 2160, 5496, 4645, 1269, 2110, 7157,
+          8883,
         ],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
       },
       {
         type: "line",
-        label: "Geçen Ay Randevu",
+        label: "Geçen Yıl Görüntülenme",
         data: [
-          4, 5, 1, 3, 7, 8, 3, 4, 2, 0, 3, 1, 5, 2, 3, 0, 1, 6, 3, 1, 0, 4, 1,
-          5, 2, 0, 1, 4, 3, 0, 3,
+          2165, 3120, 1582, 1591, 1138, 3160, 4196, 6145, 6129, 9770, 2127,
+          1143,
+        ],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+  const stateYearlyLike = {
+    //YILLIK beğenme SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: months,
+    datasets: [
+      {
+        type: "line",
+        label: "Bu Yıl Beğenme",
+        data: [165, 180, 322, 541, 178, 260, 496, 465, 269, 210, 157, 883],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "line",
+        label: "Geçen Yıl Beğenme",
+        data: [215, 320, 582, 191, 138, 160, 196, 545, 629, 970, 1127, 243],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+
+  const stateMonthlyView = {
+    labels: daysInMonth,
+    datasets: [
+      {
+        type: "line",
+        label: "Bu Ay Görüntülenme",
+        data: [
+          326, 448, 126, 548, 614, 748, 113, 146, 235, 313, 348, 413, 123, 546,
+          694, 731, 113, 115, 248, 332, 353, 413, 131, 556, 651, 766, 145, 148,
+          248, 385, 331,
+        ],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "line",
+        label: "Geçen Ay Görüntülenme",
+        data: [
+          448, 548, 113, 376, 764, 842, 313, 415, 286, 135, 346, 113, 543, 295,
+          349, 468, 113, 648, 348, 113, 486, 45, 155, 568, 248, 456, 163, 446,
+          313, 136, 368,
         ],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
@@ -162,113 +236,31 @@ function AppointmentInfos() {
         y: {
           title: {
             display: true,
-            text: "Randevu Sayısı",
+            text: "Görüntülenme Sayısı",
           },
         },
       },
     },
   };
-
-  const stateRequest = {
-    //RANDEVU TALEPLERİNİ SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+  const stateMonthlyLike = {
     labels: daysInMonth,
     datasets: [
       {
         type: "line",
-        label: "Bu Ay Randevu Talebi",
+        label: "Bu Ay Beğenme",
         data: [
-          3, 0, 1, 5, 6, 7, 1, 1, 2, 0, 3, 4, 1, 5, 6, 0, 1, 1, 2, 3, 0, 4, 1,
-          5, 6, 0, 1, 1, 2, 0, 3,
+          32, 48, 26, 58, 64, 78, 31, 46, 35, 33, 48, 43, 23, 56, 94, 71, 13,
+          51, 48, 33, 53, 43, 31, 55, 61, 76, 45, 48, 48, 85, 31,
         ],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
       },
       {
         type: "line",
-        label: "Geçen Ay Randevu Talebi",
+        label: "Geçen Ay Beğenme",
         data: [
-          3, 0, 12, 5, 6, 0, 1, 1, 2, 0, 6, 4, 1, 5, 6, 0, 1, 5, 2, 3, 1, 4, 1,
-          5, 7, 0, 1, 1, 2, 5, 3,
-        ],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-  const stateCancel = {
-    // RANDEVU İPTALLERİNİ SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "line",
-        label: "Bu Ay Randevu İptali",
-        data: [
-          0, 0, 1, 5, 0, 0, 1, 1, 2, 0, 3, 4, 1, 0, 0, 0, 1, 1, 2, 3, 0, 0, 1,
-          5, 2, 0, 1, 1, 2, 0, 3,
-        ],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "line",
-        label: "Geçen Ay Randevu İptali",
-        data: [
-          0, 2, 1, 3, 0, 4, 1, 1, 4, 0, 3, 5, 1, 0, 7, 0, 1, 2, 2, 6, 0, 5, 1,
-          5, 2, 1, 1, 1, 9, 0, 3,
-        ],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-  const stateConfirm = {
-    //RANDEVU ONAYI SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "line",
-        label: "Bu Ay Randevu Onayı",
-        data: [
-          5, 4, 2, 5, 3, 1, 1, 1, 2, 7, 3, 4, 1, 0, 8, 0, 1, 1, 2, 3, 4, 6, 1,
-          5, 2, 0, 1, 1, 2, 0, 3,
-        ],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "line",
-        label: "Geçen Ay Randevu Onayı",
-        data: [
-          1, 4, 2, 3, 3, 1, 1, 1, 9, 7, 4, 4, 1, 0, 4, 0, 1, 1, 6, 3, 4, 7, 1,
-          5, 2, 8, 1, 1, 10, 0, 4,
-        ],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-  const stateTime = {
-    // RANDEVU SÜRESİ GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "line",
-        label: "Bu Ay Randevu Süreleri",
-        data: [
-          300, 400, 150, 530, 200, 75, 123, 170, 210, 330, 310, 400, 110, 50,
-          60, 70, 164, 198, 213, 332, 341, 401, 179, 50, 69, 79, 132, 176, 213,
-          321, 365,
-        ],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "line",
-        label: "Geçen Ay Randevu Süreleri",
-        data: [
-          300, 555, 150, 640, 200, 75, 123, 120, 210, 330, 310, 90, 110, 50, 60,
-          70, 164, 198, 356, 332, 341, 400, 179, 40, 69, 79, 123, 176, 213, 453,
-          462,
+          48, 58, 13, 76, 64, 82, 13, 45, 26, 35, 36, 13, 53, 95, 49, 48, 13,
+          68, 48, 11, 86, 5, 15, 68, 48, 46, 63, 46, 33, 36, 68,
         ],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
@@ -285,79 +277,75 @@ function AppointmentInfos() {
         y: {
           title: {
             display: true,
-            text: "Süre (Dakika)",
+            text: "Görüntülenme Sayısı",
           },
         },
       },
     },
   };
-  const [graph, setGraph] = useState(stateToday);
+
+  const [graph, setGraph] = useState(stateTodayView);
 
   const boxes = [
     //İNFO KUTULARINA VERİLERİ GÖNDERDİĞİMİZ ARRAY
     {
-      number: 5,
-      title: "BU GÜN RANDEVU",
-      lastOne: 3,
-      graphType: "daily",
-      description: "Bu günkü toplam randevuları ve saatlik dağılımı gösterir.",
+      number: 950,
+      title: "BU GÜN GÖRÜNTÜLENME",
+      lastOne: 926,
+      graphType: "dailyView",
+      description: "Bu günkü toplam görüntülenmeyi gösterir.",
     },
     {
-      number: 15,
-      title: "BU HAFTA RANDEVU",
-      lastOne: 14,
-      graphType: "weekly",
-      description: "Bu haftaki toplam randevuları ve günlük dağılımı gösterir.",
+      number: 473,
+      title: "BU GÜN BEĞENİ",
+      lastOne: 405,
+      graphType: "dailyLike",
+      description: "Bu günkü toplam beğeni sayısını gösterir.",
     },
     {
-      number: 45,
-      title: "BU AY RANDEVU",
-      lastOne: 55,
-      graphType: "monthly",
-      description: "Bu ayki toplam randevuları ve günlük dağılımı gösterir.",
+      number: 3775,
+      title: "BU HAFTA GÖRÜNTÜLENME",
+      lastOne: 4211,
+      graphType: "weeklyView",
+      description: "Bu haftaki toplam görüntülenmeyi gösterir.",
     },
     {
-      number: 505,
-      title: "BU YIL RANDEVU",
-      lastOne: 102,
-      graphType: "yearly",
-      description: "Bu yılki toplam randevuları ve aylık dağılımı gösterir.",
+      number: 607,
+      title: "BU HAFTA BEĞENİ",
+      lastOne: 521,
+      graphType: "weeklyLike",
+      description: "Bu haftaki toplam beğeni sayısını gösterir.",
     },
     {
-      number: 7,
-      title: "RANDEVU TALEBİ",
-      lastOne: 55,
-      graphType: "request",
-      description:
-        "Bu ayki toplam randevu taleplerini ve aylık dağılımı gösterir.",
+      number: 11407,
+      title: "BU AY GÖRÜNTÜLENME",
+      lastOne: 10960,
+      graphType: "monthlyView",
+      description: "Bu ayki toplam görüntülenmeyi gösterir.",
     },
     {
-      number: 8,
-      title: "RANDEVU İPTALİ",
-      lastOne: 55,
-      graphType: "cancel",
-      description:
-        "Bu ayki toplam randevu iptalleri ve aylık dağılımı gösterir.",
+      number: 1507,
+      title: "BU AY BEĞENİ",
+      lastOne: 1408,
+      graphType: "monthlyLike",
+      description: "Bu ayki toplam beğeni sayısını gösterir.",
     },
     {
-      number: 18,
-      title: "RANDEVU ONAYI",
-      lastOne: 55,
-      graphType: "confirm",
-      description:
-        "Bu ayki toplam randevu onayları ve aylık dağılımı gösterir.",
+      number: 44956,
+      title: "BU YIL GÖRÜNTÜLENME",
+      lastOne: 42266,
+      graphType: "yearlyView",
+      description: "Bu yılki toplam görüntülenmeyi gösterir.",
     },
-
     {
-      number: 9,
-      title: "RANDEVU SÜRESİ (DK)",
-      lastOne: 14,
-      graphType: "time",
-      description:
-        "Bu ayki toplam randevu süreleri ve aylık dağılımı gösterir.",
+      number: 4126,
+      title: "BU YIL BEĞENİ",
+      lastOne: 5316,
+      graphType: "yearlyLike",
+      description: "Bu yılki toplam beğeni sayısını gösterir.",
     },
   ];
-  const optionsToday = {
+  const optionsTodayView = {
     plugins: {
       legend: {
         display: false, // Burada legend'i gizliyoruz
@@ -379,7 +367,7 @@ function AppointmentInfos() {
       y: {
         title: {
           display: true,
-          text: "Randevu Sayısı", // Y ekseni başlığı
+          text: "Göeüntülenme Sayısı", // Y ekseni başlığı
           color: "#000", // Başlık rengi
           font: {
             size: 14, // Başlık yazı boyutu
@@ -393,8 +381,43 @@ function AppointmentInfos() {
       },
     },
   };
-
-  const optionsMonthly = {
+  const optionsTodayLike = {
+    plugins: {
+      legend: {
+        display: false, // Burada legend'i gizliyoruz
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Saatler", // X ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Beğenme Sayısı", // Y ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
+  const optionsMonthlyView = {
     plugins: {
       legend: {
         display: false, // Burada legend'i gizliyoruz
@@ -416,7 +439,7 @@ function AppointmentInfos() {
       y: {
         title: {
           display: true,
-          text: "Randevu Sayısı", // Y ekseni başlığı
+          text: "Görüntülenme Sayısı", // Y ekseni başlığı
           color: "#000", // Başlık rengi
           font: {
             size: 14, // Başlık yazı boyutu
@@ -430,7 +453,43 @@ function AppointmentInfos() {
       },
     },
   };
-  const optionsYearly = {
+  const optionsMonthlyLike = {
+    plugins: {
+      legend: {
+        display: false, // Burada legend'i gizliyoruz
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Günler", // X ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Beğenme Sayısı", // Y ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
+  const optionsYearlyLike = {
     plugins: {
       legend: {
         display: false, // Burada legend'i gizliyoruz
@@ -452,7 +511,7 @@ function AppointmentInfos() {
       y: {
         title: {
           display: true,
-          text: "Randevu Sayısı", // Y ekseni başlığı
+          text: "Beğenme Sayısı", // Y ekseni başlığı
           color: "#000", // Başlık rengi
           font: {
             size: 14, // Başlık yazı boyutu
@@ -466,7 +525,7 @@ function AppointmentInfos() {
       },
     },
   };
-  const optionsCancel = {
+  const optionsYearlyView = {
     plugins: {
       legend: {
         display: false, // Burada legend'i gizliyoruz
@@ -488,7 +547,7 @@ function AppointmentInfos() {
       y: {
         title: {
           display: true,
-          text: "Randevu İptal Sayısı", // Y ekseni başlığı
+          text: "Görüntülenme Sayısı", // Y ekseni başlığı
           color: "#000", // Başlık rengi
           font: {
             size: 14, // Başlık yazı boyutu
@@ -502,140 +561,33 @@ function AppointmentInfos() {
       },
     },
   };
-  const optionsRequest = {
-    plugins: {
-      legend: {
-        display: false, // Burada legend'i gizliyoruz
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Aylar", // X ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Randevu Talebi Sayısı", // Y ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-  };
-  const optionsConfirm = {
-    plugins: {
-      legend: {
-        display: false, // Burada legend'i gizliyoruz
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Aylar", // X ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Randevu Onay Sayısı", // Y ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-  };
-  const optionsTime = {
-    plugins: {
-      legend: {
-        display: false, // Burada legend'i gizliyoruz
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Aylar", // X ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Ortalama Randevu Süresi (DK)", // Y ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-  };
-  const [options, setOptions] = useState(optionsToday);
+
+  const [options, setOptions] = useState(optionsTodayView);
   const changeGraph = (dataType) => {
-    if (dataType === "weekly") {
-      setGraph({ ...stateDay });
-      setOptions(optionsMonthly);
-    } else if (dataType === "yearly") {
-      setGraph({ ...stateYearly });
-      setOptions(optionsYearly);
-    } else if (dataType === "daily") {
-      setGraph({ ...stateToday });
-      setOptions(optionsToday);
-    } else if (dataType === "monthly") {
-      setGraph({ ...stateMonthly });
-      setOptions(optionsMonthly);
-    } else if (dataType === "time") {
-      setGraph({ ...stateTime });
-      setOptions(optionsTime);
-    } else if (dataType === "request") {
-      setGraph({ ...stateRequest });
-      setOptions(optionsRequest);
-    } else if (dataType === "cancel") {
-      setGraph({ ...stateCancel });
-      setOptions(optionsCancel);
-    } else if (dataType === "confirm") {
-      setGraph({ ...stateConfirm });
-      setOptions(optionsConfirm);
+    if (dataType === "weeklyView") {
+      setGraph({ ...stateWeeklyView });
+      setOptions(optionsMonthlyView);
+    } else if (dataType === "weeklyLike") {
+      setGraph({ ...stateWeeklyLike });
+      setOptions(optionsMonthlyLike);
+    } else if (dataType === "dailyView") {
+      setGraph({ ...stateTodayView });
+      setOptions(optionsTodayView);
+    } else if (dataType === "dailyLike") {
+      setGraph({ ...stateTodayLike });
+      setOptions(optionsTodayLike);
+    } else if (dataType === "monthlyView") {
+      setGraph({ ...stateMonthlyView });
+      setOptions(optionsMonthlyView);
+    } else if (dataType === "monthlyLike") {
+      setGraph({ ...stateMonthlyLike });
+      setOptions(optionsMonthlyLike);
+    } else if (dataType === "yearlyView") {
+      setGraph({ ...stateYearlyView });
+      setOptions(optionsYearlyView);
+    } else if (dataType === "yearlyLike") {
+      setGraph({ ...stateYearlyLike });
+      setOptions(optionsYearlyLike);
     }
   };
 
@@ -649,10 +601,11 @@ function AppointmentInfos() {
         <SwiperSlide key={i}>
           <div className="flex flex-wrap items-center justify-center">
             {currentTimes.map((box, index) => (
-              <AppointmentInfoBox
+              <InfoBox
                 key={index}
                 number={box.number}
                 title={box.title}
+                changeRate={box.changeRate}
                 lastOne={box.lastOne}
                 graph={box.graph}
                 description={box.description}
@@ -675,15 +628,10 @@ function AppointmentInfos() {
       </Swiper>
     );
   };
-  const [isAllDetailsOpen, setIsAllDetailsOpen] = useState(false);
-
-  const toggleAllDetailsModal = () => {
-    setIsAllDetailsOpen(!isAllDetailsOpen);
-  };
   return (
     <>
-      <div className="w-full my-4 bg-white mx-auto rounded-lg max-[768px]:max-w-[370px]">
-        <div className="m-4 mb-0 block lg:flex items-center justify-center lg:justify-between">
+      <div className=" lg:mx-10 lg:pb-3 lg:mb-4 my-3 mx-auto lg:my-0 bg-white  rounded-lg max-[768px]:max-w-[370px]">
+        <div className="mx-4 block lg:flex items-center justify-center lg:justify-between">
           <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
             İstatistikler
           </h1>
@@ -692,12 +640,6 @@ function AppointmentInfos() {
               <h1 className="text-xs lg:text-[0.8vw] text-gray-500 font-semibold flex items-center justify-center pt-4">
                 Son Güncelleme : {guncelTarih}
               </h1>
-              <button
-                onClick={toggleAllDetailsModal}
-                className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold lg:text-[0.8vw] h-[5vw] lg:h-[2vw] mt-4 lg:ml-5 mx-auto lg:mx-0 transition duration-[400ms]"
-              >
-                Tüm İstatistikler
-              </button>
             </div>
           )}
         </div>
@@ -760,7 +702,7 @@ function AppointmentInfos() {
                         </div>
                       </div>
                       <div className="h-full mb-auto">
-                        <h1 className=" text-premiumOrange text font-semibold ml-3 text-3xl">
+                        <h1 className=" text-premiumOrange text-lg font-semibold ml-3 lg:text-3xl">
                           {graph.datasets[0].data.reduce(
                             (acc, currentValue) => acc + currentValue,
                             0
@@ -826,14 +768,6 @@ function AppointmentInfos() {
                     {guncelTarih}
                   </h1>
                 </div>
-                <div className="w-1/2">
-                  <button
-                    onClick={toggleAllDetailsModal}
-                    className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold h-[7vw] mt-2 mx-auto  transition duration-[400ms] "
-                  >
-                    Tüm İstatistikler
-                  </button>
-                </div>
               </div>
             )}
             <div className="infosArea flex items-center justify-end w-full lg:w-[50%] mx-auto">
@@ -842,9 +776,8 @@ function AppointmentInfos() {
           </>
         </div>
       </div>
-      <AllDetails isOpen={isAllDetailsOpen} onClose={toggleAllDetailsModal} />
     </>
   );
 }
 
-export default AppointmentInfos;
+export default GeneralInfosForSocial;

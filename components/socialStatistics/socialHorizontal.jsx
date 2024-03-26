@@ -8,14 +8,13 @@ import {
   BiSolidBookmark,
 } from "react-icons/bi";
 import { AiFillHeart } from "react-icons/ai";
-import CarouselCardHeader from "./carouselCardHeader";
-import VideoPlayer from "./videoPlayer";
-import CommentForm from "./commentForm";
+import CarouselCardHeader from "../tabsSocialComponents/carouselCardHeader";
+import VideoPlayer from "../tabsSocialComponents/videoPlayer";
+import CommentForm from "../tabsSocialComponents/commentForm";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import SocialImage from "./socialImage";
-import { useProfileStore } from "@/store/useProfileStore";
+import SocialImage from "../tabsSocialComponents/socialImage";
 
-function HorizontalCarousel({ mainPosts, setMainPosts }) {
+function HorizontalSocial({ mainPosts, setMainPosts }) {
   const [openFullCaption, setOpenFullCaption] = useState(undefined);
   const [openCommentPage, setOpenCommentPage] = useState(undefined);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
@@ -25,11 +24,8 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
   const popoverRef = useRef(null);
   const dialogContentRef = useRef(null);
   const isMobile = useMediaQuery(1024);
-  const openPageId = useProfileStore((state) => state.openPageId);
-  const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
 
   const handleClose = () => {
-    setOpenpageId(null);
     setOpenCommentPage(null);
     setOpenFullCaption(undefined);
   };
@@ -102,30 +98,6 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
     document?.querySelectorAll(".commentInput")[index]?.focus();
   };
 
-  useEffect(() => {
-    if (openPageId == null) {
-      document.body.style.overflow = "auto";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
-
-    const carousel = openCarouselRef?.current?.childNodes[0];
-    let totalHeight = carousel?.scrollHeight;
-    for (let i = 0; i < mainPosts.length; i++) {
-      totalHeight -= carousel?.childNodes[i].scrollHeight;
-    }
-    const carouselGapHeight = totalHeight / (mainPosts.length - 1);
-
-    let startHeigth = 0;
-    for (let i = 0; i < openPageId; i++) {
-      startHeigth += carousel?.childNodes[i].scrollHeight;
-    }
-    carousel?.scrollTo({
-      top: openPageId == 0 ? 0 : startHeigth + carouselGapHeight * openPageId,
-      left: 0,
-    });
-  }, [openPageId]);
-
   const timeStamp = (targetDate) => {
     const currentDate = new Date();
     const targetDateTime = new Date(targetDate);
@@ -149,17 +121,15 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
   return (
     <>
       <div
-        className={`w-full h-screen fixed  top-0 left-0 bg-white/60 backdrop-blur-sm flex justify-center items-end z-[45] md:items-center ${
-          openPageId != null ? "block" : "hidden"
-        }`}
+        className={`w-full  flex justify-center items-end md:items-center h-full`}
       >
         <div
           id="openCarousel"
-          className="w-full max-w-fit lg:h-[85vh] lg:max-w-[70%] relative lg:rounded-lg sm:mt-0"
+          className="w-full relative lg:rounded-lg sm:mt-0"
           ref={openCarouselRef}
         >
           <div
-            className={` flex flex-col overflow-y-auto lg:gap-6 w-full max-w-[500px] h-full sm:w-[550px] max-h-[95vh] md:max-h-[85vh]  lg:max-w-full lg:w-full mt-0 md:-mt-1`}
+            className={` flex flex-col overflow-y-auto lg:gap-6 w-full h-full mt-0 md:-mt-1`}
           >
             {mainPosts.map((post, index) => (
               <div key={index} className={` pt-1 basis-1 relative h-full lg:`}>
@@ -216,7 +186,7 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
                                             `}
                     />
                   </div>
-                  <div className="hidden lg:flex flex-col px-4 xl:px-5 py-4 border-b min-h-[30vh] h-full max-h-[30vh] overflow-x-hidden overflow-y-auto col-start-2 ">
+                  <div className="hidden lg:flex flex-col px-4 xl:px-5 py-4 border-b  overflow-x-hidden overflow-y-auto col-start-2 ">
                     <div className="">
                       <div className={`h-fit`} id={post.comments[0]?.id}>
                         <span className="mr-2 text-white">{post.username}</span>
@@ -350,27 +320,6 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
               </div>
             ))}
           </div>
-
-          <button
-            className="
-            absolute
-            -top-[32px]
-            right-2
-            md:top-0
-            md:-right-12
-            border
-            border-input
-            bg-background
-            hover:bg-accent
-            hover:text-accent-foreground
-            w-8 h-8
-            rounded-full
-            xl:scale-110
-            2xl:scale-125"
-            onClick={handleClose}
-          >
-            X
-          </button>
         </div>
         {isMobile && (
           <div
@@ -435,4 +384,4 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
   );
 }
 
-export default HorizontalCarousel;
+export default HorizontalSocial;
