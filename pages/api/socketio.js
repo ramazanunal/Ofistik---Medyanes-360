@@ -1,6 +1,7 @@
 import { Server } from 'socket.io'
 
 const ioHandler = (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     if (!res.socket.server.io) {
         console.log('*First use, starting socket.io')
 
