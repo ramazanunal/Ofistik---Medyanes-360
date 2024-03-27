@@ -21,7 +21,7 @@ const ioHandler = (req, res) => {
     } else {
         console.log('socket.io already running')
     }
-    res.end()
+    res.send("Hello world")
 }
 
 export const config = {
