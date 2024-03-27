@@ -7,7 +7,8 @@ const ioHandler = (req, res) => {
         const io = new Server(res.socket.server, {
             cors: [
                 "*"
-            ]
+            ],
+            addTrailingSlash: false
         })
 
         io.on('connection', socket => {
