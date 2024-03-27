@@ -25,7 +25,6 @@ export default function RootLayout({ children, session }) {
         <body className=''>
             <SessionProvider session={session}>
                 <SocketContainer>
-                    
                     {children}
                 </SocketContainer>
                 {/* Toastify */}
