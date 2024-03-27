@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-calendar/dist/Calendar.css';
 import { ToastContainer } from 'react-toastify';
 import { SessionProvider } from "next-auth/react";
-import { ChakraProvider } from "@chakra-ui/react";
 
 export default function RootLayout({ children, session }) {
     return (<html lang='en' className='scroll-smooth'>
@@ -24,23 +23,21 @@ export default function RootLayout({ children, session }) {
         </head>
         <body className=''>
             <SessionProvider session={session}>
-                <ChakraProvider>
-                    {children}
-                    {/* Toastify */}
-                    <ToastContainer
-                        position='top-right'
-                        autoClose={3000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme='dark'
-                    />
-                </ChakraProvider>
+                {children}
+                {/* Toastify */}
+                <ToastContainer
+                    position='top-right'
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme='dark'
+                />
             </SessionProvider>
         </body>
-    </html >);
+    </html>);
 }

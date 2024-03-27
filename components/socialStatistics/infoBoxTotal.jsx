@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function TotalInfoBox({ number, title, description }) {
+function InfoBoxTotal({ number, title, description }) {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleInfoIconHover = () => {
@@ -42,4 +42,4 @@ function TotalInfoBox({ number, title, description }) {
   );
 }
 
-export default TotalInfoBox;
+export default InfoBoxTotal;

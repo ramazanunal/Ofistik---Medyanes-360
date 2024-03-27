@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         const { time } = req.query;
         try {
             const times = await prisma.savedTimes.findMany()
-            const deleTime = times.filter((saved) => saved.time === time)[0];
+            const deleTime = times?.filter((saved) => saved.time === time)[0];
             await prisma.savedTimes.delete({
                 where: {
                     id: deleTime.id,

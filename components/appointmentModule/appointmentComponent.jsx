@@ -33,9 +33,14 @@ function AppointmentComponent() {
   };
 
   const getSelectedTimes = async () => {
-    const times = await getAPI("/selectedtimes");
-    setSelectedTimes(times);
-    return times;
+    try {
+      const times = await getAPI("/selectedtimes");
+      setSelectedTimes(times);
+      return times;
+    } catch (error) {
+      console.log(error)
+      return []
+    }
   };
 
   const handleNext = () => {
@@ -78,6 +83,10 @@ function AppointmentComponent() {
     //DATABASE DEN OKUCAAK SAATLER
     getSelectedTimes();
   }, []);
+
+  useEffect(() => {
+    console.log(selectedTimes)
+  }, [selectedTimes])
 
   const obje = [
     //örnek services datası
@@ -200,15 +209,15 @@ function AppointmentComponent() {
       title: "Başarılı",
       html: request
         ? '<h2 className="text-center text-base font-semibold p-4">' +
-          "Randevu talebiniz başarılı bir şekilde oluşturuldu." +
-          '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
-          "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
-          "</h2>"
+        "Randevu talebiniz başarılı bir şekilde oluşturuldu." +
+        '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
+        "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
+        "</h2>"
         : '<h2 className="text-center text-base font-semibold p-4">' +
-          "Sizinle buluşmayı büyük bir heyecan ile bekliyoruz." +
-          '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
-          "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
-          "</h2>",
+        "Sizinle buluşmayı büyük bir heyecan ile bekliyoruz." +
+        '<a className="text-deepSlateBlue text-lg font-semibold" href="/myAppointments"> Randevularım </a>' +
+        "bölümünden randevunuzun detaylarını inceleyebilir ve yönetebilirsiniz." +
+        "</h2>",
       icon: "success",
       confirmButtonText: "Kapat",
     });

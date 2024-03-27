@@ -228,7 +228,8 @@ function TimeAndDate({
     );
   };
 
-  const appointmentTimesForSelectedDate = times.filter((time) => {
+  const appointmentTimesForSelectedDate = times?.filter((time) => {
+    console.log(time)
     const formattedSelectedDate = formatDate(selectedDate);
     return formatDate(new Date(time.date)) === formattedSelectedDate;
   });
@@ -343,7 +344,7 @@ function TimeAndDate({
                 </h2>
               </div>
             </div>
-            {appointmentTimesForSelectedDate.length > 0 && (
+            {appointmentTimesForSelectedDate?.length > 0 && (
               <div className="flex flex-col items-center justify-center">
                 {timedRequestSelectedTime === "" && (
                   <>
@@ -396,12 +397,12 @@ function TimeAndDate({
             <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-[8rem] max-[768px]:h-min">
               <div
                 className={`appointmentTimes relative lg:w-[10rem] ${
-                  appointmentTimesForSelectedDate.length > 0
+                  appointmentTimesForSelectedDate?.length > 0
                     ? "lg:h-[10rem]"
                     : "lg:h-[13rem]"
                 } flex flex-col items-center justify-center w-[8rem] max-[768px]:h-auto`}
               >
-                {isMobile && appointmentTimesForSelectedDate.length > 9 && (
+                {isMobile && appointmentTimesForSelectedDate?.length > 9 && (
                   <>
                     <div className="custom-swiper-button-prev absolute left-1 top-[41%] text-xl text-purpleElite z-[2] cursor-pointer">
                       <i className="fa-solid fa-arrow-left" alt="Previous"></i>
@@ -411,7 +412,7 @@ function TimeAndDate({
                     </div>
                   </>
                 )}
-                {appointmentTimesForSelectedDate.length > 0 ? (
+                {appointmentTimesForSelectedDate?.length > 0 ? (
                   renderSwiper(appointmentTimesForSelectedDate)
                 ) : (
                   <>

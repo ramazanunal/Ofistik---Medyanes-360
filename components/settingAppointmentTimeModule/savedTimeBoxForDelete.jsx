@@ -15,7 +15,7 @@ function SavedTimesForDeletion({ time }) {
       if (result.isConfirmed) {
         const savedTimes = await getAPI("/savedtimes")
 
-        const deleTime = savedTimes.filter((saved) => saved === time)[0];
+        const deleTime = savedtimes?.filter((saved) => saved === time)[0];
 
         await postAPI(`/savedtimes?time=${deleTime}`, "", "DELETE")
         Swal.fire({

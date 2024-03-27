@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         try {
             await await prisma.selectedTimes.deleteMany({})
             req.body.forEach(async (element) => {
-                const createdSelectedTime = await prisma.selectedTimes.create({
+                await prisma.selectedTimes.create({
                     data: element,
                 });
             });
