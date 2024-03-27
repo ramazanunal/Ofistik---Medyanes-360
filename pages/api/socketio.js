@@ -1,23 +1,26 @@
 import { Server } from 'socket.io'
 
 const ioHandler = (req, res) => {
-    console.log('*First use, starting socket.io')
+    if (!res.socket.server.io) {
+        console.log('*First use, starting socket.io')
 
-    const io = new Server(res.socket.server, {
-        cors: [
-            "*"
-        ],
-    })
-
-    io.on('connection', socket => {
-        socket.broadcast.emit('a user connected')
-        socket.on('hello', msg => {
-            socket.emit('hello', 'world!')
+        const io = new Server(res.socket.server, {
+            cors: [
+                "*"
+            ],
         })
-    })
 
-    res.socket.server.io = io
+        io.on('connection', socket => {
+            socket.broadcast.emit('a user connected')
+            socket.on('hello', msg => {
+                socket.emit('hello', 'world!')
+            })
+        })
 
+        res.socket.server.io = io
+    } else {
+        console.log('socket.io already running')
+    }
     res.send("Hello world")
 }
 
