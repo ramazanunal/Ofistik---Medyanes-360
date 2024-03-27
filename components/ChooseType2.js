@@ -32,7 +32,7 @@ function ChoseType2({
           }}
           key={idx}
           className={classnames(
-            "flex flex-1 items-center mx-3 lg:mx-5 transition-all duration-200 ease-in-out cursor-pointer py-3 text-sm lg:text-lg font-normal justify-center whitespace-nowrap",
+            "flex flex-1 items-center px-3 lg:px-8 transition-all duration-500 ease-in-out cursor-pointer py-3 text-sm lg:text-lg font-normal justify-center whitespace-nowrap",
             activeIndex === idx &&
               " text-premiumOrange border-b-2 border-premiumOrange",
             activeIndex !== idx && " text-gray-600 border-b-2 border-gray-400"

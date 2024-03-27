@@ -12,15 +12,15 @@ function InfoBox({ number, title, lastOne, changeGraph, description }) {
   };
 
   return (
-    <div className="rounded-md bg-gray-50 relative lg:w-[10.5vw] m-1 2xl:m-3 w-44 animate__animated animate__zoomIn">
+    <div className="rounded-md bg-gray-50 relative lg:w-[9.5vw] m-1 2xl:m-3 w-44 animate__animated animate__zoomIn">
       <div className="infoIcon absolute right-0 top-0">
         <i
           onMouseOver={handleInfoIconHover}
           onMouseLeave={handleInfoIconLeave}
-          className="fa-solid fa-circle-info text-xs md:text-[1.1vw] lg:text-[0.9vw] xl:text-[0.8vw] text-gray-500 absolute right-1 top-1 cursor-pointer"
+          className="fa-solid fa-circle-info text-xs md:text-[1.1vw] lg:text-[0.9vw] xl:text-[0.8vw] text-gray-500 absolute right-2 top-2 cursor-pointer"
         ></i>
         {showTooltip && (
-          <div className="tooltip z-[3] bg-white border border-gray-300 p-2 rounded-xl shadow-lg absolute transform -translate-x-0 top-7 right-[2px] transition duration-300 w-[150px]">
+          <div className="tooltip z-[3] bg-white border border-gray-300 p-2 rounded-xl shadow-lg absolute transform -translate-x-0 top-7 right-2 transition duration-300 w-[150px]">
             <h1 className="text-xs font-semibold text-center text-gray-600">
               {description}
             </h1>
