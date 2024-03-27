@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import React from "react";
 
@@ -61,26 +61,33 @@ const EventModal = ({
               <div className="appointmentNotes">
                 <div className="flex">
                   <div className="imgArea w-[120px] p-2">
-                    <Image src="/images/pp.png" width={30} height={30} quality={100} className="ml-[3px]" alt="" />
+                    <Image
+                      src="/images/pp.png"
+                      width={100}
+                      height={100}
+                      quality={100}
+                      className="ml-[3px]"
+                      alt=""
+                    />
                   </div>
                   <div className="forSomeone flex flex-wrap items-center justify-center">
                     <div className="generalNameAreaSomeOne mr-5">
                       <div className="flex flex-col justify-start items-start ml-2">
                         <div className="flex">
-                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
+                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2 mt-2"></i>
                           <h1 className="text-md font-semibold my-1 text-gray-600">
                             {event.firstName} {event.lastName} (
                             {event.gender.toUpperCase()})
                           </h1>
                         </div>
                         <div className="flex">
-                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
+                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2 mt-2"></i>
                           <h1 className="text-md font-semibold my-1 text-gray-600">
                             {event.service}
                           </h1>
                         </div>
                         <div className="flex">
-                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2"></i>
+                          <i className="fa-solid fa-circle text-premiumOrange flex text-xs items-center justify-center mr-2 mt-2"></i>
                           <h1 className="text-md my-1 text-gray-600">
                             {randevuTarih} {randevuSaat}-{endSaat}
                           </h1>

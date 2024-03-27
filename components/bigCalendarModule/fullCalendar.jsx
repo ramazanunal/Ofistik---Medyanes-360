@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -55,7 +55,7 @@ const getSessionStorageData = (formData, setRequest) => {
       request = value;
     }).toDate();
 
-    const end = convertToISOFormat(formEntry.time, () => { })
+    const end = convertToISOFormat(formEntry.time, () => {})
       .add(formEntry.duration, "minutes")
       .toDate();
 
@@ -81,7 +81,7 @@ function FullCalendarComponent() {
   const [selectedTimes, setSelectedTimes] = useState([]);
   const [isFullDayModalOpen, setFullDayModalOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
-  const isMobile = useMediaQuery(500)
+  const isMobile = useMediaQuery(500);
   const [isHalfMid, setHalfMid] = useState(false);
   const [isMid, setIsMid] = useState(false);
 
@@ -190,8 +190,8 @@ function FullCalendarComponent() {
     const updatedSelectedTimes = selectedtimes?.filter(
       (timeObj) => !(timeObj.date === date && timeObj.time === time)
     );
-    await postAPI("/selectedtimes", updatedSelectedTimes, "POST")
-    await getSelectedTimes()
+    await postAPI("/selectedtimes", updatedSelectedTimes, "POST");
+    await getSelectedTimes();
   };
   const onSelectEvent = (event) => {
     if (event.title === "Boş Randevu") {
@@ -282,8 +282,9 @@ function FullCalendarComponent() {
   return (
     <>
       <div
-        className={`bg-white lg:scale-[1] md:scale-[0.9] lg:mr-[1rem] shadow-xl rounded-xl max-[768px]:mx-[15px] flex items-center justify-center animate__animated lg:w-full ${isMobileForAnimation ? "" : "animate__fadeInBottomLeft"
-          }`}
+        className={`bg-white lg:scale-[1] md:scale-[0.9] lg:mr-[1rem] shadow-xl rounded-xl max-[768px]:mx-[15px] flex items-center justify-center animate__animated lg:w-full ${
+          isMobileForAnimation ? "" : "animate__fadeInBottomLeft"
+        }`}
       >
         <div className="lg:mx-auto relative w-full max-[500px]:w-[360px] p-2 lg:p-5">
           <h1 className=" text-[1.5vw] max-[768px]:text-xl m-6 mb-2 ml-5 max-[500px]:m-3 mt-1 text-gray-600 font-semibold text-center flex justify-center lg:justify-start">
@@ -292,13 +293,13 @@ function FullCalendarComponent() {
           <div className="colorsMean mb-5  flex right-1 ml-5 top-1 font-semibold justify-start items-center text-gray-600 md:text-[1.2vw] lg:text-[1vw] xl:text-[0.9vw]">
             <div className="lg:flex lg:flex-row lg:justify-start">
               <div className="flex max-[500px]:mr-2 mr-2">
-                <i className="fa-solid fa-circle text-greenCalendar max-[500px]:text-xs flex justify-center items-center"></i>
+                <i className="fa-solid fa-circle text-greenCalendar max-[500px]:text-xs flex justify-center items-center mt-[5px]"></i>
                 <h1 className="max-[500px]:text-xs  ml-2 max-[500px]:text-center flex justify-center items-center">
                   Dolu Randevular
                 </h1>
               </div>
               <div className="flex  max-[500px]:mr-2 mr-2">
-                <i className="fa-solid fa-circle text-calanderAppointment max-[500px]:text-xs    flex justify-center items-center"></i>
+                <i className="fa-solid fa-circle text-calanderAppointment max-[500px]:text-xs    flex justify-center items-center mt-[5px]"></i>
                 <h1 className="max-[500px]:text-xs   ml-2 max-[500px]:text-center flex justify-center items-center">
                   Boş Randevular
                 </h1>
@@ -306,13 +307,13 @@ function FullCalendarComponent() {
             </div>
             <div className="lg:flex lg:flex-row lg:justify-start">
               <div className="flex max-[500px]:mr-2 mr-2">
-                <i className="fa-solid fa-circle text-grayCalendar max-[500px]:text-xs   flex justify-center items-center"></i>
+                <i className="fa-solid fa-circle text-grayCalendar max-[500px]:text-xs   flex justify-center items-center mt-[5px]"></i>
                 <h1 className="max-[500px]:text-xs ml-2 max-[500px]:text-center flex justify-center items-center">
                   Tamamlanmış Randevular
                 </h1>
               </div>
               <div className="flex max-[500px]:mr-2 mr-2">
-                <i className="fa-solid fa-circle text-coral max-[500px]:text-xs  flex  justify-center items-center"></i>
+                <i className="fa-solid fa-circle text-coral max-[500px]:text-xs  flex  justify-center items-center mt-[5px]"></i>
                 <h1 className="max-[500px]:text-xs  ml-2 max-[500px]:text-center flex justify-center items-center">
                   İptal Edilen Randevular
                 </h1>
@@ -328,17 +329,17 @@ function FullCalendarComponent() {
                 height: isMobile
                   ? "600px"
                   : isHalfMid
-                    ? "600px"
-                    : isMid
-                      ? "600px"
-                      : "35vw",
+                  ? "600px"
+                  : isMid
+                  ? "600px"
+                  : "35vw",
                 width: isMobile
                   ? "100%"
                   : isHalfMid
-                    ? "100%"
-                    : isMid
-                      ? "100%"
-                      : "100%",
+                  ? "100%"
+                  : isMid
+                  ? "100%"
+                  : "100%",
               }}
               events={eventsFromSessionStorage}
               onSelectEvent={onSelectEvent}
