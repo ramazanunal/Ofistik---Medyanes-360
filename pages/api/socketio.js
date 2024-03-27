@@ -4,8 +4,10 @@ const ioHandler = (req, res) => {
     if (!res.socket.server.io) {
         console.log('*First use, starting socket.io')
 
-        const io = new Server(undefined, {
-            addTrailingSlash: false
+        const io = new Server(res.socket.server, {
+            cors: [
+                "*"
+            ]
         })
 
         io.on('connection', socket => {
@@ -19,7 +21,7 @@ const ioHandler = (req, res) => {
     } else {
         console.log('socket.io already running')
     }
-    res.end()
+    res.send("Hello world")
 }
 
 export const config = {
