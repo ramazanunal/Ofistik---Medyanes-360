@@ -8,7 +8,6 @@ const ioHandler = (req, res) => {
             cors: [
                 "*"
             ],
-            addTrailingSlash: false
         })
 
         io.on('connection', socket => {
