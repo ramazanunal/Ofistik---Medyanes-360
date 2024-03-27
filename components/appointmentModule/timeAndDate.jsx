@@ -99,6 +99,7 @@ function TimeAndDate({
   const handleAppointmentBoxClick = (clickedTime) => {
     //SAAT BUTONUNA TIKLADIĞIMIZDA ÇALIŞAN FONKSİYON
     const formattedReturnDate = `${currentDateDisplay} ${clickedTime} ${appointmentRequestNormal} ${duration}`;
+    console.log(formattedReturnDate)
     setReturnDate(formattedReturnDate);
     setSelectedTime(clickedTime);
   };

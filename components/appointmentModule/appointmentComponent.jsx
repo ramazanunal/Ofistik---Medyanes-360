@@ -146,8 +146,6 @@ function AppointmentComponent() {
         const selectedDateTime = returnDate.split(" ")[2];
         const selectedDate = returnDate.split(" ")[0];
 
-        console.log(formDataa);
-
         // Gününüze bir gün ekleyin
         const parts = selectedDate.split(".");
         const formattedDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);

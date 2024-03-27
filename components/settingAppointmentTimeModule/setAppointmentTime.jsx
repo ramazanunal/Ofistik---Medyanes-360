@@ -274,7 +274,7 @@ function SetAppointmentTime() {
     setFieldValue("chosenDate", selectedDate);
     setSelectedTimes((prevSelectedTimes) => {
       if (prevSelectedTimes.includes(selectedTime)) {
-        return prevSelectedtimes?.filter((time) => time !== selectedTime);
+        return prevSelectedTimes?.filter((time) => time !== selectedTime);
       } else {
         return [...prevSelectedTimes, selectedTime];
       }

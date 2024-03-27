@@ -14,11 +14,10 @@ function RequestTimeBox({ time, date, selectedTime, onTimeClick, isMobile }) {
   return (
     <div className="flex items-center justify-center">
       <div
-        className={`timeBox w-[145px] max-[768px]:w-[115px] ${
-          isSelected
+        className={`timeBox w-[145px] max-[768px]:w-[115px] ${isSelected
             ? " bg-premiumOrange text-white"
             : "bg-premiumOrange text-white "
-        } rounded-lg mb-[5px] p-[2px] max-[768px]:m-[5px] cursor-pointer`}
+          } rounded-lg mb-[5px] p-[2px] max-[768px]:m-[5px] cursor-pointer`}
         onClick={handleTimeClick}
       >
         {isMobile === true && (

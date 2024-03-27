@@ -361,6 +361,7 @@ function Agenda() {
       const status = formEntry.confirm;
       const { time, duration, service } = formEntry;
       const parsedInfos = time.split(/\s+/);
+
       const dateInfo = parsedInfos[0] + " " + parsedInfos[1];
       const timeInfo = getTime(parsedInfos[2], duration);
       const remainingTime = getRemainingTime(time);
