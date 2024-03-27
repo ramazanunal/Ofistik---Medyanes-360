@@ -12,7 +12,7 @@ import { CategoryScale, Chart, registerables } from "chart.js";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import TotalInfoBox from "./totalInfoBox";
+import TotalInfoBox from "./infoBoxTotal";
 import HorizontalCarousel from "../tabsSocialComponents/HorizontalCarousel";
 
 function GeneralInfosForSocial() {
