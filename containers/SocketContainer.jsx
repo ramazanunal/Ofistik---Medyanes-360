@@ -5,7 +5,9 @@ import io from 'socket.io-client'
 export default ({ children }) => {
     useEffect(() => {
         fetch('/api/socketio').finally(() => {
-            const socket = io()
+            const socket = io({
+                addTrailingSlash: false
+            })
 
             socket.on('connect', () => {
                 console.log('connect')
