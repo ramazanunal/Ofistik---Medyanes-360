@@ -77,17 +77,19 @@ function GeneralInfosForSocial() {
     datasets: [
       {
         type: "bar",
-        label: "Günlük Beğeni",
+        label: "Bu Hafta Beğeni",
         data: [138, 85, 112, 31, 96, 113, 32],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
+        borderRadius: 15,
       },
       {
         type: "bar",
-        label: "Geçen Hafta Günlük Beğeni",
+        label: "Geçen Hafta Beğeni",
         data: [34, 54, 95, 114, 36, 74, 114],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
+        borderRadius: 15,
       },
     ],
   };
