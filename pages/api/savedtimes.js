@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const createdSavedTime = await prisma.SavedTimes.findMany();
+            const createdSavedTime = await prisma.savedTimes.findMany();
             const result = createdSavedTime?.map((e) => e?.time)
 
             res.status(201).json(result);
@@ -13,12 +13,13 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'POST') {
         try {
-            const createdSavedTime = await prisma.SavedTimes.create({
+            await prisma.savedTimes.create({
                 data: {
                     time: req.body.time
                 },
             });
-            res.status(201).json(createdSavedTime);
+            const data = await prisma.savedTimes.findMany({})
+            res.status(201).json(data?.map((e) => e?.time));
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Saved times creation failed' });

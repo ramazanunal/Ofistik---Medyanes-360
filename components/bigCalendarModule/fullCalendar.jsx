@@ -186,7 +186,6 @@ function FullCalendarComponent() {
   };
   const deleteSelectedTime = async (date, time) => {
     console.log(date);
-    console.log(time);
     const updatedSelectedTimes = selectedtimes?.filter(
       (timeObj) => !(timeObj.date === date && timeObj.time === time)
     );

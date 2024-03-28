@@ -17,9 +17,7 @@ export default async function handler(req, res) {
                     data: element,
                 });
             });
-            
-            const data = await prisma.selectedTimes.findMany()
-            res.status(201).json({ message: "success", data: data });
+            res.status(201).json({ message: "success" });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Selected times creation failed' });

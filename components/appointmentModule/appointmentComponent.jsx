@@ -7,6 +7,7 @@ import ServiceComponent from "./serviceComponent";
 import Swal from "sweetalert2";
 import AppointmentView from "./appointmentView";
 import { getAPI, postAPI } from "@/services/fetchAPI";
+import { useSocket } from "@/store/useSocket";
 
 function AppointmentComponent() {
   const [step, setStep] = useState(1); // en üstte gözüken stepleri tutan değişken
@@ -24,6 +25,9 @@ function AppointmentComponent() {
   const [request, setRequest] = useState(false); //Appointment view ekranında kullandığımız talep olup olmadığını i atadığımız değişkern
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [duration, setDuration] = useState("");
+  const [selectedTimes, setSelectedTimes] = useState([]); //saatleri atadığımız değişken
+  const { socket } = useSocket()
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -42,6 +46,20 @@ function AppointmentComponent() {
       return []
     }
   };
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("selectedTimes", (newTimes) => {
+        setSelectedTimes(newTimes)
+      })
+    }
+
+    return () => {
+      if (socket) {
+        socket.off("selectedTimes")
+      }
+    }
+  }, [socket])
 
   const handleNext = () => {
     // ileri butonu fonksiyonu (seçim yapmadan ileri gitmeye çalıştığımızda hata veriyor)
@@ -76,8 +94,6 @@ function AppointmentComponent() {
       setStep((prevStep) => prevStep - 1);
     }
   };
-
-  const [selectedTimes, setSelectedTimes] = useState([]); //saatleri atadığımız değişken
 
   useEffect(() => {
     //DATABASE DEN OKUCAAK SAATLER

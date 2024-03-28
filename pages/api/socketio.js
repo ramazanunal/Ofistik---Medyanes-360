@@ -1,6 +1,6 @@
 import { Server } from 'socket.io'
 
-let users = {}; // Object to store user IDs and their corresponding socket IDs
+let users = {}; // Kullanıcı kimliklerini ve bunların karşılık gelen soket kimliklerini depolamak için bir nesne
 
 const ioHandler = (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,10 +21,24 @@ const ioHandler = (req, res) => {
                 console.log("New user's data:", users)
             })
 
+            socket.on("updateSavedTimes", (newTimes) => {
+                // Tüm kullanıcıların soketlerine yeni zamanları gönder
+                Object.values(users).forEach(userSocketId => {
+                    io.to(userSocketId).emit("savedTimes", newTimes);
+                });
+            })
+
+            socket.on("updateSelectedTimes", (newTimes) => {
+                // Tüm kullanıcıların soketlerine yeni zamanları gönder
+                Object.values(users).forEach(userSocketId => {
+                    io.to(userSocketId).emit("selectedTimes", newTimes);
+                });
+            })
+
             socket.on('disconnect', () => {
                 const userId = Object.keys(users).find(key => users[key] === socket.id);
                 if (userId) {
-                    delete users[userId]; // Remove disconnected user from the users object
+                    delete users[userId]; // Bağlantısı kesilen kullanıcıyı kullanıcılar nesnesinden kaldır
                     console.log("User disconnected:", userId);
                 }
             })
@@ -34,7 +48,7 @@ const ioHandler = (req, res) => {
     } else {
         console.log('socket.io already running')
     }
-    res.end("Hello world") // Changed from res.send to res.end
+    res.end("Hello world")
 }
 
 export const config = {

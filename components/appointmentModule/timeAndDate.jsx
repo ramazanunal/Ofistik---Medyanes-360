@@ -230,7 +230,6 @@ function TimeAndDate({
   };
 
   const appointmentTimesForSelectedDate = times?.filter((time) => {
-    console.log(time)
     const formattedSelectedDate = formatDate(selectedDate);
     return formatDate(new Date(time.date)) === formattedSelectedDate;
   });

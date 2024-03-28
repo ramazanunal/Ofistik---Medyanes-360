@@ -1,38 +1,29 @@
+'use client'
+import { useSocket } from '@/store/useSocket'
 import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 
 export default function SocketClient() {
     const { data } = useSession()
+    const { setSocket } = useSocket()
 
     useEffect(() => {
-        let socket;
         const userId = data?.user?.id;
 
-        if (userId) {
-            // Establish Socket.IO connection
-            socket = io();
+        if (true) {
+            const socket = io();
+            setSocket(socket);
 
-            // Event handlers
             socket.on("connect", () => {
-                console.log("Connected to socket server");
-                // Emit 'set_user' event when connected
-                socket.emit('set_user', userId);
+                socket.emit('set_user', "66054d2c52f4d2e92dbe53cd"); // Bağlantı tamamlandığında 'set_user' olayını emit et
             });
 
-            socket.on('disconnect', () => {
-                console.log('Disconnected from socket server');
-            });
-        }
-
-        // Cleanup function
-        return () => {
-            if (socket) {
+            return () => {
                 socket.disconnect();
-                console.log('Socket disconnected');
-            }
-        };
-    }, [data]);
+            };
+        }
+    }, []);
 
     return <></>; // Placeholder JSX
 }
