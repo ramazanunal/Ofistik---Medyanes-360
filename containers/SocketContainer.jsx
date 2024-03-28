@@ -16,7 +16,7 @@ export default function SocketClient() {
             setSocket(socket);
 
             socket.on("connect", () => {
-                socket.emit('set_user', "66054d2c52f4d2e92dbe53cd"); // Bağlantı tamamlandığında 'set_user' olayını emit et
+                socket.emit('set_user', crypto.randomUUID()); // Bağlantı tamamlandığında 'set_user' olayını emit et
             });
 
             return () => {

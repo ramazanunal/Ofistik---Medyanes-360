@@ -185,8 +185,7 @@ function FullCalendarComponent() {
     return months[monthName];
   };
   const deleteSelectedTime = async (date, time) => {
-    console.log(date);
-    const updatedSelectedTimes = selectedtimes?.filter(
+    const updatedSelectedTimes = selectedTimes?.filter(
       (timeObj) => !(timeObj.date === date && timeObj.time === time)
     );
     await postAPI("/selectedtimes", updatedSelectedTimes, "POST");

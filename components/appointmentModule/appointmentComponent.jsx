@@ -185,7 +185,7 @@ function AppointmentComponent() {
           await getSelectedTimes();
         }
 
-        postAPI(
+        const data = await postAPI(
           "/date",
           {
             confirm: formDataa["confirm"],
@@ -203,6 +203,8 @@ function AppointmentComponent() {
           },
           "POST"
         );
+
+        socket.emit("newDate", data)
 
         setShowFinishScreen(true);
         openModal();

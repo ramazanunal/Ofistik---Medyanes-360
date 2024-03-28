@@ -34,6 +34,13 @@ const ioHandler = (req, res) => {
                     io.to(userSocketId).emit("selectedTimes", newTimes);
                 });
             })
+            
+            socket.on("newDate", (date) => {
+                // Tüm kullanıcıların soketlerine yeni zamanları gönder
+                Object.values(users).forEach(userSocketId => {
+                    io.to(userSocketId).emit("date", date);
+                });
+            })
 
             socket.on('disconnect', () => {
                 const userId = Object.keys(users).find(key => users[key] === socket.id);
