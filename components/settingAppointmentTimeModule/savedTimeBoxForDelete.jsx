@@ -2,7 +2,7 @@ import { getAPI, postAPI } from "@/services/fetchAPI";
 import React from "react";
 import Swal from "sweetalert2";
 
-function SavedTimesForDeletion({ time }) {
+function SavedTimesForDeletion({ time, setTimesArray }) {
   const handleDeleteClick = () => {
     Swal.fire({
       title: "Emin misiniz!",
@@ -15,9 +15,10 @@ function SavedTimesForDeletion({ time }) {
       if (result.isConfirmed) {
         const savedTimes = await getAPI("/savedtimes")
 
-        const deleTime = savedtimes?.filter((saved) => saved === time)[0];
+        const deleTime = savedTimes?.filter((saved) => saved === time)[0];
 
-        await postAPI(`/savedtimes?time=${deleTime}`, "", "DELETE")
+        const newArray = await postAPI(`/savedtimes?time=${deleTime}`, "", "DELETE")
+        setTimesArray(newArray.data)
         Swal.fire({
           title: "Başarılı !",
           text: "Seçilen saat başarılı bir şekilde silindi.",

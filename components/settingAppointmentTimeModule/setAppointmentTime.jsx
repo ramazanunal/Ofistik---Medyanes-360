@@ -111,7 +111,9 @@ function SetAppointmentTime() {
           existingTimes.push(dateTimeObject);
         });
       });
-      await postAPI("/selectedtimes", existingTimes)
+      const newTime = await postAPI("/selectedtimes", existingTimes)
+      setSavedTimesArray(newTime.data)
+
       resetForm();
       setSelectedTimes([]);
       Swal.fire({
@@ -151,7 +153,9 @@ function SetAppointmentTime() {
           existingTimes.push(dateTimeObject);
         }
       });
-      await postAPI("/selectedtimes", existingTimes)
+      const newTime = await postAPI("/selectedtimes", existingTimes)
+      setSavedTimesArray(newTime.data)
+
       resetForm();
       Swal.fire({
         title: "Başarılı",
@@ -176,7 +180,7 @@ function SetAppointmentTime() {
         <SwiperSlide key={i}>
           <div className="flex flex-wrap items-center justify-center serviceBoxArea ">
             {currentTimes.map((savedTime, index) => (
-              <SavedTimesForDeletion key={index} time={savedTime} />
+              <SavedTimesForDeletion setTimesArray={setSavedTimesArray} key={index} time={savedTime} />
             ))}
           </div>
         </SwiperSlide>

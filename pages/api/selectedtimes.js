@@ -11,13 +11,15 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'POST') {
         try {
-            await await prisma.selectedTimes.deleteMany({})
+            await prisma.selectedTimes.deleteMany({})
             req.body.forEach(async (element) => {
                 await prisma.selectedTimes.create({
                     data: element,
                 });
             });
-            res.status(201).json({ message: "success" });
+            
+            const data = await prisma.selectedTimes.findMany()
+            res.status(201).json({ message: "success", data: data });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Selected times creation failed' });

@@ -13,7 +13,6 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'POST') {
         try {
-            console.log(req.body)
             const createdSavedTime = await prisma.SavedTimes.create({
                 data: {
                     time: req.body.time
@@ -40,6 +39,7 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'DELETE') {
         const { time } = req.query;
+
         try {
             const times = await prisma.savedTimes.findMany()
             const deleTime = times?.filter((saved) => saved.time === time)[0];
@@ -48,7 +48,9 @@ export default async function handler(req, res) {
                     id: deleTime.id,
                 },
             });
-            res.json({ message: 'Saved times deleted successfully' });
+
+            const data = await prisma.savedTimes.findMany()
+            res.json({ message: 'Saved times deleted successfully', data: data?.map((e) => e?.time) });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Saved times deletion failed' });

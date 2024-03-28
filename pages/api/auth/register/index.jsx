@@ -1,12 +1,12 @@
 import prisma from '@/lib/prisma';
 import EncryptPassword from '@/lib/encryptPassword';
 import schema from '@/validations/backend/RegisterValidation';
-import {getToken} from 'next-auth/jwt';
-import {transporter, mailOptions} from '@/pages/api/mail/nodemailer';
+import { getToken } from 'next-auth/jwt';
+import { transporter, mailOptions } from '@/pages/api/mail/nodemailer';
 
 export default async function handler(req, res) {
     try {
-        const token = await getToken({req, secret: process.env.NEXTAUTH_SECRET});
+        const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
         // Eğer kullanıcı giriş yapmışsa bu sayfaya erişemez
         // Eğer rol admin ise bu sayfaya istek atabilir.
         if (token && token?.user?.role !== 'admin') {
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
                     req.body;
 
                 // Frontend'den gelen verileri kontrol et (Validation)
-                const {error} = schema.validate({
+                const { error } = schema.validate({
                     name,
                     surname,
                     email,
@@ -98,23 +98,11 @@ export default async function handler(req, res) {
                         email: email,
                         password: hashPassword,
                         username: username,
-                        HizmetAlan: {
+                        hizmetAlan: {
                             create: {
                                 name: name,
                                 surname: surname,
                                 phone: phone,
-                                certificates: {
-                                    createMany: {
-                                        data: certificates
-                                    }
-                                },
-                                serviceAreas: serviceAreas,
-                                educationInfo: {
-                                    createMany: {
-                                        data: educationInfo
-                                    }
-                                },
-                                resume: resume,
                                 totalAppointments: 0,
                                 price: price,
                                 languages: languages,
@@ -159,11 +147,11 @@ export default async function handler(req, res) {
             } else {
                 return res
                     .status(405)
-                    .json({statusCode: 405, message: 'Bu metoda izin verilmedi.'});
+                    .json({ statusCode: 405, message: 'Bu metoda izin verilmedi.' });
             }
         }
     } catch (error) {
-        res.status(500).json({statusCode: 500, message: error.message});
+        res.status(500).json({ statusCode: 500, message: error.message });
     }
 }
 
@@ -210,7 +198,7 @@ function generateUniqueCode() {
     const characters =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    const code = Array.from({length: 6}, () => {
+    const code = Array.from({ length: 6 }, () => {
         const randomIndex = Math.floor(Math.random() * characters.length);
         return characters.charAt(randomIndex);
     }).join('');
