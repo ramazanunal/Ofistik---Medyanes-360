@@ -2,25 +2,27 @@
     position: absolute; 
     top: 5px; 
     left: 5px; 
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff; 
-    padding: 1px;
+    background-color: #e5e7eb;
+    color: #000; 
+    padding: 2px;
     border-radius: 5px; 
     text-decoration: none;
     cursor: pointer;
+    font-size: 25px;
+    width: 28px;
+    height: 28px;
   }
   .downloadLink:hover{
-    color:#dc2626 ;
+    background-color:hsl(7, 90%, 64%) ;
+    color: #fff;
     opacity: 0.9;
   }
 .closeImage{
     position: absolute; 
     top: 5px; 
     right: 5px; 
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff; 
     padding: 2px;
     border-radius: 5px; 
-    font-size: 9px;
+    font-size: 25px;
     cursor: pointer;
 }

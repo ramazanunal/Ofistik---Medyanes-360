@@ -131,18 +131,18 @@ function Messages() {
     setSelectedImage(null);
   };
 
-  console.log(messages);
   return (
     <div
-      className={`${styles.messagesContainer} ${styles.scrollStyles} md:h-[83vh] h-[87vh]`}
+      className={`${styles.messagesContainer} ${styles.scrollStyles}  md:h-[83vh]  h-[87vh]`}
     >
       {/* Mesajlaşma alanı */}
       <div className={`${styles.messageArea} `}>
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`${styles.message}  ${message.sender === "me" ? styles.myMessage : styles.notMyMessage
-              }`}
+            className={`${styles.message}  ${
+              message.sender === "me" ? styles.myMessage : styles.notMyMessage
+            }`}
           >
             {message.sender !== "me" && (
               <div className={styles.avatar}>
@@ -184,12 +184,13 @@ function Messages() {
                 </a>
                 {message.document.message !== "" && (
                   <div
-                    className={`${message.sender === "me"
+                    className={`${
+                      message.sender === "me"
                         ? styles.myMessageText
                         : styles.messageText
-                      } flex flex-col mt-2`}
+                    } flex flex-col mt-2`}
                   >
-                    <div> {message.document.message}</div>
+                 <span className="max-w-screen-sm overflow-hidden break-words">{message.document.message}</span>
                     <div className=" flex  justify-end items-center space-x-2 text-xs mt-1 opacity-70">
                       <div>{message.hour}</div>
                       {message.sent && (
@@ -200,11 +201,12 @@ function Messages() {
                 )}
               </div>
             ) : message.image ? (
-              <div className="flex flex-col">
+              <div className="flex flex-col justify-end">
                 {message.image.image.files.map((img, index) => (
                   <div key={index} className="mx-1" >
                     <div className={styles.imageWithDownload}>
-                      <img src={img} alt="Sent" className={styles.sentImage} onClick={() => { handleImageClick(img) }} />
+                    <div className={styles.imgDiv}>
+                     <img src={img} alt="Sent" className={styles.sentImage} onClick={()=> {handleImageClick(img)}} />
                       {message.download && (
                         <a
                           href={message.image.image}
@@ -215,7 +217,7 @@ function Messages() {
                         </a>
                       )}
                       <div
-                        className={`absolute bottom-1 right-1 flex items-center space-x-2 text-xs opacity-70`}
+                        className={`absolute bottom-1 right-2 flex items-center space-x-2 text-xs `}
                       >
                         <div className="text-plusTxt">{message.hour}</div>
                         {message.sent && (
@@ -223,17 +225,20 @@ function Messages() {
                         )}
                       </div>
                     </div>
+                     
+                    </div>
                   </div>
                 ))}
 
                 {message.image.image.message !== "" && (
                   <div
-                    className={`${message.sender === "me"
+                    className={`${
+                      message.sender === "me"
                         ? styles.myMessageText
                         : styles.messageText
-                      } flex flex-col `}
+                    } flex flex-col  `}
                   >
-                    <div> {message.image.image.message}</div>
+                     <span className="max-w-screen-sm overflow-hidden break-words mr-3 text-end">{message.image.image.message}</span> 
                     <div className=" flex  justify-end items-center space-x-2 text-xs mt-1 opacity-70">
                       <div>{message.hour}</div>
                       {message.sent && (
@@ -245,13 +250,14 @@ function Messages() {
               </div>
             ) : (
               <div
-                className={`${message.sender === "me"
+                className={`${
+                  message.sender === "me"
                     ? styles.myMessageText
                     : styles.messageText
-                  } flex flex-col`}
+                } flex flex-col `}
               >
-                <span className="max-w-screen-sm overflow-hidden break-words">{message.text}</span>
-                <div className="flex justify-end items-center space-x-2 text-xs mt-1 opacity-70">
+                 <span className="max-w-screen-sm  overflow-hidden break-words">{message.text}</span> 
+                <div className=" flex  justify-end items-center space-x-2 text-xs mt-1 opacity-70">
                   <div>{message.hour}</div>
                   {message.sent && (
                     <IoCheckmarkDoneSharp className="text-premiumOrange" />

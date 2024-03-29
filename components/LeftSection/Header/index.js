@@ -86,21 +86,21 @@ function Header({ onSearch, onFilterChange, filteredUser }) {
       <div className="h-10 w-[79%] bg-inputbg rounded-lg  ml-10 mt-2 flex  justify-between items-center">
         <div
           className={`bg-inputbg cursor-pointer  text-newMessage text-sm p-2 rounded-lg ${
-            selectOption === "inbox" ? "bg-personMesTxt text-plusTxt duration-500" : ""
+            selectOption === "inbox" ? "bg-premiumOrange text-plusTxt duration-500" : ""
           }`}  onClick={()=> handleClickOption("inbox")}
         >
           Gelen Kutusu
         </div>
         <div
           className={`bg-inputbg cursor-pointer  text-newMessage text-sm p-2 rounded-lg ${
-            selectOption === "unread" ? "bg-personMesTxt text-plusTxt duration-500" : ""
+            selectOption === "unread" ? "bg-premiumOrange text-plusTxt duration-500" : ""
           }`}  onClick={()=> handleClickOption("unread")}
         >
           Okunmamış
         </div>
         <div
           className={`bg-inputbg cursor-pointer  text-newMessage text-sm p-2 rounded-lg ${
-            selectOption === "archive" ? "bg-personMesTxt text-plusTxt duration-500" : ""
+            selectOption === "archive" ? "bg-premiumOrange text-plusTxt duration-500" : ""
           }`}  onClick={()=> handleClickOption("archive")}
         >
           Arşiv

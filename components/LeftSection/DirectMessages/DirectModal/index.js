@@ -47,7 +47,7 @@ function DirectModal({ isOpenModal, setIsOpenModal }) {
                 Yeni Mesaj
               </button>
               <button
-                className="px-4 py-2 mx-2 text-gray-400  border-b-2 border-gray-300 "
+                className="px-4 py-2 mx-2  border-b-2  "
                 onClick={handleClickOpenModal}
               >
                 Yeni Toplu Mesaj

@@ -81,7 +81,7 @@ function Input({ inputValue, sendMessage, handleInputChange, sendImage, sendDocu
       
       
        <Tooltip hasArrow label='More'  placement='top' fontSize='sm' >
-        <div className="text-2xl cursor-pointer" >
+        <div className="text-2xl cursor-pointer text-premiumOrange" >
         <HiOutlinePaperClip onClick={handleShowMoreMenu}/>
        
          
@@ -96,7 +96,7 @@ function Input({ inputValue, sendMessage, handleInputChange, sendImage, sendDocu
         
       <div ref={emojiRef} onClick={handleEmojiClick}>
        <Tooltip hasArrow label='Emoji'  placement='top' fontSize='sm' >
-        <div className="text-2xl cursor-pointer">
+        <div className="text-2xl cursor-pointer text-premiumOrange">
           <HiOutlineEmojiHappy />
         </div>
         </Tooltip>

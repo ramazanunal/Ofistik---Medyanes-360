@@ -50,7 +50,6 @@ export default function Home() {
         <div className="flex bg-inputbg">
           <MessagesList selectedUser={selectedUser} />
           <Chat selectedUser={selectedUser} />
-
         </div>
       </ChakraProvider>
 
