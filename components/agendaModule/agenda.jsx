@@ -67,7 +67,7 @@ function Agenda() {
     setCurrentPage(newPage);
   };
 
-  const paginatedFormData = formData.slice(
+  const paginatedFormData = formData?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -114,9 +114,9 @@ function Agenda() {
             (appointmentDate > currentDate ||
               (appointmentDate.getDate() === currentDate.getDate() &&
                 new Date(`1970-01-01T${timeArray[2]}`) <
-                  new Date(
-                    `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
-                  ))) &&
+                new Date(
+                  `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                ))) &&
             data.confirm === false &&
             data.delete === false
           );
@@ -125,9 +125,9 @@ function Agenda() {
             (appointmentDate < currentDate ||
               (appointmentDate.getDate() === currentDate.getDate() &&
                 new Date(`1970-01-01T${timeArray[2]}`) <
-                  new Date(
-                    `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
-                  ))) &&
+                new Date(
+                  `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                ))) &&
             data.delete === false
           );
         case "today":
@@ -145,9 +145,9 @@ function Agenda() {
             (appointmentDate > currentDate ||
               (appointmentDate.getDate() === currentDate.getDate() &&
                 new Date(`1970-01-01T${timeArray[2]}`) >
-                  new Date(
-                    `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
-                  ))) &&
+                new Date(
+                  `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                ))) &&
             data.delete === false
           );
 
@@ -157,9 +157,9 @@ function Agenda() {
               (appointmentDate > currentDate ||
                 (appointmentDate.getDate() === currentDate.getDate() &&
                   new Date(`1970-01-01T${timeArray[2]}`) <
-                    new Date(
-                      `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
-                    ))) &&
+                  new Date(
+                    `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                  ))) &&
               data.confirm === false &&
               data.delete === false
             );
@@ -168,9 +168,9 @@ function Agenda() {
               (appointmentDate > currentDate ||
                 (appointmentDate.getDate() === currentDate.getDate() &&
                   new Date(`1970-01-01T${timeArray[2]}`) >
-                    new Date(
-                      `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
-                    ))) &&
+                  new Date(
+                    `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                  ))) &&
               data.delete === false
             );
           } else if (pendingAppointments.length === 0) {
@@ -229,13 +229,13 @@ function Agenda() {
         sortedFormData = filteredFormData.sort((a, b) => {
           const dateA = new Date(
             a.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              a.time.split(" ")[2]
+            " " +
+            a.time.split(" ")[2]
           );
           const dateB = new Date(
             b.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              b.time.split(" ")[2]
+            " " +
+            b.time.split(" ")[2]
           );
 
           return dateA - dateB;
@@ -244,13 +244,13 @@ function Agenda() {
         sortedFormData = filteredFormData.sort((a, b) => {
           const dateA = new Date(
             a.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              a.time.split(" ")[2]
+            " " +
+            a.time.split(" ")[2]
           );
           const dateB = new Date(
             b.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              b.time.split(" ")[2]
+            " " +
+            b.time.split(" ")[2]
           );
 
           return dateB - dateA;
@@ -259,13 +259,13 @@ function Agenda() {
         sortedFormData = filteredFormData.sort((a, b) => {
           const dateA = new Date(
             a.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              a.time.split(" ")[2]
+            " " +
+            a.time.split(" ")[2]
           );
           const dateB = new Date(
             b.time.split(" ")[0].split(".").reverse().join("-") +
-              " " +
-              b.time.split(" ")[2]
+            " " +
+            b.time.split(" ")[2]
           );
 
           return dateA - dateB;
@@ -274,6 +274,8 @@ function Agenda() {
 
       setFormData(sortedFormData);
     }
+
+    return filterFormData
   };
 
   useEffect(() => {
@@ -378,22 +380,22 @@ function Agenda() {
         remainingTime.remainingHours > 0
           ? `${remainingTime.remainingHours} saat ${remainingTime.remainingMinutes} dakika`
           : remainingTime.remainingMinutes > 0
-          ? `${remainingTime.remainingMinutes} dakika`
-          : "-";
+            ? `${remainingTime.remainingMinutes} dakika`
+            : "-";
       const requestStatus = parsedInfos[3];
       const currentDate = new Date();
       const appointmentDate = new Date(
         time.split(" ")[0].split(".").reverse().join("-") +
-          " " +
-          time.split(" ")[2]
+        " " +
+        time.split(" ")[2]
       );
       const isPastAppointment =
         appointmentDate < currentDate ||
         (appointmentDate.getDate() === currentDate.getDate() &&
           new Date(`1970-01-01T${parsedInfos[2]}`) <
-            new Date(
-              `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
-            ));
+          new Date(
+            `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+          ));
 
       const onAccept = async (timeObject) => {
         // RANDEVU TALEBİNİ KABUL ETME FONKSİYONUNU request değerini false yapıyor
@@ -412,7 +414,7 @@ function Agenda() {
               const falseValue2 = originalObje.confirm;
               const updatedValue2 = falseValue2 === false ? true : "";
 
-              await postAPI(
+              const newData = await postAPI(
                 "/date",
                 {
                   id: timeObject,
@@ -421,13 +423,11 @@ function Agenda() {
                   },
                 },
                 "PUT"
-              );
+              )
+              setFormData(newData)
             }
           }
         });
-
-        const updated = await getDatas();
-
         return null;
       };
 
@@ -446,7 +446,7 @@ function Agenda() {
             const originalObje = data.filter(({ id }) => id === timeObject)[0];
 
             if (originalObje) {
-              await postAPI(
+              const data = await postAPI(
                 "/date",
                 {
                   id: timeObject,
@@ -456,9 +456,8 @@ function Agenda() {
                   },
                 },
                 "PUT"
-              ).then(async () => {
-                await getDatas();
-              });
+              )
+              setFormData(data)
             }
           }
         });
@@ -548,9 +547,8 @@ function Agenda() {
           </td>
           <td className={`text-center p-3 font-medium`}>
             <span
-              className={`text-center mb-auto ${
-                fullRemainingTime === "-" ? "" : ""
-              }`}
+              className={`text-center mb-auto ${fullRemainingTime === "-" ? "" : ""
+                }`}
             >
               {fullRemainingTime}
             </span>
@@ -713,8 +711,8 @@ function Agenda() {
     const currentDate = new Date();
     const appointmentDate = new Date(
       start.split(" ")[0].split(".").reverse().join("-") +
-        " " +
-        start.split(" ")[2]
+      " " +
+      start.split(" ")[2]
     );
 
     const remainingTimeInMilliseconds =
@@ -864,8 +862,8 @@ function Agenda() {
     const currentDate = new Date();
     const appointmentDate = new Date(
       time.split(" ")[0].split(".").reverse().join("-") +
-        " " +
-        time.split(" ")[2]
+      " " +
+      time.split(" ")[2]
     );
     return appointmentDate > currentDate;
   }
@@ -901,13 +899,13 @@ function Agenda() {
           sortedFormData = filteredFormData.sort((a, b) => {
             const dateA = new Date(
               a.time.split(" ")[0].split(".").reverse().join("-") +
-                " " +
-                a.time.split(" ")[2]
+              " " +
+              a.time.split(" ")[2]
             );
             const dateB = new Date(
               b.time.split(" ")[0].split(".").reverse().join("-") +
-                " " +
-                b.time.split(" ")[2]
+              " " +
+              b.time.split(" ")[2]
             );
 
             return dateA - dateB;
@@ -916,13 +914,13 @@ function Agenda() {
           sortedFormData = filteredFormData.sort((a, b) => {
             const dateA = new Date(
               a.time.split(" ")[0].split(".").reverse().join("-") +
-                " " +
-                a.time.split(" ")[2]
+              " " +
+              a.time.split(" ")[2]
             );
             const dateB = new Date(
               b.time.split(" ")[0].split(".").reverse().join("-") +
-                " " +
-                b.time.split(" ")[2]
+              " " +
+              b.time.split(" ")[2]
             );
 
             return dateB - dateA;
@@ -931,13 +929,13 @@ function Agenda() {
           sortedFormData = filteredFormData.sort((a, b) => {
             const dateA = new Date(
               a.time.split(" ")[0].split(".").reverse().join("-") +
-                " " +
-                a.time.split(" ")[2]
+              " " +
+              a.time.split(" ")[2]
             );
             const dateB = new Date(
               b.time.split(" ")[0].split(".").reverse().join("-") +
-                " " +
-                b.time.split(" ")[2]
+              " " +
+              b.time.split(" ")[2]
             );
 
             return dateA - dateB;
@@ -1033,8 +1031,8 @@ function Agenda() {
               const currentDate = new Date();
               const appointmentDate = new Date(
                 time.split(" ")[0].split(".").reverse().join("-") +
-                  " " +
-                  time.split(" ")[2]
+                " " +
+                time.split(" ")[2]
               );
               const timeObject = formEntry.id;
               const isCancelDisabled = remainingTime.remainingHours < 12;
@@ -1042,13 +1040,12 @@ function Agenda() {
                 appointmentDate < currentDate ||
                 (appointmentDate.getDate() === currentDate.getDate() &&
                   new Date(`1970-01-01T${parsedInfos[2]}`) <
-                    new Date(
-                      `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
-                    ));
+                  new Date(
+                    `1970-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}`
+                  ));
               const name =
-                `${formEntry.firstName || ""} ${
-                  formEntry.lastName || ""
-                }`.trim() || "Bayram Çınar"; //DATA BASE DEN ALINAN GİRİŞ YAPMIŞ KULLANICI İSMİ
+                `${formEntry.firstName || ""} ${formEntry.lastName || ""
+                  }`.trim() || "Bayram Çınar"; //DATA BASE DEN ALINAN GİRİŞ YAPMIŞ KULLANICI İSMİ
               const isCancelled = formEntry.delete;
               const isToday = isSameDay(appointmentDate, currentDate);
 
@@ -1096,17 +1093,17 @@ function Agenda() {
 
     const swiperProps = isMobile
       ? {
-          direction: "horizontal",
-          pagination: { clickable: true, dynamicBullets: true },
-          modules: [Pagination, Navigation],
-        }
+        direction: "horizontal",
+        pagination: { clickable: true, dynamicBullets: true },
+        modules: [Pagination, Navigation],
+      }
       : {
-          navigation: {
-            prevEl: ".custom-swiper-button-prev",
-            nextEl: ".custom-swiper-button-next",
-          },
-          modules: [Navigation],
-        };
+        navigation: {
+          prevEl: ".custom-swiper-button-prev",
+          nextEl: ".custom-swiper-button-next",
+        },
+        modules: [Navigation],
+      };
 
     return (
       <Swiper {...swiperProps} className="mySwiper">
@@ -1153,9 +1150,8 @@ function Agenda() {
   return (
     <>
       <div
-        className={`bg-white lg:scale-[1] md:scale-[0.9] ${
-          isMobileForAnimation ? "" : "animate__fadeInTopLeft"
-        } animate__animated  rounded-xl max-[768px]:mx-auto max-[768px]:w-[23rem] mb-5 w-full flex-grow shadow-xl flex flex-col justify-between relative z-[2]`}
+        className={`bg-white lg:scale-[1] md:scale-[0.9] ${isMobileForAnimation ? "" : "animate__fadeInTopLeft"
+          } animate__animated  rounded-xl max-[768px]:mx-auto max-[768px]:w-[23rem] mb-5 w-full flex-grow shadow-xl flex flex-col justify-between relative z-[2]`}
       >
         <div className="w-full overflow-auto max-h-600">
           <div className="block lg:flex items-center justify-center lg:justify-between m-4">
@@ -1235,41 +1231,36 @@ function Agenda() {
               <div className="flex justify-center lg:justify-start items-center mb-4 lg:ml-4 flex-wrap md:text-[1.2vw] lg:text-[1vw] xl:text-[0.9vw]">
                 <div
                   onClick={() => handleFilterChange("all")}
-                  className={`p-1 border-b-2 ${
-                    filter === "all" ? "activeCategory" : ""
-                  } border-gray-300 m-2 text-gray-500 cursor-pointer`}
+                  className={`p-1 border-b-2 ${filter === "all" ? "activeCategory" : ""
+                    } border-gray-300 m-2 text-gray-500 cursor-pointer`}
                 >
                   Tümü
                 </div>
                 <div
                   onClick={() => handleFilterChange("coming")}
-                  className={`p-1 border-b-2 ${
-                    filter === "coming" ? "activeCategory" : ""
-                  } border-gray-300 m-2 text-gray-500 cursor-pointer`}
+                  className={`p-1 border-b-2 ${filter === "coming" ? "activeCategory" : ""
+                    } border-gray-300 m-2 text-gray-500 cursor-pointer`}
                 >
                   Yaklaşan
                 </div>
                 <div
                   onClick={() => handleFilterChange("past")}
-                  className={`p-1 border-b-2 ${
-                    filter === "past" ? "activeCategory" : ""
-                  } border-gray-300 m-2 text-gray-500 cursor-pointer`}
+                  className={`p-1 border-b-2 ${filter === "past" ? "activeCategory" : ""
+                    } border-gray-300 m-2 text-gray-500 cursor-pointer`}
                 >
                   Geçmiş
                 </div>
                 <div
                   onClick={() => handleFilterChange("today")}
-                  className={`p-1 border-b-2 ${
-                    filter === "today" ? "activeCategory" : ""
-                  } border-gray-300 m-2 text-gray-500 cursor-pointer`}
+                  className={`p-1 border-b-2 ${filter === "today" ? "activeCategory" : ""
+                    } border-gray-300 m-2 text-gray-500 cursor-pointer`}
                 >
                   Bugünkü
                 </div>
                 <div
                   onClick={() => handleFilterChange("cancelled")}
-                  className={`p-1 border-b-2 ${
-                    filter === "cancelled" ? "activeCategory" : ""
-                  } border-gray-300 m-2 text-gray-500 cursor-pointer`}
+                  className={`p-1 border-b-2 ${filter === "cancelled" ? "activeCategory" : ""
+                    } border-gray-300 m-2 text-gray-500 cursor-pointer`}
                 >
                   İptal Edilen
                 </div>
@@ -1277,9 +1268,8 @@ function Agenda() {
                 <div className="dropdown-content flex">
                   <div
                     onClick={() => handleFilterChange("notConfirmed")}
-                    className={`p-1 border-b-2 ${
-                      filter === "notConfirmed" ? "activeCategory" : ""
-                    } border-gray-300 m-2 text-gray-500 cursor-pointer flex`}
+                    className={`p-1 border-b-2 ${filter === "notConfirmed" ? "activeCategory" : ""
+                      } border-gray-300 m-2 text-gray-500 cursor-pointer flex`}
                   >
                     {pendingAppointments.length > 0 && (
                       <i className="fa-solid fa-circle text-premiumOrange text-[0.5rem] flashing-text text-center flex items-center justify-center mr-2 mt-2"></i>
@@ -1444,11 +1434,10 @@ function Agenda() {
             <ul className="flex space-x-2">
               <li
                 onClick={() => handlePageChange(currentPage - 1)}
-                className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${
-                  currentPage === 1
-                    ? "bg-grayBg text-gray-600 font-semibold"
-                    : "border-grayBg"
-                }`}
+                className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${currentPage === 1
+                  ? "bg-grayBg text-gray-600 font-semibold"
+                  : "border-grayBg"
+                  }`}
               >
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
@@ -1462,11 +1451,10 @@ function Agenda() {
                 <li
                   key={page + 1}
                   onClick={() => handlePageChange(page + 1)}
-                  className={`px-3 py-2 border w-[40px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${
-                    page + 1 === currentPage
-                      ? "bg-grayBg text-gray-600 font-semibold"
-                      : "border-grayBg"
-                  }`}
+                  className={`px-3 py-2 border w-[40px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${page + 1 === currentPage
+                    ? "bg-grayBg text-gray-600 font-semibold"
+                    : "border-grayBg"
+                    }`}
                 >
                   <button onClick={() => handlePageChange(page + 1)}>
                     {page + 1}
@@ -1475,11 +1463,10 @@ function Agenda() {
               ))}
               <li
                 onClick={() => handlePageChange(currentPage + 1)}
-                className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${
-                  currentPage === totalPages
-                    ? "bg-grayBg text-gray-600 font-semibold"
-                    : "border-grayBg"
-                }`}
+                className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${currentPage === totalPages
+                  ? "bg-grayBg text-gray-600 font-semibold"
+                  : "border-grayBg"
+                  }`}
               >
                 <button
                   onClick={() => handlePageChange(currentPage + 1)}

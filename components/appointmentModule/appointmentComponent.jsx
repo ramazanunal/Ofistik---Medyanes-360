@@ -182,7 +182,8 @@ function AppointmentComponent() {
             "PUT"
           );
 
-          await getSelectedTimes();
+          const times = await getSelectedTimes();
+          socket.emit("updateSelectedTimes", times)
         }
 
         const data = await postAPI(

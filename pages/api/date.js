@@ -45,7 +45,8 @@ export default async function handler(req, res) {
                 },
                 data: data,
             });
-            res.json(updatedDate);
+            const response_data = await prisma.date.findMany({})
+            res.json(response_data);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Date update failed' });
