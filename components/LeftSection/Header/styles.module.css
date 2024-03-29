@@ -1,0 +1,21 @@
+.searchContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    width: 300px;
+  }
+  .inputStyle {
+    flex: 1;
+    padding: 9px;
+    border: none;
+    outline: none;
+    font-weight: 400;
+  }
+ .searchContainer:focus{
+    border: 1px solid #292d31
+ }
+  .searchIcon {
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+  }

@@ -1,0 +1,50 @@
+.inputArea {
+
+    position: fixed;
+    bottom: 0;
+   
+    border-top: 1px solid #d1d5db;
+    
+    
+  }
+  
+  .inputField {
+    width:100%;
+    padding: 10px;
+    
+  }
+  
+
+.dot{
+  height: 7px;
+  width: 7px;
+  margin:0 2px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: dotTyping 0.9s linear infinite forwards;
+  
+}
+.dot1{
+  animation-delay: .25s;
+}
+.dot2{
+  animation-delay: .5s;
+}
+.dot3{
+  animation-delay: .75s;
+}
+@keyframes dotTyping {
+  0%{
+    transform: translateY(0px);
+    opacity: 0.5;
+
+  }
+  50%{
+    transform: translateY(-6px);
+    opacity: 0.7;
+  }
+  100%{
+    transform: translateY(0px);
+    opacity: 0.2;
+  }  
+}
