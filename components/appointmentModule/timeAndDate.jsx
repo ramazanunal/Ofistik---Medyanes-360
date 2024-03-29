@@ -99,7 +99,7 @@ function TimeAndDate({
   const handleAppointmentBoxClick = (clickedTime) => {
     //SAAT BUTONUNA TIKLADIĞIMIZDA ÇALIŞAN FONKSİYON
     const formattedReturnDate = `${currentDateDisplay} ${clickedTime} ${appointmentRequestNormal} ${duration}`;
-    console.log(formattedReturnDate)
+    console.log(formattedReturnDate);
     setReturnDate(formattedReturnDate);
     setSelectedTime(clickedTime);
   };
@@ -394,13 +394,13 @@ function TimeAndDate({
                 )}
               </div>
             )}
-            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-[8rem] max-[768px]:h-min">
+            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-[15rem] max-[768px]:h-min">
               <div
                 className={`appointmentTimes relative lg:w-[10rem] ${
                   appointmentTimesForSelectedDate?.length > 0
                     ? "lg:h-[10rem]"
                     : "lg:h-[13rem]"
-                } flex flex-col items-center justify-center w-[8rem] max-[768px]:h-auto`}
+                } flex flex-col items-center justify-center w-[15rem] max-[768px]:h-auto`}
               >
                 {isMobile && appointmentTimesForSelectedDate?.length > 9 && (
                   <>

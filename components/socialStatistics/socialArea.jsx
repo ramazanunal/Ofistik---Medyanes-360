@@ -8,6 +8,12 @@ import Loading from "@/components/Loading";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { FaPlus } from "react-icons/fa6";
 import { useProfileStore } from "@/store/useProfileStore";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination } from "swiper/modules";
+import InfoBoxTotal from "./infoBoxTotal";
 import AddPostComp from "../tabsSocialComponents/AddPostComp";
 
 export default function SocialArea() {
@@ -31,24 +37,92 @@ export default function SocialArea() {
   const handleClick = (index) => {
     setOpenpageId(index);
   };
+  const boxesTotal = [
+    //İNFO KUTULARINA VERİLERİ GÖNDERDİĞİMİZ ARRAY
+    {
+      number: 58,
+      title: "TOPLAM GÖNDERİ",
+      description: "Toplam gönderiyi gösterir.",
+    },
+    {
+      number: 950,
+      title: "TOPLAM GÖRÜNTÜLENME",
+      description: "Toplam görüntülenmeyi gösterir.",
+    },
+    {
+      number: 473,
+      title: "TOPLAM BEĞENİ",
+      description: "Toplam beğeni sayısını gösterir.",
+    },
+    {
+      number: 3775,
+      title: "TOPLAM YORUM",
+      description: "Toplam yorumu gösterir.",
+    },
+    {
+      number: 607,
+      title: "TOPLAM PAYLAŞIM",
+      description: "Toplam paylaşım sayısını gösterir.",
+    },
+    {
+      number: 607,
+      title: "TOPLAM KAYDETME",
+      description: "Toplam kaydetme sayısını gösterir.",
+    },
+  ];
+  const renderSwiperTotalInfos = (items) => {
+    const itemsPerSlide = isMobile ? 6 : 10;
+    const swiperSlides = [];
 
+    for (let i = 0; i < items.length; i += itemsPerSlide) {
+      const currentTimes = items.slice(i, i + itemsPerSlide);
+      const swiperSlide = (
+        <SwiperSlide key={i}>
+          <div className="flex flex-wrap items-center justify-center">
+            {currentTimes.map((box, index) => (
+              <InfoBoxTotal
+                key={index}
+                number={box.number}
+                title={box.title}
+                description={box.description}
+              />
+            ))}
+          </div>
+        </SwiperSlide>
+      );
+      swiperSlides.push(swiperSlide);
+    }
+
+    return (
+      <Swiper
+        pagination={{ clickable: true, dynamicBullets: true }}
+        modules={[Pagination]}
+        className="mySwiper"
+      >
+        {swiperSlides}
+      </Swiper>
+    );
+  };
   return (
     <>
-      <div className="flex mx-5 items-center p-5 lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-8">
-        <div className="ml-auto">
+      <div className="flex mx-3 items-center py-3 lg:p-5 lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-5">
+        <div className="statisticArea flex lg:flex-row flex-col w-full bg-gray-100 rounded-xl py-3">
+          <div className="totalStatistics lg:w-[90%]">
+            {renderSwiperTotalInfos(boxesTotal)}
+          </div>
           <button
             onClick={() => {
               setOpenAddPost(true);
             }}
             type="button"
-            className="flex items-center gap-2 font-semibold px-3 md:px-5 py-1 md:py-1 rounded-xl transition-colors duration-150 bg-white border-2 border-premiumOrange text-premiumOrange hover:bg-premiumOrange hover:text-white "
+            className="flex items-center gap-2 font-semibold px-3 md:px-5 h-[5.5vw] my-auto rounded-xl transition-colors duration-150 bg-white border-2 border-premiumOrange text-premiumOrange hover:bg-premiumOrange hover:text-white lg:text-[0.8vw] lg:mr-5 max-[768px]:py-5 max-[768px]:my-2 max-[768px]:mx-5 max-[768px]:text-sm max-[768px]:justify-center"
           >
-            <span>Ekle</span>
+            <span>Gönderi Oluştur</span>
             <FaPlus />
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-5 pb-5 relative overflow-x-hidden  overflow-hidden  md:h-[calc(100vh_-_302px)] mt-10">
+      <div className="flex flex-col gap-5 pb-5 relative overflow-x-hidden  overflow-hidden  md:h-[calc(100vh_-_302px)] mt-10 lg:mx-5">
         <div className=" overflow-y-auto ">
           <div className="flex justify-center flex-wrap gap-4">
             {posts.map((post, index) => (

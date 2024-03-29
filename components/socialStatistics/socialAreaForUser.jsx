@@ -88,7 +88,7 @@ export default function SocialAreaForUser() {
           />
         </div> */}
       </div>
-      <div className="flex flex-col lg:mx-auto relative overflow-x-hidden  overflow-hidden md:max-w-[1200px]   md:h-[calc(100vh_-_250px)]">
+      <div className="flex flex-col lg:mx-auto relative overflow-x-hidden  overflow-hidden md:max-w-[1200px]   md:h-[88vh]">
         <div className=" overflow-y-auto ">
           <div className="flex justify-center flex-wrap gap-4">
             {activeComponent === "Takip ettiklerim" && (
