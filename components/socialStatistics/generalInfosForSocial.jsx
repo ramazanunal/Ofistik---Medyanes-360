@@ -56,14 +56,14 @@ function GeneralInfosForSocial() {
     datasets: [
       {
         type: "bar",
-        label: "Günlük Görüntülenme",
+        label: "Bu Hafta Görüntülenme",
         data: [652, 856, 112, 314, 796, 113, 932],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
       },
       {
         type: "bar",
-        label: "Geçen Hafta Günlük Görüntülenme",
+        label: "Geçen Hafta Görüntülenme",
         data: [324, 514, 895, 114, 636, 714, 1014],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
@@ -81,7 +81,6 @@ function GeneralInfosForSocial() {
         data: [138, 85, 112, 31, 96, 113, 32],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
-        borderRadius: 15,
       },
       {
         type: "bar",
@@ -89,7 +88,6 @@ function GeneralInfosForSocial() {
         data: [34, 54, 95, 114, 36, 74, 114],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
-        borderRadius: 15,
       },
     ],
   };
@@ -457,6 +455,11 @@ function GeneralInfosForSocial() {
   const boxesTotal = [
     //İNFO KUTULARINA VERİLERİ GÖNDERDİĞİMİZ ARRAY
     {
+      number: 58,
+      title: "TOPLAM GÖNDERİ",
+      description: "Toplam gönderiyi gösterir.",
+    },
+    {
       number: 950,
       title: "TOPLAM GÖRÜNTÜLENME",
       description: "Toplam görüntülenmeyi gösterir.",
@@ -772,9 +775,9 @@ function GeneralInfosForSocial() {
   return (
     <>
       <div className=" lg:mx-10 lg:pb-3 lg:mb-4 my-3 mx-auto lg:my-0 bg-white  rounded-lg max-[768px]:max-w-[370px]">
-        <div className="totalStatistics">
+        {/* <div className="totalStatistics">
           {renderSwiperTotalInfos(boxesTotal)}
-        </div>
+        </div> */}
         <div className="mx-4 block lg:flex items-center justify-center lg:justify-between">
           <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
             İstatistikler
@@ -846,7 +849,7 @@ function GeneralInfosForSocial() {
                         </div>
                       </div>
                       <div className="h-full mb-auto">
-                        <h1 className=" text-premiumOrange text-lg font-semibold ml-3 lg:text-3xl">
+                        <h1 className=" text-premiumOrange text-base font-semibold ml-3 lg:text-[1.4vw]">
                           {graph.datasets[0].data.reduce(
                             (acc, currentValue) => acc + currentValue,
                             0
