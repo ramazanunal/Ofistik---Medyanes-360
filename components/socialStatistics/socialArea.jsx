@@ -105,7 +105,7 @@ export default function SocialArea() {
   };
   return (
     <>
-      <div className="flex mx-3 items-center py-3 lg:p-5 lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-5">
+      <div className="flex mx-5 items-center py-3 lg:py-0 lg:px-5 lg:justify-center flex-row flex-wrap lg:mx-5">
         <div className="statisticArea flex lg:flex-row flex-col w-full bg-gray-100 rounded-xl py-3">
           <div className="totalStatistics lg:w-[90%]">
             {renderSwiperTotalInfos(boxesTotal)}

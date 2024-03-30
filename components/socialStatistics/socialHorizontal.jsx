@@ -137,6 +137,7 @@ function HorizontalSocial({ mainPosts, setMainPosts }) {
                   className={`lg:grid grid-cols-2   bg-primary rounded-lg h-fit  `}
                 >
                   <CarouselCardHeader
+                    options={1}
                     post={post}
                     openCommentPage={openCommentPage}
                     openCarouselRef={openCarouselRef}

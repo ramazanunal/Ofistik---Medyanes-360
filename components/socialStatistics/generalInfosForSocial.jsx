@@ -12,7 +12,6 @@ import { CategoryScale, Chart, registerables } from "chart.js";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import TotalInfoBox from "./infoBoxTotal";
 import HorizontalCarousel from "../tabsSocialComponents/HorizontalCarousel";
 
 function GeneralInfosForSocial() {
@@ -452,39 +451,6 @@ function GeneralInfosForSocial() {
       description: "Bu ayki toplam kaydetme sayısını gösterir.",
     },
   ];
-  const boxesTotal = [
-    //İNFO KUTULARINA VERİLERİ GÖNDERDİĞİMİZ ARRAY
-    {
-      number: 58,
-      title: "TOPLAM GÖNDERİ",
-      description: "Toplam gönderiyi gösterir.",
-    },
-    {
-      number: 950,
-      title: "TOPLAM GÖRÜNTÜLENME",
-      description: "Toplam görüntülenmeyi gösterir.",
-    },
-    {
-      number: 473,
-      title: "TOPLAM BEĞENİ",
-      description: "Toplam beğeni sayısını gösterir.",
-    },
-    {
-      number: 3775,
-      title: "TOPLAM YORUM",
-      description: "Toplam yorumu gösterir.",
-    },
-    {
-      number: 607,
-      title: "TOPLAM PAYLAŞIM",
-      description: "Toplam paylaşım sayısını gösterir.",
-    },
-    {
-      number: 607,
-      title: "TOPLAM KAYDETME",
-      description: "Toplam kaydetme sayısını gösterir.",
-    },
-  ];
 
   const optionsMonthlyView = {
     plugins: {
@@ -739,45 +705,10 @@ function GeneralInfosForSocial() {
       </Swiper>
     );
   };
-  const renderSwiperTotalInfos = (items) => {
-    const itemsPerSlide = isMobile ? 4 : 10;
-    const swiperSlides = [];
 
-    for (let i = 0; i < items.length; i += itemsPerSlide) {
-      const currentTimes = items.slice(i, i + itemsPerSlide);
-      const swiperSlide = (
-        <SwiperSlide key={i}>
-          <div className="flex flex-wrap items-center justify-center">
-            {currentTimes.map((box, index) => (
-              <TotalInfoBox
-                key={index}
-                number={box.number}
-                title={box.title}
-                description={box.description}
-              />
-            ))}
-          </div>
-        </SwiperSlide>
-      );
-      swiperSlides.push(swiperSlide);
-    }
-
-    return (
-      <Swiper
-        pagination={{ clickable: true, dynamicBullets: true }}
-        modules={[Pagination]}
-        className="mySwiper"
-      >
-        {swiperSlides}
-      </Swiper>
-    );
-  };
   return (
     <>
       <div className=" lg:mx-10 lg:pb-3 lg:mb-4 my-3 mx-auto lg:my-0 bg-white  rounded-lg max-[768px]:max-w-[370px]">
-        {/* <div className="totalStatistics">
-          {renderSwiperTotalInfos(boxesTotal)}
-        </div> */}
         <div className="mx-4 block lg:flex items-center justify-center lg:justify-between">
           <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
             İstatistikler
