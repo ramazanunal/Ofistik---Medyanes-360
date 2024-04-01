@@ -115,7 +115,7 @@ export default function SocialArea() {
               setOpenAddPost(true);
             }}
             type="button"
-            className="flex items-center gap-2 font-semibold px-3 md:px-5 h-[5.5vw] my-auto rounded-xl transition-colors duration-150 bg-white border-2 border-premiumOrange text-premiumOrange hover:bg-premiumOrange hover:text-white lg:text-[0.8vw] lg:mr-5 max-[768px]:py-5 max-[768px]:my-2 max-[768px]:mx-5 max-[768px]:text-sm max-[768px]:justify-center"
+            className="flex items-center gap-2 font-semibold px-3 md:px-5 h-[5.5vw] my-auto rounded-xl transition-colors duration-150 bg-white border-2 border-premiumOrange text-premiumOrange hover:bg-premiumOrange hover:text-white lg:text-[0.9vw] lg:mr-5 max-[768px]:py-5 max-[768px]:my-2 max-[768px]:mx-5 max-[768px]:text-sm max-[768px]:justify-center"
           >
             <span>Gönderi Oluştur</span>
             <FaPlus />

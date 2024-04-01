@@ -159,7 +159,7 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
           ref={openCarouselRef}
         >
           <div
-            className={` flex flex-col overflow-y-auto lg:gap-6 w-full max-w-[500px] h-full sm:w-[550px] max-h-[95vh] md:max-h-[85vh]  lg:max-w-full lg:w-full lg:pr-0`}
+            className={` flex flex-col overflow-y-auto lg:gap-6 w-full max-w-[500px] h-full sm:w-[550px] max-h-[95vh] md:max-h-[85vh]  lg:max-w-full lg:w-full mt-8`}
           >
             {mainPosts.map((post, index) => (
               <div key={index} className={` pt-1 basis-1 relative h-full lg:`}>
@@ -351,7 +351,6 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
               </div>
             ))}
           </div>
-
           <div
             className="w-4 h-4 md:w-6 md:h-6 rounded-md p-4 cursor-pointer transition-all duration-700  bg-gray-200/50 hover:bg-red-500 group absolute right-0 top-0"
             onClick={() => handleClose()}

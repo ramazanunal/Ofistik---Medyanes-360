@@ -210,22 +210,22 @@ function CarouselCardHeader({
             </PopoverTrigger>
             <PopoverContent
               ref={popoverRef}
-              className="flex flex-col gap-2 p-0 w-fit hover:bg-gray-100 z-[46]"
+              className="flex flex-col gap-2 p-0 w-fit z-[46]"
             >
               <Dialog className="">
                 {options === 1 && (
-                  <DialogTrigger className="flex items-center  gap-2 p-3 ">
+                  <DialogTrigger className="flex items-center rounded-xl gap-2 p-3 hover:bg-premiumOrange transition-all duration-500">
                     <RiSpam2Fill />
                     <span>Şikayet et</span>
                   </DialogTrigger>
                 )}
                 {options === 2 && (
                   <>
-                    <DialogTrigger className="flex items-center  gap-1 p-3 ">
+                    <DialogTrigger className="flex items-center rounded-xl gap-1 p-3 hover:bg-premiumOrange transition-all duration-500 hover:text-white">
                       <MdEdit />
                       <span>Düzenle</span>
                     </DialogTrigger>
-                    <DialogTrigger className="flex items-center  gap-1 p-3 ">
+                    <DialogTrigger className="flex items-center rounded-xl gap-1 p-3 hover:bg-premiumOrange transition-all duration-500 hover:text-white">
                       <MdDelete />
                       <span>Sil</span>
                     </DialogTrigger>
