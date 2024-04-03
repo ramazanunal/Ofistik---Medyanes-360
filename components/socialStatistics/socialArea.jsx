@@ -105,7 +105,7 @@ export default function SocialArea() {
   };
   return (
     <>
-      <div className="flex mx-3 items-center py-3 lg:p-5 lg:justify-center flex-row flex-wrap pb-5 md:py-0 lg:mx-5">
+      <div className="flex mx-5 items-center py-3 lg:py-0 lg:px-5 lg:justify-center flex-row flex-wrap lg:mx-5">
         <div className="statisticArea flex lg:flex-row flex-col w-full bg-gray-100 rounded-xl py-3">
           <div className="totalStatistics lg:w-[90%]">
             {renderSwiperTotalInfos(boxesTotal)}
@@ -115,7 +115,7 @@ export default function SocialArea() {
               setOpenAddPost(true);
             }}
             type="button"
-            className="flex items-center gap-2 font-semibold px-3 md:px-5 h-[5.5vw] my-auto rounded-xl transition-colors duration-150 bg-white border-2 border-premiumOrange text-premiumOrange hover:bg-premiumOrange hover:text-white lg:text-[0.8vw] lg:mr-5 max-[768px]:py-5 max-[768px]:my-2 max-[768px]:mx-5 max-[768px]:text-sm max-[768px]:justify-center"
+            className="flex items-center gap-2 font-semibold px-3 md:px-5 h-[5.5vw] my-auto rounded-xl transition-colors duration-150 bg-white border-2 border-premiumOrange text-premiumOrange hover:bg-premiumOrange hover:text-white lg:text-[0.9vw] lg:mr-5 max-[768px]:py-5 max-[768px]:my-2 max-[768px]:mx-5 max-[768px]:text-sm max-[768px]:justify-center"
           >
             <span>Gönderi Oluştur</span>
             <FaPlus />

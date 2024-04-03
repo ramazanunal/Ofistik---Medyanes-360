@@ -29,7 +29,7 @@ function InfoBox({ number, title, lastOne, changeGraph, description }) {
       </div>
       <div className={`px-[0.3vw]  2xl:px-[0.5vw] py-[0.5vw] 2xl:py-[1.2vw] `}>
         <div className="titleArea flex justify-center m-2 ">
-          <h1 className="text-xs lg:text-[0.65vw] text-gray-600 font-semibold">
+          <h1 className="text-[10px] lg:text-[0.55vw] text-gray-600 font-semibold">
             {title}
           </h1>
         </div>
