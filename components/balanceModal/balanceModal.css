@@ -1,0 +1,22 @@
+.vertical-line::after{
+    content:'';
+    position:absolute;
+    height:20px;
+    width:.4px;
+    top:0;
+    bottom:0;
+    padding-bottom: 3px;
+    background-color:hsl(7, 90%, 64%);  
+    margin: auto;
+    padding-left: 2px;
+    padding-right:2px;
+
+}
+.highlight-on-hover {
+    cursor: pointer;
+    transition: box-shadow 0.3s ease; 
+  }
+  
+  .highlight-on-hover:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.7); 
+  }

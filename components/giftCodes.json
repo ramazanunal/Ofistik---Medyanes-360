@@ -1,0 +1,37 @@
+[
+  {
+    "code": "acA6-caEG-C39x-cvp9",
+    "limit": 5,
+    "finish": "2024-02-19",
+    "amount": 100,
+    "usedAccounts": []
+  },
+  {
+    "code": "bDf3-xzYT-Po3r-mnb8",
+    "limit": 10,
+    "finish": "2024-03-05",
+    "amount": 200,
+    "usedAccounts": [123456]
+  },
+  {
+    "code": "kLm9-pqRT-S87v-dfg4",
+    "limit": 3,
+    "finish": "2024-12-15",
+    "amount": 500,
+    "usedAccounts": []
+  },
+  {
+    "code": "zXc7-vbNM-O90i-qwe2",
+    "limit": 8,
+    "finish": "2024-09-30",
+    "amount": 150,
+    "usedAccounts": []
+  },
+  {
+    "code": "pO9i-rtDF-Zxc4-vbn6",
+    "limit": 7,
+    "finish": "2024-07-22",
+    "amount": 300,
+    "usedAccounts": []
+  }
+]

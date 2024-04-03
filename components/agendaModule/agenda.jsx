@@ -43,9 +43,10 @@ function Agenda() {
   }, [socket])
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    setIsMobile(window.innerWidth <= 768);
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
 
     handleResize();
 

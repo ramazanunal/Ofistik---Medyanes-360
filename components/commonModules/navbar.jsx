@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
-import { Link } from "react-router-dom";
 import "../../style/navbar.css";
+import Link from "next/link";
 
 function Navbar() {
   return (
@@ -9,17 +9,17 @@ function Navbar() {
       <nav>
         <ul className="flex flex-row max-w-[100vw] justify-around">
           <li className="text-sm font-semibold text-center my-5 mx-2 nav-item">
-            <Link className="nav-link relative" to={""}>
+            <Link className="nav-link relative" href={""}>
               Appointment Area
             </Link>
           </li>
           <li className="text-sm  font-semibold text-center my-5 mx-2 nav-item">
-            <Link className="nav-link relative" to={"dashboard"}>
+            <Link className="nav-link relative" href={"/dashboard"}>
               Dashboard
             </Link>
           </li>
           <li className="text-sm  font-semibold text-center my-5 mx-2 nav-item">
-            <Link className="nav-link relative" to={"myAppointments"}>
+            <Link className="nav-link relative" href={"/myAppointments"}>
               My Appointments
             </Link>
           </li>

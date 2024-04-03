@@ -10,9 +10,10 @@ function Dashboard() {
   const [isMobile, setIsMobile] = useState(false); //ekranın mobil olup olmadığını kontrol ettiğimiz değişken
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    setIsMobile(window.innerWidth <= 768);
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
 
     handleResize()
 
