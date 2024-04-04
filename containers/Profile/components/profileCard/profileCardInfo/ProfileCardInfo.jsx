@@ -79,23 +79,27 @@ const ProfileCardHeader = ({
       <div className="relative max-w-full flex flex-col sm:flex-row items-center  sm:items-start gap-3">
         <div className="relative imageArea min-w-[115px] flex flex-col items-center justify-center">
           <span
-            className={`absolute h-5 w-5 ${1 === 1 ? "bg-green-600" : "bg-redOne"
-              } rounded-full top-4 point right-0 border-white border-4`}
+            className={`absolute h-5 w-5 ${
+              1 === 1 ? "bg-green-600" : "bg-redOne"
+            } rounded-full top-4 point right-0 border-white border-4`}
           ></span>
           <img
             onClick={() => setWideScreenImg(true)}
             src="/profileImage.jpg"
-            className={`cursor-pointer w-28 h-28 rounded-full ${1 !== undefined
+            className={`cursor-pointer w-28 h-28 rounded-full ${
+              1 !== undefined
                 ? `border-2 ${1 === 1 ? "border-green-600" : "border-redOne"}`
                 : ""
-              }`}
+            }`}
             alt=""
           />
           {1 !== undefined && (
             <span
-              className={`status bg-lightGreen  ${1 === 1 ? "text-green-600" : "text-redOne"
-                } px-3 py-1 rounded-2xl text-sm border-${1 === 1 ? "green-600" : "redOne"
-                } border relative bottom-3.5 font-semibold`}
+              className={`status bg-lightGreen  ${
+                1 === 1 ? "text-green-600" : "text-redOne"
+              } px-3 py-1 rounded-2xl text-sm border-${
+                1 === 1 ? "green-600" : "redOne"
+              } border relative bottom-3.5 font-semibold`}
             >
               {1 === 1 ? "Çevrim içi" : "Meşgul"}
             </span>
@@ -121,10 +125,11 @@ const ProfileCardHeader = ({
                 >
                   <BsCheck
                     size={16}
-                    className={`heart-icon ${isHearted
+                    className={`heart-icon ${
+                      isHearted
                         ? "hearted text-premiumOrange  animate-heart "
                         : ""
-                      }`}
+                    }`}
                   />
                   <h1 className="text-[11px] font-semibold">Takip</h1>
                 </div>
@@ -135,8 +140,9 @@ const ProfileCardHeader = ({
                 >
                   <FiPlus
                     size={14}
-                    className={`heart-icon ${isHearted ? "heartedmb-1 animate-heart" : ""
-                      }`}
+                    className={`heart-icon ${
+                      isHearted ? "heartedmb-1 animate-heart" : ""
+                    }`}
                   />
                   <h1 className="text-[11px] font-semibold ">Takip Et</h1>
                 </div>
@@ -154,8 +160,9 @@ const ProfileCardHeader = ({
               >
                 <BsCheck
                   size={18}
-                  className={`heart-icon ${isHearted ? "hearted text-white  animate-heart " : ""
-                    }`}
+                  className={`heart-icon ${
+                    isHearted ? "hearted text-white  animate-heart " : ""
+                  }`}
                 />
                 <h1 className="text-[11px]">Takip</h1>
               </div>
@@ -167,8 +174,9 @@ const ProfileCardHeader = ({
               >
                 <FiPlus
                   size={14}
-                  className={`heart-icon ${isHearted ? "heartedmb-1 animate-heart" : ""
-                    }`}
+                  className={`heart-icon ${
+                    isHearted ? "heartedmb-1 animate-heart" : ""
+                  }`}
                 />
                 <h1 className="text-[11px] sm:hidden telefon:block ">
                   Takip Et
@@ -179,8 +187,9 @@ const ProfileCardHeader = ({
               onClick={() => {
                 setIsFollow(!isFollow);
               }}
-              className={`${isFollow ? "text-primaryBlue" : ""
-                } hover:opacity-60`}
+              className={`${
+                isFollow ? "text-primaryBlue" : ""
+              } hover:opacity-60`}
             />
             <div className="relative group">
               <SlOptionsVertical
@@ -189,8 +198,9 @@ const ProfileCardHeader = ({
               />
               <div
                 ref={optionsRef}
-                className={`absolute top-4 right-0 ${showOptions ? "flex" : "hidden"
-                  } flex-col w-32 pt-2`}
+                className={`absolute top-4 right-0 ${
+                  showOptions ? "flex" : "hidden"
+                } flex-col w-32 pt-2`}
               >
                 <div className="py-2  w-full p-3 border rounded-lg text-[10px] bg-lighBlue  text-black">
                   <div className="flex items-center gap-2 text-xs">
@@ -260,7 +270,7 @@ const ProfileCardHeader = ({
           </div>
         </div>
       </div>
-      <div className="priceArea flex text-center justify-center mx-3 ">
+      <div className="priceArea flex text-center justify-center bg-premiumOrange text-white py-2 rounded-xl">
         <h4 className="font-semibold text-lg">₺{price}/Seans</h4>
         <h4 className="ml-2 text-sm pt-1">
           {" "}
