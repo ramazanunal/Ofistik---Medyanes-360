@@ -18,9 +18,9 @@ function MainConfirmArea({
       /*ekran 768 den küçükse isMobil olur*/
     }
     setIsMobile(window.innerWidth <= 768);
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
-  };
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
     window.addEventListener("resize", handleResize);
 
@@ -49,7 +49,7 @@ function MainConfirmArea({
               Reklam Tipi
             </h1>
             <h1 className="text-sm md:text-[0.9vw] lg:text-[0.9vw] xl:text-[0.9vw] font-bold mt-1">
-              {advertType === "1" ? "Hizmet Reklamı" : "Profil Reklamı"}
+              {advertType === "1" ? "Profil Reklamı" : "Gönderi Reklamı"}
             </h1>
           </div>
           <div className="advertStartDate justify-start px-6 my-4 border-l-2 border-gray-200">

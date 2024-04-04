@@ -9,7 +9,8 @@ function WhyUseAdvert() {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  const [isScreenSizeLessThan1024, setIsScreenSizeLessThan1024] = useState(false);
+  const [isScreenSizeLessThan1024, setIsScreenSizeLessThan1024] =
+    useState(false);
 
   useEffect(() => {
     setIsScreenSizeLessThan1024(window.innerWidth < 1024);
@@ -50,14 +51,17 @@ function WhyUseAdvert() {
           </div>
 
           <div className="iconArea block lg:flex justify-around my-8 flex-wrap">
-            <IconComponent icon={"/img/announcement.png"} text={"Reklam Verin !"} />
+            <IconComponent
+              icon={"/img/announcement.png"}
+              text={"Reklam Verin !"}
+            />
             {!isScreenSizeLessThan1024 && (
               <Image
                 width={100}
                 height={100}
                 quality={100}
                 src={"/img/right-arrow.png"}
-                className="my-auto !w-[10.5vw] !h-[10.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[5vw] xl:h-[5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
+                className="my-auto !w-[5.5vw] !h-[5.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[5vw] xl:h-[5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
                 alt=""
               />
             )}
@@ -67,18 +71,21 @@ function WhyUseAdvert() {
                 height={100}
                 quality={100}
                 src={"/img/down-arrow.png"}
-                className="my-4 !w-[10.5vw] !h-[10.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[6.5vw] xl:h-[6.5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
+                className="my-4 !w-[5.5vw] !h-[5.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[6.5vw] xl:h-[6.5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
                 alt=""
               />
             )}
-            <IconComponent icon={"/img/star.png"} text={"Profilinizi Öne Çıkarın !"} />
+            <IconComponent
+              icon={"/img/star.png"}
+              text={"Profilinizi Öne Çıkarın !"}
+            />
             {!isScreenSizeLessThan1024 && (
               <Image
                 width={100}
                 height={100}
                 quality={100}
                 src={"/img/right-arrow.png"}
-                className="my-auto !w-[10.5vw] !h-[10.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[5vw] xl:h-[5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
+                className="my-auto !w-[5.5vw] !h-[5.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[5vw] xl:h-[5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
                 alt=""
               />
             )}
@@ -88,18 +95,21 @@ function WhyUseAdvert() {
                 height={100}
                 quality={100}
                 src={"/img/down-arrow.png"}
-                className="my-4 !w-[10.5vw] !h-[10.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[6.5vw] xl:h-[6.5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
+                className="my-4 !w-[5.5vw] !h-[5.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[6.5vw] xl:h-[6.5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
                 alt=""
               />
             )}
-            <IconComponent icon={"/img/increase.png"} text={"Etkileşiminizi Arttırın !"} />
+            <IconComponent
+              icon={"/img/increase.png"}
+              text={"Etkileşiminizi Arttırın !"}
+            />
             {!isScreenSizeLessThan1024 && (
               <Image
                 width={100}
                 height={100}
                 quality={100}
                 src={"/img/right-arrow.png"}
-                className="my-auto !w-[10.5vw] !h-[10.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[5vw] xl:h-[5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
+                className="my-auto !w-[5.5vw] !h-[5.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[5vw] xl:h-[5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
                 alt=""
               />
             )}
@@ -109,11 +119,14 @@ function WhyUseAdvert() {
                 height={100}
                 quality={100}
                 src={"/img/down-arrow.png"}
-                className="my-4 !w-[10.5vw] !h-[10.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[6.5vw] xl:h-[6.5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
+                className="my-4 !w-[5.5vw] !h-[5.5vw] md:w-[8.5vw] md:h-[8.5vw] xl:w-[6.5vw] xl:h-[6.5vw] lg:w-[7.5vw] lg:h-[7.5vw] mx-auto"
                 alt=""
               />
             )}
-            <IconComponent icon={"/img/trolley.png"} text={"Ve Daha Fazla kazanın !"} />
+            <IconComponent
+              icon={"/img/trolley.png"}
+              text={"Ve Daha Fazla kazanın !"}
+            />
           </div>
         </div>
       </div>
