@@ -103,7 +103,7 @@ export default function SocialAreaForUser() {
               posts.map((post, index) => (
                 <button
                   key={index}
-                  className="relative group w-[130px] h-[130px]  md:w-[250px] md:h-[250px]"
+                  className="relative group w-[100px] h-[100px]  md:w-[200px] md:h-[200px]"
                   onClick={() => handleClick(index)}
                 >
                   <Image
