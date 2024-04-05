@@ -40,9 +40,9 @@ function TimeAndDate({
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
-  };
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
     handleResize;
 
@@ -395,13 +395,13 @@ function TimeAndDate({
                 )}
               </div>
             )}
-            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-[15rem] max-[768px]:h-min">
+            <div className="leftArea flex-1 md:mr-[0px] lg:w-[10rem] lg:h-[10rem] w-[20rem] max-[768px]:h-min">
               <div
                 className={`appointmentTimes relative lg:w-[10rem] ${
                   appointmentTimesForSelectedDate?.length > 0
                     ? "lg:h-[10rem]"
                     : "lg:h-[13rem]"
-                } flex flex-col items-center justify-center w-[15rem] max-[768px]:h-auto`}
+                } flex flex-col items-center justify-center w-[20rem] max-[768px]:h-auto`}
               >
                 {isMobile && appointmentTimesForSelectedDate?.length > 9 && (
                   <>

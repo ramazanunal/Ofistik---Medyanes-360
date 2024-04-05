@@ -128,15 +128,15 @@ export default function SocialArea() {
             {posts.map((post, index) => (
               <button
                 key={index}
-                className="relative group w-[130px] h-[130px]  md:w-[250px] md:h-[250px]"
+                className="relative group w-[100px] h-[100px]  md:w-[250px] md:h-[250px]"
                 onClick={() => handleClick(index)}
               >
                 <Image
                   src={post.image_url.src}
                   className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
                   alt="Picture of the author"
-                  width={700}
-                  height={700}
+                  width={isMobile ? 150 : 700}
+                  height={isMobile ? 150 : 700}
                   loading="lazy"
                   id={index}
                   draggable={false}

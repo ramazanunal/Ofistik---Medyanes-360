@@ -9,9 +9,10 @@ import { HiVideoCamera } from "react-icons/hi2";
 import { BsBoxArrowUp } from "react-icons/bs";
 import { BiSolidComment } from "react-icons/bi";
 import { FiPlus } from "react-icons/fi";
+import Image from "next/image";
 import { BsCheck } from "react-icons/bs";
-import { IoMdWallet } from "react-icons/io";
-import { CiHeart } from "react-icons/ci";
+import report from "../../../../../assets/image/report.png";
+import spam from "../../../../../assets/image/spam.png";
 import { GrLanguage } from "react-icons/gr";
 import { FaUser } from "react-icons/fa";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -204,21 +205,11 @@ const ProfileCardHeader = ({
               >
                 <div className="py-2  w-full p-3 border rounded-lg text-[10px] bg-lighBlue  text-black">
                   <div className="flex items-center gap-2 text-xs">
-                    <img
-                      width="18"
-                      height="18"
-                      src="https://img.icons8.com/color/48/spam.png"
-                      alt="spam"
-                    />
+                    <Image src={spam} width={18} height={18} />
                     <h1 className="hover:opacity-75">Spam</h1>
                   </div>
-                  <div className="flex items-center gap-2 text-xs">
-                    <img
-                      width="18"
-                      height="18"
-                      src="https://img.icons8.com/color/48/complaint.png"
-                      alt="complaint"
-                    />
+                  <div className="flex items-center gap-2 text-xs mt-1">
+                    <Image src={report} width={18} height={18} />
                     <h1 className="hover:opacity-75">Şikayet Et</h1>
                   </div>
                 </div>
@@ -247,31 +238,34 @@ const ProfileCardHeader = ({
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-12 content-start w-full  gap-[2px] mt-5 text-textBoldBlue font-semibold">
-        <div className="col-span-4 flex flex-col items-center justify-start w-full gap-1 py-5 px- bg-lighBlue rounded-s-xl ">
+      <div className="grid grid-cols-12 content-start w-full  gap-[2px] my-3 text-textBoldBlue font-semibold">
+        <div className="col-span-4 flex flex-col items-center justify-start w-full gap-2 py-5 px- rounded-s-xl bg-gray-100 rounded-l-xl">
           <h1 className="text-[14px]">Görüşme</h1>
           <div className="flex items-center gap-2">
-            <HiVideoCamera className="text-gray-600" size={20} />
+            <HiVideoCamera className="text-premiumOrange" size={20} />
             <h6 className="text-[12px]">28</h6>
           </div>
         </div>
-        <div className="col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue ">
+        <div className="col-span-4 flex flex-col w-full gap-2 py-5 px- bg-gray-100 ">
           <h1 className="text-[14px] ">Takipçi</h1>
           <div className="flex items-center justify-center gap-2">
-            <FaUser className="text-gray-600" />
+            <FaUser className="text-premiumOrange" />
             <h6 className="text-[12px] ">523</h6>
           </div>
         </div>
-        <div className="col-span-4 flex flex-col w-full gap-1 py-5 px- bg-lighBlue rounded-e-xl">
+        <div className="col-span-4 flex flex-col w-full gap-2 py-5 px- bg-gray-100 rounded-r-xl">
           <h1 className="text-[14px] ">Diller</h1>
           <div className="flex items-center justify-center gap-2">
-            <GrLanguage className="text-gray-600" />
+            <GrLanguage className="text-premiumOrange" />
             <h6 className="text-[12px] ">Tr</h6>
           </div>
         </div>
       </div>
-      <div className="priceArea flex text-center justify-center bg-premiumOrange text-white py-2 rounded-xl">
-        <h4 className="font-semibold text-lg">₺{price}/Seans</h4>
+      <div className="priceArea flex text-center justify-center  text-gray-600 bg-gray-100 py-2 rounded-xl">
+        <h4 className="font-semibold text-lg">
+          <span className="text-premiumOrange mr-1 font-semibold">₺</span>
+          {price}/Seans
+        </h4>
         <h4 className="ml-2 text-sm pt-1">
           {" "}
           {`(Minimum ${minSessionTime} dakika)`}

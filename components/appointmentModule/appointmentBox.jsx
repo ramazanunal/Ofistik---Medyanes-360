@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Swal from "sweetalert2";
 
@@ -31,20 +31,24 @@ function AppointmentBox({
   return (
     <div
       className={`timeBox w-[145px] max-[768px]:w-[100px] ${
-        isSelected
-          ? "bg-white border-2 border-premiumOrange text-premiumOrange"
-          : "bg-premiumOrange"
-      } ${
-        active ? "bg-premiumOrange " : "bg-stepBorder1"
-      }  rounded-lg mb-[5px] p-[2px] max-[768px]:m-[5px] cursor-pointer`}
+        active
+          ? isSelected
+            ? "bg-premiumOrange border-2 border-premiumOrange "
+            : "bg-white border-2 border-premiumOrange "
+          : "bg-gray-100 border-2 border-gray-100  "
+      } rounded-lg mb-[5px] p-[2px] max-[768px]:m-[5px] cursor-pointer`}
       onClick={handleTimeClick}
     >
       {isMobile === true && (
         <>
           <h4
             className={`text-sm ${
-              isSelected ? "text-premiumOrange" : "text-white"
-            } p-1 pb-0 text-center`}
+              active
+                ? isSelected
+                  ? "text-white"
+                  : "text-premiumOrange"
+                : "text-gray-700"
+            }  p-1 pb-0 text-center`}
           >
             {time}
           </h4>
@@ -54,7 +58,11 @@ function AppointmentBox({
         <>
           <h4
             className={`text-sm ${
-              isSelected ? "text-premiumOrange" : "text-white"
+              active
+                ? isSelected
+                  ? "text-white"
+                  : "text-premiumOrange"
+                : "text-gray-700"
             } p-1 text-center`}
           >
             {time}

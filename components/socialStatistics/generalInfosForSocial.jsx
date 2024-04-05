@@ -144,7 +144,7 @@ function GeneralInfosForSocial() {
       },
       {
         type: "bar",
-        label: "Geçen Hafta Paylaşım",
+        label: "Geçen Hafta Kaydetme",
         data: [19, 33, 41, 42, 53, 12, 28],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
