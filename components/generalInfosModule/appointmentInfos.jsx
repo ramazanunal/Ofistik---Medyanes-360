@@ -760,7 +760,7 @@ function AppointmentInfos() {
                         </div>
                       </div>
                       <div className="h-full mb-auto">
-                        <h1 className=" text-premiumOrange text font-semibold ml-3 text-3xl">
+                        <h1 className=" text-premiumOrange text font-semibold ml-3 text-base lg:text-[1.4vw]">
                           {graph.datasets[0].data.reduce(
                             (acc, currentValue) => acc + currentValue,
                             0

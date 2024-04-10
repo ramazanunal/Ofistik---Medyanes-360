@@ -548,7 +548,7 @@ function FinanceStatistics() {
                         </div>
                       </div>
                       <div className="h-full mb-auto">
-                        <h1 className=" text-premiumOrange text font-semibold ml-3 text-3xl">
+                        <h1 className=" text-premiumOrange text font-semibold ml-3 text-base lg:text-[1.4vw]">
                           {graph.datasets[0].data.reduce(
                             (acc, currentValue) => acc + currentValue,
                             0
@@ -606,21 +606,13 @@ function FinanceStatistics() {
             </div>
             {isMobile && (
               <div className="flex items-center justify-center">
-                <div className="flex flex-col justify-center items-center mx-auto w-1/2">
+                <div className="flex flex-col justify-center items-center mx-auto">
                   <h1 className="text-xs lg:text-[0.8vw] text-gray-500 font-semibold flex items-center justify-center pt-2">
                     Son Güncelleme
                   </h1>
                   <h1 className="text-xs lg:text-[0.8vw] text-gray-500 font-semibold flex items-center justify-center">
                     {guncelTarih}
                   </h1>
-                </div>
-                <div className="w-1/2">
-                  <button
-                    onClick={toggleAllDetailsModal}
-                    className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold h-[7vw] mt-2 mx-auto  transition duration-[400ms] "
-                  >
-                    Tüm İstatistikler
-                  </button>
                 </div>
               </div>
             )}
