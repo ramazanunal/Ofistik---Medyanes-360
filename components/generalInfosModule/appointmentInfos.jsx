@@ -685,7 +685,7 @@ function AppointmentInfos() {
       <div className="w-full my-4 bg-white mx-auto rounded-lg max-[768px]:max-w-[370px]">
         <div className="m-4 mb-0 block lg:flex items-center justify-center lg:justify-between">
           <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
-            İstatistikler
+            Randevu İstatistikleri
           </h1>
           {!isMobile && (
             <div className="block lg:flex items-center justify-center">

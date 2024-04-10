@@ -1,30 +1,23 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import InfoBox from "./infoBox";
+import InfoBoxFinance from "./infoBoxFinance";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
 import { Line } from "react-chartjs-2";
-import { useProfileStore } from "@/store/useProfileStore";
 import { CategoryScale, Chart, registerables } from "chart.js";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import HorizontalCarousel from "../tabsSocialComponents/HorizontalCarousel";
 
-function GeneralInfosForSocial() {
+function FinanceStatistics() {
   const isMobile = useMediaQuery(1024);
   Chart.register(...registerables);
   Chart.register(CategoryScale);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
-  const setPosts = useProfileStore((state) => state.setPosts);
-  const posts = useProfileStore((state) => state.posts);
-  const setUsers = useProfileStore((state) => state.setUsers);
-  const users = useProfileStore((state) => state.users);
-  const openPageId = useProfileStore((state) => state.openPageId);
 
   const gun = currentDate.getDate().toString().padStart(2, "0");
   const ay = (currentDate.getMonth() + 1).toString().padStart(2, "0");
@@ -49,108 +42,6 @@ function GeneralInfosForSocial() {
     "Pazar",
   ];
 
-  const stateWeeklyView = {
-    //GUNLÜK Görüntülenme SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: days,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Hafta Görüntülenme",
-        data: [652, 856, 112, 314, 796, 113, 932],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Hafta Görüntülenme",
-        data: [324, 514, 895, 114, 636, 714, 1014],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-
-  const stateWeeklyLike = {
-    //GUNLÜK beğeni SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: days,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Hafta Beğeni",
-        data: [138, 85, 112, 31, 96, 113, 32],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Hafta Beğeni",
-        data: [34, 54, 95, 114, 36, 74, 114],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-
-  const stateWeeklyComment = {
-    //haftalık yorum SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: days,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Hafta Yorum",
-        data: [12, 56, 14, 36, 46, 16, 96],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Hafta Yorum",
-        data: [19, 64, 53, 31, 53, 16, 54],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-  const stateWeeklyShare = {
-    //haftalık paylaşım SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: days,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Hafta Paylaşım",
-        data: [5, 56, 16, 36, 88, 16, 66],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Hafta Paylaşım",
-        data: [19, 64, 41, 31, 53, 34, 28],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
-  const stateWeeklySave = {
-    //haftalık kaydetme SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
-    labels: days,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Hafta Kaydetme",
-        data: [5, 13, 16, 45, 29, 16, 17],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Hafta Kaydetme",
-        data: [19, 33, 41, 42, 53, 12, 28],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-  };
   const months = [
     "Ocak",
     "Şubat",
@@ -165,294 +56,249 @@ function GeneralInfosForSocial() {
     "Kasım",
     "Aralık",
   ];
-
   const daysInMonth = new Array(31).fill().map((_, i) => i + 1);
-
-  const stateMonthlyView = {
-    labels: daysInMonth,
+  const dailyEarn = {
+    //GUNLÜK KAZANÇ SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: days,
     datasets: [
       {
         type: "bar",
-        label: "Bu Ay Görüntülenme",
-        data: [
-          326, 448, 126, 548, 614, 748, 113, 146, 235, 313, 348, 413, 123, 546,
-          694, 731, 113, 115, 248, 332, 353, 413, 131, 556, 651, 766, 145, 148,
-          248, 385, 331,
-        ],
+        label: "Günlük Kazanç",
+        data: [535, 840, 120, 330, 775, 165, 990],
         backgroundColor: "hsl(7, 90%, 64%)",
         borderColor: "hsl(7, 90%, 64%)",
       },
       {
         type: "bar",
-        label: "Geçen Ay Görüntülenme",
-        data: [
-          448, 548, 113, 376, 764, 842, 313, 415, 286, 135, 346, 113, 543, 295,
-          349, 468, 113, 648, 348, 113, 486, 45, 155, 568, 248, 456, 163, 446,
-          313, 136, 368,
-        ],
+        label: "Geçen Hafta Günlük Kazanç",
+        data: [392, 586, 815, 155, 620, 420, 100],
         backgroundColor: "hsl(0, 0%, 70%)",
         borderColor: "hsl(0, 0%, 70%)",
       },
     ],
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Günler",
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: "Görüntülenme Sayısı",
-          },
-        },
-      },
-    },
-  };
-  const stateMonthlyLike = {
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Ay Beğenme",
-        data: [
-          32, 48, 26, 58, 64, 78, 31, 46, 35, 33, 48, 43, 23, 56, 94, 71, 13,
-          51, 48, 33, 53, 43, 31, 55, 61, 76, 45, 48, 48, 85, 31,
-        ],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Ay Beğenme",
-        data: [
-          48, 58, 13, 76, 64, 82, 13, 45, 26, 35, 36, 13, 53, 95, 49, 48, 13,
-          68, 48, 11, 86, 5, 15, 68, 48, 46, 63, 46, 33, 36, 68,
-        ],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Günler",
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: "Görüntülenme Sayısı",
-          },
-        },
-      },
-    },
-  };
-  const stateMonthlyComment = {
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Ay Yorum",
-        data: [
-          32, 48, 26, 58, 64, 78, 31, 46, 35, 33, 48, 43, 23, 56, 94, 71, 13,
-          51, 48, 33, 53, 43, 31, 55, 61, 76, 45, 48, 48, 85, 31,
-        ],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Ay Yorum",
-        data: [
-          48, 58, 13, 76, 64, 82, 13, 45, 26, 35, 36, 13, 53, 95, 49, 48, 13,
-          68, 48, 11, 86, 5, 15, 68, 48, 46, 63, 46, 33, 36, 68,
-        ],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Günler",
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: "Yorum Sayısı",
-          },
-        },
-      },
-    },
-  };
-  const stateMonthlyShare = {
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Ay Paylaşım",
-        data: [
-          32, 48, 26, 58, 64, 78, 31, 46, 35, 33, 48, 43, 23, 56, 94, 71, 13,
-          51, 48, 33, 53, 43, 31, 55, 61, 76, 45, 48, 48, 85, 31,
-        ],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Ay Paylaşım",
-        data: [
-          48, 58, 13, 76, 64, 82, 13, 45, 26, 35, 36, 13, 53, 95, 49, 48, 13,
-          68, 48, 11, 86, 5, 15, 68, 48, 46, 63, 46, 33, 36, 68,
-        ],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Günler",
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: "Paylaşım Sayısı",
-          },
-        },
-      },
-    },
-  };
-  const stateMonthlySave = {
-    labels: daysInMonth,
-    datasets: [
-      {
-        type: "bar",
-        label: "Bu Ay Kaydetme",
-        data: [
-          32, 48, 26, 58, 64, 78, 31, 46, 35, 33, 48, 43, 23, 56, 94, 71, 13,
-          51, 48, 33, 53, 43, 31, 55, 61, 76, 45, 48, 48, 85, 31,
-        ],
-        backgroundColor: "hsl(7, 90%, 64%)",
-        borderColor: "hsl(7, 90%, 64%)",
-      },
-      {
-        type: "bar",
-        label: "Geçen Ay Kaydetme",
-        data: [
-          48, 58, 13, 76, 64, 82, 13, 45, 26, 35, 36, 13, 53, 95, 49, 48, 13,
-          68, 48, 11, 86, 5, 15, 68, 48, 46, 63, 46, 33, 36, 68,
-        ],
-        backgroundColor: "hsl(0, 0%, 70%)",
-        borderColor: "hsl(0, 0%, 70%)",
-      },
-    ],
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Günler",
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: "Kaydetme Sayısı",
-          },
-        },
-      },
-    },
   };
 
-  const [graph, setGraph] = useState(stateWeeklyView);
+  const monthlyEarn = {
+    //YILLIK KAZANÇ SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: months,
+    datasets: [
+      {
+        type: "bar",
+        label: "Bu Yıl Kazanç",
+        data: [
+          13566, 18010, 12246, 9314, 17810, 16000, 9665, 4546, 16921, 11000,
+          15752, 8331,
+        ],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "bar",
+        label: "Geçen Yıl Kazanç",
+        data: [
+          16500, 12014, 18253, 19110, 1168, 16068, 19766, 14516, 12943, 7000,
+          12743, 4300,
+        ],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+  const weeklyEarn = {
+    //AYLIK RANDEVU SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: daysInMonth,
+    datasets: [
+      {
+        type: "bar",
+        label: "Bu Ay Kazanç",
+        data: [
+          1356, 1010, 1226, 914, 1710, 1600, 965, 546, 1921, 1000, 1552, 833,
+          1356, 1810, 1246, 914, 1810, 1000, 665, 446, 1621, 1000, 1552, 331,
+          1566, 1810, 1246, 914, 1710, 1000, 665,
+        ],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "bar",
+        label: "Geçen Ay Kazanç",
+        data: [
+          100, 1204, 1823, 1910, 168, 168, 1966, 416, 1943, 700, 1743, 400,
+          1650, 124, 1853, 910, 168, 1668, 1766, 1416, 1243, 700, 1743, 430,
+          600, 1214, 1253, 1110, 118, 1608, 1966,
+        ],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+  const exactDailyEarn = {
+    //GUNLÜK BRÜT KAZANÇ SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: days,
+    datasets: [
+      {
+        type: "bar",
+        label: "Günlük Brüt Kazanç",
+        data: [410, 720, 90, 250, 612, 130, 760],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "bar",
+        label: "Geçen Hafta Günlük Brüt Kazanç",
+        data: [285, 415, 700, 86, 513, 326, 75],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+
+  const exactMonthlyEarn = {
+    //YILLIK BRÜT KAZANÇ SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: months,
+    datasets: [
+      {
+        type: "bar",
+        label: "Bu Yıl Brüt Kazanç",
+        data: [
+          12566, 17010, 11246, 8314, 16810, 15000, 8665, 3546, 15921, 10000,
+          14752, 7331,
+        ],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "bar",
+        label: "Geçen Yıl Brüt Kazanç",
+        data: [
+          15500, 11014, 17253, 18110, 868, 15068, 18766, 13516, 11943, 6000,
+          11743, 3300,
+        ],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+  const exactWeeklyEarn = {
+    //AYLIK BRÜT KAZANÇ SAYILARINI GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: daysInMonth,
+    datasets: [
+      {
+        type: "bar",
+        label: "Bu Ay Brüt Kazanç",
+        data: [
+          1256, 910, 1126, 814, 1610, 1500, 865, 446, 1821, 900, 1452, 733,
+          1256, 1710, 1146, 814, 1710, 900, 465, 346, 1521, 900, 1452, 231,
+          1466, 1710, 1146, 814, 1610, 900, 565,
+        ],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "bar",
+        label: "Geçen Ay Brüt Kazanç",
+        data: [
+          75, 1104, 1723, 1810, 110, 110, 1866, 316, 1843, 600, 1643, 300, 1550,
+          85, 1753, 810, 168, 1568, 1666, 1316, 1143, 600, 1643, 330, 500, 1114,
+          1153, 1010, 118, 1508, 1866,
+        ],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+  const addsense = {
+    //AYLIK REKLAM GİDERLERİ GRAFİĞE DÖNÜŞÜTRDÜĞÜMÜZ DEĞİŞKEN DATA YERİNE VERİLER GELECEK
+    labels: daysInMonth,
+    datasets: [
+      {
+        type: "bar",
+        label: "Bu Ay Reklam Giderleri",
+        data: [
+          125, 90, 116, 84, 110, 150, 85, 44, 182, 90, 142, 73, 126, 110, 146,
+          84, 110, 90, 45, 34, 151, 90, 152, 31, 146, 110, 146, 81, 160, 90, 65,
+        ],
+        backgroundColor: "hsl(7, 90%, 64%)",
+        borderColor: "hsl(7, 90%, 64%)",
+      },
+      {
+        type: "bar",
+        label: "Geçen Ay Reklam Giderleri",
+        data: [
+          75, 114, 173, 180, 10, 10, 186, 36, 143, 60, 163, 30, 150, 85, 153,
+          110, 168, 168, 166, 131, 114, 60, 163, 30, 50, 114, 113, 110, 18, 158,
+          186,
+        ],
+        backgroundColor: "hsl(0, 0%, 70%)",
+        borderColor: "hsl(0, 0%, 70%)",
+      },
+    ],
+  };
+  const [graph, setGraph] = useState(dailyEarn);
 
   const boxes = [
     //İNFO KUTULARINA VERİLERİ GÖNDERDİĞİMİZ ARRAY
     {
-      number: 950,
-      title: "BU HAFTA GÖRÜNTÜLENME",
-      lastOne: 926,
-      graphType: "weeklyView",
-      description: "Bu haftaki toplam görüntülenmeyi gösterir.",
+      number: 3755,
+      title: "GÜNLÜK KAZANÇ (₺)",
+      lastOne: 3088,
+      graphType: "dailyEarn",
+      description: "Günlük kazancı gösterir.",
     },
     {
-      number: 473,
-      title: "BU HAFTA BEĞENİ",
-      lastOne: 405,
-      graphType: "weeklyLike",
-      description: "Bu haftaki toplam beğeni sayısını gösterir.",
+      number: 37295,
+      title: "AYLIK KAZANÇ (₺)",
+      lastOne: 34081,
+      graphType: "weeklyEarn",
+      description: "Aylık kazancı gösterir.",
     },
     {
-      number: 3775,
-      title: "BU HAFTA YORUM",
-      lastOne: 4211,
-      graphType: "weeklyComment",
-      description: "Bu haftaki toplam yorumu gösterir.",
+      number: 153161,
+      title: "YILLIK KAZANÇ (₺)",
+      lastOne: 154381,
+      graphType: "monthlyEarn",
+      description: "Yıllık kazancı gösterir.",
     },
     {
-      number: 607,
-      title: "BU HAFTA PAYLAŞIM",
-      lastOne: 521,
-      graphType: "weeklyShare",
-      description: "Bu haftaki toplam paylaşım sayısını gösterir.",
+      number: 2972,
+      title: "BRÜT GÜNLÜK KAZANÇ (₺)",
+      lastOne: 2400,
+      graphType: "exactDailyEarn",
+      description:
+        "Brüt (vergileri ve komisyonları çıkardıktan sonra) Günlük kazancı gösterir.",
     },
     {
-      number: 607,
-      title: "BU HAFTA KAYDETME",
-      lastOne: 521,
-      graphType: "weeklySave",
-      description: "Bu haftaki toplam kaydetme sayısını gösterir.",
+      number: 34095,
+      title: "BRÜT AYLIK KAZANÇ (₺)",
+      lastOne: 31401,
+      graphType: "exactWeeklyEarn",
+      description:
+        "Brüt (vergileri ve komisyonları çıkardıktan sonra) aylık kazancı gösterir.",
     },
     {
-      number: 11407,
-      title: "BU AY GÖRÜNTÜLENME",
-      lastOne: 10960,
-      graphType: "monthlyView",
-      description: "Bu ayki toplam görüntülenmeyi gösterir.",
+      number: 141161,
+      title: "BRÜT YILLIK KAZANÇ (₺)",
+      lastOne: 143081,
+      graphType: "exactMonthlyEarn",
+      description:
+        "Brüt (vergileri ve komisyonları çıkardıktan sonra) yıllık kazancı gösterir.",
     },
     {
-      number: 1507,
-      title: "BU AY BEĞENİ",
-      lastOne: 1408,
-      graphType: "monthlyLike",
-      description: "Bu ayki toplam beğeni sayısını gösterir.",
+      number: 3258,
+      title: "REKLAM GİDERLERİ (₺)",
+      lastOne: 3427,
+      graphType: "addsense",
+      description: "Bu ayki toplam reklam giderlerini gösterir.",
     },
     {
-      number: 1507,
-      title: "BU AY YORUM",
-      lastOne: 1408,
-      graphType: "monthlyComment",
-      description: "Bu ayki toplam yorum sayısını gösterir.",
-    },
-    {
-      number: 1507,
-      title: "BU AY PAYLAŞIM",
-      lastOne: 1408,
-      graphType: "monthlyShare",
-      description: "Bu ayki toplam paylaşım sayısını gösterir.",
-    },
-    {
-      number: 1507,
-      title: "BU AY KAYDETME",
-      lastOne: 1408,
-      graphType: "monthlySave",
-      description: "Bu ayki toplam kaydetme sayısını gösterir.",
+      number: 15,
+      title: "VERGİ TUTARI",
+      lastOne: 14,
+      graphType: "taxes",
+      description: "Toplam vergi tutarını gösterir.",
     },
   ];
-
-  const optionsMonthlyView = {
+  const optionsDailyEarn = {
     plugins: {
       legend: {
         display: false, // Burada legend'i gizliyoruz
@@ -474,151 +320,7 @@ function GeneralInfosForSocial() {
       y: {
         title: {
           display: true,
-          text: "Görüntülenme Sayısı", // Y ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-  };
-  const optionsMonthlyLike = {
-    plugins: {
-      legend: {
-        display: false, // Burada legend'i gizliyoruz
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Günler", // X ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Beğenme Sayısı", // Y ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-  };
-  const optionsMonthlyComment = {
-    plugins: {
-      legend: {
-        display: false, // Burada legend'i gizliyoruz
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Günler", // X ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Yorum Sayısı", // Y ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-  };
-  const optionsMonthlyShare = {
-    plugins: {
-      legend: {
-        display: false, // Burada legend'i gizliyoruz
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Günler", // X ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Paylaşım Sayısı", // Y ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-  };
-  const optionsMonthlySave = {
-    plugins: {
-      legend: {
-        display: false, // Burada legend'i gizliyoruz
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Günler", // X ekseni başlığı
-          color: "#000", // Başlık rengi
-          font: {
-            size: 14, // Başlık yazı boyutu
-            weight: "medium", // Başlık yazı kalınlığı
-            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
-          },
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Kaydetme Sayısı", // Y ekseni başlığı
+          text: "Kazanç ( ₺ )", // Y ekseni başlığı
           color: "#000", // Başlık rengi
           font: {
             size: 14, // Başlık yazı boyutu
@@ -633,43 +335,106 @@ function GeneralInfosForSocial() {
     },
   };
 
-  const [options, setOptions] = useState(optionsMonthlyView);
+  const optionsMonthlyEarn = {
+    plugins: {
+      legend: {
+        display: false, // Burada legend'i gizliyoruz
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Aylar", // X ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Kazanç ( ₺ )", // Y ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
+  const optionsMonthlyAddsense = {
+    plugins: {
+      legend: {
+        display: false, // Burada legend'i gizliyoruz
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Aylar", // X ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Reklam Gideri ( ₺ )", // Y ekseni başlığı
+          color: "#000", // Başlık rengi
+          font: {
+            size: 14, // Başlık yazı boyutu
+            weight: "medium", // Başlık yazı kalınlığı
+            family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", // Başlık yazı tipi
+          },
+        },
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
+  const [options, setOptions] = useState(optionsDailyEarn);
   const changeGraph = (dataType) => {
-    if (dataType === "weeklyView") {
-      setGraph({ ...stateWeeklyView });
-      setOptions(optionsMonthlyView);
-    } else if (dataType === "weeklyLike") {
-      setGraph({ ...stateWeeklyLike });
-      setOptions(optionsMonthlyLike);
-    } else if (dataType === "weeklyComment") {
-      setGraph({ ...stateWeeklyComment });
-      setOptions(optionsMonthlyComment);
-    } else if (dataType === "weeklyShare") {
-      setGraph({ ...stateWeeklyShare });
-      setOptions(optionsMonthlyShare);
-    } else if (dataType === "weeklySave") {
-      setGraph({ ...stateWeeklySave });
-      setOptions(optionsMonthlySave);
-    } else if (dataType === "monthlyLike") {
-      setGraph({ ...stateMonthlyLike });
-      setOptions(optionsMonthlyLike);
-    } else if (dataType === "monthlyView") {
-      setGraph({ ...stateMonthlyView });
-      setOptions(optionsMonthlyView);
-    } else if (dataType === "monthlyComment") {
-      setGraph({ ...stateMonthlyComment });
-      setOptions(optionsMonthlyComment);
-    } else if (dataType === "monthlyShare") {
-      setGraph({ ...stateMonthlyShare });
-      setOptions(optionsMonthlyShare);
-    } else if (dataType === "monthlySave") {
-      setGraph({ ...stateMonthlySave });
-      setOptions(optionsMonthlySave);
+    if (dataType === "dailyEarn") {
+      setGraph({ ...dailyEarn });
+      setOptions(optionsDailyEarn);
+    } else if (dataType === "monthlyEarn") {
+      setGraph({ ...monthlyEarn });
+      setOptions(optionsMonthlyEarn);
+    } else if (dataType === "weeklyEarn") {
+      setGraph({ ...weeklyEarn });
+      setOptions(optionsDailyEarn);
+    } else if (dataType === "exactDailyEarn") {
+      setGraph({ ...exactDailyEarn });
+      setOptions(optionsDailyEarn);
+    } else if (dataType === "exactMonthlyEarn") {
+      setGraph({ ...exactMonthlyEarn });
+      setOptions(optionsMonthlyEarn);
+    } else if (dataType === "exactWeeklyEarn") {
+      setGraph({ ...exactWeeklyEarn });
+      setOptions(optionsDailyEarn);
+    } else if (dataType === "addsense") {
+      setGraph({ ...addsense });
+      setOptions(optionsMonthlyAddsense);
     }
   };
 
   const renderSwiper = (items) => {
-    const itemsPerSlide = isMobile ? 4 : 10;
+    const itemsPerSlide = isMobile ? 4 : 8;
     const swiperSlides = [];
 
     for (let i = 0; i < items.length; i += itemsPerSlide) {
@@ -678,11 +443,10 @@ function GeneralInfosForSocial() {
         <SwiperSlide key={i}>
           <div className="flex flex-wrap items-center justify-center">
             {currentTimes.map((box, index) => (
-              <InfoBox
+              <InfoBoxFinance
                 key={index}
                 number={box.number}
                 title={box.title}
-                changeRate={box.changeRate}
                 lastOne={box.lastOne}
                 graph={box.graph}
                 description={box.description}
@@ -705,13 +469,17 @@ function GeneralInfosForSocial() {
       </Swiper>
     );
   };
+  const [isAllDetailsOpen, setIsAllDetailsOpen] = useState(false);
 
+  const toggleAllDetailsModal = () => {
+    setIsAllDetailsOpen(!isAllDetailsOpen);
+  };
   return (
     <>
-      <div className=" lg:mx-10 lg:pb-3 lg:mb-4 my-3 mx-auto lg:my-0 bg-white  rounded-lg max-[768px]:max-w-[370px]">
-        <div className="mx-4 block lg:flex items-center justify-center lg:justify-between">
+      <div className=" my-4 bg-white mx-auto lg:mx-5 lg:px-5 lg:pb-5 rounded-lg max-[768px]:max-w-[370px] h-f">
+        <div className="m-4 mb-0 block lg:flex items-center justify-center lg:justify-between">
           <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
-            Sosyal İstatistikleri
+            Finans İstatistikleri
           </h1>
           {!isMobile && (
             <div className="block lg:flex items-center justify-center">
@@ -780,7 +548,7 @@ function GeneralInfosForSocial() {
                         </div>
                       </div>
                       <div className="h-full mb-auto">
-                        <h1 className=" text-premiumOrange text-base font-semibold ml-3 lg:text-[1.4vw]">
+                        <h1 className=" text-premiumOrange text font-semibold ml-3 text-3xl">
                           {graph.datasets[0].data.reduce(
                             (acc, currentValue) => acc + currentValue,
                             0
@@ -799,7 +567,7 @@ function GeneralInfosForSocial() {
                               <h1 className=" text-gray-500 font-semibold">
                                 {graph.datasets[1].label} :
                               </h1>
-                              <h1 className=" text-black font-semibold ml-1">
+                              <h1 className=" text-black font-extrabold ml-1">
                                 {graph.datasets[1].data.reduce(
                                   (acc, currentValue) => acc + currentValue,
                                   0
@@ -846,6 +614,14 @@ function GeneralInfosForSocial() {
                     {guncelTarih}
                   </h1>
                 </div>
+                <div className="w-1/2">
+                  <button
+                    onClick={toggleAllDetailsModal}
+                    className="text-center flex items-center justify-center px-8 bg-white hover:bg-premiumOrange hover:text-white text-premiumOrange border-2 border-premiumOrange rounded-lg text-xs font-semibold h-[7vw] mt-2 mx-auto  transition duration-[400ms] "
+                  >
+                    Tüm İstatistikler
+                  </button>
+                </div>
               </div>
             )}
             <div className="infosArea flex items-center justify-end w-full lg:w-[60%] mx-auto">
@@ -854,18 +630,8 @@ function GeneralInfosForSocial() {
           </>
         </div>
       </div>
-      {setOpenpageId && (
-        <HorizontalCarousel
-          usersData={users}
-          setUsersData={setUsers}
-          mainPosts={posts}
-          openPageId={openPageId}
-          setOpenpageId={setOpenpageId}
-          setMainPosts={setPosts}
-        />
-      )}
     </>
   );
 }
 
-export default GeneralInfosForSocial;
+export default FinanceStatistics;
