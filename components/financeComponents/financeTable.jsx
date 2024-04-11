@@ -80,7 +80,7 @@ function FinanceTable() {
                 </thead>
               )}
               <tbody>
-                {currentPageData.map(
+                {/* {currentPageData.map(
                   (item, index) =>
                     (!isMobile && (
                       <tr key={index}>
@@ -168,7 +168,259 @@ function FinanceTable() {
                         key={index}
                       />
                     ))
-                )}
+                )} */}
+                <tr>
+                  <td className="px-2 py-3">
+                    <div className="advertInfos flex items-center justify-start flex-col">
+                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15:00 - 16:30
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
+                      <i
+                        className={`fa-solid fa-circle  
+                                   text-greenBalance
+                                 text-[0.5rem] flex items-center justify-center mx-2`}
+                      ></i>
+                      <h1
+                        className={`text-center font-semibold text-sm 
+                                     text-greenBalance
+                                `}
+                      >
+                        Fatura Kesildi
+                      </h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      530 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm font-semibold flex items-center justify-center">
+                      120 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      52 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      358 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15.04.2024
+                    </h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-2 py-3">
+                    <div className="advertInfos flex items-center justify-start flex-col">
+                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15:00 - 16:30
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
+                      <i
+                        className={`fa-solid fa-circle  
+                                   text-greenBalance
+                                 text-[0.5rem] flex items-center justify-center mx-2`}
+                      ></i>
+                      <h1
+                        className={`text-center font-semibold text-sm 
+                                     text-greenBalance
+                                `}
+                      >
+                        Fatura Kesildi
+                      </h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      530 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm font-semibold flex items-center justify-center">
+                      120 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      52 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      358 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15.04.2024
+                    </h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-2 py-3">
+                    <div className="advertInfos flex items-center justify-start flex-col">
+                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15:00 - 16:30
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
+                      <i
+                        className={`fa-solid fa-circle  
+                                   text-greenBalance
+                                 text-[0.5rem] flex items-center justify-center mx-2`}
+                      ></i>
+                      <h1
+                        className={`text-center font-semibold text-sm 
+                                     text-greenBalance
+                                `}
+                      >
+                        Fatura Kesildi
+                      </h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      530 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm font-semibold flex items-center justify-center">
+                      120 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      52 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      358 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15.04.2024
+                    </h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-2 py-3">
+                    <div className="advertInfos flex items-center justify-start flex-col">
+                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center justify-center">
+                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15:00 - 16:30
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
+                      <i
+                        className={`fa-solid fa-circle  
+                                   text-greenBalance
+                                 text-[0.5rem] flex items-center justify-center mx-2`}
+                      ></i>
+                      <h1
+                        className={`text-center font-semibold text-sm 
+                                     text-greenBalance
+                                `}
+                      >
+                        Fatura Kesildi
+                      </h1>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      530 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm font-semibold flex items-center justify-center">
+                      120 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      52 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      358 ₺
+                    </h1>
+                  </td>
+                  <td className="px-2 py-3">
+                    <h1 className="text-sm flex items-center justify-center">
+                      15.04.2024
+                    </h1>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <div className="lg:flex justify-between m-3 text-sm md:text-[1vw] lg:text-[1vw] xl:text-[0.8vw]">
