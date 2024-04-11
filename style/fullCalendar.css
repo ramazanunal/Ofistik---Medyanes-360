@@ -181,4 +181,7 @@
   .rbc-toolbar {
     font-size: 12px !important;
   }
+  .rbc-toolbar {
+    flex-direction: row !important;
+  }
 }
