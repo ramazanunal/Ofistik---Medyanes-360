@@ -4,7 +4,7 @@ import FinanceTable from "./financeTable";
 
 function GeneralComponentFinance() {
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className="bg-gray-100 h-screen md:px-10">
       <FinanceStatistics />
       <FinanceTable />
     </div>

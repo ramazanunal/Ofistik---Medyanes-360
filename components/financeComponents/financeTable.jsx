@@ -1,33 +1,135 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import FinanceCardType from "./financeCardType";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { cn } from "@/lib/utilities/utils";
+import { datas } from "./mock";
+import { BsThreeDots } from "react-icons/bs";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+function CustomChoseType({
+  options,
+  value,
+  onChange,
+  className,
+  isMobile,
+  ...rest
+}) {
+  return !isMobile ? (
+    <div className={cn(" ml-4", className)} {...rest}>
+      <div
+        className="flex gap-5 px-2 py-1 rounded-lg bg-white  text-gray-500"
+        onChange={onChange}
+      >
+        {options.map((option, index) => (
+          <button
+            className={cn(
+              "border-b-2 transition-all duration-200 ease-in-out hover:text-premiumOrange hover:border-premiumOrange",
+              {
+                "border-premiumOrange text-premiumOrange":
+                  value === option.value,
+              }
+            )}
+            onClick={onChange}
+            key={index}
+            value={option.value}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div className={cn("flex items-center ml-10 gap-2", className)} {...rest}>
+      <select
+        className="flex gap-2 px-2 py-1 font-medium rounded-lg bg-white  text-gray-500"
+        onChange={onChange}
+      >
+        {options.map((option, index) => (
+          <option
+            className={cn(
+              "border-b-2 transition-all duration-200 ease-in-out hover:text-black hover:border-black",
+              {
+                "border-black text-black": value === option.value,
+              }
+            )}
+            onClick={onChange}
+            key={index}
+            value={option.value}
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+const ThreeDots = () => {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          className="text-sm font-semibold p-0 px-2 py-1 text-premiumOrange border-none"
+          variant="outline"
+        >
+          <BsThreeDots size={20} className="rotate-90" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-fit flex flex-col">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="border-none text-start ">
+              Fatura Gör
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[550px] h-[90dvh] max-h-[720px] overflow-auto ">
+            Fatura gelcek bu kısıma
+          </DialogContent>
+        </Dialog>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="border-none ">
+              Fatura yükle
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[550px] h-[90dvh] max-h-[720px] overflow-auto ">
+            <DialogHeader>
+              <DialogTitle>Edit tükle</DialogTitle>
+              <DialogDescription>
+                Make changes to your profile here. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
 function FinanceTable() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(4);
-  const [isMobile, setIsMobile] = useState(false);
-  const [data, setData] = useState([]);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [data, setData] = useState(datas);
   const [totalPages, setTotalPages] = useState(0);
+  const [status, setStatus] = useState("");
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [currentPageData, setCurrentPageData] = useState();
 
-  useEffect(() => {
-    // Calculate total pages when data changes
-    setTotalPages(Math.ceil(data.length / itemsPerPage));
-  }, [data, itemsPerPage]);
-  useEffect(() => {
-    {
-      /*ekran 768 den küçükse isMobil olur*/
-    }
-    setIsMobile(window.innerWidth <= 768);
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   useEffect(() => {
     const storedData = localStorage.getItem("adverts");
     if (storedData) {
@@ -51,376 +153,254 @@ function FinanceTable() {
     setCurrentPage(1);
   };
 
-  const currentPageData = data.slice(startIndex, endIndex);
+  useEffect(() => {
+    setCurrentPageData(data.slice(startIndex, endIndex));
+  }, []);
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+  };
+
+  const tryCurrencyFormat = (value) => {
+    return new Intl.NumberFormat("tr-TR", {
+      style: "currency",
+      currency: "TRY",
+    }).format(value);
+  };
+
+  const timeLeftCounter = (date) => {
+    const now = new Date();
+    const targetDate = new Date(date);
+
+    if (now > targetDate) return "-";
+
+    const timeDifference = Math.round(
+      (targetDate - now) / (1000 * 60 * 60 * 24)
+    );
+
+    const formatter = new Intl.RelativeTimeFormat("tr", { style: "short" });
+    const formattedTimeLeft = formatter.format(timeDifference, "day");
+
+    return formattedTimeLeft;
+  };
+
+  useEffect(() => {
+    status == "approaching" &&
+      setCurrentPageData(
+        data
+          .filter((item) => timeLeftCounter(new Date(item.date)) != "-")
+          .slice(startIndex, endIndex)
+          .sort((a, b) => new Date(a.date) - new Date(b.date))
+      );
+    status == "past" &&
+      setCurrentPageData(
+        data
+          .filter((item) => timeLeftCounter(new Date(item.date)) == "-")
+          .slice(startIndex, endIndex)
+      );
+    status == "current" &&
+      setCurrentPageData(
+        data
+          .filter(
+            (item) => timeLeftCounter(new Date(item.gettingDate)) == "now"
+          )
+          .slice(startIndex, endIndex)
+      );
+    status == "pending" &&
+      setCurrentPageData(
+        data
+          .filter((item) => item.status == "pending")
+          .slice(startIndex, endIndex)
+      );
+    status == "error" &&
+      setCurrentPageData(
+        data
+          .filter((item) => item.status == "error")
+          .slice(startIndex, endIndex)
+      );
+    status == "" && setCurrentPageData(data.slice(startIndex, endIndex));
+  }, [status, currentPage]);
+
+  useEffect(() => {
+    // Calculate total pages when data changes
+    currentPageData &&
+      setTotalPages(Math.ceil(currentPageData.length / itemsPerPage));
+  }, [data, itemsPerPage, currentPageData]);
+
+  if (!currentPageData) return <div>Loading...</div>;
   return (
     <>
-      <div className="bg-white rounded-lg mx-5 mb-8">
+      <div className="bg-white rounded-lg mx-auto md:mx-5 mb-8">
         <div className="main pb-3">
           <div className="titleAndButtons lg:flex justify-between items-center m-4 px-4 py-6 pb-0 lg:pb-6">
             <h1 className="lg:text-[1.5vw] max-[768px]:text-xl font-semibold text-gray-600 pl-3 pt-4 text-center">
               Görüşmeler
             </h1>
           </div>
-          <div className="tableArea my-4 px-4 mt-0 lg:mt-4 lg:pb-5">
-            <table className="rounded-xl w-full ">
+          <CustomChoseType
+            title="Fatura Durumu"
+            options={[
+              { value: "", label: "Hepsi" },
+              { value: "approaching", label: "Yaklaşan" },
+              { value: "past", label: "Geçmiş" },
+              { value: "current", label: "Bugünkü" },
+              { value: "pending", label: "Beklemede" },
+              { value: "error", label: "Ödeme Alınamayan" },
+            ]}
+            value={status}
+            onChange={handleStatusChange}
+            className=""
+            isMobile={isMobile}
+          />
+          <div className="tableArea my-4 px-4 mt-0 lg:mt-4 lg:pb-5  overflow-x-auto ">
+            <table className="rounded-xl w-full table">
               {!isMobile && (
                 <thead className="text-sm">
                   <tr className="sticky top-0 bg-lightGray text-gray-600">
-                    <th className="py-3 px-1">Randevu Numarası</th>
-                    <th className="py-3 px-1">İsim Soyisim</th>
-                    <th className="py-3 px-1">Tarih</th>
-                    <th className="py-3 px-1">Saat</th>
-                    <th className="py-3 px-1">Fatura Durumu</th>
-                    <th className="py-3 px-1">Gelir ( ₺ )</th>
-                    <th className="py-3 px-1">Komisyon ( ₺ )</th>
-                    <th className="py-3 px-1">Vergi ( ₺ )</th>
-                    <th className="py-3 px-1">Net Gelir ( ₺ )</th>
-                    <th className="py-3 px-1">Hesaba Geçiş Tarihi</th>
+                    <th className="py-3 px-1 whitespace-nowrap">
+                      Randevu Numarası
+                    </th>
+                    <th className="py-3 px-1 whitespace-nowrap">
+                      İsim Soyisim
+                    </th>
+                    <th className="py-3 px-1 whitespace-nowrap">Tarih</th>
+                    <th className="py-3 px-1 whitespace-nowrap">Saat</th>
+                    <th className="py-3 px-1 whitespace-nowrap">Gelir ( ₺ )</th>
+                    <th className="py-3 px-1 whitespace-nowrap">
+                      Komisyon ( ₺ )
+                    </th>
+                    <th className="py-3 px-1 whitespace-nowrap">Vergi ( ₺ )</th>
+                    <th className="py-3 px-1 whitespace-nowrap">
+                      Net Gelir ( ₺ )
+                    </th>
+                    <th className="py-3 px-1 whitespace-nowrap">
+                      Hesaba Geçiş Tarihi
+                    </th>
+                    <th className="py-3 px-1 whitespace-nowrap">
+                      Fatura Durumu
+                    </th>
+                    <th className="py-3 px-1 whitespace-nowrap">Kalan Süre</th>
+                    <th className="py-3 px-1 whitespace-nowrap"></th>
                   </tr>
                 </thead>
               )}
               <tbody>
-                {/* {currentPageData.map(
-                  (item, index) =>
-                    (!isMobile && (
-                      <tr key={index}>
-                        <td className="px-2 py-3">
-                          <div className="advertInfos flex items-center justify-start flex-col">
-                            <h1 className="name text-sm">
-                              66069a1d08bfe8acbd62ea91
-                            </h1>
-                          </div>
-                        </td>
-                        <td className="px-2 py-3">
-                          <div className="flex items-center justify-center">
-                            <h1 className="text-sm font-semibold">
-                              Bayram Çınar
-                            </h1>
-                          </div>
-                        </td>
-                        <td className="px-2 py-3">
-                          <div className="flex items-center justify-center">
-                            <h1 className="text-sm text-gray-400">
-                              29.3.2024 Cuma
-                            </h1>
-                          </div>
-                        </td>
-                        <td className="px-2 py-3">
-                          <h1 className="text-sm flex items-center justify-center">
-                            15:00 - 16:30
+                {currentPageData.map((item, index) =>
+                  !isMobile ? (
+                    <tr key={index}>
+                      <td className="px-2 py-3">
+                        <div className="advertInfos flex items-center justify-start flex-col">
+                          <h1 className="name text-sm">{item.id}</h1>
+                        </div>
+                      </td>
+                      <td className="px-2 py-3">
+                        <div className="flex items-center justify-center">
+                          <h1 className="text-sm font-semibold">{item.name}</h1>
+                        </div>
+                      </td>
+                      <td className="px-2 py-3">
+                        <div className="flex items-center justify-center">
+                          <h1 className="text-sm text-gray-400">
+                            {new Intl.DateTimeFormat("tr-TR", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric",
+                              weekday: "short",
+                            }).format(new Date(item.date))}
                           </h1>
-                        </td>
-                        <td className="px-2 py-3">
-                          <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
-                            <i
-                              className={`fa-solid fa-circle  
-                                   text-greenBalance
-                                 text-[0.5rem] flex items-center justify-center mx-2`}
-                            ></i>
-                            <h1
-                              className={`text-center font-semibold text-sm 
-                                     text-greenBalance
-                                `}
-                            >
-                              Fatura Kesildi
-                            </h1>
-                          </div>
-                        </td>
-                        <td className="px-2 py-3">
-                          <h1 className="text-sm flex items-center justify-center">
-                            530 ₺
+                        </div>
+                      </td>
+                      <td className="px-2 py-3">
+                        <h1 className="text-sm flex items-center justify-center">
+                          {item.time}
+                        </h1>
+                      </td>
+
+                      <td className="px-2 py-3">
+                        <h1 className="text-sm flex items-center justify-center">
+                          {tryCurrencyFormat(item.income)}
+                        </h1>
+                      </td>
+                      <td className="px-2 py-3">
+                        <h1 className="text-sm font-semibold flex items-center justify-center">
+                          {tryCurrencyFormat(item.commission)}
+                        </h1>
+                      </td>
+                      <td className="px-2 py-3">
+                        <h1 className="text-sm flex items-center justify-center">
+                          {tryCurrencyFormat(item.tax)}
+                        </h1>
+                      </td>
+                      <td className="px-2 py-3">
+                        <h1 className="text-sm flex items-center justify-center">
+                          {tryCurrencyFormat(item.ciro)}
+                        </h1>
+                      </td>
+                      <td className="px-2 py-3">
+                        <h1 className="text-sm flex items-center justify-center">
+                          15.04.2024
+                        </h1>
+                      </td>
+                      <td className="px-2 py-3">
+                        <div
+                          className={cn(
+                            "flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ",
+                            { "bg-yellow-100": item.status == "pending" },
+                            { "bg-red-100": item.status == "error" }
+                          )}
+                        >
+                          <i
+                            className={cn(
+                              "fa-solid fa-circle text-greenBalance text-[0.5rem] flex items-center justify-center mx-2",
+                              { "text-yellow-500": item.status == "pending" },
+                              { "text-red-500": item.status == "error" }
+                            )}
+                          ></i>
+                          <h1
+                            className={cn(
+                              "text-center font-semibold text-sm text-greenBalance",
+                              { "text-yellow-500": item.status == "pending" },
+                              { "text-red-500": item.status == "error" }
+                            )}
+                          >
+                            {item.status == "success" && "Fatura Kesildi"}
+                            {item.status == "pending" && "Fatura Beklemede"}
+                            {item.status == "error" && "Fatura Kesilemedi"}
                           </h1>
-                        </td>
-                        <td className="px-2 py-3">
-                          <h1 className="text-sm font-semibold flex items-center justify-center">
-                            120 ₺
+                        </div>
+                      </td>
+                      <td className="px-2 py-3">
+                        <div className="flex items-center justify-center">
+                          <h1 className="text-sm text-gray-400">
+                            {timeLeftCounter(new Date(item.date))}
                           </h1>
-                        </td>
-                        <td className="px-2 py-3">
-                          <h1 className="text-sm flex items-center justify-center">
-                            52 ₺
-                          </h1>
-                        </td>
-                        <td className="px-2 py-3">
-                          <h1 className="text-sm flex items-center justify-center">
-                            358 ₺
-                          </h1>
-                        </td>
-                        <td className="px-2 py-3">
-                          <h1 className="text-sm flex items-center justify-center">
-                            15.04.2024
-                          </h1>
-                        </td>
-                      </tr>
-                    )) ||
-                    (isMobile && (
-                      <FinanceCardType
-                        commission={"120 ₺"}
-                        date={"29.3.2024 Cuma"}
-                        id={"66069a1d08bfe8acbd62ea91"}
-                        income={"530 ₺"}
-                        name={"Bayram Çınar"}
-                        status={"Fatura Kesildi"}
-                        ciro={"358 ₺"}
-                        tax={"52 ₺"}
-                        time={"15:00 - 16:30"}
-                        gettingDate={"15.04.2024"}
-                        key={index}
-                      />
-                    ))
-                )} */}
-                <tr>
-                  <td className="px-2 py-3">
-                    <div className="advertInfos flex items-center justify-start flex-col">
-                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15:00 - 16:30
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
-                      <i
-                        className={`fa-solid fa-circle  
-                                   text-greenBalance
-                                 text-[0.5rem] flex items-center justify-center mx-2`}
-                      ></i>
-                      <h1
-                        className={`text-center font-semibold text-sm 
-                                     text-greenBalance
-                                `}
-                      >
-                        Fatura Kesildi
-                      </h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      530 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm font-semibold flex items-center justify-center">
-                      120 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      52 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      358 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15.04.2024
-                    </h1>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-2 py-3">
-                    <div className="advertInfos flex items-center justify-start flex-col">
-                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15:00 - 16:30
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
-                      <i
-                        className={`fa-solid fa-circle  
-                                   text-greenBalance
-                                 text-[0.5rem] flex items-center justify-center mx-2`}
-                      ></i>
-                      <h1
-                        className={`text-center font-semibold text-sm 
-                                     text-greenBalance
-                                `}
-                      >
-                        Fatura Kesildi
-                      </h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      530 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm font-semibold flex items-center justify-center">
-                      120 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      52 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      358 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15.04.2024
-                    </h1>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-2 py-3">
-                    <div className="advertInfos flex items-center justify-start flex-col">
-                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15:00 - 16:30
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
-                      <i
-                        className={`fa-solid fa-circle  
-                                   text-greenBalance
-                                 text-[0.5rem] flex items-center justify-center mx-2`}
-                      ></i>
-                      <h1
-                        className={`text-center font-semibold text-sm 
-                                     text-greenBalance
-                                `}
-                      >
-                        Fatura Kesildi
-                      </h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      530 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm font-semibold flex items-center justify-center">
-                      120 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      52 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      358 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15.04.2024
-                    </h1>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-2 py-3">
-                    <div className="advertInfos flex items-center justify-start flex-col">
-                      <h1 className="name text-sm">66069a1d08bfe8acbd62ea91</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm font-semibold">Bayram Çınar</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center justify-center">
-                      <h1 className="text-sm text-gray-400">29.3.2024 Cuma</h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15:00 - 16:30
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <div className="flex p-1 bg-greenBalanceBg border-greenBalance items-center justify-center rounded-xl ">
-                      <i
-                        className={`fa-solid fa-circle  
-                                   text-greenBalance
-                                 text-[0.5rem] flex items-center justify-center mx-2`}
-                      ></i>
-                      <h1
-                        className={`text-center font-semibold text-sm 
-                                     text-greenBalance
-                                `}
-                      >
-                        Fatura Kesildi
-                      </h1>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      530 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm font-semibold flex items-center justify-center">
-                      120 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      52 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      358 ₺
-                    </h1>
-                  </td>
-                  <td className="px-2 py-3">
-                    <h1 className="text-sm flex items-center justify-center">
-                      15.04.2024
-                    </h1>
-                  </td>
-                </tr>
+                        </div>
+                      </td>
+                      <td className="px-2 py-3">
+                        <ThreeDots />
+                      </td>
+                    </tr>
+                  ) : (
+                    <FinanceCardType
+                      commission={tryCurrencyFormat(item.commission)}
+                      date={new Intl.DateTimeFormat("tr-TR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        weekday: "short",
+                      }).format(new Date(item.date))}
+                      id={"66069a1d08bfe8acbd62ea91"}
+                      income={tryCurrencyFormat(item.income)}
+                      name={item.name}
+                      status={"Fatura Kesildi"}
+                      ciro={tryCurrencyFormat(item.ciro)}
+                      tax={tryCurrencyFormat(item.tax)}
+                      time={"15:00 - 16:30"}
+                      gettingDate={timeLeftCounter("15-04-2024")}
+                      key={index}
+                    />
+                  )
+                )}
               </tbody>
             </table>
             <div className="lg:flex justify-between m-3 text-sm md:text-[1vw] lg:text-[1vw] xl:text-[0.8vw]">
@@ -432,11 +412,11 @@ function FinanceTable() {
                   value={itemsPerPage}
                 >
                   <option value="">Sayfa Sayısı</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
                   <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
                 </select>
                 <h1 className="text-xs lg:text-sm text-gray-500 ml-2">
                   Şuanda Gösterilen Sayı {itemsPerPage}
