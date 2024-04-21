@@ -650,3 +650,66 @@ export const datas = [
     remainingTime: "7/10/2006",
   },
 ];
+
+export const datas2 = [
+  {
+    id: 1,
+    total_income_detail: {
+      order_amount: 600,
+      campaign_discount: 20,
+      total: 620,
+    },
+    total_expense_detail: {
+      commission: 90,
+      tax: 10,
+      total: 100,
+    },
+    payment_date: "2023-01-30",
+    vesting_period: "01-25 Ocak 2023",
+  },
+  {
+    id: 2,
+    total_income_detail: {
+      order_amount: 300,
+      campaign_discount: 10,
+      total: 310,
+    },
+    total_expense_detail: {
+      commission: 100,
+      tax: 20,
+      total: 120,
+    },
+    payment_date: "2023-02-30",
+    vesting_period: "01-25 Şubat 2023",
+  },
+  {
+    id: 3,
+    total_income_detail: {
+      order_amount: 1000,
+      campaign_discount: 20,
+      total: 1020,
+    },
+    total_expense_detail: {
+      commission: 100,
+      tax: 12,
+      total: 112,
+    },
+    payment_date: "2023-03-30",
+    vesting_period: "01-25 Mart 2023",
+  },
+  {
+    id: 4,
+    total_income_detail: {
+      order_amount: 800,
+      campaign_discount: 40,
+      total: 840,
+    },
+    total_expense_detail: {
+      commission: 50,
+      tax: 30,
+      total: 80,
+    },
+    payment_date: "2023-04-30",
+    vesting_period: "01-25 Nisan 2023",
+  },
+];

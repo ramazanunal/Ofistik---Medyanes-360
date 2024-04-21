@@ -11,11 +11,13 @@ function FinanceCardType({
   date,
   time,
   gettingDate,
+  threeDots,
 }) {
   return (
     <div className="max-w-[400px] bg-gray-100 rounded-xl text-gray-600 my-4">
-      <div className="nameArea border-b-2 border-gray-300">
+      <div className="nameArea border-b-2 border-gray-300 flex justify-between pr-2">
         <h1 className="px-4 py-2 text-center font-semibold text-md">{name}</h1>
+        <div>{threeDots}</div>
       </div>
       <div className="flex flex-row items-center justify-between">
         <div className="dateArea flex items-center justify-start ml-4 mt-2 w-1/2">

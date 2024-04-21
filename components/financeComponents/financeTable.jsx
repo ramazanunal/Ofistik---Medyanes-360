@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, use } from "react";
 import FinanceCardType from "./financeCardType";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utilities/utils";
 import { datas } from "./mock";
 import { BsThreeDots } from "react-icons/bs";
@@ -84,10 +84,10 @@ const ThreeDots = () => {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          className="text-sm font-semibold p-0 px-2 py-1 text-premiumOrange border-none"
+          className="text-sm font-semibold p-0 px-2 py-1 bg-transparent text-premiumOrange border-none"
           variant="outline"
         >
-          <BsThreeDots size={20} className="rotate-90" />
+          <BsThreeDots size={20} className=" md:rotate-90" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-fit flex flex-col">
@@ -97,7 +97,7 @@ const ThreeDots = () => {
               Fatura Gör
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[550px] h-[90dvh] max-h-[720px] overflow-auto ">
+          <DialogContent className="sm:max-w-[550px] h-fit max-h-[90dvh]  overflow-auto ">
             Fatura gelcek bu kısıma
           </DialogContent>
         </Dialog>
@@ -107,11 +107,11 @@ const ThreeDots = () => {
               Fatura yükle
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[550px] h-[90dvh] max-h-[720px] overflow-auto ">
+          <DialogContent className="sm:max-w-[550px] h-fit max-h-[90dvh] overflow-auto ">
             <DialogHeader>
-              <DialogTitle>Edit tükle</DialogTitle>
+              <DialogTitle>fatura yükle</DialogTitle>
               <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
+                bu kısımdan fatura yüklenecek
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
@@ -127,7 +127,7 @@ function FinanceTable() {
   const [data, setData] = useState(datas);
   const [totalPages, setTotalPages] = useState(0);
   const [status, setStatus] = useState("");
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(768);
   const [currentPageData, setCurrentPageData] = useState();
 
   useEffect(() => {
@@ -171,6 +171,11 @@ function FinanceTable() {
   const timeLeftCounter = (date) => {
     const now = new Date();
     const targetDate = new Date(date);
+
+    // Check if targetDate is a valid date
+    if (isNaN(targetDate.getTime())) {
+      return "-";
+    }
 
     if (now > targetDate) return "-";
 
@@ -227,7 +232,9 @@ function FinanceTable() {
       setTotalPages(Math.ceil(currentPageData.length / itemsPerPage));
   }, [data, itemsPerPage, currentPageData]);
 
+  if (!data) return <div>Data yok</div>;
   if (!currentPageData) return <div>Loading...</div>;
+
   return (
     <>
       <div className="bg-white rounded-lg mx-auto md:mx-5 mb-8">
@@ -338,7 +345,11 @@ function FinanceTable() {
                       </td>
                       <td className="px-2 py-3">
                         <h1 className="text-sm flex items-center justify-center">
-                          15.04.2024
+                          {new Intl.DateTimeFormat("tr-TR", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          }).format(new Date(item.gettingDate))}
                         </h1>
                       </td>
                       <td className="px-2 py-3">
@@ -389,14 +400,19 @@ function FinanceTable() {
                         year: "numeric",
                         weekday: "short",
                       }).format(new Date(item.date))}
-                      id={"66069a1d08bfe8acbd62ea91"}
+                      id={item.id}
                       income={tryCurrencyFormat(item.income)}
                       name={item.name}
                       status={"Fatura Kesildi"}
                       ciro={tryCurrencyFormat(item.ciro)}
                       tax={tryCurrencyFormat(item.tax)}
-                      time={"15:00 - 16:30"}
-                      gettingDate={timeLeftCounter("15-04-2024")}
+                      time={item.time}
+                      gettingDate={new Intl.DateTimeFormat("tr-TR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      }).format(new Date(item.gettingDate))}
+                      threeDots={<ThreeDots />}
                       key={index}
                     />
                   )
