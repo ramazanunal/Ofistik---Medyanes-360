@@ -76,18 +76,18 @@ function ProgressPayment() {
         )}
       >
         <div className="border-b">
-          <div className="relative flex flex-row w-full items-center justify-between px-4">
+          <div className="relative flex flex-row w-full items-center justify-between px-4 pb-10">
             <button
               onClick={decrement}
-              className="disabled:opacity-50 disabled:text-gray-500 hover:scale-105 active:scale-100 text-premiumOrangeBg hover:text-premiumOrange transition-all duration-200"
+              className="disabled:opacity-50 absolute bottom-0 left-0 sm:relative  disabled:text-gray-500 hover:scale-105 active:scale-100 text-premiumOrangeBg hover:text-premiumOrange transition-all duration-200"
               disabled={currentNumber === 0}
             >
               <IoIosArrowDropleftCircle size={34} />
             </button>
-            <div className="flex flex-row items-center flex-1">
+            <div className="flex flex-col lg:flex-row items-center flex-1">
               <ScaleAnimateComp
                 animated={animated}
-                className="flex items-center gap-2 justify-center w-full p-4"
+                className="flex items-center gap-2 sm:justify-center w-full p-4"
               >
                 <div className="p-3 bg-premiumOrangeBG2 text-premiumOrange rounded-md">
                   <FaFileInvoice size={28} />
@@ -102,7 +102,7 @@ function ProgressPayment() {
               </ScaleAnimateComp>
               <ScaleAnimateComp
                 animated={animated}
-                className="flex items-center gap-2 justify-center w-full p-4 border-x border-gray-200"
+                className="flex items-center gap-2 sm:justify-center w-full p-4 lg:border-x border-gray-200"
               >
                 <div className="p-3 bg-premiumOrangeBG2 text-premiumOrange rounded-md">
                   <CiCalendar size={28} className="stroke-1" />
@@ -116,7 +116,7 @@ function ProgressPayment() {
               </ScaleAnimateComp>
               <ScaleAnimateComp
                 animated={animated}
-                className="flex items-center gap-2 justify-center w-full p-4"
+                className="flex items-center gap-2 sm:justify-center w-full p-4"
               >
                 <div className="p-3 bg-premiumOrangeBG2 text-premiumOrange rounded-md">
                   <CiClock2 size={28} className="stroke-1" />
@@ -131,7 +131,7 @@ function ProgressPayment() {
             </div>
             <button
               onClick={increment}
-              className="disabled:opacity-50 disabled:text-gray-500 hover:scale-105 active:scale-100 text-premiumOrangeBg hover:text-premiumOrange transition-all duration-200"
+              className="disabled:opacity-50 absolute bottom-0 right-0 sm:relative disabled:text-gray-500 hover:scale-105 active:scale-100 text-premiumOrangeBg hover:text-premiumOrange transition-all duration-200"
               disabled={currentNumber === progressPayment.length - 1}
             >
               <IoIosArrowDroprightCircle size={34} />
@@ -139,17 +139,17 @@ function ProgressPayment() {
           </div>
           <div className="flex items-center gap-2 p-4 bg-blue-200 rounded-md  relative mx-auto md:mx-20 my-3">
             <div className="w-2 h-full absolute rounded-l-md left-0 top-0 bg-blue-500"></div>
-            <FaInfoCircle className="text-blue-500" size={22} />
-            <span className="text-gray-600 font-medium">
+            <FaInfoCircle className="text-blue-500 hidden sm:block" size={22} />
+            <span className="text-gray-600 font-medium text-sm lg:text-base">
               Geçmiş dönemden kaynaklı gelir/gider kayıdınızla beraber bu
               hakediş döneminde hesabınıza yapılacak toplam ödeme tutarıdır.
             </span>
           </div>
         </div>
-        <div className="flex justify-between">
+        <div className="flex flex-col lg:flex-row justify-between">
           <ScaleAnimateComp
             animated={animated}
-            className={cn("flex flex-col w-1/2")}
+            className={cn("flex flex-col lg:w-1/2")}
           >
             {currentPayment.total_income_detail.campaign_discount && (
               <div className="flex items-center gap-2 w-full p-4">
@@ -193,7 +193,7 @@ function ProgressPayment() {
           </ScaleAnimateComp>
           <ScaleAnimateComp
             animated={animated}
-            className={cn("flex flex-col w-1/2")}
+            className={cn("flex flex-col lg:w-1/2")}
           >
             {currentPayment.total_income_detail.campaign_discount && (
               <div className="flex items-center gap-2 w-full p-4">
