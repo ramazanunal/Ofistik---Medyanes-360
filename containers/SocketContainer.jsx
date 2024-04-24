@@ -6,24 +6,33 @@ import io from 'socket.io-client'
 
 export default function SocketClient() {
     const { data } = useSession()
-    const { setSocket } = useSocket()
+    const { setSocket, socket: stateSocket } = useSocket()
 
     useEffect(() => {
         const userId = data?.user?.id;
 
         if (true) {
-            const socket = io();
-            setSocket(socket);
+            let socket;
 
-            socket.on("connect", () => {
-                socket.emit('set_user', crypto.randomUUID()); // Bağlantı tamamlandığında 'set_user' olayını emit et
-            });
+            fetch('/api/socketio').then(() => {
+                if (!stateSocket) {
+                    socket = io();
+                    setSocket(socket);
+
+                    socket.on("connect", () => {
+                        // sonrasında userId kullanılacak
+                        socket.emit('set_user', crypto.randomUUID()); // Bağlantı tamamlandığında 'set_user' olayını emit et
+                    });
+                }
+            })
 
             return () => {
-                socket.disconnect();
+                if (socket) {
+                    socket.disconnect();
+                }
             };
         }
-    }, []);
+    }, [stateSocket]);
 
     return <></>; // Placeholder JSX
 }
