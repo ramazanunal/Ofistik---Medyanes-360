@@ -294,7 +294,7 @@ function FinanceTable() {
               <tbody>
                 {currentPageData.map((item, index) =>
                   !isMobile ? (
-                    <tr key={index}>
+                    <tr key={index} className="whitespace-nowrap">
                       <td className="px-2 py-3">
                         <div className="advertInfos flex items-center justify-start flex-col">
                           <h1 className="name text-sm">{item.id}</h1>

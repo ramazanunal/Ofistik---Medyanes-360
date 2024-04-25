@@ -92,8 +92,8 @@ function ProgressPayment() {
                 <div className="p-3 bg-premiumOrangeBG2 text-premiumOrange rounded-md">
                   <FaFileInvoice size={28} />
                 </div>
-                <div className="flex flex-col items-start justify-center">
-                  <p className=" text-2xl font-bold">
+                <div className="flex flex-col items-start justify-center ">
+                  <p className=" text-2xl font-bold ">
                     {currentPayment.total_income_detail.total -
                       currentPayment.total_expense_detail.total}
                   </p>
