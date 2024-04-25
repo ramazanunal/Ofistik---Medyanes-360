@@ -7,8 +7,8 @@ function GeneralComponentFinance() {
   return (
     <div className="bg-gray-100 min-h-screen md:px-10 py-4">
       <FinanceStatistics />
-      <FinanceTable />
       <ProgressPayment />
+      <FinanceTable />
     </div>
   );
 }

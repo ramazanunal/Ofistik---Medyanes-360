@@ -10,6 +10,16 @@ import { CiCalendar, CiClock2 } from "react-icons/ci";
 import { cn } from "@/lib/utilities/utils";
 import { IoMdArrowRoundUp } from "react-icons/io";
 import { FaInfoCircle } from "react-icons/fa";
+import { tryCurrencyFormat } from "./utils";
+
+const CardItem = ({ title, value }) => {
+  return (
+    <div className="border-b pb-2 flex justify-between font-medium px-2">
+      <span className="text-gray-400">{title}</span>
+      <span>{tryCurrencyFormat(value)}</span>
+    </div>
+  );
+};
 
 const ScaleAnimateComp = ({ animated, children, className }) => {
   return (
@@ -94,8 +104,10 @@ function ProgressPayment() {
                 </div>
                 <div className="flex flex-col items-start justify-center ">
                   <p className=" text-2xl font-bold ">
-                    {currentPayment.total_income_detail.total -
-                      currentPayment.total_expense_detail.total}
+                    {tryCurrencyFormat(
+                      currentPayment.total_income_detail.total -
+                        currentPayment.total_expense_detail.total
+                    )}
                   </p>
                   <h4 className="text-sm font-light">Ödenecek Tutar</h4>
                 </div>
@@ -123,7 +135,11 @@ function ProgressPayment() {
                 </div>
                 <div className="flex flex-col items-start justify-center">
                   <p className=" text-2xl font-bold">
-                    {currentPayment.payment_date}
+                    {new Intl.DateTimeFormat("tr-TR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    }).format(new Date(currentPayment.payment_date))}
                   </p>
                   <h4 className="text-sm font-light">Öngörülen ödeme tarihi</h4>
                 </div>
@@ -161,7 +177,9 @@ function ProgressPayment() {
                 </div>
                 <div className="flex flex-col items-start justify-center">
                   <p className=" text-2xl font-bold">
-                    {currentPayment.total_income_detail.total}
+                    {tryCurrencyFormat(
+                      currentPayment.total_income_detail.total
+                    )}
                   </p>
                   <h4 className="text-sm font-light">Toplam gelir</h4>
                 </div>
@@ -170,24 +188,18 @@ function ProgressPayment() {
             <div className="space-y-2 p-4">
               <h4 className="px-0.5 font-bold text-xl">Satış Bazlı</h4>
               <div className="space-y-2">
-                <div className="border-b pb-2 flex justify-between font-medium px-2">
-                  <span className="text-gray-400">Kampanya indirimi</span>
-                  <span>
-                    TL{currentPayment.total_income_detail.campaign_discount}
-                  </span>
-                </div>
-                <div className="border-b pb-2 flex justify-between font-medium px-2">
-                  <span className="text-gray-400">Sipariş tutarı</span>
-                  <span>
-                    TL{currentPayment.total_income_detail.order_amount}
-                  </span>
-                </div>
-                <div className=" pb-2 flex justify-between font-medium px-2">
-                  <span className="text-gray-400">Toplam</span>
-                  <span>
-                    TL{currentPayment.total_income_detail.order_amount}
-                  </span>
-                </div>
+                <CardItem
+                  title={"Kampanya indirimi"}
+                  value={currentPayment.total_income_detail.campaign_discount}
+                />
+                <CardItem
+                  title={"Sipariş tutarı"}
+                  value={currentPayment.total_income_detail.order_amount}
+                />
+                <CardItem
+                  title={"Toplam"}
+                  value={currentPayment.total_income_detail.total}
+                />
               </div>
             </div>
           </ScaleAnimateComp>
@@ -202,7 +214,9 @@ function ProgressPayment() {
                 </div>
                 <div className="flex flex-col items-start justify-center">
                   <p className=" text-2xl font-bold">
-                    {currentPayment.total_income_detail.total}
+                    {tryCurrencyFormat(
+                      currentPayment.total_income_detail.total
+                    )}
                   </p>
                   <h4 className="text-sm font-light">Toplam gelir</h4>
                 </div>
@@ -211,24 +225,26 @@ function ProgressPayment() {
             <div className="space-y-2 p-4">
               <h4 className="px-0.5 font-bold text-xl">Satış Bazlı</h4>
               <div className="space-y-2">
-                <div className="border-b pb-2 flex justify-between font-medium px-2">
-                  <span className="text-gray-400">Kampanya indirimi</span>
-                  <span>
-                    TL{currentPayment.total_income_detail.campaign_discount}
-                  </span>
-                </div>
-                <div className="border-b pb-2 flex justify-between font-medium px-2">
-                  <span className="text-gray-400">Sipariş tutarı</span>
-                  <span>
-                    TL{currentPayment.total_income_detail.order_amount}
-                  </span>
-                </div>
-                <div className=" pb-2 flex justify-between font-medium px-2">
-                  <span className="text-gray-400">Toplam</span>
-                  <span>
-                    TL{currentPayment.total_income_detail.order_amount}
-                  </span>
-                </div>
+                <CardItem
+                  title={"Kampanya indirimi"}
+                  value={currentPayment.total_expense_detail.campaign_discount}
+                />
+                <CardItem
+                  title={"Sipariş tutarı"}
+                  value={currentPayment.total_expense_detail.ad_expense}
+                />
+                <CardItem
+                  title={"Komisyon"}
+                  value={currentPayment.total_expense_detail.commission}
+                />
+                <CardItem
+                  title={"Vergi"}
+                  value={currentPayment.total_expense_detail.tax}
+                />
+                <CardItem
+                  title={"Toplam"}
+                  value={currentPayment.total_expense_detail.total}
+                />
               </div>
             </div>
           </ScaleAnimateComp>

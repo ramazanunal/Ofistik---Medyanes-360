@@ -21,6 +21,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { tryCurrencyFormat } from "./utils";
+
 function CustomChoseType({
   options,
   value,
@@ -159,13 +161,6 @@ function FinanceTable() {
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value);
-  };
-
-  const tryCurrencyFormat = (value) => {
-    return new Intl.NumberFormat("tr-TR", {
-      style: "currency",
-      currency: "TRY",
-    }).format(value);
   };
 
   const timeLeftCounter = (date) => {
