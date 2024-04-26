@@ -2,35 +2,55 @@
 import { useState } from "react";
 import AgoraUIKit, { layout } from "agora-react-uikit";
 import "agora-react-uikit/dist/index.css";
+import { useParams, useSearchParams } from "next/navigation";
 
 const LiveContainer = () => {
   const [videocall, setVideocall] = useState(true);
   const [isHost, setHost] = useState(true);
   const [isPinned, setPinned] = useState(false);
   const [username, setUsername] = useState("");
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  if (!token || token == "") return <div>Invalid Token</div>;
+  if (!params.ChName) return <div>Invalid URL</div>;
+  if (!process.env.NEXT_PUBLIC_AGORA_APP_ID)
+    return <div>Invalid Agora App ID</div>;
+  if (!process.env.NEXT_PUBLIC_AGORA_APP_CERTIFICATE)
+    return <div>Invalid Agora App Certificate</div>;
+
   const rtcProps = {
-    appId: process.env.NEXT_PUBLIC_AGORA_ID,
-    channel: "random",
-    token: "007eJxTYNggvHW9QvQD1w1nuL7kmVZE33IS7/2fYqTo5W1483DqcgcFBgMLkxRDk1RTI9PkFJNkS2MLy6TEZGNLY9OkxBRLAwMTlXDNtIZARoYZP1KZGRkgEMRnYyhKzEvJz2VgAAA3SB7c", // add your token if using app in secured mode
+    appId: process.env.NEXT_PUBLIC_AGORA_APP_ID,
+    appCertificate: process.env.NEXT_PUBLIC_AGORA_APP_CERTIFICATE,
+    channel: params.ChName,
+    token: token,
     role: isHost ? "host" : "audience",
     layout: isPinned ? layout.pin : layout.grid,
     enableScreensharing: true,
   };
-console.log("rtcProps", rtcProps)
+
+  console.log("rtcProps", rtcProps);
   return (
-    <div style={styles.container}>
-      <div style={styles.videoContainer}>
-        <h1 style={styles.heading}>Agora React Web UI Kit</h1>
+    <div className="w-[100vw] h-[100vh] flex flex-1 bg-white">
+      <div className="flex flex-col flex-1">
+        <h1 className="text-center my-5 text-xl">{params.ChName}</h1>
         {videocall ? (
           <>
-            <div style={styles.nav}>
-              <p style={{ fontSize: 20, width: 200 }}>
+            <div className="flex justify-around">
+              <p className="w-[200px]" style={{ fontSize: 20 }}>
                 You're {isHost ? "a host" : "an audience"}
               </p>
-              <button style={styles.btn} onClick={() => setHost(!isHost)}>
+              <button
+                className="bg-premiumOrangeBg cursor-pointer rounded-md px-2 py-1 text-white  font-medium"
+                onClick={() => setHost(!isHost)}
+              >
                 Change Role
               </button>
-              <button style={styles.btn} onClick={() => setPinned(!isPinned)}>
+              <button
+                className="bg-premiumOrangeBg cursor-pointer rounded-md px-2 py-1 text-white  font-medium"
+                onClick={() => setPinned(!isPinned)}
+              >
                 Change Layout
               </button>
             </div>
@@ -43,9 +63,9 @@ console.log("rtcProps", rtcProps)
             />
           </>
         ) : (
-          <div style={styles.nav}>
+          <div className="flex justify-around">
             <input
-              style={styles.input}
+              className="flex h-6 self-center"
               placeholder="nickname"
               type="text"
               value={username}
@@ -61,32 +81,6 @@ console.log("rtcProps", rtcProps)
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    width: "100vw",
-    height: "100vh",
-    display: "flex",
-    flex: 1,
-    backgroundColor: "#007bff22",
-  },
-  heading: { textAlign: "center", marginBottom: 0 },
-  videoContainer: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-  },
-  nav: { display: "flex", justifyContent: "space-around" },
-  btn: {
-    backgroundColor: "#007bff",
-    cursor: "pointer",
-    borderRadius: 5,
-    padding: "4px 8px",
-    color: "#ffffff",
-    fontSize: 20,
-  },
-  input: { display: "flex", height: 24, alignSelf: "center" },
 };
 
 export default LiveContainer;
