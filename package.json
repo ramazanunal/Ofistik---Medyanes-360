@@ -32,6 +32,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@uidotdev/usehooks": "^2.4.1",
     "agora-react-uikit": "^1.2.0",
+    "agora-token": "^2.0.3",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.0",
