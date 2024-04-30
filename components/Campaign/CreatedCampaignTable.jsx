@@ -82,11 +82,11 @@ function CreatedCampaignTable() {
               </button>
               <Link
                 className="flex items-center justify-center w-full text-center py-1 px-6 text-premiumOrange bg-white hover:text-white border-2 border-premiumOrange rounded-lg font-semibold mr-4 overflow-hidden relative transition-all will-change-transform after:bg-premiumOrange z-0 after:block after:w-full after:h-full after:absolute after:left-0 after:text-white after:top-0 after:transform after:translate-x-[-100%] after:origin-top-left after:transition-transform after:duration-[400ms] after:ease-out after:will-change-transform after:z-[-1] hover:after:translate-x-[0%] hover:border-2 hover:border-transparent hover:scale-105 hover:transform-none hover:duration-300 hover:ease-out hover:will-change-transform"
-                href={"/addsense/reklamOlustur"}
+                href={"/campaign/new-campaign"}
               >
                 <i className="fa-solid fa-circle-plus mr-2 "></i>
                 <span style={{ whiteSpace: "nowrap" }}>
-                  Yeni Reklam Oluştur
+                  Yeni Kampanya Oluştur
                 </span>
               </Link>
             </div>
