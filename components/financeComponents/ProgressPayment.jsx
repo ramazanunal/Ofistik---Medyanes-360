@@ -21,7 +21,7 @@ const CardItem = ({ title, value }) => {
   );
 };
 
-const ScaleAnimateComp = ({ animated, children, className }) => {
+export const ScaleAnimateComp = ({ animated, children, className }) => {
   return (
     <div
       className={cn("scale-0 transition-all duration-300", className, {

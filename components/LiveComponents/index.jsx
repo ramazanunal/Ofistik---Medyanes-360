@@ -2,18 +2,39 @@
 import { useState } from "react";
 import AgoraUIKit, { layout } from "agora-react-uikit";
 import "agora-react-uikit/dist/index.css";
-import { useParams, useSearchParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { getAPI } from "@/services/fetchAPI";
 
-const LiveContainer = () => {
+const spaceControl = (token) => {
+  token.split("").find((item) => {
+    if (item === " ") {
+      token = token.replace(" ", "+");
+    }
+  });
+  return token.toString();
+};
+
+const LiveContainer = async () => {
   const [videocall, setVideocall] = useState(true);
   const [isHost, setHost] = useState(true);
   const [isPinned, setPinned] = useState(false);
   const [username, setUsername] = useState("");
   const params = useParams();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const router = useRouter();
+  let token = searchParams.get("token");
+
+  token = spaceControl(token);
+  let uid = searchParams.get("uid");
 
   if (!token || token == "") return <div>Invalid Token</div>;
+  if (!uid || uid == "") {
+    uid = Math.floor(Math.random() * 1000000001);
+    await getAPI(`/agora?channelName="asd"&uid=${uid}`).then(
+      (res) => res.token
+    );
+    router.push(`/live/${params.ChName}?token=${token}&uid=${uid}`);
+  }
   if (!params.ChName) return <div>Invalid URL</div>;
   if (!process.env.NEXT_PUBLIC_AGORA_APP_ID)
     return <div>Invalid Agora App ID</div>;
@@ -28,6 +49,7 @@ const LiveContainer = () => {
     role: isHost ? "host" : "audience",
     layout: isPinned ? layout.pin : layout.grid,
     enableScreensharing: true,
+    uid: uid,
   };
 
   console.log("rtcProps", rtcProps);
@@ -73,9 +95,7 @@ const LiveContainer = () => {
                 setUsername(e.target.value);
               }}
             />
-            <h3 style={styles.btn} onClick={() => setVideocall(true)}>
-              Start Call
-            </h3>
+            <h3 onClick={() => setVideocall(true)}>Start Call</h3>
           </div>
         )}
       </div>

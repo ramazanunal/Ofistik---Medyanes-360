@@ -16,6 +16,11 @@ export default async function agoraTokenHandler(req, res) {
     console.log("uid", uid);
     console.log("uid", process.env.NEXT_PUBLIC_AGORA_APP_ID);
     const expirationTimeInSeconds = 3600;
+    if (!appId || appId === "" || !appCertificate || appCertificate === "") {
+      return res
+        .status(400)
+        .json({ error: "Agora appId or credentials are required" });
+    }
 
     const currentTimestamp = Math.floor(Date.now() / 1000);
 

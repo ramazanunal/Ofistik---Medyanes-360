@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-  import { getAPI } from "@/services/fetchAPI";
+import { getAPI } from "@/services/fetchAPI";
 
 function Page() {
   const [token, setToken] = React.useState("");
@@ -62,7 +62,9 @@ function Page() {
               "/live/" +
               channel +
               "?token=" +
-              token
+              token +
+              "&uid=" +
+              uid
             }
             className="text-sm "
           >
@@ -70,7 +72,9 @@ function Page() {
               "/live/" +
               channel +
               "?token=" +
-              token}
+              token +
+              "&uid=" +
+              uid}
           </a>
         </div>
       )}
