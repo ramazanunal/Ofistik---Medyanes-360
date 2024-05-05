@@ -11,7 +11,6 @@ import { Navigation, Pagination } from "swiper/modules";
 import CardMobile from "./cardMobile";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { getAPI, postAPI } from "@/services/fetchAPI";
-import { useSocket } from "@/store/useSocket";
 
 function Agenda() {
   const [formData, setFormData] = useState([]);
@@ -26,21 +25,6 @@ function Agenda() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [pendingAppointments, setPendingAppointments] = useState([]);
   const [comingAppointments, setComingAppointments] = useState([]);
-  const { socket } = useSocket()
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("date", (newDate) => {
-        setFormData((prev) => [...prev, newDate])
-      })
-    }
-
-    return () => {
-      if (socket) {
-        socket.off("date")
-      }
-    }
-  }, [socket])
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);

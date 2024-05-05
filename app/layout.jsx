@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-calendar/dist/Calendar.css';
 import { ToastContainer } from 'react-toastify';
 import { SessionProvider } from "next-auth/react";
-import SocketContainer from '@/containers/SocketContainer';
 
 export default function RootLayout({ children, session }) {
     return (<html lang='en' className='scroll-smooth'>
@@ -24,7 +23,6 @@ export default function RootLayout({ children, session }) {
         </head>
         <body className=''>
             <SessionProvider session={session}>
-                <SocketContainer />
                     {children}
                 {/* Toastify */}
                 <ToastContainer

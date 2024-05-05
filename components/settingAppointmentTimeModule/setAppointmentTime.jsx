@@ -16,7 +16,6 @@ import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { getAPI, postAPI } from "@/services/fetchAPI";
-import { useSocket } from "@/store/useSocket";
 
 function SetAppointmentTime() {
     const [datesData, setDatesData] = useState([]); // TAKVİMDEN SEÇTİĞİMİZ TARİHLERİ TUTAN ARRAY
@@ -27,7 +26,6 @@ function SetAppointmentTime() {
     const appointmentDuration = 90; // BU KISIM KULLANICI PROFİLİNDEN ALINAN RANDEVU SÜRESİ YERİ
     const appointmentPrice = 1000; // BU KISIM KULLANICI PROFİLİNDEN ALINAN RANDEVU ÜCRETİ YERİ
     const isMobileForAnimation = useMediaQuery(768)
-    const { socket } = useSocket()
 
     const timeSortingFunction = (a, b) => {
         const timeA = new Date("1970-01-01T" + a + ":00");
@@ -117,7 +115,6 @@ function SetAppointmentTime() {
             });
             await postAPI("/selectedtimes", existingTimes)
             setSelectedTimes(existingTimes)
-            socket.emit("updateSelectedTimes", existingTimes)
 
             resetForm();
             Swal.fire({
