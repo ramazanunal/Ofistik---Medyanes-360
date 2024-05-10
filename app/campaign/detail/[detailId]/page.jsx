@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { CiCalendar, CiClock2 } from "react-icons/ci";
 import { FaFileInvoice } from "react-icons/fa";
 import Image from "next/image";
-import Button from "@/components/ui/Button";
+import { cn } from "@/lib/utilities/utils";
 
 function Page() {
   const { detailId } = useParams();
@@ -246,12 +246,14 @@ function Page() {
           </div>
 
           <div>
-            <Button
-              variant="outline"
-              className=" hover:bg-premiumOrangeBg hover:border-premiumOrange hover:text-white hover:scale-[1.02] active:scale-100  transition-all duration-200"
+            <button
+              onClick={() => alert("Kampanyaya katıldınız")}
+              className={cn(
+                " hover:bg-premiumOrangeBg hover:border-premiumOrange hover:text-white hover:scale-[1.02] active:scale-100  transition-all duration-200 border px-2 py-1 rounded-sm border-premiumOrange text-premiumOrange font-semibold"
+              )}
             >
               Kampanyaya Katıl
-            </Button>
+            </button>
           </div>
         </div>
       </div>
