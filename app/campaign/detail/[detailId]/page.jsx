@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { CiCalendar, CiClock2 } from "react-icons/ci";
 import { FaFileInvoice } from "react-icons/fa";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
+import Button from "@/components/ui/Button";
 
 function Page() {
   const { detailId } = useParams();
