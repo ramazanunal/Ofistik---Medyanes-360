@@ -7,6 +7,8 @@ import { IoMdArrowBack } from "react-icons/io";
 import { motion } from "framer-motion";
 import { CiCalendar, CiClock2 } from "react-icons/ci";
 import { FaFileInvoice } from "react-icons/fa";
+import Image from "next/image";
+import { Button } from "@/components/ui/Button";
 
 function Page() {
   const { detailId } = useParams();
@@ -45,7 +47,7 @@ function Page() {
   };
 
   return (
-    <div className="p-5 space-y-5 bg-slate-100">
+    <div className="p-5 space-y-5 bg-slate-100 min-h-screen">
       <a
         href="/campaign"
         className="flex items-center justify-center gap-2 bg-white  p-2 rounded-md hover:scale-[1.02] active:scale-[.98] w-fit h-fit text-slate-700"
@@ -103,7 +105,9 @@ function Page() {
             </div>
             <div className="flex flex-col items-start justify-center">
               <p className=" text-2xl font-bold">
-                {timeLeftCounter(campaign.startDate)}
+                {timeLeftCounter(campaign.startDate) == "-"
+                  ? "Katılım süresi doldu"
+                  : timeLeftCounter(campaign.startDate)}
               </p>
               <h4 className="text-sm font-light">Katılım için kalan süre</h4>
             </div>
@@ -142,6 +146,113 @@ function Page() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      <div className="p-8 bg-white rounded-md ">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          <div className="flex flex-col gap-4">
+            <div className="flex gap-6">
+              <Image
+                src={campaign.img}
+                alt="campaign"
+                width={300}
+                height={300}
+                className="w-full h-full rounded-md"
+              />
+              <div className="">
+                <h1 className="text-2xl font-bold whitespace-nowrap mb-4">
+                  {campaign.name}
+                </h1>
+                <div className="flex flex-wrap justify-center gap-8">
+                  <p className="text-center flex flex-col">
+                    <span className="font-medium whitespace-nowrap">
+                      Katılım
+                    </span>
+                    <span className="font-semibold text-lg">
+                      {campaign.participation}
+                    </span>
+                  </p>
+                  <p className="text-center flex flex-col">
+                    <span className="font-medium whitespace-nowrap">
+                      Kalan Miktar
+                    </span>
+                    <span className="font-semibold text-lg">
+                      {campaign.remaining_amount}
+                    </span>
+                  </p>
+                  <p className="text-center flex flex-col text-green-600">
+                    <span className="font-medium whitespace-nowrap">
+                      Toplam kar
+                    </span>
+                    <span className="font-semibold text-lg">
+                      {campaign.after.net - campaign.before.net} TL
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row gap-24 items-center">
+            <div className="space-y-2">
+              <h6 className="font-bold">Kampanya Öncesi</h6>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Fiyat</p>
+                <p>{campaign.before.price} TL</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Dakika</p>
+                <p>{campaign.before.minute} dk</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Komisyon</p>
+                <p>{campaign.before.commission} TL</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Vergi</p>
+                <p>{campaign.before.tax} TL</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Net</p>
+                <p>{campaign.before.net} TL</p>
+              </div>
+            </div>
+            <IoIosArrowForward
+              className="rotate-90 md:rotate-0 min-w-8 min-h-8 text-slate-400"
+              size={28}
+            />
+            <div className="space-y-2">
+              <h6 className="font-bold">Kampanya Sonrası</h6>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Fiyat</p>
+                <p>{campaign.after.price} TL</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Dakika</p>
+                <p>{campaign.after.minute} dk</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Komisyon</p>
+                <p>{campaign.after.commission} TL</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Vergi</p>
+                <p>{campaign.after.tax} TL</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="font-medium">Net</p>
+                <p>{campaign.after.net} TL</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <Button
+              variant="outline"
+              className=" hover:bg-premiumOrangeBg hover:border-premiumOrange hover:text-white hover:scale-[1.02] active:scale-100  transition-all duration-200"
+            >
+              Kampanyaya Katıl
+            </Button>
+          </div>
         </div>
       </div>
     </div>
