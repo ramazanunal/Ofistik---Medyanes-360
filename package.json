@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.3",
+    "@appbuilder/react": "file:react-sdk/appbuilder-react-3.0.7-JL65EY2KyK.tgz",
     "@chakra-ui/react": "^2.8.2",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
@@ -51,6 +53,7 @@
     "lucide-react": "^0.303.0",
     "moment-timezone": "^0.5.43",
     "mongodb": "^6.1.0",
+    "nanoid": "^4.0.2",
     "next": "^13.5.6",
     "next-auth": "^4.24.3",
     "nodemailer": "^6.9.8",
@@ -63,7 +66,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
     "react-modal": "^3.16.1",
-    "react-router-dom": "^6.20.1",
+    "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "react-time-picker": "^6.6.0",
     "react-timeit": "^1.2.12",

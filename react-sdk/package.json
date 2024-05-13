@@ -1,0 +1,13 @@
+{
+  "name": "@appbuilder/react",
+  "version": "3.0.7-JL65EY2KyK",
+  "private": true,
+  "main": "index.js",
+  "types": "index.d.ts",
+  "peerDependencies": {
+    "@apollo/client": "^3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.1"
+  }
+}
