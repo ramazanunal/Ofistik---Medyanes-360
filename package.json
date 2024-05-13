@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.3",
-    "@appbuilder/react": "file:react-sdk/appbuilder-react-3.0.7-JL65EY2KyK.tgz",
+    "@appbuilder/react": "file:appbuilder-react-3.0.7-XWpXe3h1dR.tgz",
     "@chakra-ui/react": "^2.8.2",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
@@ -85,6 +85,7 @@
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "prisma": "^5.8.1",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "webpack": "^5.91.0"
   }
 }
