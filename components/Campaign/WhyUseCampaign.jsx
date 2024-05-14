@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import IconComponent from "../mainAdvertPage/iconComponent";
-import AdvertTypes from "../advertTypes/advertTypes";
+import AdvertTypes from "./advertTypes";
 import Image from "next/image";
 
 function WhyUseCampaign() {
