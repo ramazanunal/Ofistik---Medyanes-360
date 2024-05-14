@@ -154,26 +154,6 @@ const AdvertTypes = ({ isOpen, onClose }) => {
                       "Bireysel olarak randevularınızı ve kazancınızı arttırmak için oluşturduğunuz kampanya modelidir.",
                     ]}
                     q2={[
-                      "Görsel ve video içeriklerle kendinizi ve yaptığınız işi tanıtabilirsiniz. ",
-                      "Yaptığınız iş görsele dayalı ise reklam ile yaptığınız işleri öne çıkartarak referans olarak kullanabilirsiniz.",
-                      "Gönderilerinizin tıklanması ile profil trafiğinizi ve takipçi sayınızı arttırabilirsiniz.",
-                      "Artan profil trafiğinizle birlikte isim bilinirliğinizi arttırabilir,hizmet alanlar ile etkileşime girebilirsiniz.",
-                      "Ofistik reklam algoritması sayesinde verdiğiniz hizmet grubu için arama yapan ve hizmet verme olasılığınız yüksek olan doğru hedef kitleyi yakalarsınız.",
-                      "Verdiğiniz reklamların performansını kolaylıkla takipo edip reklam verimliliğinizi arttırabilirsiniz.",
-                    ]}
-                    q3={["Ofistik anasayfası", "Sosyal medya keşfet sayfası"]}
-                    q4={[
-                      "Gönderi reklamından etkili şekilde faydalanmak için gönderinizin kalitesinden,açıklama kısmının yeterli ve dikkat çekici olduğundan emin olun.",
-                    ]}
-                  />
-                )}
-                {activeLink === 1 && (
-                  <AdvertTypeModule
-                    img={"/img/plan3.png"}
-                    q1={[
-                      "Profilinizi ön plana çıkartarak etkileşiminizi arttırmak için uygulanan reklam modelidir.",
-                    ]}
-                    q2={[
                       "Profiliniz kampanyalı profil görünümüne kavuşur ve hizmet alanların dikkatini çekerek,trafiğinizi arttırırsınız.",
                       "Oluşturduğunuz kampanya ile rakiplerinizin önüne geçme şansınız artar.",
                       "İsim bilinirliğiniz artar ve tercih edilme sıralamasında üst sıralara çıkarsınız.",
@@ -185,6 +165,23 @@ const AdvertTypes = ({ isOpen, onClose }) => {
                     ]}
                     q4={[
                       "Bireysel kampanyadan etkili şekilde faydalanmak için profilinizin tüm bölümlerinin yeterince dolu ve açıklayıcı olduğundan emin olun.",
+                    ]}
+                  />
+                )}
+                {activeLink === 1 && (
+                  <AdvertTypeModule
+                    img={"/img/plan3.png"}
+                    q1={[
+                      "Ofistik tarafından belli bir hedef kitleye ulaşmak için ve dönemsel olarak hizmet satışını arttırmak amacı ile yapılan kampanya modelidir.",
+                    ]}
+                    q2={[
+                      "Ofistik kampanyalarını duyurmak için geniş bir reklam çalışması yapar.Bu sayede kampanyaya katılan hizmet verenlerin görünürlüğü ve ziyaret trafiği artar.",
+                      "Artan profil trafiğinizle birlikte isim bilinirliğinizi arttırabilir,hizmet alanlar ile etkileşime girebilirsiniz.",
+                      "Kampanyalara katılarak sektörel rakiplerinizin önüne geçip fiyat rekabeti sağlayarsınız.",
+                    ]}
+                    q3={["Ofistik Anasayfa", "Profil", "Mini Profil"]}
+                    q4={[
+                      "Profil reklamından etkili şekilde faydalanmak için profilinizin tüm bölümlerinin yeterince dolu ve açıklayıcı olduğundan emin olun. ",
                     ]}
                   />
                 )}
