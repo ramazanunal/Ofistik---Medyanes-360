@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.3",
-    "@appbuilder/react": "file:appbuilder-react-3.0.7-XWpXe3h1dR.tgz",
+    "@appbuilder/react": "file:appbuilder-react-3.0.7-7I7XGV9d8h.tgz",
     "@chakra-ui/react": "^2.8.2",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
