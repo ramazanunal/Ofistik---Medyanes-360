@@ -152,13 +152,14 @@ function Page() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex flex-col gap-4">
             <div className="flex gap-6">
-              <Image
-                src={campaign.img}
-                alt="campaign"
-                width={300}
-                height={300}
-                className="w-full h-full rounded-md"
-              />
+              <div className="relative w-[300px] h-[250px]">
+                <Image
+                  src={campaign.img}
+                  alt="campaign"
+                  fill
+                  className="w-full h-full rounded-md object-cover"
+                />
+              </div>
               <div className="">
                 <h1 className="text-2xl font-bold whitespace-nowrap mb-4">
                   {campaign.name}
@@ -180,24 +181,16 @@ function Page() {
                       {campaign.remaining_amount}
                     </span>
                   </p>
-                  <p className="text-center flex flex-col text-green-600">
-                    <span className="font-medium whitespace-nowrap">
-                      Toplam kar
-                    </span>
-                    <span className="font-semibold text-lg">
-                      {campaign.after.net - campaign.before.net} TL
-                    </span>
-                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row gap-24 items-center">
+          <div className="flex flex-col lg:flex-row gap-12 items-center">
             <div className="space-y-2">
               <h6 className="font-bold">Kampanya Öncesi</h6>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Fiyat</p>
-                <p>{campaign.before.price} TL</p>
+                <p>{campaign.before.price} ₺</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Dakika</p>
@@ -205,15 +198,15 @@ function Page() {
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Komisyon</p>
-                <p>{campaign.before.commission} TL</p>
+                <p>{campaign.before.commission} ₺</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Vergi</p>
-                <p>{campaign.before.tax} TL</p>
+                <p>{campaign.before.tax} ₺</p>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between font-semibold">
                 <p className="font-medium">Net</p>
-                <p>{campaign.before.net} TL</p>
+                <p>{campaign.before.net} ₺</p>
               </div>
             </div>
             <IoIosArrowForward
@@ -224,7 +217,7 @@ function Page() {
               <h6 className="font-bold">Kampanya Sonrası</h6>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Fiyat</p>
-                <p>{campaign.after.price} TL</p>
+                <p>{campaign.after.price} ₺</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Dakika</p>
@@ -232,15 +225,15 @@ function Page() {
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Komisyon</p>
-                <p>{campaign.after.commission} TL</p>
+                <p>{campaign.after.commission} ₺</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-medium">Vergi</p>
-                <p>{campaign.after.tax} TL</p>
+                <p>{campaign.after.tax} ₺</p>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between font-semibold">
                 <p className="font-medium">Net</p>
-                <p>{campaign.after.net} TL</p>
+                <p>{campaign.after.net} ₺</p>
               </div>
             </div>
           </div>
@@ -249,7 +242,7 @@ function Page() {
             <button
               onClick={() => alert("Kampanyaya katıldınız")}
               className={cn(
-                " hover:bg-premiumOrangeBg hover:border-premiumOrange hover:text-white hover:scale-[1.02] active:scale-100  transition-all duration-200 border px-2 py-1 rounded-sm border-premiumOrange text-premiumOrange font-semibold"
+                " hover:bg-green-500  ml-10 hover:text-white hover:scale-[1.02] active:scale-100  transition-all duration-200 border px-2 py-1 rounded-sm border-green-500 text-green-500 font-semibold"
               )}
             >
               Kampanyaya Katıl
