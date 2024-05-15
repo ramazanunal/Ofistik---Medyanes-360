@@ -2,7 +2,7 @@ const { RtcTokenBuilder, RtcRole } = require("agora-token");
 
 export default async function agoraTokenHandler(req, res) {
   if (req.method === "GET") {
-    const { channelName, uid, userAccount } = req.query;
+    const { channelName, uid } = req.query;
     if (!uid || uid === "") {
       return res.status(400).json({ error: "uid is required" });
     }
@@ -13,27 +13,16 @@ export default async function agoraTokenHandler(req, res) {
     const appId = process.env.NEXT_PUBLIC_AGORA_APP_ID;
     const appCertificate = process.env.NEXT_PUBLIC_AGORA_APP_CERTIFICATE;
     const role = RtcRole.PUBLISHER;
-    console.log("uid", uid);
-    console.log("uid", process.env.NEXT_PUBLIC_AGORA_APP_ID);
     const expirationTimeInSeconds = 3600;
-    if (!appId || appId === "" || !appCertificate || appCertificate === "") {
-      return res
-        .status(400)
-        .json({ error: "Agora appId or credentials are required" });
-    }
-
     const currentTimestamp = Math.floor(Date.now() / 1000);
-
     const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds;
 
-    // Build token with uid
     const tokenA = RtcTokenBuilder.buildTokenWithUid(
       appId,
       appCertificate,
       channelName,
       uid,
       role,
-      expirationTimeInSeconds,
       privilegeExpiredTs
     );
 
