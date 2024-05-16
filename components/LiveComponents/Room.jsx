@@ -50,7 +50,7 @@ function Room({ channel = "deneme" }) {
         window.removeEventListener("beforeunload", leaveRoom);
       };
     }
-  }, []);
+  }, [window]);
 
   useEffect(() => {
     // Check if username exists in sessionStorage

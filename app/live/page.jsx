@@ -8,7 +8,10 @@ function Page() {
   const router = useRouter();
 
   const [roomLogin, setRoomLogin] = useState({
-    username: sessionStorage.getItem("username") || "",
+    username:
+      typeof window !== "undefined"
+        ? sessionStorage.getItem("username") || ""
+        : "",
     roomName: "",
   });
   const [token, setToken] = useState("");
@@ -20,7 +23,10 @@ function Page() {
 
   const handleRoomSubmit = async (e) => {
     e.preventDefault();
-    sessionStorage.setItem("username", String(roomLogin.username));
+
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("username", String(roomLogin.username));
+    }
 
     try {
       const response = await getAPI(
