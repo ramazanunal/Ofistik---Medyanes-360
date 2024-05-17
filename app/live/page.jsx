@@ -46,77 +46,77 @@ function Page() {
 
   return (
     <>
-      {showCreateRoom && (
-        <div className="fixed z-20 w-screen h-screen top-0 left-0 flex items-center justify-center bg-slate-800/50">
-          <div className="w-[98vw] h-auto max-h-screen overflow-y-auto border border-orange-500 bg-slate-900 rounded-lg md:w-[500px] md:h-[400px]">
-            <div className="py-3 bg-slate-800 flex items-center justify-between">
-              <b className="text-lg w-[70%] text-end font-bold">
-                Toplantı Başlat
-              </b>
-              <b className="w-[30%] pe-2 text-end">
-                <span onClick={closeRoomModal} className="cursor-pointer">
-                  X
-                </span>
-              </b>
-            </div>
-            <form
-              onSubmit={handleRoomSubmit}
-              className="px-6 py-10 flex flex-col gap-4"
-            >
-              <div className="flex w-full flex-col gap-2">
-                <label htmlFor="name">İsminiz</label>
-                <input
-                  type="text"
-                  className="h-[44px] bg-slate-800 rounded-lg p-3 focus:outline-none focus:border focus:border-orange-500"
-                  value={roomLogin.username}
-                  onChange={(e) =>
-                    setRoomLogin((prev) => ({
-                      ...prev,
-                      username: e.target.value,
-                    }))
-                  }
-                  required
-                />
-              </div>
-              <div className="flex w-full flex-col gap-2">
-                <label htmlFor="roomName">Oda Numaranız</label>
-                <input
-                  type="text"
-                  className="h-[44px] bg-slate-800 rounded-lg p-3 focus:outline-none focus:border focus:border-orange-500"
-                  value={roomLogin.roomName}
-                  onChange={(e) =>
-                    setRoomLogin((prev) => ({
-                      ...prev,
-                      roomName: e.target.value,
-                    }))
-                  }
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="mt-3 rounded-md bg-orange-500 px-3 py-3 font-bold"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to right, #ff8c00, #ff2f96)",
-                }}
-              >
-                Başlat
-              </button>
-            </form>
+      <div className="w-screen h-screen top-0 left-0 flex flex-col items-center justify-center bg-gray-100">
+        <div className="titleArea m-5">
+          <h1 className="text-xl lg:text-3xl text-center text-premiumOrange font-bold">
+            Ofistik Randevu Servisi
+          </h1>
+        </div>
+        <div className=" h-auto max-h-screen overflow-y-auto bg-gray-50 rounded-3xl md:w-[500px] md:h-[400px] mx-8 lg:mx-0">
+          <div className="py-3 bg-gray flex items-center justify-center">
+            <h1 className="lg:text-xl text-md text-center font-semibold text-gray-600 mt-3">
+              Toplantı Oluştur
+            </h1>
           </div>
-        </div>
-      )}
-      {token && (
-        <div className="m-10 w-96 flex flex-wrap">
-          <a
-            href={`/live/${channel}?token=${token}&uid=${uid}`}
-            className="text-sm "
+          <form
+            onSubmit={handleRoomSubmit}
+            className="px-6 py-3 flex flex-col gap-4"
           >
-            {`${process.env.NEXT_PUBLIC_URL}/live/${channel}?token=${token}&uid=${uid}`}
-          </a>
+            <div className="flex w-full flex-col gap-2">
+              <label
+                htmlFor="name"
+                className="text-gray-600 font-semibold text-sm lg:text-base"
+              >
+                İsminiz
+              </label>
+              <input
+                type="text"
+                className="h-[44px] bg-gray-100 rounded-xl p-5 focus:outline-none"
+                value={roomLogin.username}
+                onChange={(e) =>
+                  setRoomLogin((prev) => ({
+                    ...prev,
+                    username: e.target.value,
+                  }))
+                }
+                required
+              />
+            </div>
+            <div className="flex w-full flex-col gap-2">
+              <label
+                htmlFor="roomName"
+                className="text-gray-600 font-semibold text-sm lg:text-base"
+              >
+                Oda İsmi
+              </label>
+              <input
+                type="text"
+                className="h-[44px] bg-gray-100 rounded-xl p-5 focus:outline-none"
+                value={roomLogin.roomName}
+                onChange={(e) =>
+                  setRoomLogin((prev) => ({
+                    ...prev,
+                    roomName: e.target.value,
+                  }))
+                }
+                required
+              />
+              <div className="flex items-center justify-start ml-1 mt-2">
+                <i class="fa-solid fa-circle-exclamation text-red-600 text-sm mr-2"></i>
+                <h1 className="warningText text-red-600 text-sm">
+                  Müşteriniz belirtilen oda ismi ile randevunuza katılacaktır.
+                </h1>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="mt-3 text-md lg:text-base rounded-2xl bg-premiumOrange text-white px-3 py-3 font-semibold hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500"
+            >
+              Başlat
+            </button>
+          </form>
         </div>
-      )}
+      </div>
     </>
   );
 }

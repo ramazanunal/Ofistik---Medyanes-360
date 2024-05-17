@@ -9,55 +9,33 @@ import Participants from "./Participants";
 import LiveChat from "./LiveChat";
 
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
+const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
-// Main Component
 function Room({ channel = "deneme" }) {
   const router = useRouter();
+  const screenShareRef = useRef();
 
-  const [shareClient, setShareClient] = useState(null); // State to store the fetched token
-  const [TOKEN, setToken] = useState(null); // State to store the fetched token
-
-  useEffect(() => {
-    const fetchToken = async () => {
-      try {
-        const response = await getAPI(`/agora?channelName=${channel}`);
-        console.log(response);
-        const fetchedToken = response.token;
-        setToken(fetchedToken); // Set the fetched token in the state
-      } catch (error) {
-        console.error("Error fetching token:", error);
-      }
-    };
-
-    if (!TOKEN) {
-      fetchToken();
-    }
-  }, [channel, TOKEN]); // Fetch token whenever channel or token changes
+  const [token, setToken] = useState(null);
+  const [joined, setJoined] = useState(false);
+  const [UID, setUID] = useState("");
+  const [users, setUsers] = useState([]);
+  const [localTracks, setLocalTracks] = useState({ audio: "", video: "" });
+  const [screenShare, setScreenShare] = useState({ mode: false, track: "" });
+  const [participants, setParticipants] = useState([]);
+  const [rtmClient, setRtmClient] = useState(null);
+  const [channelRes, setChannelRes] = useState(null);
+  const [totalMembers, setTotalMembers] = useState(0);
+  const [chats, setChats] = useState([]);
+  const [showCtrl, setShowCtrl] = useState({
+    showParticipants: false,
+    showLiveChat: false,
+  });
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-
-      client.on("user-published", handleUserPublished);
-      client.on("user-left", handleUserLeft);
-
-      window.addEventListener("beforeunload", leaveRoom);
-
-      return () => {
-        client.off("user-published", handleUserPublished);
-        client.off("user-left", handleUserLeft);
-
-        window.removeEventListener("beforeunload", leaveRoom);
-      };
-    }
-  }, [window]);
-
-  useEffect(() => {
-    // Check if username exists in sessionStorage
     const displayName = sessionStorage.getItem("username");
     if (!displayName) {
       const displayNamePromptResult = prompt(
-        "You do not have a display name. \nPlease enter your display name for this session."
+        "Toplantıya katılmak için lütfen isminizi giriniz."
       );
       if (!displayNamePromptResult) {
         router.push("/");
@@ -65,14 +43,7 @@ function Room({ channel = "deneme" }) {
         sessionStorage.setItem("username", displayNamePromptResult);
       }
     }
-  }, []);
-
-  const screenShareRef = useRef();
-
-  const [showCtrl, setShowCtrl] = useState({
-    showParticipants: false,
-    showLiveChat: false,
-  });
+  }, [router]);
 
   useEffect(() => {
     if (showCtrl.showParticipants || showCtrl.showLiveChat) {
@@ -82,22 +53,6 @@ function Room({ channel = "deneme" }) {
     }
   }, [showCtrl.showParticipants, showCtrl.showLiveChat]);
 
-  const [localTracks, setLocalTracks] = useState({ audio: "", video: "" });
-
-  const [joined, setJoined] = useState(false);
-  const [UID, setUID] = useState("");
-  const [users, setUsers] = useState([]);
-  const [screenShare, setScreenShare] = useState({
-    elementRef: "",
-    mode: false,
-    track: "",
-  });
-  const [participants, setParticipants] = useState([]);
-  const [rtmClient, setRtmClient] = useState(null);
-  const [channelRes, setChannelRes] = useState(null);
-  const [totalMembers, setTotalMembers] = useState(0);
-  const [chats, setChats] = useState([]);
-
   const updateMemberTotal = async (members) => {
     setTotalMembers(members.length);
   };
@@ -105,34 +60,13 @@ function Room({ channel = "deneme" }) {
   const handleMemberJoined = async (MemberId) => {
     const members = await channelRes.getMembers();
     updateMemberTotal(members);
-
     setParticipants((prev) => [...prev, MemberId]);
-    const { name } = await rtmClient.getUserAttributesByKeys(String(MemberId), [
-      "name",
-    ]);
-    setChats((prev) => [
-      ...prev,
-      {
-        displayName: "🤖 RaveMeet Bot",
-        message: `👋 Welcome to Room 123, ${name}`,
-      },
-    ]);
+    await rtmClient.getUserAttributesByKeys(String(MemberId), ["name"]);
   };
 
   const handleMemberLeft = async (MemberId) => {
-    const nameHTML = document.getElementById(`user-${MemberId}`);
-
     const members = await channelRes.getMembers();
     updateMemberTotal(members);
-
-    setChats((prev) => [
-      ...prev,
-      {
-        displayName: "🤖 RaveMeet Bot",
-        message: `${nameHTML.textContent} left the room 😔.`,
-      },
-    ]);
-
     setParticipants((prev) => prev.filter((id) => id !== MemberId));
   };
 
@@ -143,19 +77,14 @@ function Room({ channel = "deneme" }) {
 
   const getMembers = async (channelResIn) => {
     const members = await channelResIn.getMembers();
-
     updateMemberTotal(members);
-
-    for (let i = 0; i < members.length; i++) {
-      const id = members[i];
-
+    members.forEach((id) => {
       setParticipants((prev) => [...prev, id]);
-    }
+    });
   };
 
   const handleChannelMessage = async (messageData, MemberId) => {
     let data = JSON.parse(messageData.text);
-
     if (data.type === "chat") {
       setChats((prev) => [
         ...prev,
@@ -166,56 +95,31 @@ function Room({ channel = "deneme" }) {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
-    if (joined === true) {
+    if (joined) {
       const displayName = sessionStorage.getItem("username");
-
       let message = e.target.message.value;
-      channelRes.sendMessage({
-        text: JSON.stringify({
-          type: "chat",
-          message: message,
-          displayName: displayName,
-        }),
+      await channelRes.sendMessage({
+        text: JSON.stringify({ type: "chat", message, displayName }),
       });
-      setChats((prev) => [
-        ...prev,
-        { displayName: displayName, message: message },
-      ]);
+      setChats((prev) => [...prev, { displayName, message }]);
     } else {
       alert("You must join the room first");
     }
-
     e.target.reset();
   };
 
   const initRTM = async (uid) => {
     try {
       let rtmClientIn = AgoraRTM.createInstance(APP_ID);
-      await rtmClientIn.login({ uid: String(uid), token: TOKEN });
-
+      await rtmClientIn.login({ uid: String(uid), token });
       await rtmClientIn.addOrUpdateLocalUserAttributes({
         name: sessionStorage.getItem("username"),
       });
-
       let channelResIn = rtmClientIn.createChannel(channel);
       await channelResIn.join();
-
-      await Promise.all([
-        setChannelRes(channelResIn),
-        setRtmClient(rtmClientIn),
-      ]);
-
-      const { name } = await rtmClientIn.getUserAttributesByKeys(String(uid), [
-        "name",
-      ]);
-      setChats((prev) => [
-        ...prev,
-        {
-          displayName: "🤖 RaveMeet Bot",
-          message: `👋 Welcome to Room 123, ${name}`,
-        },
-      ]);
+      setChannelRes(channelResIn);
+      setRtmClient(rtmClientIn);
+      await rtmClientIn.getUserAttributesByKeys(String(uid), ["name"]);
     } catch (err) {
       console.error("Failed to initialize RTM:", err);
     }
@@ -226,41 +130,28 @@ function Room({ channel = "deneme" }) {
       channelRes.on("MemberJoined", handleMemberJoined);
       channelRes.on("MemberLeft", handleMemberLeft);
       channelRes.on("ChannelMessage", handleChannelMessage);
-
       getMembers(channelRes);
     }
   }, [channelRes, rtmClient]);
 
   const joinRoom = async () => {
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.ERROR);
-
-    const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-    setShareClient(client);
-    client
-      .join(APP_ID, channel, TOKEN, null)
-      .then((uid) => {
-        console.log(uid);
-        setUID(uid);
-        return Promise.all([AgoraRTC.createMicrophoneAndCameraTracks(), uid]);
-      })
-      .then(([tracks, uid]) => {
-        const [audioTrack, videoTrack] = tracks;
-        setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
-        client.publish(tracks);
-        setLocalTracks({ audio: audioTrack, video: videoTrack });
-
-        setJoined(true);
-
-        initRTM(uid);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const uid = await client.join(APP_ID, channel, token, null);
+      setUID(uid);
+      const [audioTrack, videoTrack] =
+        await AgoraRTC.createMicrophoneAndCameraTracks();
+      setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
+      client.publish([audioTrack, videoTrack]);
+      setLocalTracks({ audio: audioTrack, video: videoTrack });
+      setJoined(true);
+      initRTM(uid);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleUserPublished = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
-
     if (mediaType === "video") {
       setUsers((prev) => [...prev, user]);
     }
@@ -273,96 +164,81 @@ function Room({ channel = "deneme" }) {
   const handleScreenShare = async () => {
     const screenShareBtn = document.getElementById("screen-share");
     const camera = document.getElementById("camera");
-    const client = shareClient;
     if (!screenShare.mode) {
-      setScreenShare((prev) => ({ ...prev, mode: true }));
-
-      screenShareBtn.classList.add("bg-orange-800");
-      camera.classList.add("hidden");
-
-      const screenShareTrack = await AgoraRTC.createScreenVideoTrack();
-
-      // Unpublish video track
-      await client.unpublish(localTracks.video);
-
-      setUsers((prev) =>
-        prev.map((user) => {
-          if (user.uid === UID) {
-            return {
-              ...user,
-              videoTrack: undefined, // unset videoTrack when sharing screen
-              screenShareTrack: screenShareTrack, // set screenShareTrack
-            };
-          }
-          return user;
-        })
-      );
-
-      // Publish screen share track
-      await client.publish(screenShareTrack);
-
-      // Play the screen share track
-      screenShareTrack.play(screenShareRef.current);
-
-      // Make the screenShare div visible
-      screenShareRef.current.classList.remove("hidden");
-    } else {
-      setScreenShare((prev) => ({ ...prev, mode: false }));
-
-      screenShareBtn.classList.remove("bg-orange-800");
-      camera.classList.remove("hidden");
-
-      setUsers((prev) =>
-        prev.map((user) => {
-          if (user.uid === UID) {
-            return {
-              ...user,
-              videoTrack: localTracks.video, // set videoTrack when not sharing screen
-              screenShareTrack: undefined, // unset screenShareTrack
-            };
-          }
-          return user;
-        })
-      );
-
-      // Unpublish screen share track
-      users.forEach((user) => {
-        if (user.screenShareTrack) {
-          client.unpublish(user.screenShareTrack);
-          user.screenShareTrack.stop();
+      try {
+        setScreenShare((prev) => ({ ...prev, mode: true }));
+        screenShareBtn.classList.add("bg-orange-800");
+        camera.classList.add("hidden");
+        const screenShareTrack = await AgoraRTC.createScreenVideoTrack();
+        if (localTracks.video) {
+          await client.unpublish(localTracks.video);
         }
-      });
-
-      // Publish video track
-      await client.publish(localTracks.video);
-
-      // Make the screenShare div hidden
-      screenShareRef.current.classList.add("hidden");
+        setUsers((prev) =>
+          prev.map((user) => {
+            if (user.uid === UID) {
+              return { ...user, videoTrack: undefined, screenShareTrack };
+            }
+            return user;
+          })
+        );
+        await client.publish(screenShareTrack);
+        screenShareTrack.play(screenShareRef.current);
+        setScreenShare((prev) => ({ ...prev, track: screenShareTrack }));
+        screenShareRef.current.classList.remove("hidden");
+      } catch (error) {
+        console.error("Error starting screen share:", error);
+      }
+    } else {
+      try {
+        setScreenShare((prev) => ({ ...prev, mode: false }));
+        screenShareBtn.classList.remove("bg-orange-800");
+        camera.classList.remove("hidden");
+        setUsers((prev) =>
+          prev.map((user) => {
+            if (user.uid === UID) {
+              return {
+                ...user,
+                videoTrack: localTracks.video,
+                screenShareTrack: undefined,
+              };
+            }
+            return user;
+          })
+        );
+        if (screenShare.track) {
+          await client.unpublish(screenShare.track);
+          screenShare.track.stop();
+        }
+        if (localTracks.video) {
+          await client.publish(localTracks.video);
+        }
+        screenShareRef.current.classList.add("hidden");
+      } catch (error) {
+        console.error("Error stopping screen share:", error);
+      }
     }
   };
 
   useEffect(() => {
-    const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-
     client.on("user-published", handleUserPublished);
     client.on("user-left", handleUserLeft);
-
     window.addEventListener("beforeunload", leaveRoom);
-
     return () => {
       client.off("user-published", handleUserPublished);
       client.off("user-left", handleUserLeft);
-
       window.removeEventListener("beforeunload", leaveRoom);
     };
   }, []);
-
+  console.log(users);
   return (
     <div className="h-screen overflow-y-auto">
-      <nav className="relative bg-slate-900 border-b border-slate-950 flex items-center justify-between h-[10vh] px-4 lg:px-8">
-        <b className="text-2xl cursor-pointer">RM ID -</b>
+      <nav className="relative bg-gray-200  flex items-center justify-between h-[10vh] px-4 lg:px-8">
+        <b className="text-2xl cursor-pointer text-gray-600">{channel}</b>
+        <b className="text-3xl cursor-pointer text-premiumOrange font-bold">
+          Ofistik
+        </b>
         <button
-          className="rounded-md bg-red-500 px-3 py-1.5 font-bold"
+          className="rounded-xl bg-premiumOrange px-8 py-3 text-gray-100 font-bold"
           onClick={async () => {
             joined && (await leaveRoom());
             router.push("/");
