@@ -1,8 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import VideoPlayer from "./VideoPlayer";
 import "./style.css";
-import Image from "next/image";
-import user from "../../assets/icons/userForLive.png";
+import WhiteBoardMain from "./whiteBoardMain";
+
 const MainScreen = memo(
   ({
     joined,
@@ -11,16 +11,44 @@ const MainScreen = memo(
     localTracks,
     handleScreenShare,
     users,
+    handleWhiteBoardShare,
+    whiteBoardShareRef,
     UID,
     screenShareRef,
+    roomToken,
+    uuid,
   }) => {
-    console.log(users);
+    const [whiteboardOpen, setWhiteboardOpen] = useState(false);
+
+    const openWhiteboard = () => {
+      setWhiteboardOpen(true);
+    };
+
+    const closeWhiteboard = () => {
+      setWhiteboardOpen(false);
+    };
+
+    const stringUid = UID.toString();
+
     return (
       <div
         id="video-holder"
         className="relative h-[90vh] overflow-y-auto w-full flex flex-wrap justify-center p-2 gap-4 lg:p-4 lg:w-[65vw] bg-gray-200"
       >
         {/* Share Screen */}
+        {roomToken &&
+          UID &&
+          uuid &&
+          whiteboardOpen && ( // Whiteboard açık olduğunda göster
+            <div className="whiteBoard">
+              <WhiteBoardMain
+                roomToken={roomToken}
+                uid={stringUid}
+                uuid={uuid}
+                whiteBoardShareRef={whiteBoardShareRef}
+              />
+            </div>
+          )}
         <div
           ref={screenShareRef}
           id="share-screen"
@@ -33,19 +61,46 @@ const MainScreen = memo(
             <VideoPlayer key={user.uid} user={user} UID={UID} />
           ))}
         </div>
-
         {/* Join Stream */}
         <div className="w-full fixed bg-slate-300/10 py-2 z-10 bottom-0 flex justify-center">
           {joined === true ? (
             <div className="flex items-center justify-center gap-4">
+              {/* Whiteboard açma/kapatma butonu */}
+              <div id="whiteBoard">
+                <button
+                  onClick={() => {
+                    handleWhiteBoardShare();
+                    if (whiteboardOpen) {
+                      closeWhiteboard();
+                    } else {
+                      openWhiteboard();
+                    }
+                  }}
+                  className={`p-2 whiteBoardButton rounded-md cursor-pointer bg-premiumOrange text-white hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500 ${
+                    whiteboardOpen ? "bg-premiumOrange" : ""
+                  }`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                  </svg>
+                </button>
+              </div>
+              {/* Kamera Butonu */}
               <div
                 id="camera"
-                className={`p-2 rounded-md cursor-pointer bg-premiumOrange text-white`}
+                className={`p-2 rounded-md cursor-pointer bg-premiumOrange text-white hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500`}
                 onClick={async () => {
                   const camera = document.getElementById("camera");
                   const videoDiv =
                     document.getElementsByClassName("videoPlayer");
-                  console.log(videoDiv);
                   if (localTracks.video.muted) {
                     await localTracks.video.setMuted(false);
                     camera.classList.add("bg-orange-800");
@@ -80,6 +135,7 @@ const MainScreen = memo(
                   />
                 </svg>
               </div>
+              {/* Mikrofon Butonu */}
               <div
                 id="mic"
                 className="p-2 rounded-xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500"
@@ -110,6 +166,7 @@ const MainScreen = memo(
                   />
                 </svg>
               </div>
+              {/* Ekran Paylaş Butonu */}
               <div
                 id="screen-share"
                 className={`rounded-xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500 p-2`}

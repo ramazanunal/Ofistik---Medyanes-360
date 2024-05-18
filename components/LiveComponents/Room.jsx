@@ -7,20 +7,27 @@ import AgoraRTM from "agora-rtm-sdk";
 import MainScreen from "./MainScreen";
 import Participants from "./Participants";
 import LiveChat from "./LiveChat";
-
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 function Room({ channel = "deneme" }) {
   const router = useRouter();
   const screenShareRef = useRef();
-
+  const whiteBoardShareRef = useRef();
   const [token, setToken] = useState(null);
   const [joined, setJoined] = useState(false);
   const [UID, setUID] = useState("");
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState({ audio: "", video: "" });
+  const [localTracksWhiteBoard, setLocalTracksWhiteBoard] = useState({
+    audio: "",
+    video: "",
+  });
   const [screenShare, setScreenShare] = useState({ mode: false, track: "" });
+  const [whiteBoardShare, setWhiteBoardShare] = useState({
+    mode: false,
+    track: "",
+  });
   const [participants, setParticipants] = useState([]);
   const [rtmClient, setRtmClient] = useState(null);
   const [channelRes, setChannelRes] = useState(null);
@@ -170,9 +177,9 @@ function Room({ channel = "deneme" }) {
         screenShareBtn.classList.add("bg-orange-800");
         camera.classList.add("hidden");
         const screenShareTrack = await AgoraRTC.createScreenVideoTrack();
-        if (localTracks.video) {
-          await client.unpublish(localTracks.video);
-        }
+        // if (localTracks.video) {
+        //   await client.unpublish(localTracks.video);
+        // }
         setUsers((prev) =>
           prev.map((user) => {
             if (user.uid === UID) {
@@ -219,6 +226,65 @@ function Room({ channel = "deneme" }) {
     }
   };
 
+  const handleWhiteBoardShare = async () => {
+    const whiteBoardShareBtn = document.getElementById("white-board");
+    const whiteButton = document.getElementById("whiteBoard");
+    if (!whiteBoardShare.mode) {
+      try {
+        setWhiteBoardShare((prev) => ({ ...prev, mode: true }));
+        whiteBoardShareBtn.classList.add("bg-orange-800");
+        whiteButton.classList.add("hidden");
+        const screenShareTrack = await AgoraRTC.createScreenVideoTrack();
+        if (localTracksWhiteBoard.video) {
+          await client.unpublish(localTracksWhiteBoard.video);
+        }
+        setUsers((prev) =>
+          prev.map((user) => {
+            if (user.uid === UID) {
+              return { ...user, videoTrack: undefined, screenShareTrack };
+            }
+            debugger;
+            return user;
+          })
+        );
+        await client.publish(screenShareTrack);
+        screenShareTrack.play(whiteBoardShareRef.current);
+        setWhiteBoardShare((prev) => ({ ...prev, track: screenShareTrack }));
+        whiteBoardShareRef.current.classList.remove("hidden");
+      } catch (error) {
+        console.error("Error starting screen share:", error);
+      }
+    } else {
+      try {
+        setWhiteBoardShare((prev) => ({ ...prev, mode: false }));
+        whiteBoardShareBtn.classList.remove("bg-orange-800");
+        whiteButton.classList.remove("hidden");
+        setUsers((prev) =>
+          prev.map((user) => {
+            if (user.uid === UID) {
+              return {
+                ...user,
+                videoTrack: localTracksWhiteBoard.video,
+                screenShareTrack: undefined,
+              };
+            }
+            return user;
+          })
+        );
+        if (whiteBoardShare.track) {
+          await client.unpublish(whiteBoardShare.track);
+          whiteBoardShare.track.stop();
+        }
+        if (localTracks.video) {
+          await client.publish(localTracks.video);
+        }
+        whiteBoardShareRef.current.classList.add("hidden");
+      } catch (error) {
+        console.error("Error stopping screen share:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     client.on("user-published", handleUserPublished);
     client.on("user-left", handleUserLeft);
@@ -229,16 +295,73 @@ function Room({ channel = "deneme" }) {
       window.removeEventListener("beforeunload", leaveRoom);
     };
   }, []);
+
+  const [roomToken, setRoomToken] = useState(null);
+  const [uuid, setUuid] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const config = {
+          method: "POST",
+          headers: {
+            token:
+              "NETLESSSDK_YWs9c2ZnWVU0VWF5UGxOS3ktWSZleHBpcmVBdD02MTcxNjAzOTM1OTkyMSZub25jZT05MDMxMTIxMC0xNTFiLTExZWYtYTQzNy04ZDUyNzM4MTAzNTQmcm9sZT0wJnNpZz01OGQ3ZjYwOGEwYTA1MjhmNzg2MjU2N2VjOThlMGVkYTMyMGQ5OWE2YjM2ZmEzYTNkOThmMTU3NTg1ODdiZjQy",
+            "Content-Type": "application/json",
+            region: "us-sv",
+          },
+          body: JSON.stringify({}),
+        };
+        const config1 = {
+          method: "POST",
+          headers: {
+            token:
+              "NETLESSSDK_YWs9c2ZnWVU0VWF5UGxOS3ktWSZleHBpcmVBdD02MTcxNjAzOTM1OTkyMSZub25jZT05MDMxMTIxMC0xNTFiLTExZWYtYTQzNy04ZDUyNzM4MTAzNTQmcm9sZT0wJnNpZz01OGQ3ZjYwOGEwYTA1MjhmNzg2MjU2N2VjOThlMGVkYTMyMGQ5OWE2YjM2ZmEzYTNkOThmMTU3NTg1ODdiZjQy",
+            "Content-Type": "application/json",
+            region: "us-sv",
+          },
+          body: JSON.stringify({ lifespan: 3600000, role: "admin" }),
+        };
+
+        body: JSON.stringify({ lifespan: 3600000, role: "admin" });
+        // Öncelikle odanın UUID'sini alıyoruz
+        const roomResponse = await fetch(
+          "https://api.netless.link/v5/rooms",
+          config
+        );
+
+        const roomData = await roomResponse.json();
+        const roomUUID = roomData.uuid;
+
+        // Oda tokenini oluşturmak için UUID kullanarak bir istek daha yapıyoruz
+        const roomTokenResponse = await fetch(
+          `https://api.netless.link/v5/tokens/rooms/${roomUUID}`,
+          config1
+        );
+        const roomTokenData = await roomTokenResponse.json();
+        const roomToken = roomTokenData;
+        setRoomToken(roomToken);
+        setUuid(roomUUID);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   console.log(users);
   return (
     <div className="h-screen overflow-y-auto">
       <nav className="relative bg-gray-200  flex items-center justify-between h-[10vh] px-4 lg:px-8">
-        <b className="text-2xl cursor-pointer text-gray-600">{channel}</b>
-        <b className="text-3xl cursor-pointer text-premiumOrange font-bold">
+        <b className="text-lg lg:text-2xl cursor-pointer text-gray-600">
+          {channel}
+        </b>
+        <b className="text-xl lg:text-3xl cursor-pointer text-premiumOrange font-bold">
           Ofistik
         </b>
         <button
-          className="rounded-xl bg-premiumOrange px-8 py-3 text-gray-100 font-bold"
+          className="rounded-xl bg-premiumOrange lg:px-8 lg:py-3 px-3 py-1 text-gray-100 font-bold text-sm lg:text-base"
           onClick={async () => {
             joined && (await leaveRoom());
             router.push("/");
@@ -323,6 +446,13 @@ function Room({ channel = "deneme" }) {
           UID={UID}
           screenShareRef={screenShareRef}
           handleScreenShare={() => handleScreenShare(screenShareRef)}
+          whiteBoardShareRef={whiteBoardShareRef}
+          handleWhiteBoardShare={() =>
+            handleWhiteBoardShare(whiteBoardShareRef)
+          }
+          roomToken={roomToken}
+          uid={UID}
+          uuid={uuid}
         />
 
         {/* Live Chat */}
