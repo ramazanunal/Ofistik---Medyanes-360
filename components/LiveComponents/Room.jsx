@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import AgoraRTC from "agora-rtc-sdk-ng";
@@ -13,21 +12,12 @@ const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 function Room({ channel = "deneme" }) {
   const router = useRouter();
   const screenShareRef = useRef();
-  const whiteBoardShareRef = useRef();
   const [token, setToken] = useState(null);
   const [joined, setJoined] = useState(false);
   const [UID, setUID] = useState("");
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState({ audio: "", video: "" });
-  const [localTracksWhiteBoard, setLocalTracksWhiteBoard] = useState({
-    audio: "",
-    video: "",
-  });
   const [screenShare, setScreenShare] = useState({ mode: false, track: "" });
-  const [whiteBoardShare, setWhiteBoardShare] = useState({
-    mode: false,
-    track: "",
-  });
   const [participants, setParticipants] = useState([]);
   const [rtmClient, setRtmClient] = useState(null);
   const [channelRes, setChannelRes] = useState(null);
@@ -78,8 +68,7 @@ function Room({ channel = "deneme" }) {
   };
 
   const leaveRoom = async () => {
-    await channelRes.leave();
-    await rtmClient.logout();
+    router.push("/");
   };
 
   const getMembers = async (channelResIn) => {
@@ -226,65 +215,6 @@ function Room({ channel = "deneme" }) {
     }
   };
 
-  const handleWhiteBoardShare = async () => {
-    const whiteBoardShareBtn = document.getElementById("white-board");
-    const whiteButton = document.getElementById("whiteBoard");
-    if (!whiteBoardShare.mode) {
-      try {
-        setWhiteBoardShare((prev) => ({ ...prev, mode: true }));
-        whiteBoardShareBtn.classList.add("bg-orange-800");
-        whiteButton.classList.add("hidden");
-        const screenShareTrack = await AgoraRTC.createScreenVideoTrack();
-        if (localTracksWhiteBoard.video) {
-          await client.unpublish(localTracksWhiteBoard.video);
-        }
-        setUsers((prev) =>
-          prev.map((user) => {
-            if (user.uid === UID) {
-              return { ...user, videoTrack: undefined, screenShareTrack };
-            }
-            debugger;
-            return user;
-          })
-        );
-        await client.publish(screenShareTrack);
-        screenShareTrack.play(whiteBoardShareRef.current);
-        setWhiteBoardShare((prev) => ({ ...prev, track: screenShareTrack }));
-        whiteBoardShareRef.current.classList.remove("hidden");
-      } catch (error) {
-        console.error("Error starting screen share:", error);
-      }
-    } else {
-      try {
-        setWhiteBoardShare((prev) => ({ ...prev, mode: false }));
-        whiteBoardShareBtn.classList.remove("bg-orange-800");
-        whiteButton.classList.remove("hidden");
-        setUsers((prev) =>
-          prev.map((user) => {
-            if (user.uid === UID) {
-              return {
-                ...user,
-                videoTrack: localTracksWhiteBoard.video,
-                screenShareTrack: undefined,
-              };
-            }
-            return user;
-          })
-        );
-        if (whiteBoardShare.track) {
-          await client.unpublish(whiteBoardShare.track);
-          whiteBoardShare.track.stop();
-        }
-        if (localTracks.video) {
-          await client.publish(localTracks.video);
-        }
-        whiteBoardShareRef.current.classList.add("hidden");
-      } catch (error) {
-        console.error("Error stopping screen share:", error);
-      }
-    }
-  };
-
   useEffect(() => {
     client.on("user-published", handleUserPublished);
     client.on("user-left", handleUserLeft);
@@ -300,54 +230,17 @@ function Room({ channel = "deneme" }) {
   const [uuid, setUuid] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const config = {
-          method: "POST",
-          headers: {
-            token:
-              "NETLESSSDK_YWs9c2ZnWVU0VWF5UGxOS3ktWSZleHBpcmVBdD02MTcxNjAzOTM1OTkyMSZub25jZT05MDMxMTIxMC0xNTFiLTExZWYtYTQzNy04ZDUyNzM4MTAzNTQmcm9sZT0wJnNpZz01OGQ3ZjYwOGEwYTA1MjhmNzg2MjU2N2VjOThlMGVkYTMyMGQ5OWE2YjM2ZmEzYTNkOThmMTU3NTg1ODdiZjQy",
-            "Content-Type": "application/json",
-            region: "us-sv",
-          },
-          body: JSON.stringify({}),
-        };
-        const config1 = {
-          method: "POST",
-          headers: {
-            token:
-              "NETLESSSDK_YWs9c2ZnWVU0VWF5UGxOS3ktWSZleHBpcmVBdD02MTcxNjAzOTM1OTkyMSZub25jZT05MDMxMTIxMC0xNTFiLTExZWYtYTQzNy04ZDUyNzM4MTAzNTQmcm9sZT0wJnNpZz01OGQ3ZjYwOGEwYTA1MjhmNzg2MjU2N2VjOThlMGVkYTMyMGQ5OWE2YjM2ZmEzYTNkOThmMTU3NTg1ODdiZjQy",
-            "Content-Type": "application/json",
-            region: "us-sv",
-          },
-          body: JSON.stringify({ lifespan: 3600000, role: "admin" }),
-        };
-
-        body: JSON.stringify({ lifespan: 3600000, role: "admin" });
-        // Öncelikle odanın UUID'sini alıyoruz
-        const roomResponse = await fetch(
-          "https://api.netless.link/v5/rooms",
-          config
-        );
-
-        const roomData = await roomResponse.json();
-        const roomUUID = roomData.uuid;
-
-        // Oda tokenini oluşturmak için UUID kullanarak bir istek daha yapıyoruz
-        const roomTokenResponse = await fetch(
-          `https://api.netless.link/v5/tokens/rooms/${roomUUID}`,
-          config1
-        );
-        const roomTokenData = await roomTokenResponse.json();
-        const roomToken = roomTokenData;
-        setRoomToken(roomToken);
-        setUuid(roomUUID);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
+    const parts = window.location.href.split("/");
+    const uuidTokenString = parts[parts.length - 3];
+    const roomTokenString = parts[parts.length - 2];
+    const [uuidData] = uuidTokenString
+      .split("/")
+      .map((part) => part.split("=")[1]);
+    const [roomTokenData] = roomTokenString
+      .split("/")
+      .map((part) => part.split("=")[1]);
+    setUuid(uuidData);
+    setRoomToken(roomTokenData);
   }, []);
 
   console.log(users);
@@ -363,9 +256,7 @@ function Room({ channel = "deneme" }) {
         <button
           className="rounded-xl bg-premiumOrange lg:px-8 lg:py-3 px-3 py-1 text-gray-100 font-bold text-sm lg:text-base"
           onClick={async () => {
-            joined && (await leaveRoom());
-            router.push("/");
-            location.reload();
+            router.push("/"); //TOPLANTI BİTTİ SAYFASI YAP
           }}
         >
           Toplantıdan Ayrıl
@@ -446,10 +337,6 @@ function Room({ channel = "deneme" }) {
           UID={UID}
           screenShareRef={screenShareRef}
           handleScreenShare={() => handleScreenShare(screenShareRef)}
-          whiteBoardShareRef={whiteBoardShareRef}
-          handleWhiteBoardShare={() =>
-            handleWhiteBoardShare(whiteBoardShareRef)
-          }
           roomToken={roomToken}
           uid={UID}
           uuid={uuid}

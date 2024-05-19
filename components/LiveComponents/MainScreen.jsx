@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import VideoPlayer from "./VideoPlayer";
 import "./style.css";
 import WhiteBoardMain from "./whiteBoardMain";
@@ -11,15 +11,19 @@ const MainScreen = memo(
     localTracks,
     handleScreenShare,
     users,
-    handleWhiteBoardShare,
-    whiteBoardShareRef,
     UID,
     screenShareRef,
     roomToken,
     uuid,
   }) => {
     const [whiteboardOpen, setWhiteboardOpen] = useState(false);
-
+    const [role, setRole] = useState(false);
+    useEffect(() => {
+      const parts = window.location.href.split("/");
+      const role = parts[parts.length - 1];
+      const [roleData] = role.split("/").map((part) => part.split("=")[1]);
+      setRole(roleData);
+    }, []);
     const openWhiteboard = () => {
       setWhiteboardOpen(true);
     };
@@ -45,7 +49,6 @@ const MainScreen = memo(
                 roomToken={roomToken}
                 uid={stringUid}
                 uuid={uuid}
-                whiteBoardShareRef={whiteBoardShareRef}
               />
             </div>
           )}
@@ -68,8 +71,8 @@ const MainScreen = memo(
               {/* Whiteboard açma/kapatma butonu */}
               <div id="whiteBoard">
                 <button
+                  title="Beyaz Tahtayı Aç"
                   onClick={() => {
-                    handleWhiteBoardShare();
                     if (whiteboardOpen) {
                       closeWhiteboard();
                     } else {
@@ -96,6 +99,7 @@ const MainScreen = memo(
               {/* Kamera Butonu */}
               <div
                 id="camera"
+                title="Kamerayı Aç"
                 className={`p-2 rounded-md cursor-pointer bg-premiumOrange text-white hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500`}
                 onClick={async () => {
                   const camera = document.getElementById("camera");
@@ -138,6 +142,7 @@ const MainScreen = memo(
               {/* Mikrofon Butonu */}
               <div
                 id="mic"
+                title="Mikrofonu Aç"
                 className="p-2 rounded-xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500"
                 onClick={async () => {
                   const mic = document.getElementById("mic");
@@ -167,26 +172,29 @@ const MainScreen = memo(
                 </svg>
               </div>
               {/* Ekran Paylaş Butonu */}
-              <div
-                id="screen-share"
-                className={`rounded-xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500 p-2`}
-                onClick={handleScreenShare}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
+              {role === "admin" && (
+                <div
+                  id="screen-share"
+                  title="Ekranı Paylaş"
+                  className={`rounded-xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500 p-2`}
+                  onClick={handleScreenShare}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
           ) : (
             <button

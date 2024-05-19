@@ -32,7 +32,7 @@ const Participants = memo(
           showCtrl.showParticipants ? "w-[90vw] md:w-[40vw] top-[10vh]" : "w-0"
         } z-30 bg-gray-200 lg:relative lg:w-[15vw]`}
       >
-        <div className="relative bg-premiumOrange m-3 rounded-xl h-[10vh] font-bold flex items-center justify-center gap-4">
+        <div className="relative bg-premiumOrange m-3 rounded-xl h-[7vh] font-bold flex items-center justify-center gap-4">
           <span className="text-xl text-gray-100">Katılımcılar</span>
           <div className="bg-slate-950 text-white w-8 h-8 flex justify-center items-center rounded-xl">
             {totalMembers}

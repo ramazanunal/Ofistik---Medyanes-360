@@ -1,7 +1,7 @@
 import { useFastboard, Fastboard } from "@netless/fastboard-react";
 import React from "react";
 
-function WhiteBoardMain({ roomToken, uid, uuid, whiteBoardShareRef }) {
+function WhiteBoardMain({ roomToken, uid, uuid }) {
   let fastboard;
   try {
     fastboard = useFastboard(() => ({
@@ -22,7 +22,6 @@ function WhiteBoardMain({ roomToken, uid, uuid, whiteBoardShareRef }) {
   return (
     <div
       id="white-board"
-      ref={whiteBoardShareRef}
       style={{
         width: "62vw",
         height: "500px",
