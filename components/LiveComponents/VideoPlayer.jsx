@@ -46,12 +46,14 @@ const VideoPlayer = memo(({ user, UID }) => {
   }
 
   return (
-    <div
-      ref={ref}
-      id={user.uid}
-      onClick={enLargeFrame}
-      className="w-[300px] h-[300px] overflow-hidden cursor-pointer rounded-3xl mr-3 md:w-[170px] md:h-[170px] xl:w-[250px] xl:h-[250px] videoPlayer"
-    ></div>
+    <>
+      <div
+        ref={ref}
+        id={user.uid}
+        onClick={enLargeFrame}
+        className="w-[300px] h-[300px] overflow-hidden cursor-pointer rounded-3xl mr-3  border-2 m-auto border-gray-300  md:w-[170px] md:h-[170px] xl:w-[250px] xl:h-[250px] videoPlayer"
+      ></div>
+    </>
   );
 });
 

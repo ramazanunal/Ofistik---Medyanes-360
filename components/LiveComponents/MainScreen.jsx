@@ -9,6 +9,8 @@ const MainScreen = memo(
     setJoined,
     joinRoom,
     localTracks,
+    handleMuteMic,
+    handleMuteCamera,
     handleScreenShare,
     users,
     UID,
@@ -18,12 +20,14 @@ const MainScreen = memo(
   }) => {
     const [whiteboardOpen, setWhiteboardOpen] = useState(false);
     const [role, setRole] = useState(false);
+
     useEffect(() => {
       const parts = window.location.href.split("/");
       const role = parts[parts.length - 1];
       const [roleData] = role.split("/").map((part) => part.split("=")[1]);
       setRole(roleData);
     }, []);
+
     const openWhiteboard = () => {
       setWhiteboardOpen(true);
     };
@@ -40,18 +44,11 @@ const MainScreen = memo(
         className="relative h-[90vh] overflow-y-auto w-full flex flex-wrap justify-center p-2 gap-4 lg:p-4 lg:w-[65vw] bg-gray-200"
       >
         {/* Share Screen */}
-        {roomToken &&
-          UID &&
-          uuid &&
-          whiteboardOpen && ( // Whiteboard açık olduğunda göster
-            <div className="whiteBoard">
-              <WhiteBoardMain
-                roomToken={roomToken}
-                uid={stringUid}
-                uuid={uuid}
-              />
-            </div>
-          )}
+        {roomToken && UID && uuid && whiteboardOpen && (
+          <div className="whiteBoard">
+            <WhiteBoardMain roomToken={roomToken} uid={stringUid} uuid={uuid} />
+          </div>
+        )}
         <div
           ref={screenShareRef}
           id="share-screen"
@@ -102,20 +99,37 @@ const MainScreen = memo(
                 title="Kamerayı Aç"
                 className={`p-2 rounded-md cursor-pointer bg-premiumOrange text-white hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500`}
                 onClick={async () => {
+                  const user = users.find((user) => user.uid === UID);
+                  if (user) {
+                    handleMuteCamera(user);
+                  }
                   const camera = document.getElementById("camera");
-                  const videoDiv =
-                    document.getElementsByClassName("videoPlayer");
-                  if (localTracks.video.muted) {
-                    await localTracks.video.setMuted(false);
-                    camera.classList.add("bg-orange-800");
-                    videoDiv.innerHTML = `<Image
-                    src={require(user)}
-                    width={100}
-                    height={100}
-                    />`;
-                  } else {
-                    await localTracks.video.setMuted(true);
-                    camera.classList.remove("bg-orange-800");
+                  if (user.videoTrack.muted === false) {
+                    camera.classList.remove(
+                      "bg-premiumOrange",
+                      "text-white",
+                      "hover:bg-gray-200",
+                      "hover:text-premiumOrange"
+                    );
+                    camera.classList.add(
+                      "bg-gray-200",
+                      "text-premiumOrange",
+                      "hover:bg-premiumOrange",
+                      "hover:text-gray-200"
+                    );
+                  } else if (user.videoTrack.muted === true) {
+                    camera.classList.remove(
+                      "bg-gray-200",
+                      "text-premiumOrange",
+                      "hover:bg-premiumOrange",
+                      "hover:text-gray-200"
+                    );
+                    camera.classList.add(
+                      "bg-premiumOrange",
+                      "text-white",
+                      "hover:bg-gray-200",
+                      "hover:text-premiumOrange"
+                    );
                   }
                 }}
               >
@@ -145,14 +159,37 @@ const MainScreen = memo(
                 title="Mikrofonu Aç"
                 className="p-2 rounded-xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500"
                 onClick={async () => {
-                  const mic = document.getElementById("mic");
-
-                  if (localTracks.audio.muted) {
-                    await localTracks.audio.setMuted(false);
-                    mic.classList.add("bg-orange-800");
-                  } else {
-                    await localTracks.audio.setMuted(true);
-                    mic.classList.remove("bg-orange-800");
+                  const user = users.find((user) => user.uid === UID);
+                  if (user) {
+                    handleMuteMic(user);
+                  }
+                  const camera = document.getElementById("mic");
+                  if (user.audioTrack.muted === false) {
+                    camera.classList.remove(
+                      "bg-premiumOrange",
+                      "text-white",
+                      "hover:bg-gray-200",
+                      "hover:text-premiumOrange"
+                    );
+                    camera.classList.add(
+                      "bg-gray-200",
+                      "text-premiumOrange",
+                      "hover:bg-premiumOrange",
+                      "hover:text-gray-200"
+                    );
+                  } else if (user.audioTrack.muted === true) {
+                    camera.classList.remove(
+                      "bg-gray-200",
+                      "text-premiumOrange",
+                      "hover:bg-premiumOrange",
+                      "hover:text-gray-200"
+                    );
+                    camera.classList.add(
+                      "bg-premiumOrange",
+                      "text-white",
+                      "hover:bg-gray-200",
+                      "hover:text-premiumOrange"
+                    );
                   }
                 }}
               >

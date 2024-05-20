@@ -151,12 +151,30 @@ function Room({ channel = "deneme" }) {
     if (mediaType === "video") {
       setUsers((prev) => [...prev, user]);
     }
+    const elementToRemove = document.getElementById(user.uid);
+    if (elementToRemove) {
+      elementToRemove.remove();
+    }
   };
 
   const handleUserLeft = (user) => {
     setUsers((prev) => prev.filter((u) => u.uid !== user.uid));
   };
 
+  const handleMuteCamera = async (user) => {
+    if (user.videoTrack.muted === false) {
+      await user.videoTrack.setMuted(true);
+    } else if (user.videoTrack.muted === true) {
+      await user.videoTrack.setMuted(false);
+    }
+  };
+  const handleMuteMic = async (user) => {
+    if (user.audioTrack.muted === false) {
+      await user.audioTrack.setMuted(true);
+    } else if (user.audioTrack.muted === true) {
+      await user.audioTrack.setMuted(false);
+    }
+  };
   const handleScreenShare = async () => {
     const screenShareBtn = document.getElementById("screen-share");
     const camera = document.getElementById("camera");
@@ -166,9 +184,9 @@ function Room({ channel = "deneme" }) {
         screenShareBtn.classList.add("bg-orange-800");
         camera.classList.add("hidden");
         const screenShareTrack = await AgoraRTC.createScreenVideoTrack();
-        // if (localTracks.video) {
-        //   await client.unpublish(localTracks.video);
-        // }
+        if (localTracks.video) {
+          await client.unpublish(localTracks.video);
+        }
         setUsers((prev) =>
           prev.map((user) => {
             if (user.uid === UID) {
@@ -328,11 +346,13 @@ function Room({ channel = "deneme" }) {
 
         {/* Main Screen */}
         <MainScreen
+          handleMuteMic={handleMuteMic}
           joined={joined}
           setJoined={setJoined}
           joinRoom={joinRoom}
           localTracks={localTracks}
           setLocalTracks={setLocalTracks}
+          handleMuteCamera={handleMuteCamera}
           users={users}
           UID={UID}
           screenShareRef={screenShareRef}
