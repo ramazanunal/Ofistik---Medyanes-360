@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import ItemList from "./itemList";
 
-function MainSelectItemPage({ initialValues, setInitialValueAdded, postList }) {
-  const [initalvalueAdded, setInitalvalueAdded] = useState();
+function MainSelectItemPage({
+  initialValues,
+  setInitialValueAddedProp,
+  postList,
+}) {
+  const [initialValueAdded, setInitialValueAdded] = useState("");
+
   const day = (date1, date2) => {
     //REKLAM SÜRESİNİ BULAN FONKSİYON
     const oneDay = 24 * 60 * 60 * 1000;
@@ -11,33 +16,52 @@ function MainSelectItemPage({ initialValues, setInitialValueAdded, postList }) {
     const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     return diffDays;
   };
-  console.log(initalvalueAdded);
-  setInitialValueAdded(initalvalueAdded);
+
+  const handleRadioChange = (e) => {
+    setInitialValueAdded(e.target.value);
+    setInitialValueAddedProp(e.target.value); 
+  };
+
+  console.log(initialValueAdded);
+
   return (
-    <div className="w-full">
-      {initialValues.reklamTipi === "2" && (
-        <div className="w-full">
-          <div className="headerArea py-5">
-            <div className="border-b-2 border-gray-100 flex w-full px-5">
-              <h1
-                className={` cursor-pointer 
-            border-premiumOrange border-b-2 text-premiumOrange font-semibold
-           p-3 `}
-              >
-                Gönderi Listem
-              </h1>
-            </div>
-          </div>
-        </div>
-      )}
-      <ItemList
-        amount={initialValues.gunlukButceMiktarı}
-        selectedMethod={initialValues.reklamTipi}
-        time={day(initialValues.baslangicTarihi, initialValues.bitisTarihi)}
-        postList={postList}
-        initialValues={initialValues}
-        setInitialValues={setInitalvalueAdded}
-      />
+    <div className="w-full p-4">
+      <h3 className="text-lg font-medium">İndirim Kriterini Belirleyin</h3>
+      <div className="flex gap-4">
+        <label htmlFor="everyone" className="space-x-2">
+          <input
+            type="radio"
+            id="everyone"
+            name="audience"
+            value="everyone"
+            checked={initialValueAdded === "everyone"}
+            onChange={handleRadioChange}
+          />
+          <span>Herkes</span>
+        </label>
+        <label htmlFor="firstAppointment" className="space-x-2">
+          <input
+            type="radio"
+            id="firstAppointment"
+            name="audience"
+            value="firstAppointment"
+            checked={initialValueAdded === "firstAppointment"}
+            onChange={handleRadioChange}
+          />
+          <span>İlk Randevu</span>
+        </label>
+        <label htmlFor="secondAppointment" className="space-x-2">
+          <input
+            type="radio"
+            id="secondAppointment"
+            name="audience"
+            value="secondAppointment"
+            checked={initialValueAdded === "secondAppointment"}
+            onChange={handleRadioChange}
+          />
+          <span>İkinci Randevu</span>
+        </label>
+      </div>
     </div>
   );
 }
