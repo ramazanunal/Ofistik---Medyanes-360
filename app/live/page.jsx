@@ -14,6 +14,7 @@ function Page() {
         : "",
     roomName: "",
   });
+  console.log(roomLogin);
   const [token, setToken] = useState("");
   const [channel, setChannel] = useState("");
   const [uid, setUid] = useState("");

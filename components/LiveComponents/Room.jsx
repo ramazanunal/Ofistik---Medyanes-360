@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams, usePathname } from "next/navigation";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import AgoraRTM from "agora-rtm-sdk";
 import MainScreen from "./MainScreen";
@@ -9,8 +9,24 @@ import LiveChat from "./LiveChat";
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
-function Room({ channel = "deneme" }) {
+function Room() {
+  
+
   const router = useRouter();
+
+ const base = useParams();
+const fullChName = base.ChName; // channelName%3Demrahoda
+const chNameParts = fullChName.split('%3D');
+const chName = chNameParts[1]; // emrahoda
+
+console.log(chName, "ASDASDASD");
+const channel = chName
+
+
+
+
+ 
+
   const screenShareRef = useRef();
   const [token, setToken] = useState(null);
   const [joined, setJoined] = useState(false);
