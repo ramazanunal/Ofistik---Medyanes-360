@@ -24,6 +24,7 @@ function Room() {
   const [token, setToken] = useState(null);
   const [joined, setJoined] = useState(false);
   const [UID, setUID] = useState("");
+  const [role, setRole] = useState("");
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState({ audio: "", video: "" });
   const [screenShare, setScreenShare] = useState({ mode: false, track: "" });
@@ -36,20 +37,9 @@ function Room() {
     showParticipants: false,
     showLiveChat: false,
   });
-
-  useEffect(() => {
-    const displayName = sessionStorage.getItem("username");
-    if (!displayName) {
-      const displayNamePromptResult = prompt(
-        "Toplantıya katılmak için lütfen isminizi giriniz."
-      );
-      if (!displayNamePromptResult) {
-        router.push("/");
-      } else {
-        sessionStorage.setItem("username", displayNamePromptResult);
-      }
-    }
-  }, [router]);
+  const [inputUsername, setInputUsername] = useState("");
+  const displayName = sessionStorage.getItem("username");
+  console.log(displayName);
 
   useEffect(() => {
     if (showCtrl.showParticipants || showCtrl.showLiveChat) {
@@ -286,7 +276,25 @@ function Room() {
       secs < 10 ? "0" : ""
     }${secs}`;
   };
-  return (
+  const copyMeetingLink = () => {
+    const currentUrl = window.location.href;
+    const readerUrl = currentUrl.replace("role=admin", "role=reader");
+    navigator.clipboard
+      .writeText(readerUrl)
+      .then(() => {
+        alert("Toplantı linki başarıyla kopyalandı!");
+      })
+      .catch((err) => {
+        console.error("Kopyalama sırasında hata oluştu:", err);
+      });
+  };
+  useEffect(() => {
+    const parts = window.location.href.split("/");
+    const role = parts[parts.length - 1];
+    const [roleData] = role.split("/").map((part) => part.split("=")[1]);
+    setRole(roleData);
+  }, []);
+  return displayName !== null ? (
     <div className="h-screen overflow-y-auto">
       <nav className="relative bg-gray-200  flex items-center justify-between h-[10vh] px-4 lg:px-8">
         <div className="timerArea flex flex-col items-center justify-center">
@@ -296,11 +304,18 @@ function Room() {
           <b className="text-lg cursor-pointer text-gray-600">
             Toplantı Süresi: {formatTime(timeElapsed)}
           </b>
+          {role === "admin" && (
+            <button
+              className="rounded-xl bg-premiumOrange px-3 py-1 text-gray-100 font-bold text-sm"
+              onClick={copyMeetingLink}
+            >
+              Toplantı Linkini Kopyala
+            </button>
+          )}
         </div>
         <b className="text-xl lg:text-3xl cursor-pointer text-premiumOrange font-bold">
           Ofistik
         </b>
-
         <button
           className="rounded-xl bg-premiumOrange lg:px-8 lg:py-3 px-3 py-1 text-gray-100 font-bold text-sm lg:text-base"
           onClick={async () => {
@@ -408,6 +423,44 @@ function Room() {
           }
         ></div>
       )}
+    </div>
+  ) : (
+    <div className="w-screen h-screen top-0 left-0 flex flex-col items-center justify-center bg-gray-100">
+      <div className="titleArea m-5">
+        <h1 className="text-xl lg:text-3xl text-center text-premiumOrange font-bold">
+          Ofistik Randevu Servisi
+        </h1>
+      </div>
+      <div className=" h-auto max-h-screen overflow-y-auto bg-gray-50 rounded-3xl p-8 mx-8 lg:mx-0">
+        <div className="flex w-full flex-col gap-2">
+          <label
+            htmlFor="name"
+            className="text-gray-600 font-semibold text-sm lg:text-base"
+          >
+            İsminiz
+          </label>
+          <input
+            type="text"
+            className="h-[44px] bg-gray-100 rounded-xl p-5 focus:outline-none"
+            value={inputUsername}
+            onChange={(e) => setInputUsername(e.target.value)}
+            required
+          />
+          <button
+            className="mt-3 text-md lg:text-base rounded-2xl bg-premiumOrange text-white px-3 py-3 font-semibold hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500"
+            onClick={() => {
+              if (inputUsername) {
+                sessionStorage.setItem("username", inputUsername);
+                window.location.reload(); // Reload the entire page
+              } else {
+                alert("Lütfen bir isim giriniz");
+              }
+            }}
+          >
+            Katıl
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
