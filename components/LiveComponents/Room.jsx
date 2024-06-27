@@ -10,22 +10,15 @@ const APP_ID = "b524a5780b4c4657bf7c8501881792be";
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 function Room() {
-  
-
   const router = useRouter();
 
- const base = useParams();
-const fullChName = base.ChName; // channelName%3Demrahoda
-const chNameParts = fullChName.split('%3D');
-const chName = chNameParts[1]; // emrahoda
+  const base = useParams();
+  const fullChName = base.ChName; // channelName%3Demrahoda
+  const chNameParts = fullChName.split("%3D");
+  const chName = chNameParts[1]; // emrahoda
 
-console.log(chName, "ASDASDASD");
-const channel = chName
-
-
-
-
- 
+  console.log(chName, "ASDASDASD");
+  const channel = chName;
 
   const screenShareRef = useRef();
   const [token, setToken] = useState(null);
@@ -277,16 +270,37 @@ const channel = chName
     setRoomToken(roomTokenData);
   }, []);
 
-  console.log(users);
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const intervalRef = useRef(null);
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setTimeElapsed((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(intervalRef.current);
+  }, []);
+  const formatTime = (seconds) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hrs}:${mins < 10 ? "0" : ""}${mins}:${
+      secs < 10 ? "0" : ""
+    }${secs}`;
+  };
   return (
     <div className="h-screen overflow-y-auto">
       <nav className="relative bg-gray-200  flex items-center justify-between h-[10vh] px-4 lg:px-8">
-        <b className="text-lg lg:text-2xl cursor-pointer text-gray-600">
-          {channel}
-        </b>
+        <div className="timerArea flex flex-col items-center justify-center">
+          <b className="text-lg lg:text-2xl cursor-pointer text-gray-600">
+            {channel}
+          </b>
+          <b className="text-lg cursor-pointer text-gray-600">
+            Toplantı Süresi: {formatTime(timeElapsed)}
+          </b>
+        </div>
         <b className="text-xl lg:text-3xl cursor-pointer text-premiumOrange font-bold">
           Ofistik
         </b>
+
         <button
           className="rounded-xl bg-premiumOrange lg:px-8 lg:py-3 px-3 py-1 text-gray-100 font-bold text-sm lg:text-base"
           onClick={async () => {

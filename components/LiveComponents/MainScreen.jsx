@@ -26,6 +26,9 @@ const MainScreen = memo(
       const role = parts[parts.length - 1];
       const [roleData] = role.split("/").map((part) => part.split("=")[1]);
       setRole(roleData);
+      if (role === "reader") {
+        joinRoom();
+      }
     }, []);
 
     const openWhiteboard = () => {
