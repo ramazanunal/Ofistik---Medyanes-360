@@ -23,6 +23,8 @@ function Room() {
   const screenShareRef = useRef();
   const [token, setToken] = useState(null);
   const [joined, setJoined] = useState(false);
+  const [chatShow, setChatShow] = useState(false);
+  const [showParticipants, setShowParticipants] = useState(false);
   const [UID, setUID] = useState("");
   const [role, setRole] = useState("");
   const [users, setUsers] = useState([]);
@@ -39,7 +41,6 @@ function Room() {
   });
   const [inputUsername, setInputUsername] = useState("");
   const displayName = sessionStorage.getItem("username");
-  console.log(displayName);
 
   useEffect(() => {
     if (showCtrl.showParticipants || showCtrl.showLiveChat) {
@@ -381,16 +382,22 @@ function Room() {
       </nav>
       <section className="h-[90vh] flex justify-between overflow-hidden">
         {/* Participants */}
-        <Participants
-          showCtrl={showCtrl}
-          setShowCtrl={setShowCtrl}
-          rtmClient={rtmClient}
-          totalMembers={totalMembers}
-          participants={participants}
-        />
+        {showParticipants && (
+          <Participants
+            showCtrl={showCtrl}
+            setShowCtrl={setShowCtrl}
+            rtmClient={rtmClient}
+            totalMembers={totalMembers}
+            participants={participants}
+          />
+        )}
 
         {/* Main Screen */}
         <MainScreen
+          setShowParticipants={setShowParticipants}
+          showParticipants={showParticipants}
+          setChatShow={setChatShow}
+          chatShow={chatShow}
           handleMuteMic={handleMuteMic}
           joined={joined}
           setJoined={setJoined}
@@ -408,7 +415,13 @@ function Room() {
         />
 
         {/* Live Chat */}
-        <LiveChat showCtrl={showCtrl} sendMessage={sendMessage} chats={chats} />
+        {chatShow && (
+          <LiveChat
+            showCtrl={showCtrl}
+            sendMessage={sendMessage}
+            chats={chats}
+          />
+        )}
       </section>
 
       {(showCtrl.showLiveChat || showCtrl.showParticipants) && (
