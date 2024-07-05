@@ -51,7 +51,7 @@ function WhiteBoardMain({ roomToken, uid, uuid, showChat, showParticipants }) {
       id="white-board"
       style={{
         width: size,
-        height: "100%",
+        height: "75vh",
         border: "1px solid",
         borderRadius: "15px",
         borderColor: "hsl(215, 20%, 75%)",

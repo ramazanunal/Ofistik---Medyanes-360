@@ -30,7 +30,7 @@ const Participants = memo(
       <div
         className={`h-full border-r border-r-slate-400 overflow-hidden transition-[width] fixed left-0 ${
           showCtrl.showParticipants ? "w-[90vw] md:w-[40vw] top-[10vh]" : "w-0"
-        } z-30 bg-gray-200 lg:relative lg:w-[15vw]`}
+        } z-30 bg-[#313131] lg:relative lg:w-[15vw]`}
       >
         <div className="relative bg-premiumOrange m-3 rounded-xl h-[7vh] font-bold flex items-center justify-center gap-4">
           <span className="text-xl text-gray-100">Katılımcılar</span>
@@ -60,7 +60,7 @@ const Participants = memo(
                 <div className="w-4 h-4 rounded-full bg-green-500"></div>
                 <span
                   id={`user-${participantId}`}
-                  className="truncate text-gray-700 font-semibold"
+                  className="truncate text-gray-50 font-semibold"
                 >
                   {participantId}
                 </span>

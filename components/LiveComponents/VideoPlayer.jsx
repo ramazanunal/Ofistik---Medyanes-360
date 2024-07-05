@@ -1,9 +1,8 @@
-import React, { memo, useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import userImage from "../../assets/icons/userForLive.png";
+import React, { memo, useEffect, useRef } from "react";
 
-const VideoPlayer = memo(({ user, UID }) => {
+const VideoPlayer = memo(({ user, UID, users }) => {
   const ref = useRef();
+  const videoHolder = document.getElementById("userVideo");
 
   useEffect(() => {
     if (user.videoTrack) {
@@ -24,16 +23,16 @@ const VideoPlayer = memo(({ user, UID }) => {
   }, [user, UID]);
 
   const enLargeFrame = (event) => {
-    const videoHolder = document.getElementById("video-holder");
+    const videoHolder = document.getElementById("userVideo");
     const shareScreen = document.getElementById("share-screen");
+
     if (event.target.parentNode.parentNode.parentNode.id !== shareScreen.id) {
       let child = shareScreen.children[0];
       if (child) {
         videoHolder.appendChild(child);
       }
-
-      shareScreen.appendChild(event.currentTarget);
       shareScreen.classList.remove("hidden");
+      shareScreen.appendChild(event.currentTarget);
     } else {
       videoHolder.appendChild(
         document.getElementById("share-screen").children[0]
@@ -41,6 +40,7 @@ const VideoPlayer = memo(({ user, UID }) => {
       shareScreen.classList.add("hidden");
     }
   };
+
   if (!user.videoTrack && !user.screenShareTrack) {
     return null;
   }
@@ -51,7 +51,7 @@ const VideoPlayer = memo(({ user, UID }) => {
         ref={ref}
         id={user.uid}
         onClick={enLargeFrame}
-        className="w-[300px] h-[300px] overflow-hidden cursor-pointer rounded-3xl mr-3  border-2 m-auto border-gray-300  md:w-[170px] md:h-[170px] xl:w-[250px] xl:h-[250px] videoPlayer"
+        className="w-[300px] h-[300px] overflow-hidden cursor-pointer rounded-3xl mr-3 border-2 m-auto border-gray-300 md:w-[170px] md:h-[170px] xl:w-[250px] xl:h-[250px] videoPlayer"
       ></div>
     </>
   );

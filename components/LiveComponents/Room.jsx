@@ -7,8 +7,11 @@ import MainScreen from "./MainScreen";
 import Participants from "./Participants";
 import LiveChat from "./LiveChat";
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
+import AC from "agora-chat";
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-
+const conn = new AC.connection({
+  appKey: "611139134#1334578",
+});
 function Room() {
   const router = useRouter();
 
@@ -16,8 +19,6 @@ function Room() {
   const fullChName = base.ChName; // channelName%3Demrahoda
   const chNameParts = fullChName.split("%3D");
   const chName = chNameParts[1]; // emrahoda
-
-  console.log(chName, "ASDASDASD");
   const channel = chName;
 
   const screenShareRef = useRef();
@@ -89,6 +90,60 @@ function Room() {
     }
   };
 
+  var sendFile = function () {
+    // Select the local file.
+    var input = document.getElementById("file");
+    // Turn the file message to a binary file.
+    var file = AC.utils.getFileUrl(input);
+    var allowType = {
+      jpg: true,
+      gif: true,
+      png: true,
+      bmp: true,
+      zip: true,
+      txt: true,
+      doc: true,
+      pdf: true,
+    };
+    if (file.filetype.toLowerCase() in allowType) {
+      var option = {
+        // Set the message type.
+        type: "file",
+        file: file,
+        // Set the username of the message receiver.
+        to: "252378044497921",
+        // Set the chat type.
+        chatType: "chatRoom",
+        // Occurs when the file fails to be uploaded.
+        onFileUploadError: function () {
+          console.log("onFileUploadError");
+        },
+        // Reports the progress of uploading the file.
+        onFileUploadProgress: function (e) {
+          console.log(e);
+        },
+        // Occurs when the file is uploaded.
+        onFileUploadComplete: function () {
+          console.log("onFileUploadComplete");
+        },
+        ext: { file_length: file.data.size },
+      };
+      // Create a file message.
+      var msg = AC.message.create(option);
+      // Call send to send the file message.
+      conn
+        .send(msg)
+        .then((res) => {
+          // Occurs when the file message is sent.
+          console.log("Success");
+        })
+        .catch((e) => {
+          // Occurs when the file message fails to be sent.
+          console.log("Fail");
+        });
+    }
+  };
+
   const sendMessage = async (e) => {
     e.preventDefault();
     if (joined) {
@@ -103,7 +158,6 @@ function Room() {
     }
     e.target.reset();
   };
-
   const initRTM = async (uid) => {
     try {
       let rtmClientIn = AgoraRTM.createInstance(APP_ID);
@@ -176,56 +230,49 @@ function Room() {
     }
   };
   const handleScreenShare = async () => {
-    const screenShareBtn = document.getElementById("screen-share");
-    const camera = document.getElementById("camera");
     if (!screenShare.mode) {
       try {
-        setScreenShare((prev) => ({ ...prev, mode: true }));
-        screenShareBtn.classList.add("bg-orange-800");
-        camera.classList.add("hidden");
-        const screenShareTrack = await AgoraRTC.createScreenVideoTrack();
+        const screenShareTrack = await AgoraRTC.createScreenVideoTrack({
+          encoderConfig: "720p_1",
+        });
+
+        // Ekran paylaşımını başlat
         if (localTracks.video) {
           await client.unpublish(localTracks.video);
         }
+
         setUsers((prev) =>
-          prev.map((user) => {
-            if (user.uid === UID) {
-              return { ...user, videoTrack: undefined, screenShareTrack };
-            }
-            return user;
-          })
+          prev.map((user) =>
+            user.uid === UID ? { ...user, screenShareTrack } : user
+          )
         );
+
         await client.publish(screenShareTrack);
         screenShareTrack.play(screenShareRef.current);
-        setScreenShare((prev) => ({ ...prev, track: screenShareTrack }));
+        setScreenShare({ mode: true, track: screenShareTrack });
         screenShareRef.current.classList.remove("hidden");
       } catch (error) {
         console.error("Error starting screen share:", error);
       }
     } else {
       try {
-        setScreenShare((prev) => ({ ...prev, mode: false }));
-        screenShareBtn.classList.remove("bg-orange-800");
-        camera.classList.remove("hidden");
-        setUsers((prev) =>
-          prev.map((user) => {
-            if (user.uid === UID) {
-              return {
-                ...user,
-                videoTrack: localTracks.video,
-                screenShareTrack: undefined,
-              };
-            }
-            return user;
-          })
-        );
+        // Ekran paylaşımını durdur
         if (screenShare.track) {
           await client.unpublish(screenShare.track);
           screenShare.track.stop();
         }
+
+        setUsers((prev) =>
+          prev.map((user) =>
+            user.uid === UID ? { ...user, screenShareTrack: null } : user
+          )
+        );
+
         if (localTracks.video) {
           await client.publish(localTracks.video);
         }
+
+        setScreenShare({ mode: false, track: null });
         screenShareRef.current.classList.add("hidden");
       } catch (error) {
         console.error("Error stopping screen share:", error);
@@ -277,53 +324,51 @@ function Room() {
       secs < 10 ? "0" : ""
     }${secs}`;
   };
-  const copyMeetingLink = () => {
-    const currentUrl = window.location.href;
-    const readerUrl = currentUrl.replace("role=admin", "role=reader");
-    navigator.clipboard
-      .writeText(readerUrl)
-      .then(() => {
-        alert("Toplantı linki başarıyla kopyalandı!");
-      })
-      .catch((err) => {
-        console.error("Kopyalama sırasında hata oluştu:", err);
-      });
-  };
+
   useEffect(() => {
     const parts = window.location.href.split("/");
     const role = parts[parts.length - 1];
     const [roleData] = role.split("/").map((part) => part.split("=")[1]);
     setRole(roleData);
   }, []);
+
+  useEffect(() => {
+    const shareScreen = document.getElementById("share-screen");
+    users.forEach((user) => {
+      if (user._videoTrack && user._videoTrack._ID.includes("track-video-")) {
+        // Append the element to shareScreen
+        const videoElement = document.createElement("div");
+        videoElement.id = user.uid; // Assuming user.uid can be used as a unique identifier
+        videoElement.classList.add("video-element"); // Add your CSS class here
+
+        // Append the element to shareScreen
+        shareScreen.appendChild(videoElement);
+
+        // Optionally, you can also play the video track here
+        user._videoTrack.play(videoElement);
+      }
+    });
+  }, [users]);
+
   return displayName !== null ? (
     <div className="h-screen overflow-y-auto">
-      <nav className="relative bg-gray-200  flex items-center justify-between h-[10vh] px-4 lg:px-8">
+      <nav className="relative bg-[#313131]  flex items-center justify-between h-[10vh] px-4 lg:px-8">
         <div className="timerArea flex flex-col items-center justify-center">
-          <b className="text-lg lg:text-2xl cursor-pointer text-gray-600">
-            {channel}
-          </b>
-          <b className="text-lg cursor-pointer text-gray-600">
+          <b className="text-lg cursor-pointer text-gray-50">
             Toplantı Süresi: {formatTime(timeElapsed)}
           </b>
-          {role === "admin" && (
-            <button
-              className="rounded-xl bg-premiumOrange px-3 py-1 text-gray-100 font-bold text-sm"
-              onClick={copyMeetingLink}
-            >
-              Toplantı Linkini Kopyala
-            </button>
-          )}
         </div>
         <b className="text-xl lg:text-3xl cursor-pointer text-premiumOrange font-bold">
           Ofistik
         </b>
         <button
-          className="rounded-xl bg-premiumOrange lg:px-8 lg:py-3 px-3 py-1 text-gray-100 font-bold text-sm lg:text-base"
+          className="rounded-xl bg-premiumOrange lg:px-8 lg:py-2 px-3 py-1 text-gray-100 font-bold text-sm lg:text-base"
           onClick={async () => {
             router.push("/"); //TOPLANTI BİTTİ SAYFASI YAP
           }}
         >
           Toplantıdan Ayrıl
+          <i class="fa-solid fa-arrow-right-from-bracket ml-2"></i>
         </button>
 
         {/* Absolutes */}
@@ -394,6 +439,7 @@ function Room() {
 
         {/* Main Screen */}
         <MainScreen
+          channel={channel}
           setShowParticipants={setShowParticipants}
           showParticipants={showParticipants}
           setChatShow={setChatShow}
@@ -417,6 +463,7 @@ function Room() {
         {/* Live Chat */}
         {chatShow && (
           <LiveChat
+            sendFile={sendFile}
             showCtrl={showCtrl}
             sendMessage={sendMessage}
             chats={chats}
