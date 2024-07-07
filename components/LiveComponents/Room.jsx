@@ -320,8 +320,8 @@ function Room() {
     const hrs = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    return `${hrs}:${mins < 10 ? "0" : ""}${mins}:${
-      secs < 10 ? "0" : ""
+    return `${hrs}:${mins < 10 ? "0 " : ""}${mins}:${
+      secs < 10 ? "0 " : ""
     }${secs}`;
   };
 
@@ -352,11 +352,17 @@ function Room() {
 
   return displayName !== null ? (
     <div className="h-screen overflow-y-auto">
-      <nav className="relative bg-[#313131]  flex items-center justify-between h-[10vh] px-4 lg:px-8">
-        <div className="timerArea flex flex-col items-center justify-center">
-          <b className="text-lg cursor-pointer text-gray-50">
-            Toplantı Süresi: {formatTime(timeElapsed)}
-          </b>
+      <nav className="relative bg-gray-100  flex items-center justify-between h-[10vh] px-4 lg:px-8">
+        <div className="timerArea flex flex-row items-center justify-center">
+          <div className="w-5 h-5 bg-red-600 rounded-full mr-3 blinking"></div>
+          <div className="flex flex-col items-center justify-center">
+            <b className="text-lg cursor-pointer text-gray-500">
+              Toplantı Süresi
+            </b>
+            <b className="text-lg cursor-pointer text-gray-600">
+              {formatTime(timeElapsed)}
+            </b>
+          </div>
         </div>
         <b className="text-xl lg:text-3xl cursor-pointer text-premiumOrange font-bold">
           Ofistik

@@ -82,7 +82,7 @@ const MainScreen = memo(
           id="video-holder"
           className={`relative h-[90vh] overflow-y-auto w-full flex flex-wrap justify-center p-2 gap-4 lg:p-4 ${
             chatShow ? "lg:w-[65vw]" : "lg:w-[83vw]"
-          } bg-[#313131]`}
+          } bg-gray-100`}
         >
           {/* Share Screen */}
           {roomToken && UID && uuid && whiteboardOpen && (
@@ -103,10 +103,10 @@ const MainScreen = memo(
           <div
             ref={screenShareRef}
             id="share-screen"
-            className={`hidden top-0 left-0 !w-[100%] h-[75vh] bg-[#313131]`}
+            className={`hidden top-0 left-0 !w-[100%] h-[75vh] bg-gray-100`}
           ></div>
           {/* Join Stream */}
-          <div className="w-full fixed bg-slate-300/10 py-2 z-10 bottom-0 flex justify-center ">
+          <div className="w-full fixed bg-slate-200/10 py-2 z-10 bottom-0 flex justify-center ">
             {joined === true ? (
               <>
                 <div
@@ -116,7 +116,7 @@ const MainScreen = memo(
                   )}`}
                 >
                   <div className="channelNameArea">
-                    <h1 className="text-2xl text-gray-50">
+                    <h1 className="text-xl tracking-wider text-gray-700">
                       {channel} Toplantısı
                     </h1>
                   </div>
@@ -132,8 +132,8 @@ const MainScreen = memo(
                             openWhiteboard();
                           }
                         }}
-                        className={`p-2 whiteBoardButton rounded-2xl cursor-pointer bg-premiumOrange text-white hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500 ${
-                          whiteboardOpen ? "bg-premiumOrange" : ""
+                        className={`px-2 py-5 whiteBoardButton w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                          whiteboardOpen ? "bg-premiumOrange text-white" : ""
                         }`}
                       >
                         <svg
@@ -155,129 +155,50 @@ const MainScreen = memo(
                           ></rect>
                         </svg>
                       </button>
+                      <h1 className="text-sm text-center text-gray-700 mt-2">
+                        Beyaz Tahtayı Aç
+                      </h1>
                     </div>
                     {/* Kamera Butonu */}
-                    <div
-                      id="camera"
-                      title="Kamerayı Aç"
-                      className={`p-2 rounded-2xl cursor-pointer bg-premiumOrange text-white hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500`}
-                      onClick={async () => {
-                        const user = users.find((user) => user.uid === UID);
-                        if (user) {
-                          handleMuteCamera(user);
-                        }
-                        const camera = document.getElementById("camera");
-                        if (user.videoTrack.muted === false) {
-                          camera.classList.remove(
-                            "bg-premiumOrange",
-                            "text-white",
-                            "hover:bg-gray-200",
-                            "hover:text-premiumOrange"
-                          );
-                          camera.classList.add(
-                            "bg-gray-200",
-                            "text-premiumOrange",
-                            "hover:bg-premiumOrange",
-                            "hover:text-gray-200"
-                          );
-                        } else if (user.videoTrack.muted === true) {
-                          camera.classList.remove(
-                            "bg-gray-200",
-                            "text-premiumOrange",
-                            "hover:bg-premiumOrange",
-                            "hover:text-gray-200"
-                          );
-                          camera.classList.add(
-                            "bg-premiumOrange",
-                            "text-white",
-                            "hover:bg-gray-200",
-                            "hover:text-premiumOrange"
-                          );
-                        }
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-7 h-7"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
-                        />
-                      </svg>
-                    </div>
-                    {/* Mikrofon Butonu */}
-                    <div
-                      id="mic"
-                      title="Mikrofonu Aç"
-                      className="p-2 rounded-2xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500"
-                      onClick={async () => {
-                        const user = users.find((user) => user.uid === UID);
-                        if (user) {
-                          handleMuteMic(user);
-                        }
-                        const camera = document.getElementById("mic");
-                        if (user.audioTrack.muted === false) {
-                          camera.classList.remove(
-                            "bg-premiumOrange",
-                            "text-white",
-                            "hover:bg-gray-200",
-                            "hover:text-premiumOrange"
-                          );
-                          camera.classList.add(
-                            "bg-gray-200",
-                            "text-premiumOrange",
-                            "hover:bg-premiumOrange",
-                            "hover:text-gray-200"
-                          );
-                        } else if (user.audioTrack.muted === true) {
-                          camera.classList.remove(
-                            "bg-gray-200",
-                            "text-premiumOrange",
-                            "hover:bg-premiumOrange",
-                            "hover:text-gray-200"
-                          );
-                          camera.classList.add(
-                            "bg-premiumOrange",
-                            "text-white",
-                            "hover:bg-gray-200",
-                            "hover:text-premiumOrange"
-                          );
-                        }
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-7 h-7"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-                        />
-                      </svg>
-                    </div>
-                    {/* Ekran Paylaş Butonu */}
-                    {role === "admin" && (
+                    <div className="flex flex-col items-center justify-center">
                       <div
-                        id="screen-share"
-                        title="Ekranı Paylaş"
-                        className={`rounded-2xl cursor-pointer bg-premiumOrange text-gray-100 hover:bg-gray-200 hover:text-premiumOrange transition-all duration-500 p-2`}
-                        onClick={handleScreenShare}
+                        id="camera"
+                        title="Kamerayı Aç"
+                        className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                        onClick={async () => {
+                          const user = users.find((user) => user.uid === UID);
+                          if (user) {
+                            handleMuteCamera(user);
+                          }
+                          const camera = document.getElementById("camera");
+                          if (user.videoTrack.muted === false) {
+                            camera.classList.remove(
+                              "bg-premiumOrange",
+                              "text-white",
+                              "hover:bg-gray-200",
+                              "hover:text-premiumOrange"
+                            );
+                            camera.classList.add(
+                              "bg-gray-200",
+                              "text-premiumOrange",
+                              "hover:bg-premiumOrange",
+                              "hover:text-gray-200"
+                            );
+                          } else if (user.videoTrack.muted === true) {
+                            camera.classList.remove(
+                              "bg-gray-200",
+                              "text-premiumOrange",
+                              "hover:bg-premiumOrange",
+                              "hover:text-gray-200"
+                            );
+                            camera.classList.add(
+                              "bg-premiumOrange",
+                              "text-white",
+                              "hover:bg-gray-200",
+                              "hover:text-premiumOrange"
+                            );
+                          }
+                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -290,9 +211,106 @@ const MainScreen = memo(
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                            d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
                           />
                         </svg>
+                      </div>
+                      <h1 className="text-sm text-center text-gray-700 mt-2">
+                        Kamera Aç/Kapa
+                      </h1>
+                    </div>
+                    {/* Mikrofon Butonu */}
+                    <div className="flex flex-col items-center justify-center">
+                      <div
+                        id="mic"
+                        title="Mikrofonu Aç"
+                        className="px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500"
+                        onClick={async () => {
+                          const user = users.find((user) => user.uid === UID);
+                          if (user) {
+                            handleMuteMic(user);
+                          }
+                          const camera = document.getElementById("mic");
+                          if (user.audioTrack.muted === false) {
+                            camera.classList.remove(
+                              "bg-premiumOrange",
+                              "text-white",
+                              "hover:bg-gray-200",
+                              "hover:text-premiumOrange"
+                            );
+                            camera.classList.add(
+                              "bg-gray-200",
+                              "text-premiumOrange",
+                              "hover:bg-premiumOrange",
+                              "hover:text-gray-200"
+                            );
+                          } else if (user.audioTrack.muted === true) {
+                            camera.classList.remove(
+                              "bg-gray-200",
+                              "text-premiumOrange",
+                              "hover:bg-premiumOrange",
+                              "hover:text-gray-200"
+                            );
+                            camera.classList.add(
+                              "bg-premiumOrange",
+                              "text-white",
+                              "hover:bg-gray-200",
+                              "hover:text-premiumOrange"
+                            );
+                          }
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-7 h-7"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+                          />
+                        </svg>
+                      </div>
+                      <h1 className="text-sm text-center text-gray-700 mt-2">
+                        Mikrofon Aç/Kapa
+                      </h1>
+                    </div>
+                    {/* Ekran Paylaş Butonu */}
+                    {role === "admin" && (
+                      <div className="flex flex-col items-center justify-center">
+                        <div
+                          id="screen-share"
+                          title="Ekranı Paylaş"
+                          className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                          onClick={handleScreenShare}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-7 h-7"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                            />
+                          </svg>
+                        </div>
+                        <h1 className="text-sm text-center text-gray-700 mt-2">
+                          Ekran Paylaş
+                        </h1>
                       </div>
                     )}
                   </div>
@@ -301,7 +319,7 @@ const MainScreen = memo(
                     <div
                       id="chat"
                       title="Chati Aç"
-                      className="p-2 rounded-xl cursor-pointer text-2xl text-gray-100  hover:text-premiumOrange transition-all duration-500"
+                      className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
                       onClick={openChat}
                     >
                       <i class="fa-regular fa-comments"></i>
@@ -310,7 +328,7 @@ const MainScreen = memo(
                     <div
                       id="participants"
                       title="Katılımcıları Aç"
-                      className="p-2 rounded-xl cursor-pointer text-2xl text-gray-100  hover:text-premiumOrange transition-all duration-500"
+                      className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
                       onClick={openParticipants}
                     >
                       <i class="fa-solid fa-users"></i>
@@ -320,7 +338,7 @@ const MainScreen = memo(
                       <div
                         id="copyMeet"
                         title="Toplantı Linkini Kopyala"
-                        className="p-2 rounded-xl cursor-pointer text-2xl text-gray-100  hover:text-premiumOrange transition-all duration-500"
+                        className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
                         onClick={copyMeetingLink}
                       >
                         <i class="fa-solid fa-copy"></i>
@@ -344,7 +362,7 @@ const MainScreen = memo(
         </div>
         <div
           id="userVideo"
-          className="userVideo flex flex-col overflow-y-scroll items-center justify-center bg-[#313131] lg:w-[18vw]"
+          className="userVideo flex flex-col overflow-y-scroll items-center justify-center bg-gray-100 lg:w-[18vw]"
         >
           {users.map((user) => (
             <VideoPlayer key={user.uid} user={user} UID={UID} users={users} />

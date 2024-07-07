@@ -1,4 +1,6 @@
 import React, { memo } from "react";
+import profile from "@/assets/icons/profile.png";
+import Image from "next/image";
 
 const Participants = memo(
   ({ showCtrl, setShowCtrl, rtmClient, totalMembers, participants }) => {
@@ -30,11 +32,11 @@ const Participants = memo(
       <div
         className={`h-full border-r border-r-slate-400 overflow-hidden transition-[width] fixed left-0 ${
           showCtrl.showParticipants ? "w-[90vw] md:w-[40vw] top-[10vh]" : "w-0"
-        } z-30 bg-[#313131] lg:relative lg:w-[15vw]`}
+        } z-30 bg-gray-100 lg:relative lg:w-[17vw]`}
       >
-        <div className="relative bg-premiumOrange m-3 rounded-xl h-[7vh] font-bold flex items-center justify-center gap-4">
-          <span className="text-xl text-gray-100">Katılımcılar</span>
-          <div className="bg-slate-950 text-white w-8 h-8 flex justify-center items-center rounded-xl">
+        <div className="relative m-3 p-5 font-bold flex items-center justify-center gap-4 border-b-2 border-gray-300">
+          <span className="text-xl text-gray-600">Katılımcılar</span>
+          <div className="bg-premiumOrange text-white w-8 h-8 flex justify-center items-center rounded-full">
             {totalMembers}
           </div>
 
@@ -51,16 +53,22 @@ const Participants = memo(
           </button>
         </div>
         {/* Members */}
-        <div className="mt-4 px-4 flex flex-col gap-3">
+        <div className="mt-4 px-4 flex flex-col gap-3 w-full">
           {participants.map((participantId) => {
             getName(participantId);
 
             return (
-              <div key={participantId} className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-green-500"></div>
+              <div
+                key={participantId}
+                className="flex flex-row items-center gap-2"
+              >
+                <div className="imageArea border-green-500 border-2 rounded-full">
+                  <Image src={profile} width={50} height={50} />
+                </div>
+
                 <span
                   id={`user-${participantId}`}
-                  className="truncate text-gray-50 font-semibold"
+                  className="truncate text-gray-700 font-semibold text-right"
                 >
                   {participantId}
                 </span>

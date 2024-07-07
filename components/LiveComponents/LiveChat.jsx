@@ -24,7 +24,7 @@ const LiveChat = memo(({ showCtrl, sendMessage, sendFile, chats }) => {
     <div
       className={`h-full border-l border-l-slate-400 flex flex-col fixed right-0 overflow-hidden ${
         showCtrl.showLiveChat ? "w-[90vw] md:w-[45vh] top-[10vh]" : "w-0"
-      } z-30 bg-[#313131] transition-[width] lg:relative lg:w-[20vw]`}
+      } z-30 bg-gray-100 transition-[width] lg:relative lg:w-[20vw]`}
     >
       <div className="h-[70vh] p-2 w-full overflow-y-auto flex flex-col gap-4 lg:h-[80vh]">
         {chats.map((chat, id) => (
@@ -51,7 +51,7 @@ const LiveChat = memo(({ showCtrl, sendMessage, sendFile, chats }) => {
         <div ref={chatRef} />
       </div>
       <form
-        className="h-[20vh] w-full p-2 flex justify-center bg-[#313131] lg:h-[10vh]"
+        className="h-[20vh] w-full p-2 flex justify-center bg-gray-200 lg:h-[10vh]"
         onSubmit={sendMessage}
       >
         <input
@@ -63,7 +63,7 @@ const LiveChat = memo(({ showCtrl, sendMessage, sendFile, chats }) => {
         />
       </form>
       <form
-        className="h-[20vh] w-full p-2 flex justify-center bg-[#313131] lg:h-[10vh]"
+        className="h-[20vh] w-full p-2 flex justify-center bg-gray-100 lg:h-[10vh]"
         onSubmit={handleFileSubmit}
       >
         <input
