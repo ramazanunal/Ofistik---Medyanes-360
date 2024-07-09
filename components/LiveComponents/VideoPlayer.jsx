@@ -1,25 +1,49 @@
 import React, { memo, useEffect, useRef } from "react";
 
-const VideoPlayer = memo(({ user, UID, users }) => {
+const VideoPlayer = memo(({ user, UID }) => {
   const ref = useRef();
-  const videoHolder = document.getElementById("userVideo");
 
   useEffect(() => {
-    if (user.videoTrack) {
-      console.log("Playing video track for user:", user.uid);
-      user.videoTrack.play(ref.current);
-    }
-    if (user.audioTrack && user.uid !== UID) {
-      console.log("Playing audio track for user:", user.uid);
-      user.audioTrack.play();
-    }
-    if (user.screenShareTrack) {
-      console.log("Playing screen share track for user:", user.uid);
-      user.screenShareTrack.play(ref.current);
-      if (user.uid !== UID) {
+    const videoHolder = document.getElementById("userVideo");
+
+    // Oynatma işlemleri
+    const playTracks = () => {
+      if (user.videoTrack) {
+        console.log("Playing video track for user:", user.uid);
+        user.videoTrack.play(ref.current);
+      } else if (!user.videoTrack && !user.screenShareTrack) {
+        // Eğer video yoksa ve screenShareTrack de yoksa, siyah bir ekran görüntüsü ekleyin
+        ref.current.style.backgroundColor = "black";
+      }
+
+      if (user.audioTrack && user.uid !== UID) {
+        console.log("Playing audio track for user:", user.uid);
         user.audioTrack.play();
       }
-    }
+
+      if (user.screenShareTrack) {
+        console.log("Playing screen share track for user:", user.uid);
+        user.screenShareTrack.play(ref.current);
+        if (user.uid !== UID) {
+          user.audioTrack.play();
+        }
+      }
+    };
+
+    playTracks();
+
+    // Clean up function
+    return () => {
+      if (user.videoTrack) {
+        user.videoTrack.stop();
+      }
+      if (user.audioTrack) {
+        user.audioTrack.stop();
+      }
+      if (user.screenShareTrack) {
+        user.screenShareTrack.stop();
+      }
+    };
   }, [user, UID]);
 
   const enLargeFrame = (event) => {
@@ -40,10 +64,6 @@ const VideoPlayer = memo(({ user, UID, users }) => {
       shareScreen.classList.add("hidden");
     }
   };
-
-  if (!user.videoTrack && !user.screenShareTrack) {
-    return null;
-  }
 
   return (
     <>

@@ -127,7 +127,7 @@ function Page() {
               </label>
               <input
                 type="text"
-                className="h-[44px] bg-gray-100 rounded-xl p-5 focus:outline-none"
+                className="h-[44px] bg-gray-200 rounded-xl p-5 focus:outline-none"
                 value={roomLogin.username}
                 onChange={(e) =>
                   setRoomLogin((prev) => ({
@@ -148,7 +148,7 @@ function Page() {
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="h-[44px] bg-gray-100 rounded-xl p-2 focus:outline-none"
+                className="h-[44px] bg-gray-200 rounded-xl p-2 focus:outline-none"
               >
                 <option value="admin">Admin</option>
                 <option value="reader">Reader</option>
@@ -163,7 +163,7 @@ function Page() {
               </label>
               <input
                 type="text"
-                className="h-[44px] bg-gray-100 rounded-xl p-5 focus:outline-none"
+                className="h-[44px] bg-gray-200 rounded-xl p-5 focus:outline-none"
                 value={roomLogin.roomName}
                 onChange={(e) =>
                   setRoomLogin((prev) => ({

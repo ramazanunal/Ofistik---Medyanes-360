@@ -188,12 +188,37 @@ function Room() {
     try {
       const uid = await client.join(APP_ID, channel, token, null);
       setUID(uid);
-      const [audioTrack, videoTrack] =
-        await AgoraRTC.createMicrophoneAndCameraTracks();
-      setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
-      client.publish([audioTrack, videoTrack]);
-      setLocalTracks({ audio: audioTrack, video: videoTrack });
-      setJoined(true);
+
+      // Create audio track
+      const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+      setUsers((prev) => [...prev, { uid, audioTrack }]);
+
+      // Check available cameras
+      const devices = await AgoraRTC.getDevices();
+      const cameras = devices.filter((device) => device.kind === "videoinput");
+
+      if (cameras.length > 0) {
+        // Create video track if camera is available
+        const videoTrack = await AgoraRTC.createCameraVideoTrack();
+        setUsers((prev) =>
+          prev.map((user) => {
+            if (user.uid === uid) {
+              return { ...user, videoTrack };
+            }
+            return user;
+          })
+        );
+        client.publish([audioTrack, videoTrack]);
+        setLocalTracks({ audio: audioTrack, video: videoTrack });
+        setJoined(true);
+      } else {
+        // Publish only audio track if no camera is available
+        client.publish([audioTrack]);
+        setLocalTracks({ audio: audioTrack });
+        setJoined(true);
+        console.warn("No camera available, joining with audio only.");
+      }
+
       initRTM(uid);
     } catch (error) {
       console.error(error);
@@ -320,8 +345,8 @@ function Room() {
     const hrs = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    return `${hrs}:${mins < 10 ? "0 " : ""}${mins}:${
-      secs < 10 ? "0 " : ""
+    return `${hrs}:${mins < 10 ? "0" : ""}${mins}:${
+      secs < 10 ? "0" : ""
     }${secs}`;
   };
 
@@ -349,7 +374,7 @@ function Room() {
       }
     });
   }, [users]);
-
+  console.log(users);
   return displayName !== null ? (
     <div className="h-screen overflow-y-auto">
       <nav className="relative bg-gray-100  flex items-center justify-between h-[10vh] px-4 lg:px-8">
@@ -507,7 +532,7 @@ function Room() {
           </label>
           <input
             type="text"
-            className="h-[44px] bg-gray-100 rounded-xl p-5 focus:outline-none"
+            className="h-[44px] bg-gray-200 rounded-xl p-5 focus:outline-none"
             value={inputUsername}
             onChange={(e) => setInputUsername(e.target.value)}
             required
