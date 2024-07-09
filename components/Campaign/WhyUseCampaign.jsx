@@ -35,7 +35,7 @@ function WhyUseCampaign() {
                 Neden Kampanya Oluşturmalıyım?
               </h1>
               <h1 className="lg:text-[1.1vw] xl:text-[1vw] text-center mt-2 font-semibold text-gray-600">
-                Reklam vererek kullanıcı etkileşiminizi arttırabilir bu sayede
+                Kampanya Oluşturarak kullanıcı etkileşiminizi arttırabilir bu sayede
                 kazancınızda artış sağlayabilirsiniz!
               </h1>
             </div>

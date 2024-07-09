@@ -25,7 +25,7 @@ const AdvertInfo = ({ onSubmit }) => {
     kampanyaAdi: "",
     baslangicTarihi: "",
     bitisTarihi: "",
-    reklamTarihi: formattedDate,
+    kampanyaTarihi: formattedDate,
   };
 
   const validationSchema = Yup.object().shape({

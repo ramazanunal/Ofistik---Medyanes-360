@@ -1,11 +1,11 @@
-'use client'
+"use client";
 import { useState } from "react";
 import Pages from "./pages";
 import CreateAdvertTitleArea from "./createAdvertTitle";
 import AdvertInfo from "./advertInfo";
-import MainSelectItemPage from "../selectItem/mainSelectItemPage";
 import Swal from "sweetalert2";
-import MainConfirmArea from "../confirmArea/mainConfirmArea";
+import CampaignMainSelectItemPage from "./SelectItem/mainSelectItemPage";
+import ConfirmCampaign from "./ConfirmCampaign";
 
 function MainCreateAdvert({
   setInitialValueAdded,
@@ -70,7 +70,7 @@ function MainCreateAdvert({
         return <AdvertInfo onSubmit={onSubmit} />;
       case 2:
         return (
-          <MainSelectItemPage
+          <CampaignMainSelectItemPage
             initialValues={valuesForContent}
             setInitialValueAddedProp={setInitialValueAdded}
           />
@@ -78,19 +78,26 @@ function MainCreateAdvert({
       case 3:
         console.log(valuesForContent);
         return (
-          <MainConfirmArea
-            advertEndDate={
+          <ConfirmCampaign
+            campaignEndDate={
               valuesForContent.bitisTarihi || initialValueAdded.bitisTarihi
             }
-            advertName={
-              valuesForContent.reklamAdi || initialValueAdded.reklamAdi
+            campaignName={
+              valuesForContent.kampanyaAdi || initialValueAdded.kampanyaAdi
             }
-            advertStartDate={
+            campaignStartDate={
               valuesForContent.baslangicTarihi ||
               initialValueAdded.baslangicTarihi
             }
-            advertType={
-              valuesForContent.reklamTipi || initialValueAdded.reklamTipi
+            campaignType={
+              valuesForContent.kampanyaTuru || initialValueAdded.kampanyaTuru
+            }
+            cartTotal={
+              valuesForContent.cartTotal || initialValueAdded.cartTotal
+            }
+            discountPercentage={
+              valuesForContent.discountPercentage ||
+              initialValueAdded.discountPercentage
             }
             amount={
               valuesForContent.gunlukButceMiktarı ||
@@ -101,7 +108,7 @@ function MainCreateAdvert({
             }
             time={day(
               valuesForContent.baslangicTarihi ||
-              initialValueAdded.baslangicTarihi,
+                initialValueAdded.baslangicTarihi,
               valuesForContent.bitisTarihi || initialValueAdded.bitisTarihi
             )}
             total={postList}
@@ -110,18 +117,25 @@ function MainCreateAdvert({
                 ? initialValueAdded.hizmetler
                 : []
             }
+            audience={valuesForContent.audience || initialValueAdded.audience}
+            quotaType={
+              valuesForContent.quotaType || initialValueAdded.quotaType
+            }
+            quotaValue={
+              valuesForContent.quotaValue || initialValueAdded.quotaValue
+            }
           />
         );
       default:
         return null;
     }
   };
-
+  console.log(valuesForContent, initialValueAdded);
   const finish = async () => {
     try {
       await Swal.fire({
         title: `Emin misiniz ?`,
-        text: "Girilen bilgiler ile reklam oluşturuluyor. Bir hata olduğunu düşünüyorsanız iptal edip düzenleyebilirsiniz.",
+        text: "Girilen bilgiler ile Kampanya oluşturuluyor. Bir hata olduğunu düşünüyorsanız iptal edip düzenleyebilirsiniz.",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -141,7 +155,7 @@ function MainCreateAdvert({
           advertsArray.push(parsedValue);
           localStorage.setItem("adverts", JSON.stringify(advertsArray));
           Swal.fire({
-            text: "Reklamınız başarı ile oluşturuldu reklamlarım bölümünden detaylarını takip edip yönetebilirsiniz !",
+            text: "Kampanyanız başarı ile oluşturuldu Kampoanyalar bölümünden detaylarını takip edip yönetebilirsiniz !",
             icon: "success",
             confirmButtonText: "Tamam",
           }).then((result) => {
@@ -180,7 +194,7 @@ function MainCreateAdvert({
               form="myform"
               type="submit"
               style={{ marginTop: "24px" }}
-              className="mb-3 lg:my-6 lg:mr-5 flex lg:mt-0 items-center justify-center text-center py-2 px-32 text-white bg-premiumOrange border-2 hover:text-premiumOrange border-premiumOrange rounded-lg font-semibold overflow-hidden relative transition-all will-change-transform after:bg-white z-0 after:block after:w-full after:h-full after:absolute after:left-0 after:text-premiumOrange after:top-0 after:transform after:translate-x-[-100%] after:origin-top-left after:transition-transform after:duration-[400ms] after:ease-out after:will-change-transform after:z-[-1] hover:after:translate-x-[0%] hover:border-2 hover:border-transparent hover:scale-105 hover:transform-none hover:duration-300 hover:ease-out hover:will-change-transform"
+              className="mb-3 lg:my-6 disabled:cursor-not-allowed disabled:opacity-60 lg:mr-5 flex lg:mt-0 items-center justify-center text-center py-2 px-32 text-white bg-premiumOrange border-2 hover:text-premiumOrange border-premiumOrange rounded-lg font-semibold overflow-hidden relative transition-all will-change-transform after:bg-white z-0 after:block after:w-full after:h-full after:absolute after:left-0 after:text-premiumOrange after:top-0 after:transform after:translate-x-[-100%] after:origin-top-left after:transition-transform after:duration-[400ms] after:ease-out after:will-change-transform after:z-[-1] disabled:hover:after:translate-x-[-100%] disabled:hover:text-white hover:after:translate-x-[0%] hover:border-2 hover:border-transparent hover:scale-105 hover:transform-none hover:duration-300 hover:ease-out hover:will-change-transform"
             >
               Devam Et
             </button>
@@ -189,7 +203,8 @@ function MainCreateAdvert({
             <button
               onClick={handleButtonClick}
               style={{ marginTop: "24px" }}
-              className="mb-3 lg:my-6 lg:mr-5 flex lg:mt-0 items-center justify-center text-center py-2 px-32 text-white bg-premiumOrange border-2 hover:text-premiumOrange border-premiumOrange rounded-lg font-semibold overflow-hidden relative transition-all will-change-transform after:bg-white z-0 after:block after:w-full after:h-full after:absolute after:left-0 after:text-premiumOrange after:top-0 after:transform after:translate-x-[-100%] after:origin-top-left after:transition-transform after:duration-[400ms] after:ease-out after:will-change-transform after:z-[-1] hover:after:translate-x-[0%] hover:border-2 hover:border-transparent hover:scale-105 hover:transform-none hover:duration-300 hover:ease-out hover:will-change-transform"
+              disabled={activePage === 1}
+              className="mb-3 lg:my-6 disabled:cursor-not-allowed disabled:opacity-60 lg:mr-5 flex lg:mt-0 items-center justify-center text-center py-2 px-32 text-white bg-premiumOrange border-2 hover:text-premiumOrange border-premiumOrange rounded-lg font-semibold overflow-hidden relative transition-all will-change-transform after:bg-white z-0 after:block after:w-full after:h-full after:absolute after:left-0 after:text-premiumOrange after:top-0 after:transform after:translate-x-[-100%] after:origin-top-left after:transition-transform after:duration-[400ms] after:ease-out after:will-change-transform after:z-[-1] disabled:hover:after:translate-x-[-100%] disabled:hover:text-white hover:after:translate-x-[0%] hover:border-2 hover:border-transparent hover:scale-105 hover:transform-none hover:duration-300 hover:ease-out hover:will-change-transform"
             >
               Devam Et
             </button>
