@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 function WhiteBoardMain({ roomToken, uid, uuid, showChat, showParticipants }) {
   const [size, setSize] = useState("");
 
+  console.log("chat :", showChat);
+  console.log("Katılımcılar :", showParticipants);
+  console.log(size);
   let fastboard;
   try {
     fastboard = useFastboard(() => ({
@@ -24,38 +27,26 @@ function WhiteBoardMain({ roomToken, uid, uuid, showChat, showParticipants }) {
   useEffect(() => {
     // showChat ve showParticipants durumlarına göre genişliği ayarlayın
     if (showChat && showParticipants) {
-      setSize("55vw");
+      setSize("50vw");
     } else if (showChat && !showParticipants) {
-      setSize("70vw");
+      setSize("65vw");
     } else if (showParticipants && !showChat) {
       setSize("70vw");
     } else if (!showParticipants && !showChat) {
       setSize("80vw");
     }
-  }, [showChat]);
-  useEffect(() => {
-    // showChat ve showParticipants durumlarına göre genişliği ayarlayın
-    if (showChat && showParticipants) {
-      setSize("55vw");
-    } else if (showChat && !showParticipants) {
-      setSize("70vw");
-    } else if (showParticipants && !showChat) {
-      setSize("70vw");
-    } else if (!showParticipants && !showChat) {
-      setSize("80vw");
-    }
-  }, [showParticipants]);
+  }, [showChat, showParticipants]);
 
   return (
     <div
       id="white-board"
       style={{
         width: size,
-        height: "75vh",
+        height: "85vh",
         border: "1px solid",
         borderRadius: "15px",
         borderColor: "hsl(215, 20%, 75%)",
-        background: "#f1f2f3",
+        background: "white",
       }}
     >
       <Fastboard app={fastboard} />

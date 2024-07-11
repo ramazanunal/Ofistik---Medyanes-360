@@ -238,6 +238,9 @@ module.exports = {
         premiumOrangeBG2: "hsl(7, 90%, 97%)",
         purpleElite: "hsl(267, 100%, 47%)",
         purpleEliteBg: "hsl(267, 100%, 97%)",
+
+        chatBlue: "hsl(216, 79%, 90%)",
+        roomWhite: "hsl(0, 0%, 96%)",
       },
       gridTemplateRows: {
         layout: "min-content 1fr min-content",

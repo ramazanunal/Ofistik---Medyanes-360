@@ -4,6 +4,7 @@ import { useRouter, useParams, usePathname } from "next/navigation";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import AgoraRTM from "agora-rtm-sdk";
 import MainScreen from "./MainScreen";
+import { Toaster } from "react-hot-toast";
 import Participants from "./Participants";
 import LiveChat from "./LiveChat";
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
@@ -341,14 +342,6 @@ function Room() {
     }, 1000);
     return () => clearInterval(intervalRef.current);
   }, []);
-  const formatTime = (seconds) => {
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hrs}:${mins < 10 ? "0" : ""}${mins}:${
-      secs < 10 ? "0" : ""
-    }${secs}`;
-  };
 
   useEffect(() => {
     const parts = window.location.href.split("/");
@@ -376,90 +369,13 @@ function Room() {
   }, [users]);
   console.log(users);
   return displayName !== null ? (
-    <div className="h-screen overflow-y-auto">
-      <nav className="relative bg-gray-100  flex items-center justify-between h-[10vh] px-4 lg:px-8">
-        <div className="timerArea flex flex-row items-center justify-center">
-          <div className="w-5 h-5 bg-red-600 rounded-full mr-3 blinking"></div>
-          <div className="flex flex-col items-center justify-center">
-            <b className="text-lg cursor-pointer text-gray-500">
-              Toplantı Süresi
-            </b>
-            <b className="text-lg cursor-pointer text-gray-600">
-              {formatTime(timeElapsed)}
-            </b>
-          </div>
-        </div>
-        <b className="text-xl lg:text-3xl cursor-pointer text-premiumOrange font-bold">
-          Ofistik
-        </b>
-        <button
-          className="rounded-xl bg-premiumOrange lg:px-8 lg:py-2 px-3 py-1 text-gray-100 font-bold text-sm lg:text-base"
-          onClick={async () => {
-            router.push("/"); //TOPLANTI BİTTİ SAYFASI YAP
-          }}
-        >
-          Toplantıdan Ayrıl
-          <i class="fa-solid fa-arrow-right-from-bracket ml-2"></i>
-        </button>
-
-        {/* Absolutes */}
-        <div
-          className="absolute top-[102%] z-20 left-0 flex items-center justify-center cursor-pointer h-12 w-12 rounded-sm bg-orange-500 lg:hidden"
-          onClick={() =>
-            setShowCtrl((prev) => ({
-              ...prev,
-              showParticipants: !showCtrl.showParticipants,
-            }))
-          }
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-            />
-          </svg>
-          <small className="w-4 h-4 rounded-md flex items-center justify-center bg-slate-900">
-            0
-          </small>
-        </div>
-
-        <div
-          className="absolute top-[102%] z-20 right-0 flex items-center justify-center cursor-pointer h-12 w-12 rounded-sm bg-orange-500 lg:hidden"
-          onClick={() =>
-            setShowCtrl((prev) => ({
-              ...prev,
-              showLiveChat: !showCtrl.showLiveChat,
-            }))
-          }
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"
-            />
-          </svg>
-        </div>
-      </nav>
-      <section className="h-[90vh] flex justify-between overflow-hidden">
+    <div className="h-screen bg-gray-100">
+      <Toaster />
+      <section className=" flex justify-between overflow-hidden">
         {/* Participants */}
         {showParticipants && (
           <Participants
+            show={showParticipants}
             showCtrl={showCtrl}
             setShowCtrl={setShowCtrl}
             rtmClient={rtmClient}
@@ -494,6 +410,7 @@ function Room() {
         {/* Live Chat */}
         {chatShow && (
           <LiveChat
+            show={chatShow}
             sendFile={sendFile}
             showCtrl={showCtrl}
             sendMessage={sendMessage}

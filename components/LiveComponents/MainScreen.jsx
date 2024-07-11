@@ -1,8 +1,9 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
 import VideoPlayer from "./VideoPlayer";
 import "./style.css";
 import WhiteBoardMain from "./whiteBoardMain";
-
+import toast, { Toaster } from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const MainScreen = memo(
   ({
     joined,
@@ -40,7 +41,13 @@ const MainScreen = memo(
     }, []);
 
     const openWhiteboard = () => {
+      const shareScreen = document.getElementById("share-screen");
+      if (shareScreen.querySelector(".userCam")) {
+        toast.error("Beyaz tahtayı açmak için lütfen büyük kamerayı kapatın!");
+        return;
+      }
       setWhiteboardOpen(true);
+      toast.success("Beyaz Tahta Başarılı bir şekilde Açıldı");
     };
 
     const closeWhiteboard = () => {
@@ -91,20 +98,37 @@ const MainScreen = memo(
         console.error("Kamera izni alınamadı:", err);
       }
     };
+    const [muted, setMuted] = useState(true);
 
+    const [timeElapsed, setTimeElapsed] = useState(0);
+    const intervalRef = useRef(null);
+    useEffect(() => {
+      intervalRef.current = setInterval(() => {
+        setTimeElapsed((prev) => prev + 1);
+      }, 1000);
+      return () => clearInterval(intervalRef.current);
+    }, []);
+    const formatTime = (seconds) => {
+      const hrs = Math.floor(seconds / 3600);
+      const mins = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      return `${hrs}:${mins < 10 ? "0" : ""}${mins}:${
+        secs < 10 ? "0" : ""
+      }${secs}`;
+    };
     return (
       <>
         <div
           id="video-holder"
-          className={`relative h-[90vh] overflow-y-auto w-full flex flex-wrap justify-center p-2 gap-4 lg:p-4 ${
-            chatShow ? "lg:w-[65vw]" : "lg:w-[83vw]"
+          className={`relative h-screen overflow-y-auto w-full flex flex-wrap justify-center p-2 gap-4 lg:p-4 ${
+            chatShow ? "lg:w-[85vw]" : "lg:w-[83vw]"
           } bg-gray-100`}
         >
           {/* Share Screen */}
           {roomToken && UID && uuid && whiteboardOpen && (
             <div
               className={`whiteBoard ${
-                chatShow ? "lg:w-[60vw]" : "lg:w-[80vw]"
+                chatShow ? "lg:w-[75vw]" : "lg:w-[85vw]"
               }`}
             >
               <WhiteBoardMain
@@ -129,7 +153,15 @@ const MainScreen = memo(
                 showParticipants
               )}`}
             >
-              <div className="channelNameArea">
+              <div className="channelNameArea flex flex-row items-center justify-center">
+                <div className="timerArea flex flex-row items-center justify-center mr-3">
+                  <div className="w-5 h-5 bg-red-600 rounded-full mr-2 blinking"></div>
+                  <div className="flex flex-col items-center justify-center">
+                    <b className="text-lg cursor-pointer text-gray-600">
+                      {formatTime(timeElapsed)}
+                    </b>
+                  </div>
+                </div>
                 <h1 className="text-xl tracking-wider text-gray-700">
                   {channel} Toplantısı
                 </h1>
@@ -141,6 +173,9 @@ const MainScreen = memo(
                     title="Beyaz Tahtayı Aç"
                     onClick={() => {
                       if (whiteboardOpen) {
+                        toast.success(
+                          "Beyaz Tahta Başarılı bir şekilde kapatıldı"
+                        );
                         closeWhiteboard();
                       } else {
                         openWhiteboard();
@@ -188,33 +223,10 @@ const MainScreen = memo(
                           handleMuteCamera(user);
                         }
                       }
-                      const camera = document.getElementById("camera");
                       if (user.videoTrack.muted === false) {
-                        camera.classList.remove(
-                          "bg-premiumOrange",
-                          "text-white",
-                          "hover:bg-gray-200",
-                          "hover:text-premiumOrange"
-                        );
-                        camera.classList.add(
-                          "bg-gray-200",
-                          "text-premiumOrange",
-                          "hover:bg-premiumOrange",
-                          "hover:text-gray-200"
-                        );
+                        toast.success("Kamera başarılı bir şekilde kapatıldı");
                       } else if (user.videoTrack.muted === true) {
-                        camera.classList.remove(
-                          "bg-gray-200",
-                          "text-premiumOrange",
-                          "hover:bg-premiumOrange",
-                          "hover:text-gray-200"
-                        );
-                        camera.classList.add(
-                          "bg-premiumOrange",
-                          "text-white",
-                          "hover:bg-gray-200",
-                          "hover:text-premiumOrange"
-                        );
+                        toast.success("Kamera başarılı bir şekilde açıldı");
                       }
                     }}
                   >
@@ -253,50 +265,22 @@ const MainScreen = memo(
                       if (user) {
                         handleMuteMic(user);
                       }
-                      const camera = document.getElementById("mic");
                       if (user.audioTrack.muted === false) {
-                        camera.classList.remove(
-                          "bg-premiumOrange",
-                          "text-white",
-                          "hover:bg-gray-200",
-                          "hover:text-premiumOrange"
+                        toast.success(
+                          "Mikrofon başarılı bir şekilde kapatıldı"
                         );
-                        camera.classList.add(
-                          "bg-gray-200",
-                          "text-premiumOrange",
-                          "hover:bg-premiumOrange",
-                          "hover:text-gray-200"
-                        );
+                        setMuted(false);
                       } else if (user.audioTrack.muted === true) {
-                        camera.classList.remove(
-                          "bg-gray-200",
-                          "text-premiumOrange",
-                          "hover:bg-premiumOrange",
-                          "hover:text-gray-200"
-                        );
-                        camera.classList.add(
-                          "bg-premiumOrange",
-                          "text-white",
-                          "hover:bg-gray-200",
-                          "hover:text-premiumOrange"
-                        );
+                        setMuted(true);
+                        toast.success("Mikrofon başarılı bir şekilde açıldı");
                       }
                     }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-7 h-7"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-                      />
-                    </svg>
+                    {muted ? (
+                      <i class="fa-solid fa-microphone-lines text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
+                    ) : (
+                      <i class="fa-solid fa-microphone-lines-slash flex items-center justify-center text-xl w-7 h-7 text-center"></i>
+                    )}
                   </div>
                   <h1 className="text-sm text-center text-gray-700 mt-2">
                     Mikrofon Aç/Kapa
@@ -368,7 +352,7 @@ const MainScreen = memo(
         </div>
         <div
           id="userVideo"
-          className="userVideo flex flex-col overflow-y-scroll items-center justify-center bg-gray-100 lg:w-[18vw]"
+          className="userVideo flex flex-col items-center justify-center bg-gray-100 lg:w-[15vw]"
         >
           {users.map((user) => (
             <VideoPlayer key={user.uid} user={user} UID={UID} users={users} />

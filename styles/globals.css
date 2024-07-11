@@ -32,7 +32,20 @@
 .blinking {
   animation: blink 1s infinite;
 }
+.live-chat {
+  position: relative;
+  top: 0;
+  right: -100%; /* Initially off-screen */
+  width: 400px; /* Adjust width as per your design */
+  height: 100%;
+  background-color: white;
+  transition: right 0.5s ease-in-out; /* Smooth transition for right property */
+  z-index: 100;
+}
 
+.live-chat.open {
+  right: 0; /* Slide in from the right */
+}
 #share-screen .videoPlayer {
   -o-object-fit: cover;
   object-fit: cover;

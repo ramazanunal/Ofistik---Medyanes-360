@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef } from "react";
-
+import toast, { Toaster } from "react-hot-toast";
 const VideoPlayer = memo(({ user, UID }) => {
   const ref = useRef();
 
@@ -49,7 +49,10 @@ const VideoPlayer = memo(({ user, UID }) => {
   const enLargeFrame = (event) => {
     const videoHolder = document.getElementById("userVideo");
     const shareScreen = document.getElementById("share-screen");
-
+    if (document.getElementById("white-board")) {
+      toast.error("Kamerayı büyütmek için beyaz tahtayı kapatın!");
+      return;
+    }
     if (event.target.parentNode.parentNode.parentNode.id !== shareScreen.id) {
       let child = shareScreen.children[0];
       if (child) {
@@ -71,7 +74,7 @@ const VideoPlayer = memo(({ user, UID }) => {
         ref={ref}
         id={user.uid}
         onClick={enLargeFrame}
-        className="w-[300px] h-[300px] overflow-hidden cursor-pointer rounded-3xl mr-3 border-2 m-auto border-gray-300 md:w-[170px] md:h-[170px] xl:w-[250px] xl:h-[250px] videoPlayer"
+        className="userCam w-[300px] h-[300px] overflow-hidden cursor-pointer rounded-3xl mr-3 border-2 m-auto border-gray-300 md:w-[170px] md:h-[170px] xl:w-[200px] xl:h-[200px] videoPlayer"
       ></div>
     </>
   );
