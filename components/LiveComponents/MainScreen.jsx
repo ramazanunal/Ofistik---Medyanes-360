@@ -18,16 +18,34 @@ const MainScreen = memo(
     handleScreenShare,
     users,
     UID,
+    rtmClient,
     screenShareRef,
     roomToken,
     uuid,
     setChatShow,
     chatShow,
+    leaveRoom,
   }) => {
     const [whiteboardOpen, setWhiteboardOpen] = useState(false);
     const [role, setRole] = useState(false);
+    const [userNames, setUserNames] = useState(false);
 
     useEffect(() => {
+      const fetchUserNames = async () => {
+        const names = {};
+        for (const user of users) {
+          const usernamePromise = rtmClient.getUserAttributesByKeys(user.uid, [
+            "name",
+          ]);
+          const { name } = await usernamePromise;
+          names[user.uid] = name;
+        }
+        setUserNames(names);
+        // debugger;
+      };
+
+      fetchUserNames();
+
       const parts = window.location.href.split("/");
       const role = parts[parts.length - 1];
       const [roleData] = role.split("/").map((part) => part.split("=")[1]);
@@ -80,7 +98,7 @@ const MainScreen = memo(
       navigator.clipboard
         .writeText(readerUrl)
         .then(() => {
-          alert("Toplantı linki başarıyla kopyalandı!");
+          toast.success("Toplantı linki başarıyla kopyalandı!");
         })
         .catch((err) => {
           console.error("Kopyalama sırasında hata oluştu:", err);
@@ -116,6 +134,7 @@ const MainScreen = memo(
         secs < 10 ? "0" : ""
       }${secs}`;
     };
+
     return (
       <>
         <div
@@ -254,6 +273,20 @@ const MainScreen = memo(
                     Kamera Aç/Kapa
                   </h1>
                 </div>
+                {/* Çıkış Butonu */}
+                <div className="flex flex-col items-center justify-center">
+                  <div
+                    id="exit"
+                    title="Toplantıdan Ayrıl"
+                    className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
+                    onClick={leaveRoom}
+                  >
+                    <i class="fa-solid fa-phone-slash text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
+                  </div>
+                  <h1 className="text-sm text-center text-gray-700 mt-2">
+                    Toplantıdan Ayrıl
+                  </h1>
+                </div>
                 {/* Mikrofon Butonu */}
                 <div className="flex flex-col items-center justify-center">
                   <div
@@ -352,10 +385,16 @@ const MainScreen = memo(
         </div>
         <div
           id="userVideo"
-          className="userVideo flex flex-col items-center justify-center bg-gray-100 lg:w-[15vw]"
+          className=" flex flex-row flex-wrap bg-gray-100 lg:w-[15vw] max-h-screen overflow-y-scroll"
         >
           {users.map((user) => (
-            <VideoPlayer key={user.uid} user={user} UID={UID} users={users} />
+            <VideoPlayer
+              rtmClient={rtmClient}
+              key={user.uid}
+              user={user}
+              UID={UID}
+              usersNumber={users.length}
+            />
           ))}
         </div>
       </>

@@ -4,7 +4,7 @@ import { useRouter, useParams, usePathname } from "next/navigation";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import AgoraRTM from "agora-rtm-sdk";
 import MainScreen from "./MainScreen";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import Participants from "./Participants";
 import LiveChat from "./LiveChat";
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
@@ -70,6 +70,9 @@ function Room() {
   };
 
   const leaveRoom = async () => {
+    await channelRes.leave();
+    await rtmClient.logout();
+    toast.success("Çıkış başarılı ana sayfaya yönlendiriliyorsunuz.");
     router.push("/");
   };
 
@@ -189,17 +192,12 @@ function Room() {
     try {
       const uid = await client.join(APP_ID, channel, token, null);
       setUID(uid);
-
-      // Create audio track
       const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       setUsers((prev) => [...prev, { uid, audioTrack }]);
-
-      // Check available cameras
       const devices = await AgoraRTC.getDevices();
       const cameras = devices.filter((device) => device.kind === "videoinput");
 
       if (cameras.length > 0) {
-        // Create video track if camera is available
         const videoTrack = await AgoraRTC.createCameraVideoTrack();
         setUsers((prev) =>
           prev.map((user) => {
@@ -213,7 +211,6 @@ function Room() {
         setLocalTracks({ audio: audioTrack, video: videoTrack });
         setJoined(true);
       } else {
-        // Publish only audio track if no camera is available
         client.publish([audioTrack]);
         setLocalTracks({ audio: audioTrack });
         setJoined(true);
@@ -242,12 +239,13 @@ function Room() {
   };
 
   const handleMuteCamera = async (user) => {
-    if (user.videoTrack.muted === false) {
-      await user.videoTrack.setMuted(true);
-    } else if (user.videoTrack.muted === true) {
+    if (user.videoTrack.muted) {
       await user.videoTrack.setMuted(false);
+    } else {
+      await user.videoTrack.setMuted(true);
     }
   };
+
   const handleMuteMic = async (user) => {
     if (user.audioTrack.muted === false) {
       await user.audioTrack.setMuted(true);
@@ -261,8 +259,6 @@ function Room() {
         const screenShareTrack = await AgoraRTC.createScreenVideoTrack({
           encoderConfig: "720p_1",
         });
-
-        // Ekran paylaşımını başlat
         if (localTracks.video) {
           await client.unpublish(localTracks.video);
         }
@@ -367,7 +363,24 @@ function Room() {
       }
     });
   }, [users]);
-  console.log(users);
+  console.log(rtmClient);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const userVideoDivs = document.querySelectorAll("#userVideo .userCam");
+      userVideoDivs.forEach((div) => {
+        if (div.querySelector("div") !== null) {
+          div.style.display = "block";
+        } else {
+          div.style.display = "none";
+        }
+      });
+    }, 1000); // Check every second (1000ms)
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
   return displayName !== null ? (
     <div className="h-screen bg-gray-100">
       <Toaster />
@@ -386,12 +399,14 @@ function Room() {
 
         {/* Main Screen */}
         <MainScreen
+          leaveRoom={leaveRoom}
           channel={channel}
           setShowParticipants={setShowParticipants}
           showParticipants={showParticipants}
           setChatShow={setChatShow}
           chatShow={chatShow}
           handleMuteMic={handleMuteMic}
+          rtmClient={rtmClient}
           joined={joined}
           setJoined={setJoined}
           joinRoom={joinRoom}
@@ -459,7 +474,7 @@ function Room() {
             onClick={() => {
               if (inputUsername) {
                 sessionStorage.setItem("username", inputUsername);
-                window.location.reload(); // Reload the entire page
+                joinRoom(); // Reload the entire page
               } else {
                 alert("Lütfen bir isim giriniz");
               }

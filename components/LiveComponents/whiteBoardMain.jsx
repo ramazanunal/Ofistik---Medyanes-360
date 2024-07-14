@@ -3,10 +3,6 @@ import React, { useEffect, useState } from "react";
 
 function WhiteBoardMain({ roomToken, uid, uuid, showChat, showParticipants }) {
   const [size, setSize] = useState("");
-
-  console.log("chat :", showChat);
-  console.log("Katılımcılar :", showParticipants);
-  console.log(size);
   let fastboard;
   try {
     fastboard = useFastboard(() => ({

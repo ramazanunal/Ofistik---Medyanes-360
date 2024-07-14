@@ -1,11 +1,9 @@
 import React, { memo, useEffect, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
-const VideoPlayer = memo(({ user, UID }) => {
+const VideoPlayer = memo(({ user, UID, usersNumber }) => {
   const ref = useRef();
 
   useEffect(() => {
-    const videoHolder = document.getElementById("userVideo");
-
     // Oynatma işlemleri
     const playTracks = () => {
       if (user.videoTrack) {
@@ -74,7 +72,7 @@ const VideoPlayer = memo(({ user, UID }) => {
         ref={ref}
         id={user.uid}
         onClick={enLargeFrame}
-        className="userCam w-[300px] h-[300px] overflow-hidden cursor-pointer rounded-3xl mr-3 border-2 m-auto border-gray-300 md:w-[170px] md:h-[170px] xl:w-[200px] xl:h-[200px] videoPlayer"
+        className={`userCam w-[300px] my-5 h-[300px] overflow-hidden cursor-pointer rounded-2xl mr-3 border-2 m-auto border-gray-300 md:w-[170px] md:h-[130px] xl:w-[250px] xl:h-[200px] videoPlayer`}
       ></div>
     </>
   );
