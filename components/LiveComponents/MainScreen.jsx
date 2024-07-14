@@ -60,10 +60,10 @@ const MainScreen = memo(
 
     const openWhiteboard = () => {
       const shareScreen = document.getElementById("share-screen");
-      if (shareScreen.querySelector(".userCam")) {
-        toast.error("Beyaz tahtayı açmak için lütfen büyük kamerayı kapatın!");
-        return;
-      }
+      // if (shareScreen.querySelector(".userCam")) {
+      //   toast.error("Beyaz tahtayı açmak için lütfen büyük kamerayı kapatın!");
+      //   return;
+      // }
       setWhiteboardOpen(true);
       toast.success("Beyaz Tahta Başarılı bir şekilde Açıldı");
     };
@@ -83,13 +83,17 @@ const MainScreen = memo(
     const stringUid = UID.toString();
 
     const getContainerWidthClass = (chatShow, showParticipants) => {
-      if (chatShow && showParticipants) {
-        return "w-[50%]";
-      }
-      if (chatShow || showParticipants) {
+      console.log("chat:  ", chatShow);
+      console.log("Participants:  ", showParticipants);
+      if (!chatShow && showParticipants) {
         return "w-[60%]";
+      } else if (!chatShow && !showParticipants) {
+        return "w-[70%]";
+      } else if (showParticipants && chatShow) {
+        return "w-[70%]";
+      } else if (!showParticipants && chatShow) {
+        return "w-[85%]";
       }
-      return "w-[80%]";
     };
 
     const copyMeetingLink = () => {
@@ -134,7 +138,24 @@ const MainScreen = memo(
         secs < 10 ? "0" : ""
       }${secs}`;
     };
+    const [size, setSize] = useState("");
+    useEffect(() => {
+      // showChat ve showParticipants durumlarına göre genişliği ayarlayın
+      if (!chatShow && showParticipants) {
+        setSize("50vw");
+      } else if (!chatShow && !showParticipants) {
+        setSize("65vw");
+      } else if (showParticipants && chatShow) {
+        setSize("70vw");
+      } else if (!showParticipants && chatShow) {
+        setSize("80vw");
+      }
+    }, [chatShow, showParticipants]);
+    const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
 
+    const swapViews = () => {
+      setShowWhiteboardLarge((prev) => !prev);
+    };
     return (
       <>
         <div
@@ -145,25 +166,41 @@ const MainScreen = memo(
         >
           {/* Share Screen */}
           {roomToken && UID && uuid && whiteboardOpen && (
-            <div
-              className={`whiteBoard ${
-                chatShow ? "lg:w-[75vw]" : "lg:w-[85vw]"
-              }`}
-            >
-              <WhiteBoardMain
-                showParticipants={showParticipants}
-                showChat={chatShow}
-                roomToken={roomToken}
-                uid={stringUid}
-                uuid={uuid}
-              />
-            </div>
+            <>
+              <div
+                className={`whiteBoard ${
+                  showWhiteboardLarge
+                    ? "w-[100%] h-[90%]"
+                    : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                }`}
+              >
+                <WhiteBoardMain
+                  showWhiteboardLarge={showWhiteboardLarge}
+                  showParticipants={showParticipants}
+                  showChat={chatShow}
+                  roomToken={roomToken}
+                  uid={stringUid}
+                  uuid={uuid}
+                />
+              </div>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={` ${
+                  showWhiteboardLarge
+                    ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                    : "w-[100%] h-[90%]"
+                }  bg-gray-100`}
+              ></div>
+              <button
+                onClick={swapViews}
+                className="bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30"
+              >
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </>
           )}
-          <div
-            ref={screenShareRef}
-            id="share-screen"
-            className={`hidden top-0 left-0 !w-[100%] h-[75vh] bg-gray-100`}
-          ></div>
+
           {/* Join Stream */}
           <div className="w-full fixed bg-slate-200/10 py-2 z-10 bottom-0 flex justify-center ">
             <div
@@ -274,19 +311,7 @@ const MainScreen = memo(
                   </h1>
                 </div>
                 {/* Çıkış Butonu */}
-                <div className="flex flex-col items-center justify-center">
-                  <div
-                    id="exit"
-                    title="Toplantıdan Ayrıl"
-                    className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
-                    onClick={leaveRoom}
-                  >
-                    <i class="fa-solid fa-phone-slash text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
-                  </div>
-                  <h1 className="text-sm text-center text-gray-700 mt-2">
-                    Toplantıdan Ayrıl
-                  </h1>
-                </div>
+
                 {/* Mikrofon Butonu */}
                 <div className="flex flex-col items-center justify-center">
                   <div
@@ -350,25 +375,6 @@ const MainScreen = memo(
                 )}
               </div>
               <div className="flex items-center justify-center gap-4">
-                {/* Chat Butonu */}
-                <div
-                  id="chat"
-                  title="Chati Aç"
-                  className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
-                  onClick={openChat}
-                >
-                  <i class="fa-regular fa-comments"></i>
-                </div>
-                {/* Katılımcılar Butonu */}
-                <div
-                  id="participants"
-                  title="Katılımcıları Aç"
-                  className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
-                  onClick={openParticipants}
-                >
-                  <i class="fa-solid fa-users"></i>
-                </div>
-                {/* Toplantı kopyalama Butonu */}
                 {role === "admin" && (
                   <div
                     id="copyMeet"
@@ -379,6 +385,20 @@ const MainScreen = memo(
                     <i class="fa-solid fa-copy"></i>
                   </div>
                 )}
+                {/* Çıkış yapma Butonu */}
+                <div className="flex flex-row items-center justify-center">
+                  <div
+                    id="exit"
+                    title="Toplantıdan Ayrıl"
+                    className={`px-8 py-5 w-full flex flex-row items-center justify-center  rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
+                    onClick={leaveRoom}
+                  >
+                    <i class="fa-solid fa-phone-slash text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
+                    <h1 className="text-base text-center text-gray-50 ml-2 font-semibold mb-2">
+                      Ayrıl
+                    </h1>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -389,6 +409,7 @@ const MainScreen = memo(
         >
           {users.map((user) => (
             <VideoPlayer
+              showWhiteboardLarge={showWhiteboardLarge}
               rtmClient={rtmClient}
               key={user.uid}
               user={user}

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
-const VideoPlayer = memo(({ user, UID, usersNumber }) => {
+const VideoPlayer = memo(({ user, UID, usersNumber, showWhiteboardLarge }) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -47,10 +47,10 @@ const VideoPlayer = memo(({ user, UID, usersNumber }) => {
   const enLargeFrame = (event) => {
     const videoHolder = document.getElementById("userVideo");
     const shareScreen = document.getElementById("share-screen");
-    if (document.getElementById("white-board")) {
-      toast.error("Kamerayı büyütmek için beyaz tahtayı kapatın!");
-      return;
-    }
+    // if (document.getElementById("white-board")) {
+    //   toast.error("Kamerayı büyütmek için beyaz tahtayı kapatın!");
+    //   return;
+    // }
     if (event.target.parentNode.parentNode.parentNode.id !== shareScreen.id) {
       let child = shareScreen.children[0];
       if (child) {
@@ -72,7 +72,9 @@ const VideoPlayer = memo(({ user, UID, usersNumber }) => {
         ref={ref}
         id={user.uid}
         onClick={enLargeFrame}
-        className={`userCam w-[300px] my-5 h-[300px] overflow-hidden cursor-pointer rounded-2xl mr-3 border-2 m-auto border-gray-300 md:w-[170px] md:h-[130px] xl:w-[250px] xl:h-[200px] videoPlayer`}
+        className={`userCam w-[300px] my-5 h-[300px] ${
+          showWhiteboardLarge ? "smallView" : ""
+        } overflow-hidden cursor-pointer rounded-2xl mr-3 border-2 m-auto border-gray-300 md:w-[170px] md:h-[130px] xl:w-[250px] xl:h-[200px] videoPlayer`}
       ></div>
     </>
   );

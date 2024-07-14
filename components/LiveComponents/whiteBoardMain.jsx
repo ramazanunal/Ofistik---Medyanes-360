@@ -1,7 +1,14 @@
 import { useFastboard, Fastboard } from "@netless/fastboard-react";
 import React, { useEffect, useState } from "react";
 
-function WhiteBoardMain({ roomToken, uid, uuid, showChat, showParticipants }) {
+function WhiteBoardMain({
+  roomToken,
+  uid,
+  uuid,
+  showChat,
+  showParticipants,
+  showWhiteboardLarge,
+}) {
   const [size, setSize] = useState("");
   let fastboard;
   try {
@@ -20,15 +27,18 @@ function WhiteBoardMain({ roomToken, uid, uuid, showChat, showParticipants }) {
     console.error("An error occurred while initializing fastboard:", error);
   }
 
+  console.log("chat durumu: ", showChat);
+  console.log("katılımcılar durumu: ", showParticipants);
+
   useEffect(() => {
     // showChat ve showParticipants durumlarına göre genişliği ayarlayın
-    if (showChat && showParticipants) {
-      setSize("50vw");
-    } else if (showChat && !showParticipants) {
+    if (!showChat && showParticipants) {
+      setSize("55vw");
+    } else if (!showChat && !showParticipants) {
       setSize("65vw");
-    } else if (showParticipants && !showChat) {
+    } else if (showParticipants && showChat) {
       setSize("70vw");
-    } else if (!showParticipants && !showChat) {
+    } else if (!showParticipants && showChat) {
       setSize("80vw");
     }
   }, [showChat, showParticipants]);
@@ -37,8 +47,8 @@ function WhiteBoardMain({ roomToken, uid, uuid, showChat, showParticipants }) {
     <div
       id="white-board"
       style={{
-        width: size,
-        height: "85vh",
+        width: showWhiteboardLarge === false ? "22vw" : size,
+        height: showWhiteboardLarge === false ? "25vh" : "85vh",
         border: "1px solid",
         borderRadius: "15px",
         borderColor: "hsl(215, 20%, 75%)",

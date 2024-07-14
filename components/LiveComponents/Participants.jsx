@@ -3,7 +3,15 @@ import profile from "@/assets/icons/profile.png";
 import Image from "next/image";
 
 const Participants = memo(
-  ({ showCtrl, setShowCtrl, rtmClient, totalMembers, participants, show }) => {
+  ({
+    showCtrl,
+    setShowCtrl,
+    rtmClient,
+    totalMembers,
+    participants,
+    show,
+    openParticipants,
+  }) => {
     const getName = async (participantId) => {
       let nameOfUser = "";
       try {
@@ -29,12 +37,18 @@ const Participants = memo(
     };
 
     return (
-      <div className="p-5 pt-2 bg-gray-100">
+      <div className="p-5 pt-2 bg-gray-100 relative">
+        <button
+          onClick={openParticipants}
+          className="bg-premiumOrange w-10 h-10 rounded-full text-white absolute top-8 right-2 z-40 hover:scale-125 transform duration-500"
+        >
+          <i class={`fa-solid fa-chevron-${show ? "left" : "right"}`}></i>
+        </button>
         <div
           className={`h-[96vh] fixed left-0 ${
             show
-              ? "animate__animated animate__fadeInLeft"
-              : "animate__animated animate__fadeOutLeft"
+              ? " animate__animated animate__fadeInLeft"
+              : "hidden animate__animated animate__fadeOutLeft"
           } z-30 bg-white lg:relative rounded-2xl lg:w-[12vw]`}
         >
           <div className="relative m-3 p-5 font-bold flex items-center justify-center gap-4 border-b-2 border-gray-300">

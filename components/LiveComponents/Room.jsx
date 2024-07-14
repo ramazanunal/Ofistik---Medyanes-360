@@ -7,6 +7,7 @@ import MainScreen from "./MainScreen";
 import { Toaster, toast } from "react-hot-toast";
 import Participants from "./Participants";
 import LiveChat from "./LiveChat";
+import Swal from "sweetalert2";
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
 import AC from "agora-chat";
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -26,7 +27,7 @@ function Room() {
   const [token, setToken] = useState(null);
   const [joined, setJoined] = useState(false);
   const [chatShow, setChatShow] = useState(false);
-  const [showParticipants, setShowParticipants] = useState(false);
+  const [showParticipants, setShowParticipants] = useState(true);
   const [UID, setUID] = useState("");
   const [role, setRole] = useState("");
   const [users, setUsers] = useState([]);
@@ -70,10 +71,26 @@ function Room() {
   };
 
   const leaveRoom = async () => {
-    await channelRes.leave();
-    await rtmClient.logout();
-    toast.success("Çıkış başarılı ana sayfaya yönlendiriliyorsunuz.");
-    router.push("/");
+    Swal.fire({
+      title: "Çıkış yapılıyor...",
+      html: "Lütfen bekleyin.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      await channelRes.leave();
+      await rtmClient.logout();
+      Swal.close();
+      toast.success("Çıkış başarılı ana sayfaya yönlendiriliyorsunuz.");
+      router.push("/");
+    } catch (error) {
+      Swal.close();
+      toast.error("Çıkış sırasında bir hata oluştu.");
+      console.error(error);
+    }
   };
 
   const getMembers = async (channelResIn) => {
@@ -146,6 +163,10 @@ function Room() {
           console.log("Fail");
         });
     }
+  };
+
+  const openChat = () => {
+    setChatShow(!chatShow);
   };
 
   const sendMessage = async (e) => {
@@ -353,24 +374,9 @@ function Room() {
     const [roleData] = role.split("/").map((part) => part.split("=")[1]);
     setRole(roleData);
   }, []);
-
-  // useEffect(() => {
-  //   const shareScreen = document.getElementById("share-screen");
-  //   users.forEach((user) => {
-  //     if (user._videoTrack && user._videoTrack._ID.includes("track-video-")) {
-  //       // Append the element to shareScreen
-  //       const videoElement = document.createElement("div");
-  //       videoElement.id = user.uid; // Assuming user.uid can be used as a unique identifier
-  //       videoElement.classList.add("video-element"); // Add your CSS class here
-
-  //       // Append the element to shareScreen
-  //       shareScreen.appendChild(videoElement);
-
-  //       // Optionally, you can also play the video track here
-  //       user._videoTrack.play(videoElement);
-  //     }
-  //   });
-  // }, [users]);
+  const openParticipants = () => {
+    setShowParticipants((prevShowParticipants) => !prevShowParticipants);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -392,16 +398,15 @@ function Room() {
       <Toaster />
       <section className=" flex justify-between overflow-hidden">
         {/* Participants */}
-        {showParticipants && (
-          <Participants
-            show={showParticipants}
-            showCtrl={showCtrl}
-            setShowCtrl={setShowCtrl}
-            rtmClient={rtmClient}
-            totalMembers={totalMembers}
-            participants={participants}
-          />
-        )}
+        <Participants
+          openParticipants={openParticipants}
+          show={showParticipants}
+          showCtrl={showCtrl}
+          setShowCtrl={setShowCtrl}
+          rtmClient={rtmClient}
+          totalMembers={totalMembers}
+          participants={participants}
+        />
 
         {/* Main Screen */}
         <MainScreen
@@ -428,16 +433,15 @@ function Room() {
           uuid={uuid}
         />
 
-        {/* Live Chat */}
-        {chatShow && (
-          <LiveChat
-            show={chatShow}
-            sendFile={sendFile}
-            showCtrl={showCtrl}
-            sendMessage={sendMessage}
-            chats={chats}
-          />
-        )}
+        <LiveChat
+          chatShow={chatShow}
+          openFunction={openChat}
+          show={chatShow}
+          sendFile={sendFile}
+          showCtrl={showCtrl}
+          sendMessage={sendMessage}
+          chats={chats}
+        />
       </section>
 
       {(showCtrl.showLiveChat || showCtrl.showParticipants) && (
