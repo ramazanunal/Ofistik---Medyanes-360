@@ -40,7 +40,7 @@ const Participants = memo(
       <div className="p-5 pt-2 bg-gray-100 relative">
         <button
           onClick={openParticipants}
-          className="bg-premiumOrange w-10 h-10 rounded-full text-white absolute top-8 right-2 z-40 hover:scale-125 transform duration-500"
+          className="bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 right-2 z-40 hover:scale-125 transform duration-500"
         >
           <i class={`fa-solid fa-chevron-${show ? "left" : "right"}`}></i>
         </button>

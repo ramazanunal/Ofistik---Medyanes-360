@@ -82,10 +82,10 @@ function Room() {
 
     try {
       await channelRes.leave();
-      await rtmClient.logout();
       Swal.close();
       toast.success("Çıkış başarılı ana sayfaya yönlendiriliyorsunuz.");
       router.push("/");
+      window.location.reload();
     } catch (error) {
       Swal.close();
       toast.error("Çıkış sırasında bir hata oluştu.");
@@ -226,6 +226,14 @@ function Room() {
   }, [channelRes, rtmClient]);
 
   const joinRoom = async () => {
+    Swal.fire({
+      title: "Giriş yapılıyor...",
+      html: "Lütfen bekleyin.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     try {
       const uid = await client.join(APP_ID, channel, token, null);
       setUID(uid);
@@ -246,6 +254,7 @@ function Room() {
         );
         client.publish([audioTrack, videoTrack]);
         setLocalTracks({ audio: audioTrack, video: videoTrack });
+        Swal.close();
         setJoined(true);
       } else {
         client.publish([audioTrack]);
@@ -287,6 +296,7 @@ function Room() {
       await user.audioTrack.setMuted(false);
     }
   };
+  const [screenShareOpen, setScreenShareOpen] = useState(false);
   const handleScreenShare = async () => {
     if (!screenShare.mode) {
       try {
@@ -296,7 +306,7 @@ function Room() {
         if (localTracks.video) {
           await client.unpublish(localTracks.video);
         }
-
+        setScreenShareOpen(true);
         setUsers((prev) =>
           prev.map((user) =>
             user.uid === UID ? { ...user, screenShareTrack } : user
@@ -313,6 +323,7 @@ function Room() {
     } else {
       try {
         // Ekran paylaşımını durdur
+        setScreenShareOpen(false);
         if (screenShare.track) {
           await client.unpublish(screenShare.track);
           screenShare.track.stop();
@@ -410,6 +421,7 @@ function Room() {
 
         {/* Main Screen */}
         <MainScreen
+          shareScreenOpen={screenShareOpen}
           leaveRoom={leaveRoom}
           channel={channel}
           setShowParticipants={setShowParticipants}

@@ -42,7 +42,7 @@ const LiveChat = memo(
       <div className="p-5 bg-gray-100 relative">
         <button
           onClick={openFunction}
-          className="bg-premiumOrange w-10 h-10 rounded-full text-white absolute top-8 left-2 z-40 hover:scale-125 transform duration-500"
+          className="bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500"
         >
           <i class={`fa-solid fa-chevron-${chatShow ? "left" : "right"}`}></i>
         </button>

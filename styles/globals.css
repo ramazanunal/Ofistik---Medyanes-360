@@ -46,7 +46,17 @@
 .live-chat.open {
   right: 0; /* Slide in from the right */
 }
-#share-screen .videoPlayer {
+#share-screen .reader.smallView.openWhite {
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%;
+  height: 85vh !important;
+  position: absolute;
+  border-radius: 0;
+  left: 0;
+  top: 0;
+}
+#share-screen .reader {
   -o-object-fit: cover;
   object-fit: cover;
   width: 100%;

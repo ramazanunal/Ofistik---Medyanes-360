@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAPI } from "@/services/fetchAPI";
+import Swal from "sweetalert2";
 
 function Page() {
   const router = useRouter();
@@ -81,7 +82,14 @@ function Page() {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("username", String(roomLogin.username));
     }
-
+    Swal.fire({
+      title: "Oda Oluşturuluyor...",
+      html: "Lütfen bekleyin.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     try {
       const response = await getAPI(
         `/agora?channelName=${roomLogin.roomName}&uid=${roomLogin.username}`
@@ -90,12 +98,13 @@ function Page() {
       setChannel(roomLogin.roomName);
       setToken(token);
       setUid(roomLogin.username);
-
+      Swal.close();
       router.push(
         `/live/channelName=${roomLogin.roomName}/uuid=${uuid}/roomToken=${roomToken}/role=${role}`
       );
       closeRoomModal();
     } catch (error) {
+      Swal.close();
       console.error(error);
     }
   };

@@ -25,6 +25,7 @@ const MainScreen = memo(
     setChatShow,
     chatShow,
     leaveRoom,
+    shareScreenOpen,
   }) => {
     const [whiteboardOpen, setWhiteboardOpen] = useState(false);
     const [role, setRole] = useState(false);
@@ -152,6 +153,8 @@ const MainScreen = memo(
       }
     }, [chatShow, showParticipants]);
     const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
+    const [showCamera, setShowCamera] = useState(true);
+    const [showMic, setShowMic] = useState(true);
 
     const swapViews = () => {
       setShowWhiteboardLarge((prev) => !prev);
@@ -165,7 +168,49 @@ const MainScreen = memo(
           } bg-gray-100`}
         >
           {/* Share Screen */}
-          {roomToken && UID && uuid && whiteboardOpen && (
+          {roomToken &&
+            UID &&
+            uuid &&
+            whiteboardOpen &&
+            shareScreenOpen &&
+            role === "admin" && (
+              <>
+                <div
+                  className={`whiteBoard ${
+                    showWhiteboardLarge
+                      ? "w-[100%] h-[90%]"
+                      : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                  }`}
+                >
+                  <WhiteBoardMain
+                    showWhiteboardLarge={showWhiteboardLarge}
+                    showParticipants={showParticipants}
+                    showChat={chatShow}
+                    roomToken={roomToken}
+                    uid={stringUid}
+                    uuid={uuid}
+                  />
+                </div>
+                <div
+                  ref={screenShareRef}
+                  id="share-screen"
+                  className={`${
+                    showWhiteboardLarge
+                      ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                      : "w-[100%] h-[90%]"
+                  }  bg-gray-100`}
+                ></div>
+                <button
+                  onClick={swapViews}
+                  className={`bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
+                    whiteboardOpen && shareScreenOpen ? "block" : "hidden"
+                  }`}
+                >
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </>
+            )}
+          {roomToken && UID && uuid && whiteboardOpen && role === "reader" && (
             <>
               <div
                 className={`whiteBoard ${
@@ -186,7 +231,7 @@ const MainScreen = memo(
               <div
                 ref={screenShareRef}
                 id="share-screen"
-                className={` ${
+                className={`${
                   showWhiteboardLarge
                     ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
                     : "w-[100%] h-[90%]"
@@ -194,13 +239,56 @@ const MainScreen = memo(
               ></div>
               <button
                 onClick={swapViews}
-                className="bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30"
+                className={`bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
+                  whiteboardOpen ? "block" : "hidden"
+                }`}
               >
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
             </>
           )}
 
+          {roomToken &&
+            UID &&
+            uuid &&
+            whiteboardOpen &&
+            !shareScreenOpen &&
+            role === "admin" && (
+              <>
+                <div className={`whiteBoard w-[100%] h-[85%]`}>
+                  <WhiteBoardMain
+                    showWhiteboardLarge={showWhiteboardLarge}
+                    showParticipants={showParticipants}
+                    showChat={chatShow}
+                    roomToken={roomToken}
+                    uid={stringUid}
+                    uuid={uuid}
+                  />
+                </div>
+              </>
+            )}
+          {roomToken && UID && uuid && shareScreenOpen && !whiteboardOpen && (
+            <>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={`
+                    w-[100%] h-[85%]
+                  bg-gray-100`}
+              ></div>
+            </>
+          )}
+          {roomToken && UID && uuid && role === "reader" && !whiteboardOpen && (
+            <>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={`
+                    w-[100%] h-[85%]
+                  bg-gray-100`}
+              ></div>
+            </>
+          )}
           {/* Join Stream */}
           <div className="w-full fixed bg-slate-200/10 py-2 z-10 bottom-0 flex justify-center ">
             <div
@@ -261,7 +349,9 @@ const MainScreen = memo(
                     </svg>
                   </button>
                   <h1 className="text-sm text-center text-gray-700 mt-2">
-                    Beyaz Tahtayı Aç
+                    {whiteboardOpen
+                      ? "Beyaz Tahtayı Kapat"
+                      : "Beyaz Tahtayı Aç"}
                   </h1>
                 </div>
                 {/* Kamera Butonu */}
@@ -281,8 +371,10 @@ const MainScreen = memo(
                       }
                       if (user.videoTrack.muted === false) {
                         toast.success("Kamera başarılı bir şekilde kapatıldı");
+                        setShowCamera(false);
                       } else if (user.videoTrack.muted === true) {
                         toast.success("Kamera başarılı bir şekilde açıldı");
+                        setShowCamera(true);
                       }
                     }}
                   >
@@ -307,7 +399,7 @@ const MainScreen = memo(
                     </svg>
                   </div>
                   <h1 className="text-sm text-center text-gray-700 mt-2">
-                    Kamera Aç/Kapa
+                    {showCamera ? "Kamera Kapat" : "Kamera Aç"}
                   </h1>
                 </div>
                 {/* Çıkış Butonu */}
@@ -327,9 +419,11 @@ const MainScreen = memo(
                         toast.success(
                           "Mikrofon başarılı bir şekilde kapatıldı"
                         );
+                        setShowMic(false);
                         setMuted(false);
                       } else if (user.audioTrack.muted === true) {
                         setMuted(true);
+                        setShowMic(true);
                         toast.success("Mikrofon başarılı bir şekilde açıldı");
                       }
                     }}
@@ -341,7 +435,7 @@ const MainScreen = memo(
                     )}
                   </div>
                   <h1 className="text-sm text-center text-gray-700 mt-2">
-                    Mikrofon Aç/Kapa
+                    {showMic ? "Mikrofon Kapat" : "Mikrofon Aç"}
                   </h1>
                 </div>
                 {/* Ekran Paylaş Butonu */}
@@ -369,7 +463,9 @@ const MainScreen = memo(
                       </svg>
                     </div>
                     <h1 className="text-sm text-center text-gray-700 mt-2">
-                      Ekran Paylaş
+                      {shareScreenOpen
+                        ? "Ekran Paylaşımı Kapat"
+                        : "Ekran Paylaşımı Aç"}
                     </h1>
                   </div>
                 )}
@@ -409,6 +505,8 @@ const MainScreen = memo(
         >
           {users.map((user) => (
             <VideoPlayer
+              showWhiteboard={whiteboardOpen}
+              role={role}
               showWhiteboardLarge={showWhiteboardLarge}
               rtmClient={rtmClient}
               key={user.uid}
