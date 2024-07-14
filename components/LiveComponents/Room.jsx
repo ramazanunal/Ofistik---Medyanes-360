@@ -354,23 +354,23 @@ function Room() {
     setRole(roleData);
   }, []);
 
-  useEffect(() => {
-    const shareScreen = document.getElementById("share-screen");
-    users.forEach((user) => {
-      if (user._videoTrack && user._videoTrack._ID.includes("track-video-")) {
-        // Append the element to shareScreen
-        const videoElement = document.createElement("div");
-        videoElement.id = user.uid; // Assuming user.uid can be used as a unique identifier
-        videoElement.classList.add("video-element"); // Add your CSS class here
+  // useEffect(() => {
+  //   const shareScreen = document.getElementById("share-screen");
+  //   users.forEach((user) => {
+  //     if (user._videoTrack && user._videoTrack._ID.includes("track-video-")) {
+  //       // Append the element to shareScreen
+  //       const videoElement = document.createElement("div");
+  //       videoElement.id = user.uid; // Assuming user.uid can be used as a unique identifier
+  //       videoElement.classList.add("video-element"); // Add your CSS class here
 
-        // Append the element to shareScreen
-        shareScreen.appendChild(videoElement);
+  //       // Append the element to shareScreen
+  //       shareScreen.appendChild(videoElement);
 
-        // Optionally, you can also play the video track here
-        user._videoTrack.play(videoElement);
-      }
-    });
-  }, [users]);
+  //       // Optionally, you can also play the video track here
+  //       user._videoTrack.play(videoElement);
+  //     }
+  //   });
+  // }, [users]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
