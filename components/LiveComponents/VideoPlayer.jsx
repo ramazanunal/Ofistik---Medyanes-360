@@ -31,17 +31,17 @@ const VideoPlayer = memo(({ user, UID, usersNumber }) => {
     playTracks();
 
     // Clean up function
-    return () => {
-      if (user.videoTrack) {
-        user.videoTrack.stop();
-      }
-      if (user.audioTrack) {
-        user.audioTrack.stop();
-      }
-      if (user.screenShareTrack) {
-        user.screenShareTrack.stop();
-      }
-    };
+    // return () => {
+    //   if (user.videoTrack) {
+    //     user.videoTrack.stop();
+    //   }
+    //   if (user.audioTrack) {
+    //     user.audioTrack.stop();
+    //   }
+    //   if (user.screenShareTrack) {
+    //     user.screenShareTrack.stop();
+    //   }
+    // };
   }, [user, UID]);
 
   const enLargeFrame = (event) => {

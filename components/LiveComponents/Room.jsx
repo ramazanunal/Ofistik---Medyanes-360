@@ -171,13 +171,29 @@ function Room() {
       });
       let channelResIn = rtmClientIn.createChannel(channel);
       await channelResIn.join();
-      setChannelRes(channelResIn);
-      setRtmClient(rtmClientIn);
+      await Promise.all([
+        setChannelRes(channelResIn),
+        setRtmClient(rtmClientIn),
+      ]);
       await rtmClientIn.getUserAttributesByKeys(String(uid), ["name"]);
     } catch (err) {
       console.error("Failed to initialize RTM:", err);
     }
   };
+
+  useEffect(() => {
+    client.on("user-published", handleUserPublished);
+    client.on("user-left", handleUserLeft);
+
+    window.addEventListener("beforeunload", leaveRoom);
+
+    return () => {
+      client.off("user-published", handleUserPublished);
+      client.off("user-left", handleUserLeft);
+
+      window.removeEventListener("beforeunload", leaveRoom);
+    };
+  }, []);
 
   useEffect(() => {
     if (channelRes && rtmClient) {
@@ -212,7 +228,7 @@ function Room() {
         setJoined(true);
       } else {
         client.publish([audioTrack]);
-        setLocalTracks({ audio: audioTrack });
+        setLocalTracks({ audio: audioTrack, video: videoTrack });
         setJoined(true);
         console.warn("No camera available, joining with audio only.");
       }
@@ -222,15 +238,12 @@ function Room() {
       console.error(error);
     }
   };
-
+  console.log(localTracks);
   const handleUserPublished = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
+
     if (mediaType === "video") {
       setUsers((prev) => [...prev, user]);
-    }
-    const elementToRemove = document.getElementById(user.uid);
-    if (elementToRemove) {
-      elementToRemove.remove();
     }
   };
 
@@ -283,6 +296,12 @@ function Room() {
           await client.unpublish(screenShare.track);
           screenShare.track.stop();
         }
+        users.forEach((user) => {
+          if (user.screenShareTrack) {
+            client.unpublish(user.screenShareTrack);
+            user.screenShareTrack.stop();
+          }
+        });
 
         setUsers((prev) =>
           prev.map((user) =>
@@ -301,17 +320,6 @@ function Room() {
       }
     }
   };
-
-  useEffect(() => {
-    client.on("user-published", handleUserPublished);
-    client.on("user-left", handleUserLeft);
-    window.addEventListener("beforeunload", leaveRoom);
-    return () => {
-      client.off("user-published", handleUserPublished);
-      client.off("user-left", handleUserLeft);
-      window.removeEventListener("beforeunload", leaveRoom);
-    };
-  }, []);
 
   const [roomToken, setRoomToken] = useState(null);
   const [uuid, setUuid] = useState(null);
@@ -363,7 +371,6 @@ function Room() {
       }
     });
   }, [users]);
-  console.log(rtmClient);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -375,9 +382,8 @@ function Room() {
           div.style.display = "none";
         }
       });
-    }, 1000); // Check every second (1000ms)
+    }, 1000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
