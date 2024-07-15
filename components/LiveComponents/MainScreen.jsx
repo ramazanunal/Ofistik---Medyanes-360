@@ -495,18 +495,18 @@ const MainScreen = memo(
                   </div>
                 )}
                 {/* Çıkış yapma Butonu */}
-                <div className="flex flex-row items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
                   <div
                     id="exit"
                     title="Toplantıdan Ayrıl"
-                    className={`px-8 py-5 w-full flex flex-row items-center justify-center  rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
+                    className={`px-5 py-5 w-full flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
                     onClick={leaveRoom}
                   >
                     <i class="fa-solid fa-phone-slash text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
-                    <h1 className="text-base text-center text-gray-50 ml-2 font-semibold mb-2">
-                      Ayrıl
-                    </h1>
                   </div>
+                  <h1 className="text-sm text-center text-gray-700 mt-2">
+                    Ayrıl
+                  </h1>
                 </div>
               </div>
             </div>
