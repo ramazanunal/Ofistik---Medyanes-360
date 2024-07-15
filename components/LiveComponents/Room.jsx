@@ -407,6 +407,7 @@ function Room() {
 
     return () => clearInterval(intervalId);
   }, []);
+  console.log(users);
   const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
   return displayName !== null ? (
     <div className="h-screen bg-gray-100">

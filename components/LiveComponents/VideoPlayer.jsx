@@ -73,11 +73,11 @@ const VideoPlayer = memo(
           ref={ref}
           id={user.uid}
           onClick={enLargeFrame}
-          className={`userCam w-[300px] my-5 h-[300px] ${
+          className={`userCam w-[300px]  h-[300px] ${
             showWhiteboardLarge ? "smallView" : ""
-          } overflow-hidden cursor-pointer rounded-2xl mr-3 ${role} ${
+          } overflow-hidden cursor-pointer ${role} ${
             showWhiteboard ? "" : "openWhite"
-          } border-2 m-auto border-gray-300 md:w-[170px] md:h-[130px] xl:w-[200px] xl:h-[150px] videoPlayer`}
+          } border-2 border-gray-300 md:w-[170px] md:h-[130px] xl:w-[200px] xl:h-[150px] videoPlayer`}
         ></div>
       </>
     );

@@ -74,23 +74,46 @@ const Participants = memo(
           >
             {users.map((user) => (
               <div key={user.uid} className="flex flex-col items-center">
-                {/* Assuming VideoPlayer component is defined elsewhere */}
-                <VideoPlayer
-                  showWhiteboard={whiteboardOpen}
-                  role={role}
-                  showWhiteboardLarge={showWhiteboardLarge}
-                  rtmClient={rtmClient}
-                  key={user.uid}
-                  user={user}
-                  UID={UID}
-                  usersNumber={users.length}
-                />
-                <span
-                  id={`user-${user.uid}`}
-                  className="truncate text-gray-700 font-semibold text-center"
-                >
-                  {participantNames[user.uid] || user.uid}
-                </span>
+                {user.videoTrack !== undefined && (
+                  <>
+                    <div className="relative bg-gray-100 h-[190px] w-[200px] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
+                      <span
+                        id={`user-${user.uid}`}
+                        className="truncate text-gray-700 font-semibold text-center top-0 p-2"
+                      >
+                        {participantNames[user.uid] || user.uid}
+                      </span>
+                      <VideoPlayer
+                        showWhiteboard={whiteboardOpen}
+                        role={role}
+                        showWhiteboardLarge={showWhiteboardLarge}
+                        rtmClient={rtmClient}
+                        key={user.uid}
+                        user={user}
+                        UID={UID}
+                        usersNumber={users.length}
+                      />
+                    </div>
+                  </>
+                )}
+                {user.videoTrack === undefined && (
+                  <>
+                    <div className="relative bg-gray-100 h-[150px] w-[200px] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
+                      <span
+                        id={`user-${user.uid}`}
+                        className="truncate text-gray-700 font-semibold text-center top-0 p-2"
+                      >
+                        {participantNames[user.uid] || user.uid}
+                      </span>
+                      <Image
+                        src={profile}
+                        height={80}
+                        width={80}
+                        className="h-20 w-20 mb-5"
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
