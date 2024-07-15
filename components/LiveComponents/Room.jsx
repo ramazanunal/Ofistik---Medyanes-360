@@ -16,7 +16,7 @@ const conn = new AC.connection({
 });
 function Room() {
   const router = useRouter();
-
+  const [whiteboardOpen, setWhiteboardOpen] = useState(false);
   const base = useParams();
   const fullChName = base.ChName; // channelName%3Demrahoda
   const chNameParts = fullChName.split("%3D");
@@ -407,13 +407,14 @@ function Room() {
 
     return () => clearInterval(intervalId);
   }, []);
-
+  const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
   return displayName !== null ? (
     <div className="h-screen bg-gray-100">
       <Toaster />
       <section className=" flex justify-between overflow-hidden">
         {/* Participants */}
         <Participants
+          users={users}
           openParticipants={openParticipants}
           show={showParticipants}
           showCtrl={showCtrl}
@@ -421,10 +422,17 @@ function Room() {
           rtmClient={rtmClient}
           totalMembers={totalMembers}
           participants={participants}
+          UID={UID}
+          whiteboardOpen={whiteboardOpen}
+          showWhiteboardLarge={showWhiteboardLarge}
         />
 
         {/* Main Screen */}
         <MainScreen
+          showWhiteboardLarge={showWhiteboardLarge}
+          setShowWhiteboardLarge={setShowWhiteboardLarge}
+          whiteboardOpen={whiteboardOpen}
+          setWhiteboardOpen={setWhiteboardOpen}
           shareScreenOpen={screenShareOpen}
           leaveRoom={leaveRoom}
           channel={channel}

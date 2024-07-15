@@ -26,27 +26,15 @@ const MainScreen = memo(
     chatShow,
     leaveRoom,
     shareScreenOpen,
+    whiteboardOpen,
+    setWhiteboardOpen,
+    showWhiteboardLarge,
+    setShowWhiteboardLarge,
   }) => {
-    const [whiteboardOpen, setWhiteboardOpen] = useState(false);
     const [role, setRole] = useState(false);
     const [userNames, setUserNames] = useState(false);
 
     useEffect(() => {
-      const fetchUserNames = async () => {
-        const names = {};
-        for (const user of users) {
-          const usernamePromise = rtmClient.getUserAttributesByKeys(user.uid, [
-            "name",
-          ]);
-          const { name } = await usernamePromise;
-          names[user.uid] = name;
-        }
-        setUserNames(names);
-        // debugger;
-      };
-
-      fetchUserNames();
-
       const parts = window.location.href.split("/");
       const role = parts[parts.length - 1];
       const [roleData] = role.split("/").map((part) => part.split("=")[1]);
@@ -79,13 +67,13 @@ const MainScreen = memo(
 
     const getContainerWidthClass = (chatShow, showParticipants) => {
       if (!chatShow && showParticipants) {
-        return "w-[60%]";
+        return "w-[70%]";
       } else if (!chatShow && !showParticipants) {
-        return "w-[70%]";
+        return "w-[80%]";
       } else if (showParticipants && chatShow) {
-        return "w-[70%]";
+        return "w-[80%]";
       } else if (!showParticipants && chatShow) {
-        return "w-[85%]";
+        return "w-[95%]";
       }
     };
 
@@ -135,16 +123,16 @@ const MainScreen = memo(
     useEffect(() => {
       // showChat ve showParticipants durumlarına göre genişliği ayarlayın
       if (!chatShow && showParticipants) {
-        setSize("50vw");
+        setSize("60vw");
       } else if (!chatShow && !showParticipants) {
-        setSize("65vw");
+        setSize("75vw");
       } else if (showParticipants && chatShow) {
-        setSize("70vw");
-      } else if (!showParticipants && chatShow) {
         setSize("80vw");
+      } else if (!showParticipants && chatShow) {
+        setSize("90vw");
       }
     }, [chatShow, showParticipants]);
-    const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
+
     const [showCamera, setShowCamera] = useState(true);
     const [showMic, setShowMic] = useState(true);
 
@@ -168,7 +156,7 @@ const MainScreen = memo(
         <div
           id="video-holder"
           className={`relative h-screen overflow-y-auto w-full flex flex-wrap justify-center p-2 gap-4 lg:p-4 ${
-            chatShow ? "lg:w-[85vw]" : "lg:w-[83vw]"
+            chatShow ? "lg:w-[95vw]" : "lg:w-[93vw]"
           } bg-gray-100`}
         >
           {/* Share Screen */}
@@ -511,23 +499,6 @@ const MainScreen = memo(
               </div>
             </div>
           </div>
-        </div>
-        <div
-          id="userVideo"
-          className=" flex flex-row flex-wrap bg-gray-100 lg:w-[15vw] max-h-screen overflow-y-auto"
-        >
-          {users.map((user) => (
-            <VideoPlayer
-              showWhiteboard={whiteboardOpen}
-              role={role}
-              showWhiteboardLarge={showWhiteboardLarge}
-              rtmClient={rtmClient}
-              key={user.uid}
-              user={user}
-              UID={UID}
-              usersNumber={users.length}
-            />
-          ))}
         </div>
       </>
     );

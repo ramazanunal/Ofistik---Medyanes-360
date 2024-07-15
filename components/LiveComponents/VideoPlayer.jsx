@@ -77,7 +77,7 @@ const VideoPlayer = memo(
             showWhiteboardLarge ? "smallView" : ""
           } overflow-hidden cursor-pointer rounded-2xl mr-3 ${role} ${
             showWhiteboard ? "" : "openWhite"
-          } border-2 m-auto border-gray-300 md:w-[170px] md:h-[130px] xl:w-[250px] xl:h-[200px] videoPlayer`}
+          } border-2 m-auto border-gray-300 md:w-[170px] md:h-[130px] xl:w-[200px] xl:h-[150px] videoPlayer`}
         ></div>
       </>
     );

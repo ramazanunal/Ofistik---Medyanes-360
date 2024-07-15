@@ -30,13 +30,13 @@ function WhiteBoardMain({
   useEffect(() => {
     // showChat ve showParticipants durumlarına göre genişliği ayarlayın
     if (!showChat && showParticipants) {
-      setSize("55vw");
+      setSize("67vw");
     } else if (!showChat && !showParticipants) {
-      setSize("65vw");
+      setSize("77vw");
     } else if (showParticipants && showChat) {
-      setSize("70vw");
+      setSize("82vw");
     } else if (!showParticipants && showChat) {
-      setSize("80vw");
+      setSize("92vw");
     }
   }, [showChat, showParticipants]);
 

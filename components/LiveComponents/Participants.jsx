@@ -1,7 +1,7 @@
-import React, { memo } from "react";
-import profile from "@/assets/icons/profile.png";
+import React, { memo, useEffect, useState } from "react";
 import Image from "next/image";
-
+import profile from "@/assets/icons/profile.png"; // Ensure this is used or remove
+import VideoPlayer from "./VideoPlayer";
 const Participants = memo(
   ({
     showCtrl,
@@ -10,31 +10,42 @@ const Participants = memo(
     totalMembers,
     participants,
     show,
+    users,
     openParticipants,
+    UID,
+    whiteboardOpen,
+    showWhiteboardLarge,
   }) => {
-    const getName = async (participantId) => {
-      let nameOfUser = "";
+    const [participantNames, setParticipantNames] = useState({});
+    const [role, setRole] = useState(false);
+
+    useEffect(() => {
+      const parts = window.location.href.split("/");
+      const role = parts[parts.length - 1];
+      const [roleData] = role.split("/").map((part) => part.split("=")[1]);
+      setRole(roleData);
+    }, []);
+
+    const fetchName = async (participantId) => {
       try {
-        setTimeout(async () => {
-          const updateNameHTML = document.getElementById(
-            `user-${participantId}`
-          );
-
-          const usernamePromise = rtmClient.getUserAttributesByKeys(
-            participantId,
-            ["name"]
-          );
-          const username = await usernamePromise;
-          const { name } = username;
-          nameOfUser = name;
-
-          // return name;
-          updateNameHTML.textContent = nameOfUser;
-        }, 100);
+        const usernamePromise = rtmClient.getUserAttributesByKeys(
+          participantId,
+          ["name"]
+        );
+        const username = await usernamePromise;
+        const { name } = username;
+        setParticipantNames((prevNames) => ({
+          ...prevNames,
+          [participantId]: name,
+        }));
       } catch (error) {
         console.error(error);
       }
     };
+
+    useEffect(() => {
+      participants.forEach(fetchName);
+    }, [participants, rtmClient]);
 
     return (
       <div className="p-5 pt-2 bg-gray-100 relative">
@@ -42,12 +53,12 @@ const Participants = memo(
           onClick={openParticipants}
           className="bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 right-2 z-40 hover:scale-125 transform duration-500"
         >
-          <i class={`fa-solid fa-chevron-${show ? "left" : "right"}`}></i>
+          <i className={`fa-solid fa-chevron-${show ? "left" : "right"}`}></i>
         </button>
         <div
           className={`h-[96vh] fixed left-0 ${
             show
-              ? " animate__animated animate__fadeInLeft"
+              ? "animate__animated animate__fadeInLeft"
               : "hidden animate__animated animate__fadeOutLeft"
           } z-30 bg-white lg:relative rounded-2xl lg:w-[12vw]`}
         >
@@ -56,42 +67,32 @@ const Participants = memo(
             <div className="bg-premiumOrange text-white w-8 h-8 flex justify-center items-center rounded-full">
               {totalMembers}
             </div>
-
-            <button
-              className="font-bold text-2xl absolute top-[3vh] left-2 lg:hidden"
-              onClick={() =>
-                setShowCtrl((prev) => ({
-                  ...prev,
-                  showParticipants: !showCtrl.showParticipants,
-                }))
-              }
-            >
-              X
-            </button>
           </div>
-          {/* Members */}
-          <div className="mt-4 px-4 flex flex-col gap-3 w-full">
-            {participants.map((participantId) => {
-              getName(participantId);
-
-              return (
-                <div
-                  key={participantId}
-                  className="flex flex-row items-center gap-2"
+          <div
+            id="userVideo"
+            className="flex flex-row flex-wrap items-center justify-center max-h-screen overflow-y-auto"
+          >
+            {users.map((user) => (
+              <div key={user.uid} className="flex flex-col items-center">
+                {/* Assuming VideoPlayer component is defined elsewhere */}
+                <VideoPlayer
+                  showWhiteboard={whiteboardOpen}
+                  role={role}
+                  showWhiteboardLarge={showWhiteboardLarge}
+                  rtmClient={rtmClient}
+                  key={user.uid}
+                  user={user}
+                  UID={UID}
+                  usersNumber={users.length}
+                />
+                <span
+                  id={`user-${user.uid}`}
+                  className="truncate text-gray-700 font-semibold text-center"
                 >
-                  <div className="imageArea border-green-500 border-2 rounded-full">
-                    <Image src={profile} width={50} height={50} />
-                  </div>
-
-                  <span
-                    id={`user-${participantId}`}
-                    className="truncate text-gray-700 font-semibold text-right"
-                  >
-                    {participantId}
-                  </span>
-                </div>
-              );
-            })}
+                  {participantNames[user.uid] || user.uid}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
