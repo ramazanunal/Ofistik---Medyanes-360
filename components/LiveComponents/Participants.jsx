@@ -16,6 +16,7 @@ const Participants = memo(
     whiteboardOpen,
     showWhiteboardLarge,
   }) => {
+    console.log(users);
     const [participantNames, setParticipantNames] = useState({});
     const [role, setRole] = useState(false);
 
@@ -98,7 +99,7 @@ const Participants = memo(
                 )}
                 {user.videoTrack === undefined && (
                   <>
-                    <div className="relative bg-gray-100 h-[150px] w-[200px] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
+                    <div className="relative bg-gray-100 h-[180px] w-[200px] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
                       <span
                         id={`user-${user.uid}`}
                         className="truncate text-gray-700 font-semibold text-center top-0 p-2"
@@ -109,7 +110,7 @@ const Participants = memo(
                         src={profile}
                         height={80}
                         width={80}
-                        className="h-20 w-20 mb-5"
+                        className="h-20 w-20 mb-8"
                       />
                     </div>
                   </>

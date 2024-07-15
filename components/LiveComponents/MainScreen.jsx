@@ -32,7 +32,6 @@ const MainScreen = memo(
     setShowWhiteboardLarge,
   }) => {
     const [role, setRole] = useState(false);
-    const [userNames, setUserNames] = useState(false);
 
     useEffect(() => {
       const parts = window.location.href.split("/");
