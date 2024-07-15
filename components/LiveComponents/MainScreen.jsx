@@ -183,7 +183,7 @@ const MainScreen = memo(
                   className={`whiteBoard ${
                     showWhiteboardLarge
                       ? "w-[100%] h-[90%]"
-                      : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16 "
+                      : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
                   }`}
                 >
                   <WhiteBoardMain
