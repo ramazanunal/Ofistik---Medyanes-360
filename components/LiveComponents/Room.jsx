@@ -82,17 +82,20 @@ function Room() {
 
     try {
       await channelRes.leave();
+      await rtmClient.logout();
+
       Swal.close();
-      toast.success("Çıkış başarılı ana sayfaya yönlendiriliyorsunuz.");
-      router.push("/");
-      window.location.reload();
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
     } catch (error) {
       Swal.close();
-      toast.error("Çıkış sırasında bir hata oluştu.");
-      console.error(error);
+      toast.error(
+        "Toplantıdan çıkarken bir hata oluştu. Lütfen tekrar deneyin."
+      );
+      console.error("Error leaving the room:", error);
     }
   };
-
   const getMembers = async (channelResIn) => {
     const members = await channelResIn.getMembers();
     updateMemberTotal(members);
@@ -226,49 +229,50 @@ function Room() {
   }, [channelRes, rtmClient]);
 
   const joinRoom = async () => {
-    Swal.fire({
-      title: "Giriş yapılıyor...",
-      html: "Lütfen bekleyin.",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
     try {
+      Swal.fire({
+        title: "Giriş yapılıyor...",
+        html: "Lütfen bekleyin.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       const uid = await client.join(APP_ID, channel, token, null);
       setUID(uid);
+
       const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-      setUsers((prev) => [...prev, { uid, audioTrack }]);
-      const devices = await AgoraRTC.getDevices();
-      const cameras = devices.filter((device) => device.kind === "videoinput");
+      let videoTrack = null;
 
-      if (cameras.length > 0) {
-        const videoTrack = await AgoraRTC.createCameraVideoTrack();
-        setUsers((prev) =>
-          prev.map((user) => {
-            if (user.uid === uid) {
-              return { ...user, videoTrack };
-            }
-            return user;
-          })
-        );
-        client.publish([audioTrack, videoTrack]);
+      try {
+        videoTrack = await AgoraRTC.createCameraVideoTrack();
+        await client.publish([audioTrack, videoTrack]);
         setLocalTracks({ audio: audioTrack, video: videoTrack });
-        Swal.close();
-        setJoined(true);
-      } else {
-        client.publish([audioTrack]);
-        setLocalTracks({ audio: audioTrack, video: videoTrack });
-        setJoined(true);
-        console.warn("No camera available, joining with audio only.");
+        setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
+      } catch (error) {
+        if (
+          error.name === "NotAllowedError" ||
+          error.name === "NotFoundError"
+        ) {
+          console.warn(
+            "Permission denied or no camera available, joining with audio only."
+          );
+        } else {
+          console.error("Error creating or publishing video track:", error);
+        }
+        await client.publish([audioTrack]);
+        setLocalTracks({ audio: audioTrack });
+        setUsers((prev) => [...prev, { uid, audioTrack }]);
       }
-
+      Swal.close();
+      setJoined(true);
       initRTM(uid);
     } catch (error) {
-      console.error(error);
+      console.error("Error joining the room:", error);
     }
   };
-  console.log(localTracks);
+
   const handleUserPublished = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
 

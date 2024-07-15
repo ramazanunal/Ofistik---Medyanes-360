@@ -57,6 +57,8 @@ const MainScreen = memo(
         setJoined("load");
         joinRoom();
       }
+
+      checkCameraPermission();
     }, []);
 
     const openWhiteboard = () => {
@@ -73,19 +75,9 @@ const MainScreen = memo(
       setWhiteboardOpen(false);
     };
 
-    const openChat = () => {
-      setChatShow(!chatShow);
-    };
-
-    const openParticipants = () => {
-      setShowParticipants((prevShowParticipants) => !prevShowParticipants);
-    };
-
     const stringUid = UID.toString();
 
     const getContainerWidthClass = (chatShow, showParticipants) => {
-      console.log("chat:  ", chatShow);
-      console.log("Participants:  ", showParticipants);
       if (!chatShow && showParticipants) {
         return "w-[60%]";
       } else if (!chatShow && !showParticipants) {
@@ -159,6 +151,18 @@ const MainScreen = memo(
     const swapViews = () => {
       setShowWhiteboardLarge((prev) => !prev);
     };
+    const [cameraPermission, setCameraPermission] = useState(null);
+    const checkCameraPermission = async () => {
+      const permissionStatus = await navigator.permissions.query({
+        name: "camera",
+      });
+      if (permissionStatus.state === "granted") {
+        setCameraPermission(true);
+      } else {
+        setCameraPermission(false);
+      }
+    };
+
     return (
       <>
         <div
@@ -179,7 +183,7 @@ const MainScreen = memo(
                   className={`whiteBoard ${
                     showWhiteboardLarge
                       ? "w-[100%] h-[90%]"
-                      : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                      : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16 "
                   }`}
                 >
                   <WhiteBoardMain
@@ -206,7 +210,7 @@ const MainScreen = memo(
                     whiteboardOpen && shareScreenOpen ? "block" : "hidden"
                   }`}
                 >
-                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <i className="fa-solid fa-magnifying-glass"></i>
                 </button>
               </>
             )}
@@ -243,7 +247,7 @@ const MainScreen = memo(
                   whiteboardOpen ? "block" : "hidden"
                 }`}
               >
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i className="fa-solid fa-magnifying-glass"></i>
               </button>
             </>
           )}
@@ -267,17 +271,22 @@ const MainScreen = memo(
                 </div>
               </>
             )}
-          {roomToken && UID && uuid && shareScreenOpen && !whiteboardOpen && (
-            <>
-              <div
-                ref={screenShareRef}
-                id="share-screen"
-                className={`
+          {roomToken &&
+            UID &&
+            uuid &&
+            shareScreenOpen &&
+            !whiteboardOpen &&
+            role === "admin" && (
+              <>
+                <div
+                  ref={screenShareRef}
+                  id="share-screen"
+                  className={`
                     w-[100%] h-[85%]
                   bg-gray-100`}
-              ></div>
-            </>
-          )}
+                ></div>
+              </>
+            )}
           {roomToken && UID && uuid && role === "reader" && !whiteboardOpen && (
             <>
               <div
@@ -307,7 +316,7 @@ const MainScreen = memo(
                   </div>
                 </div>
                 <h1 className="text-xl tracking-wider text-gray-700">
-                  {channel} Toplantısı
+                  {decodeURIComponent(channel)} Toplantısı
                 </h1>
               </div>
               <div className="flex items-center justify-center gap-4">
@@ -355,53 +364,57 @@ const MainScreen = memo(
                   </h1>
                 </div>
                 {/* Kamera Butonu */}
-                <div className="flex flex-col items-center justify-center">
-                  <div
-                    id="camera"
-                    title="Kamerayı Aç"
-                    className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
-                    onClick={async () => {
-                      const user = users.find((user) => user.uid === UID);
-                      if (user) {
-                        if (!user.videoTrack) {
-                          await handleCameraPermission();
-                        } else {
-                          handleMuteCamera(user);
+                {cameraPermission === true && (
+                  <div className="flex flex-col items-center justify-center">
+                    <div
+                      id="camera"
+                      title="Kamerayı Aç"
+                      className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                      onClick={async () => {
+                        const user = users.find((user) => user.uid === UID);
+                        if (user) {
+                          if (!user.videoTrack) {
+                            await handleCameraPermission();
+                          } else {
+                            handleMuteCamera(user);
+                          }
                         }
-                      }
-                      if (user.videoTrack.muted === false) {
-                        toast.success("Kamera başarılı bir şekilde kapatıldı");
-                        setShowCamera(false);
-                      } else if (user.videoTrack.muted === true) {
-                        toast.success("Kamera başarılı bir şekilde açıldı");
-                        setShowCamera(true);
-                      }
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-7 h-7"
+                        if (user.videoTrack.muted === false) {
+                          toast.success(
+                            "Kamera başarılı bir şekilde kapatıldı"
+                          );
+                          setShowCamera(false);
+                        } else if (user.videoTrack.muted === true) {
+                          toast.success("Kamera başarılı bir şekilde açıldı");
+                          setShowCamera(true);
+                        }
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
-                      />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                        />
+                      </svg>
+                    </div>
+                    <h1 className="text-sm text-center text-gray-700 mt-2">
+                      {showCamera ? "Kamera Kapat" : "Kamera Aç"}
+                    </h1>
                   </div>
-                  <h1 className="text-sm text-center text-gray-700 mt-2">
-                    {showCamera ? "Kamera Kapat" : "Kamera Aç"}
-                  </h1>
-                </div>
+                )}
                 {/* Çıkış Butonu */}
 
                 {/* Mikrofon Butonu */}
@@ -501,7 +514,7 @@ const MainScreen = memo(
         </div>
         <div
           id="userVideo"
-          className=" flex flex-row flex-wrap bg-gray-100 lg:w-[15vw] max-h-screen overflow-y-scroll"
+          className=" flex flex-row flex-wrap bg-gray-100 lg:w-[15vw] max-h-screen overflow-y-auto"
         >
           {users.map((user) => (
             <VideoPlayer

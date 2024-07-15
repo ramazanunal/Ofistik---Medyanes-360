@@ -27,9 +27,6 @@ function WhiteBoardMain({
     console.error("An error occurred while initializing fastboard:", error);
   }
 
-  console.log("chat durumu: ", showChat);
-  console.log("katılımcılar durumu: ", showParticipants);
-
   useEffect(() => {
     // showChat ve showParticipants durumlarına göre genişliği ayarlayın
     if (!showChat && showParticipants) {
