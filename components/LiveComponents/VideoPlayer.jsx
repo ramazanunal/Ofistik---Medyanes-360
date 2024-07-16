@@ -46,19 +46,26 @@ const VideoPlayer = memo(
     }, [user, UID]);
 
     const enLargeFrame = (event) => {
-      const videoHolder = document.getElementById("userVideo");
       const shareScreen = document.getElementById("share-screen");
+      const targetId = event.currentTarget.id;
+      const videoHolder = document.querySelector(`#userBoxForCam-${targetId}`);
 
-      if (event.target.parentNode.parentNode.parentNode.id !== shareScreen.id) {
+      if (!shareScreen.contains(event.currentTarget)) {
         let child = shareScreen.children[0];
         if (child) {
-          videoHolder.appendChild(child);
+          const originalHolder = document.querySelector(
+            `#userBoxForCam-${child.id}`
+          );
+          if (originalHolder) {
+            originalHolder.insertBefore(child, originalHolder.firstChild);
+          }
         }
         shareScreen.classList.remove("hidden");
         shareScreen.appendChild(event.currentTarget);
       } else {
-        videoHolder.appendChild(
-          document.getElementById("share-screen").children[0]
+        videoHolder.insertBefore(
+          shareScreen.children[0],
+          videoHolder.firstChild
         );
         shareScreen.classList.add("hidden");
       }
@@ -74,7 +81,7 @@ const VideoPlayer = memo(
             showWhiteboardLarge ? "smallView" : ""
           } overflow-hidden cursor-pointer ${role} ${
             showWhiteboard ? "" : "openWhite"
-          } border-2 border-gray-300 w-[10vw] h-[20vh] videoPlayer`}
+          }  w-[13vw] h-[20vh] videoPlayer rounded-t-2xl`}
         ></div>
       </>
     );

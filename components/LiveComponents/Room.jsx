@@ -446,6 +446,8 @@ function Room() {
 
         {/* Main Screen */}
         <MainScreen
+          openChat={openChat}
+          openParticipants={openParticipants}
           showWhiteboardLarge={showWhiteboardLarge}
           setShowWhiteboardLarge={setShowWhiteboardLarge}
           whiteboardOpen={whiteboardOpen}

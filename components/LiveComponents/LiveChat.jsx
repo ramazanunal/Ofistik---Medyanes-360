@@ -38,13 +38,46 @@ const LiveChat = memo(
       document.getElementById("file").click();
     };
 
+    const userColors = {};
+    const colors = [
+      "bg-[#FFB3BA]",
+      "bg-[#FFC4C4]",
+      "bg-[#FFDFBA]",
+      "bg-[#C4E1FF]",
+      "bg-[#FFD700]",
+      "bg-[#FFFFBA]",
+      "bg-[#BAFFC9]",
+      "bg-[#BAE1FF]",
+      "bg-[#D1BAFF]",
+
+      "bg-[#FFE4C4]",
+      "bg-[#FFFFD1]",
+      "bg-[#C4FFD4]",
+
+      "bg-[#E1C4FF]",
+      "bg-[#FFC0CB]",
+
+      "bg-[#B0E0E6]",
+    ];
+    let colorIndex = 0;
+
+    const getUserColor = (displayName) => {
+      if (!userColors[displayName]) {
+        userColors[displayName] = colors[colorIndex % colors.length];
+        colorIndex++;
+      }
+      return userColors[displayName];
+    };
+
     return (
       <div className="p-5 bg-gray-100 relative">
         <button
           onClick={openFunction}
           className="bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500"
         >
-          <i class={`fa-solid fa-chevron-${chatShow ? "left" : "right"}`}></i>
+          <i
+            className={`fa-solid fa-chevron-${chatShow ? "left" : "right"}`}
+          ></i>
         </button>
         <div
           className={`h-[96vh] ${
@@ -55,7 +88,9 @@ const LiveChat = memo(
             {chats.map((chat, id) => (
               <div
                 key={id}
-                className="bg-chatBlue w-fit rounded-md p-2 flex flex-row gap-2"
+                className={`w-fit rounded-md p-2 flex flex-row gap-2 ${getUserColor(
+                  chat.displayName
+                )}`}
               >
                 <div className="imageArea">
                   <Image src={profile} width={50} height={50} />

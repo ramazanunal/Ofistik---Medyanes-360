@@ -63,11 +63,11 @@ const Participants = memo(
             show
               ? "animate__animated animate__fadeInLeft"
               : "hidden animate__animated animate__fadeOutLeft"
-          } z-30 bg-white lg:relative rounded-2xl lg:w-[12vw]`}
+          } z-30 bg-white lg:relative rounded-2xl w-[15vw]`}
         >
           <div className="relative m-3 p-5 font-bold flex items-center justify-center gap-4 border-b-2 border-gray-300">
             <span className="text-xl text-gray-600">Katılımcılar</span>
-            <div className="bg-premiumOrange text-white w-8 h-8 flex justify-center items-center rounded-full">
+            <div className=" text-premiumOrange text-lg flex justify-center items-center rounded-full">
               {totalMembers}
             </div>
           </div>
@@ -78,27 +78,25 @@ const Participants = memo(
             {users.map((user) => (
               <div
                 key={user.uid}
-                className="flex flex-col items-center"
-                id={user.uid}
+                className=" relative bg-gray-100 rounded-2xl h-[20vh] w-[13vw] flex flex-col items-center justify-between mb-5 userBoxForCam"
+                id={`userBoxForCam-${user.uid}`}
               >
-                <div className="relative bg-gray-100 h-[20vh] w-[10vw] flex flex-col items-center justify-between mb-5 border-2 border-gray-300 userBoxForCam">
-                  <span
-                    id={`user-${user.uid}`}
-                    className="truncate text-gray-700 font-semibold text-center top-0 p-2"
-                  >
-                    {participantNames[user.uid] || user.uid}
-                  </span>
-                  <VideoPlayer
-                    showWhiteboard={whiteboardOpen}
-                    role={role}
-                    showWhiteboardLarge={showWhiteboardLarge}
-                    rtmClient={rtmClient}
-                    key={user.uid}
-                    user={user}
-                    UID={UID}
-                    usersNumber={users.length}
-                  />
-                </div>
+                <VideoPlayer
+                  showWhiteboard={whiteboardOpen}
+                  role={role}
+                  showWhiteboardLarge={showWhiteboardLarge}
+                  rtmClient={rtmClient}
+                  key={user.uid}
+                  user={user}
+                  UID={UID}
+                  usersNumber={users.length}
+                />
+                <span
+                  id={`user-${user.uid}`}
+                  className="truncate text-gray-700 font-semibold text-center p-2"
+                >
+                  {participantNames[user.uid] || user.uid}
+                </span>
               </div>
             ))}
           </div>
