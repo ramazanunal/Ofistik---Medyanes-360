@@ -239,42 +239,66 @@ function Room() {
     });
 
     try {
-      const uid = await client.join(APP_ID, channel, token, null);
-      setUID(uid);
-
       // Kamera iznini kontrol et
       const permissionStatus = await navigator.permissions.query({
         name: "camera",
       });
 
+      const uid = await client.join(APP_ID, channel, token, null);
+      setUID(uid);
+
       let audioTrack = null;
       let videoTrack = null;
 
       if (permissionStatus.state === "granted") {
-        [audioTrack, videoTrack] =
+        // Kamera izni varsa mikrofon ve kamera parçalarını oluştur
+        const [audioTrackLocal, videoTrackLocal] =
           await AgoraRTC.createMicrophoneAndCameraTracks();
+        audioTrack = audioTrackLocal;
+        videoTrack = videoTrackLocal;
+        await client.publish([audioTrack, videoTrack]);
+        setLocalTracks({ audio: audioTrack, video: videoTrack });
       } else {
+        // Kamera izni yoksa sadece mikrofon parçasını oluştur
         audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+        await client.publish(audioTrack);
+        setLocalTracks({ audio: audioTrack });
       }
-      setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
-      await client.publish([audioTrack, videoTrack].filter(Boolean));
 
-      setLocalTracks({ audio: audioTrack, video: videoTrack });
+      setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
       setJoined(true);
       Swal.close();
       initRTM(uid);
     } catch (error) {
       console.error("Error joining the room:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Hata",
+        text: "Odaya katılma sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+      });
     }
   };
 
   const handleUserPublished = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
 
-    if (mediaType === "video") {
-      setUsers((prev) => [...prev, user]);
-    } else if (mediaType === "audio") {
-      setUsers((prev) => [...prev, user]);
+    setUsers((prevUsers) => {
+      const userExists = prevUsers.some((u) => u.uid === user.uid);
+
+      if (!userExists) {
+        return [...prevUsers, user];
+      } else {
+        return prevUsers.map((u) =>
+          u.uid === user.uid
+            ? { ...u, [mediaType + "Track"]: user[mediaType + "Track"] }
+            : u
+        );
+      }
+    });
+
+    if (mediaType === "audio") {
+      const remoteAudioTrack = user.audioTrack;
+      remoteAudioTrack.play();
     }
   };
 
@@ -404,6 +428,7 @@ function Room() {
 
     return () => clearInterval(intervalId);
   }, []);
+
   const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
   return displayName !== null ? (
     <div className="h-screen bg-gray-100">

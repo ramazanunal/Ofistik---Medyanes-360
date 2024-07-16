@@ -76,7 +76,11 @@ const Participants = memo(
             className="flex flex-row flex-wrap items-center justify-center max-h-screen overflow-y-auto"
           >
             {users.map((user) => (
-              <div key={user.uid} className="flex flex-col items-center">
+              <div
+                key={user.uid}
+                className="flex flex-col items-center"
+                id={user.uid}
+              >
                 <div className="relative bg-gray-100 h-[20vh] w-[10vw] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
                   <span
                     id={`user-${user.uid}`}
