@@ -73,7 +73,7 @@ const Participants = memo(
           </div>
           <div
             id="userVideo"
-            className="flex flex-row flex-wrap items-center justify-center max-h-screen overflow-y-auto"
+            className="flex flex-col items-center justify-center max-h-screen overflow-y-auto"
           >
             {users.map((user) => (
               <div
@@ -81,32 +81,23 @@ const Participants = memo(
                 className="flex flex-col items-center"
                 id={user.uid}
               >
-                <div className="relative bg-gray-100 h-[20vh] w-[10vw] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
+                <div className="relative bg-gray-100 h-[20vh] w-[10vw] flex flex-col items-center justify-between mb-5 border-2 border-gray-300 userBoxForCam">
                   <span
                     id={`user-${user.uid}`}
                     className="truncate text-gray-700 font-semibold text-center top-0 p-2"
                   >
                     {participantNames[user.uid] || user.uid}
                   </span>
-                  {user.videoTrack === undefined ? (
-                    <Image
-                      src={profile}
-                      height={80}
-                      width={80}
-                      className="h-20 w-20 mb-8"
-                    />
-                  ) : (
-                    <VideoPlayer
-                      showWhiteboard={whiteboardOpen}
-                      role={role}
-                      showWhiteboardLarge={showWhiteboardLarge}
-                      rtmClient={rtmClient}
-                      key={user.uid}
-                      user={user}
-                      UID={UID}
-                      usersNumber={users.length}
-                    />
-                  )}
+                  <VideoPlayer
+                    showWhiteboard={whiteboardOpen}
+                    role={role}
+                    showWhiteboardLarge={showWhiteboardLarge}
+                    rtmClient={rtmClient}
+                    key={user.uid}
+                    user={user}
+                    UID={UID}
+                    usersNumber={users.length}
+                  />
                 </div>
               </div>
             ))}

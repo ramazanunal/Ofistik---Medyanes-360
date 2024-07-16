@@ -285,6 +285,22 @@ const MainScreen = memo(
               ></div>
             </>
           )}
+          {roomToken &&
+            UID &&
+            uuid &&
+            role === "admin" &&
+            !whiteboardOpen &&
+            !shareScreenOpen && (
+              <>
+                <div
+                  ref={screenShareRef}
+                  id="share-screen"
+                  className={`
+                    w-[100%] !h-[85vh]
+                  bg-gray-100`}
+                ></div>
+              </>
+            )}
           {/* Join Stream */}
           <div className="w-full fixed bg-slate-200/10 py-2 z-10 bottom-0 flex justify-center ">
             <div
@@ -356,7 +372,9 @@ const MainScreen = memo(
                     <div
                       id="camera"
                       title="Kamerayı Aç"
-                      className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                      className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                        showCamera ? "bg-premiumOrange text-white" : ""
+                      }`}
                       onClick={async () => {
                         const user = users.find((user) => user.uid === UID);
                         if (user) {
@@ -409,7 +427,9 @@ const MainScreen = memo(
                   <div
                     id="mic"
                     title="Mikrofonu Aç"
-                    className="px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500"
+                    className={`${
+                      showMic ? "bg-premiumOrange text-white" : ""
+                    } px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
                     onClick={async () => {
                       const user = users.find((user) => user.uid === UID);
                       if (user) {
@@ -444,7 +464,9 @@ const MainScreen = memo(
                     <div
                       id="screen-share"
                       title="Ekranı Paylaş"
-                      className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                      className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                        shareScreenOpen ? "bg-premiumOrange text-white" : ""
+                      }`}
                       onClick={handleScreenShare}
                     >
                       <svg

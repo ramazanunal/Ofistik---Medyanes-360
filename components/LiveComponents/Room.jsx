@@ -271,11 +271,6 @@ function Room() {
       initRTM(uid);
     } catch (error) {
       console.error("Error joining the room:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Hata",
-        text: "Odaya katılma sırasında bir hata oluştu. Lütfen tekrar deneyin.",
-      });
     }
   };
 

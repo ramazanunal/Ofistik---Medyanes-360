@@ -48,10 +48,7 @@ const VideoPlayer = memo(
     const enLargeFrame = (event) => {
       const videoHolder = document.getElementById("userVideo");
       const shareScreen = document.getElementById("share-screen");
-      // if (document.getElementById("white-board")) {
-      //   toast.error("Kamerayı büyütmek için beyaz tahtayı kapatın!");
-      //   return;
-      // }
+
       if (event.target.parentNode.parentNode.parentNode.id !== shareScreen.id) {
         let child = shareScreen.children[0];
         if (child) {
