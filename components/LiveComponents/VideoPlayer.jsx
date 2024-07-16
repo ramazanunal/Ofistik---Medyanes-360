@@ -73,11 +73,11 @@ const VideoPlayer = memo(
           ref={ref}
           id={user.uid}
           onClick={enLargeFrame}
-          className={`userCam w-[300px]  h-[300px] ${
+          className={`userCam ${
             showWhiteboardLarge ? "smallView" : ""
           } overflow-hidden cursor-pointer ${role} ${
             showWhiteboard ? "" : "openWhite"
-          } border-2 border-gray-300 md:w-[170px] md:h-[130px] xl:w-[200px] xl:h-[150px] videoPlayer`}
+          } border-2 border-gray-300 w-[10vw] h-[20vh] videoPlayer`}
         ></div>
       </>
     );

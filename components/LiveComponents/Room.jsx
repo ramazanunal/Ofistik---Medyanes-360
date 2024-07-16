@@ -229,44 +229,39 @@ function Room() {
   }, [channelRes, rtmClient]);
 
   const joinRoom = async () => {
-    try {
-      Swal.fire({
-        title: "Giriş yapılıyor...",
-        html: "Lütfen bekleyin.",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
+    Swal.fire({
+      title: "Giriş yapılıyor...",
+      html: "Lütfen bekleyin.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
 
+    try {
       const uid = await client.join(APP_ID, channel, token, null);
       setUID(uid);
 
-      const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+      // Kamera iznini kontrol et
+      const permissionStatus = await navigator.permissions.query({
+        name: "camera",
+      });
+
+      let audioTrack = null;
       let videoTrack = null;
 
-      try {
-        videoTrack = await AgoraRTC.createCameraVideoTrack();
-        await client.publish([audioTrack, videoTrack]);
-        setLocalTracks({ audio: audioTrack, video: videoTrack });
-        setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
-      } catch (error) {
-        if (
-          error.name === "NotAllowedError" ||
-          error.name === "NotFoundError"
-        ) {
-          console.warn(
-            "Permission denied or no camera available, joining with audio only."
-          );
-        } else {
-          console.error("Error creating or publishing video track:", error);
-        }
-        await client.publish([audioTrack]);
-        setLocalTracks({ audio: audioTrack });
-        setUsers((prev) => [...prev, { uid, audioTrack }]);
+      if (permissionStatus.state === "granted") {
+        [audioTrack, videoTrack] =
+          await AgoraRTC.createMicrophoneAndCameraTracks();
+      } else {
+        audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       }
-      Swal.close();
+      setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
+      await client.publish([audioTrack, videoTrack].filter(Boolean));
+
+      setLocalTracks({ audio: audioTrack, video: videoTrack });
       setJoined(true);
+      Swal.close();
       initRTM(uid);
     } catch (error) {
       console.error("Error joining the room:", error);
@@ -277,6 +272,8 @@ function Room() {
     await client.subscribe(user, mediaType);
 
     if (mediaType === "video") {
+      setUsers((prev) => [...prev, user]);
+    } else if (mediaType === "audio") {
       setUsers((prev) => [...prev, user]);
     }
   };
@@ -508,7 +505,7 @@ function Room() {
             onClick={() => {
               if (inputUsername) {
                 sessionStorage.setItem("username", inputUsername);
-                joinRoom(); // Reload the entire page
+                joinRoom();
               } else {
                 alert("Lütfen bir isim giriniz");
               }

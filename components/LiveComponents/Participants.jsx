@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import Image from "next/image";
 import profile from "@/assets/icons/profile.png"; // Ensure this is used or remove
 import VideoPlayer from "./VideoPlayer";
+
 const Participants = memo(
   ({
     showCtrl,
@@ -16,7 +17,7 @@ const Participants = memo(
     whiteboardOpen,
     showWhiteboardLarge,
   }) => {
-    console.log(users);
+    console.log("Users at initial render:", users);
     const [participantNames, setParticipantNames] = useState({});
     const [role, setRole] = useState(false);
 
@@ -45,6 +46,7 @@ const Participants = memo(
     };
 
     useEffect(() => {
+      console.log("Participants updated:", participants);
       participants.forEach(fetchName);
     }, [participants, rtmClient]);
 
@@ -75,46 +77,33 @@ const Participants = memo(
           >
             {users.map((user) => (
               <div key={user.uid} className="flex flex-col items-center">
-                {user.videoTrack !== undefined && (
-                  <>
-                    <div className="relative bg-gray-100 h-[190px] w-[200px] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
-                      <span
-                        id={`user-${user.uid}`}
-                        className="truncate text-gray-700 font-semibold text-center top-0 p-2"
-                      >
-                        {participantNames[user.uid] || user.uid}
-                      </span>
-                      <VideoPlayer
-                        showWhiteboard={whiteboardOpen}
-                        role={role}
-                        showWhiteboardLarge={showWhiteboardLarge}
-                        rtmClient={rtmClient}
-                        key={user.uid}
-                        user={user}
-                        UID={UID}
-                        usersNumber={users.length}
-                      />
-                    </div>
-                  </>
-                )}
-                {user.videoTrack === undefined && (
-                  <>
-                    <div className="relative bg-gray-100 h-[180px] w-[200px] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
-                      <span
-                        id={`user-${user.uid}`}
-                        className="truncate text-gray-700 font-semibold text-center top-0 p-2"
-                      >
-                        {participantNames[user.uid] || user.uid}
-                      </span>
-                      <Image
-                        src={profile}
-                        height={80}
-                        width={80}
-                        className="h-20 w-20 mb-8"
-                      />
-                    </div>
-                  </>
-                )}
+                <div className="relative bg-gray-100 h-[20vh] w-[10vw] flex flex-col items-center justify-between mb-5 border-2 border-gray-300">
+                  <span
+                    id={`user-${user.uid}`}
+                    className="truncate text-gray-700 font-semibold text-center top-0 p-2"
+                  >
+                    {participantNames[user.uid] || user.uid}
+                  </span>
+                  {user.videoTrack === undefined ? (
+                    <Image
+                      src={profile}
+                      height={80}
+                      width={80}
+                      className="h-20 w-20 mb-8"
+                    />
+                  ) : (
+                    <VideoPlayer
+                      showWhiteboard={whiteboardOpen}
+                      role={role}
+                      showWhiteboardLarge={showWhiteboardLarge}
+                      rtmClient={rtmClient}
+                      key={user.uid}
+                      user={user}
+                      UID={UID}
+                      usersNumber={users.length}
+                    />
+                  )}
+                </div>
               </div>
             ))}
           </div>
