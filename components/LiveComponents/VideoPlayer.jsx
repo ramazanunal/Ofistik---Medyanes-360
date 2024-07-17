@@ -1,7 +1,17 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+
 const VideoPlayer = memo(
-  ({ user, UID, usersNumber, showWhiteboardLarge, role, showWhiteboard }) => {
+  ({
+    user,
+    UID,
+    usersNumber,
+    showWhiteboardLarge,
+    role,
+    showWhiteboard,
+    closeWhiteboard,
+    hasSmallViewScreen1,
+  }) => {
     const ref = useRef();
 
     useEffect(() => {
@@ -49,27 +59,107 @@ const VideoPlayer = memo(
       const shareScreen = document.getElementById("share-screen");
       const targetId = event.currentTarget.id;
       const videoHolder = document.querySelector(`#userBoxForCam-${targetId}`);
-
-      if (!shareScreen.contains(event.currentTarget)) {
-        let child = shareScreen.children[0];
-        if (child) {
-          const originalHolder = document.querySelector(
-            `#userBoxForCam-${child.id}`
-          );
-          if (originalHolder) {
-            originalHolder.insertBefore(child, originalHolder.firstChild);
+      const shareScreen1 = document.getElementById("share-screen1");
+      const shareScreenElement = document.getElementById("share-screen");
+      if (shareScreenElement) {
+        const smallViewElement = shareScreenElement.querySelector("div");
+        if (smallViewElement) {
+          if (!shareScreen1.contains(event.currentTarget)) {
+            let child = shareScreen1.children[0];
+            if (child) {
+              const originalHolder = document.querySelector(
+                `#userBoxForCam-${child.id}`
+              );
+              if (originalHolder) {
+                originalHolder.insertBefore(child, originalHolder.firstChild);
+              }
+            }
+            shareScreen1.classList.remove("hidden");
+            shareScreen1.appendChild(event.currentTarget);
+          } else {
+            videoHolder.insertBefore(
+              shareScreen1.children[0],
+              videoHolder.firstChild
+            );
+            shareScreen1.classList.add("hidden");
+          }
+        } else {
+          if (!shareScreen.contains(event.currentTarget)) {
+            let child = shareScreen.children[0];
+            if (child) {
+              const originalHolder = document.querySelector(
+                `#userBoxForCam-${child.id}`
+              );
+              if (originalHolder) {
+                originalHolder.insertBefore(child, originalHolder.firstChild);
+              }
+            }
+            shareScreen.classList.remove("hidden");
+            shareScreen.appendChild(event.currentTarget);
+          } else {
+            videoHolder.insertBefore(
+              shareScreen.children[0],
+              videoHolder.firstChild
+            );
+            shareScreen.classList.add("hidden");
           }
         }
-        shareScreen.classList.remove("hidden");
-        shareScreen.appendChild(event.currentTarget);
-      } else {
-        videoHolder.insertBefore(
-          shareScreen.children[0],
-          videoHolder.firstChild
-        );
-        shareScreen.classList.add("hidden");
       }
     };
+
+    const [isInShareScreen, setIsInShareScreen] = useState(false);
+    const [isInShareScreen1, setIsInShareScreen1] = useState(false);
+
+    useEffect(() => {
+      const updateScreenState = () => {
+        const shareScreenElement = document.getElementById("share-screen");
+        const shareScreen1Element = document.getElementById("share-screen1");
+        const videoPlayerElement = ref.current;
+
+        if (shareScreenElement && videoPlayerElement) {
+          setIsInShareScreen(shareScreenElement.contains(videoPlayerElement));
+        }
+        if (shareScreen1Element && videoPlayerElement) {
+          setIsInShareScreen1(shareScreen1Element.contains(videoPlayerElement));
+        }
+        // Update class based on shareScreen1 class
+        if (shareScreen1Element) {
+          const shareScreen1Classes = shareScreen1Element.className.split(" ");
+          const isFullScreen =
+            shareScreen1Classes.includes("w-[100%]") &&
+            shareScreen1Classes.includes("h-[90%]");
+          const isSmallScreen =
+            shareScreen1Classes.includes("!w-[400px]") &&
+            shareScreen1Classes.includes("!h-[250px]");
+
+          if (isFullScreen) {
+            videoPlayerElement.classList.add("bigView");
+            videoPlayerElement.classList.remove("smallView");
+          } else if (isSmallScreen) {
+            videoPlayerElement.classList.add("smallView");
+            videoPlayerElement.classList.remove("bigView");
+          }
+        } else if (shareScreenElement) {
+          const shareScreenClasses = shareScreenElement.className.split(" ");
+          const isFullScreen =
+            shareScreenClasses.includes("w-[100%]") &&
+            shareScreenClasses.includes("h-[90%]");
+          const isSmallScreen =
+            shareScreenClasses.includes("!w-[400px]") &&
+            shareScreenClasses.includes("!h-[250px]");
+
+          if (isFullScreen) {
+            videoPlayerElement.classList.add("bigView");
+            videoPlayerElement.classList.remove("smallView");
+          } else if (isSmallScreen) {
+            videoPlayerElement.classList.add("smallView");
+            videoPlayerElement.classList.remove("bigView");
+          }
+        }
+      };
+
+      updateScreenState();
+    });
 
     return (
       <>
@@ -78,9 +168,11 @@ const VideoPlayer = memo(
           id={user.uid}
           onClick={enLargeFrame}
           className={`userCam ${
-            showWhiteboardLarge ? "smallView" : ""
-          } overflow-hidden cursor-pointer ${role} ${
-            showWhiteboard ? "" : "openWhite"
+            isInShareScreen ? "inScreen" : ""
+          }  overflow-hidden ${
+            isInShareScreen1 ? "inScreen1" : ""
+          } cursor-pointer ${
+            showWhiteboard ? "openWhite " : "closeWhite"
           }  w-[13vw] h-[20vh] videoPlayer rounded-t-2xl`}
         ></div>
       </>

@@ -32,6 +32,12 @@ const MainScreen = memo(
     setShowWhiteboardLarge,
     openParticipants,
     openChat,
+    openWhiteboard,
+    closeWhiteboard,
+    screenShareLarge,
+    setShowScreenShareLarge,
+    setHasSmallViewScreen1,
+    hasSmallViewScreen1,
   }) => {
     const [role, setRole] = useState(false);
 
@@ -49,20 +55,6 @@ const MainScreen = memo(
 
       checkCameraPermission();
     }, []);
-
-    const openWhiteboard = () => {
-      const shareScreen = document.getElementById("share-screen");
-      // if (shareScreen.querySelector(".userCam")) {
-      //   toast.error("Beyaz tahtayı açmak için lütfen büyük kamerayı kapatın!");
-      //   return;
-      // }
-      setWhiteboardOpen(true);
-      toast.success("Beyaz Tahta Başarılı bir şekilde Açıldı");
-    };
-
-    const closeWhiteboard = () => {
-      setWhiteboardOpen(false);
-    };
 
     const stringUid = UID.toString();
 
@@ -151,7 +143,31 @@ const MainScreen = memo(
         setCameraPermission(false);
       }
     };
+    const [hasSmallView, setHasSmallView] = useState(false);
 
+    // Check for the smallView element when the component mounts or updates
+    useEffect(() => {
+      // Check for the smallView element when the component mounts or updates
+      const shareScreenElement = document.getElementById("share-screen");
+      if (shareScreenElement) {
+        const smallViewElement = shareScreenElement.querySelector(".inScreen");
+        setHasSmallView(!!smallViewElement);
+      }
+    }); // Empty dependency array to run only once on mount
+
+    // Check for the smallView element when the component mounts or updates
+    useEffect(() => {
+      // Check for the smallView element when the component mounts or updates
+      const shareScreenElement = document.getElementById("share-screen1");
+      if (shareScreenElement) {
+        const smallViewElement = shareScreenElement.querySelector(".inScreen1");
+        setHasSmallViewScreen1(!!smallViewElement);
+      }
+    }); // Empty dependency array to run only once on mount
+
+    const swapViewsScreenShare = () => {
+      setShowScreenShareLarge((prev) => !prev);
+    };
     return (
       <>
         <div
@@ -161,50 +177,130 @@ const MainScreen = memo(
           } bg-gray-100`}
         >
           {/* Share Screen */}
-          {roomToken &&
-            UID &&
-            uuid &&
-            whiteboardOpen &&
-            shareScreenOpen &&
-            role === "admin" && (
-              <>
-                <div
-                  className={`whiteBoard ${
-                    showWhiteboardLarge
-                      ? "w-[100%] h-[90%]"
-                      : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                  }`}
-                >
-                  <WhiteBoardMain
-                    showWhiteboardLarge={showWhiteboardLarge}
-                    showParticipants={showParticipants}
-                    showChat={chatShow}
-                    roomToken={roomToken}
-                    uid={stringUid}
-                    uuid={uuid}
-                  />
-                </div>
-                <div
-                  ref={screenShareRef}
-                  id="share-screen"
-                  className={`${
-                    showWhiteboardLarge
-                      ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                      : "w-[100%] h-[90%]"
-                  }  bg-gray-100`}
-                ></div>
-                <button
-                  onClick={swapViews}
-                  className={`bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
-                    whiteboardOpen && shareScreenOpen ? "block" : "hidden"
-                  }`}
-                >
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </button>
-              </>
-            )}
-
-          {roomToken &&
+          {roomToken && UID && uuid && whiteboardOpen && shareScreenOpen && (
+            <>
+              <div
+                className={`whiteBoard ${
+                  showWhiteboardLarge
+                    ? "w-[100%] h-[90%]"
+                    : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                }`}
+              >
+                <WhiteBoardMain
+                  showWhiteboardLarge={showWhiteboardLarge}
+                  showParticipants={showParticipants}
+                  showChat={chatShow}
+                  roomToken={roomToken}
+                  uid={stringUid}
+                  uuid={uuid}
+                />
+              </div>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={`${
+                  showWhiteboardLarge
+                    ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                    : "w-[100%] h-[90%]"
+                }  bg-gray-100`}
+              ></div>
+              <button
+                onClick={swapViews}
+                className={`bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
+                  hasSmallView || whiteboardOpen ? "block" : "hidden"
+                }`}
+              >
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </>
+          )}
+          {roomToken && UID && uuid && whiteboardOpen && !shareScreenOpen && (
+            <>
+              <div
+                className={`whiteBoard ${
+                  showWhiteboardLarge
+                    ? "w-[100%] h-[90%]"
+                    : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                }`}
+              >
+                <WhiteBoardMain
+                  showWhiteboardLarge={showWhiteboardLarge}
+                  showParticipants={showParticipants}
+                  showChat={chatShow}
+                  roomToken={roomToken}
+                  uid={stringUid}
+                  uuid={uuid}
+                />
+              </div>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={`${
+                  showWhiteboardLarge
+                    ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                    : "w-[100%] h-[90%]"
+                }  bg-gray-100 ${hasSmallView ? "block" : "hidden"}`}
+              ></div>
+              <button
+                onClick={swapViews}
+                className={`bg-premiumOrange   w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
+                  hasSmallView ? "block" : "hidden"
+                }`}
+              >
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </>
+          )}
+          {roomToken && UID && uuid && !whiteboardOpen && !shareScreenOpen && (
+            <>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={`w-[100%] h-[90%] bg-gray-100`}
+              ></div>
+            </>
+          )}
+          {roomToken && UID && uuid && !whiteboardOpen && shareScreenOpen && (
+            <>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={`${
+                  screenShareLarge
+                    ? "w-[100%] h-[90%]"
+                    : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16 "
+                }  bg-gray-100 `}
+              ></div>
+              <div
+                id="share-screen1"
+                className={`${
+                  screenShareLarge
+                    ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
+                    : "w-[100%] h-[90%]"
+                }  bg-gray-100 ${hasSmallViewScreen1 ? "block" : "hidden"}`}
+              ></div>
+              <button
+                onClick={swapViewsScreenShare}
+                className={`bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
+                  hasSmallViewScreen1 ? "block" : "hidden"
+                }`}
+              >
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </>
+          )}
+          {/* {roomToken && UID && uuid && !whiteboardOpen && (
+            <>
+              <div
+                ref={screenShareRef}
+                id="share-screen"
+                className={`
+                    w-[100%] h-[85%]
+                  bg-gray-100`}
+              ></div>
+            </>
+          )} */}
+          {/* {roomToken &&
             UID &&
             uuid &&
             whiteboardOpen &&
@@ -239,17 +335,7 @@ const MainScreen = memo(
                 ></div>
               </>
             )}
-          {roomToken && UID && uuid && role === "reader" && !whiteboardOpen && (
-            <>
-              <div
-                ref={screenShareRef}
-                id="share-screen"
-                className={`
-                    w-[100%] h-[85%]
-                  bg-gray-100`}
-              ></div>
-            </>
-          )}
+
           {roomToken &&
             UID &&
             uuid &&
@@ -284,7 +370,7 @@ const MainScreen = memo(
                   bg-gray-100`}
                 ></div>
               </>
-            )}
+            )} */}
           {/* Join Stream */}
           <div className="w-full fixed py-2 z-10 bottom-0 flex justify-center ">
             <div

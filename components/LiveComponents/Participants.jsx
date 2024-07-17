@@ -16,8 +16,9 @@ const Participants = memo(
     UID,
     whiteboardOpen,
     showWhiteboardLarge,
+    closeWhiteboard,
+    hasSmallViewScreen1,
   }) => {
-    console.log("Users at initial render:", users);
     const [participantNames, setParticipantNames] = useState({});
     const [role, setRole] = useState(false);
 
@@ -46,7 +47,6 @@ const Participants = memo(
     };
 
     useEffect(() => {
-      console.log("Participants updated:", participants);
       participants.forEach(fetchName);
     }, [participants, rtmClient]);
 
@@ -78,10 +78,12 @@ const Participants = memo(
             {users.map((user) => (
               <div
                 key={user.uid}
-                className=" relative bg-gray-100 rounded-2xl h-[20vh] w-[13vw] flex flex-col items-center justify-between mb-5 userBoxForCam"
+                className=" relative bg-gray-100 rounded-2xl h-[20vh] w-[13vw] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
                 id={`userBoxForCam-${user.uid}`}
               >
                 <VideoPlayer
+                  hasSmallViewScreen1={hasSmallViewScreen1}
+                  closeWhiteboard={closeWhiteboard}
                   showWhiteboard={whiteboardOpen}
                   role={role}
                   showWhiteboardLarge={showWhiteboardLarge}

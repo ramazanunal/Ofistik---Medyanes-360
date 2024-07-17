@@ -49,14 +49,11 @@ const LiveChat = memo(
       "bg-[#BAFFC9]",
       "bg-[#BAE1FF]",
       "bg-[#D1BAFF]",
-
       "bg-[#FFE4C4]",
       "bg-[#FFFFD1]",
       "bg-[#C4FFD4]",
-
       "bg-[#E1C4FF]",
       "bg-[#FFC0CB]",
-
       "bg-[#B0E0E6]",
     ];
     let colorIndex = 0;
@@ -143,13 +140,13 @@ const LiveChat = memo(
             <input
               type="text"
               name="message"
-              className="h-[44px] w-[7vw] flex-grow bg-gray-100 rounded-lg p-3 focus:outline-none focus:border focus:border-orange-500 placeholder:text-slate-600"
+              className="h-[44px] w-[7vw] flex-grow bg-gray-100 rounded-lg p-3 focus:outline-none focus:border focus:border-premiumOrange placeholder:text-slate-600"
               placeholder="Mesaj Gönder..."
               autoComplete="off"
             />
             <button
               type="submit"
-              className="bg-orange-500 text-white p-2 rounded-lg ml-2"
+              className="bg-premiumOrange text-white p-2 rounded-lg ml-2"
             >
               Gönder
             </button>

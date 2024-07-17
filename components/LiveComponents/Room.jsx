@@ -424,13 +424,28 @@ function Room() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const openWhiteboard = () => {
+    if (screenShareOpen) {
+      handleScreenShare();
+    }
+    setWhiteboardOpen(true);
+    toast.success("Beyaz Tahta Başarılı bir şekilde Açıldı");
+  };
+
+  const closeWhiteboard = () => {
+    setWhiteboardOpen(false);
+  };
+  console.log("ekran paylaşımı:   ", screenShareOpen);
   const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
+  const [hasSmallViewScreen1, setHasSmallViewScreen1] = useState(false);
+  const [screenShareLarge, setShowScreenShareLarge] = useState(true);
   return displayName !== null ? (
     <div className="h-screen bg-gray-100">
       <Toaster />
       <section className=" flex justify-between overflow-hidden">
         {/* Participants */}
         <Participants
+          closeWhiteboard={closeWhiteboard}
           users={users}
           openParticipants={openParticipants}
           show={showParticipants}
@@ -442,10 +457,17 @@ function Room() {
           UID={UID}
           whiteboardOpen={whiteboardOpen}
           showWhiteboardLarge={showWhiteboardLarge}
+          hasSmallViewScreen1={hasSmallViewScreen1}
         />
 
         {/* Main Screen */}
         <MainScreen
+          hasSmallViewScreen1={hasSmallViewScreen1}
+          setHasSmallViewScreen1={setHasSmallViewScreen1}
+          screenShareLarge={screenShareLarge}
+          setShowScreenShareLarge={setShowScreenShareLarge}
+          closeWhiteboard={closeWhiteboard}
+          openWhiteboard={openWhiteboard}
           openChat={openChat}
           openParticipants={openParticipants}
           showWhiteboardLarge={showWhiteboardLarge}
