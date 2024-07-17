@@ -182,7 +182,7 @@ const MainScreen = memo(
               <div
                 className={`whiteBoard ${
                   showWhiteboardLarge
-                    ? "w-[100%] h-[90%]"
+                    ? "w-[100%] h-[85%]"
                     : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
                 }`}
               >
@@ -201,7 +201,7 @@ const MainScreen = memo(
                 className={`${
                   showWhiteboardLarge
                     ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                    : "w-[100%] h-[90%]"
+                    : "w-[100%] h-[85%]"
                 }  bg-gray-100`}
               ></div>
               <button
@@ -219,7 +219,7 @@ const MainScreen = memo(
               <div
                 className={`whiteBoard ${
                   showWhiteboardLarge
-                    ? "w-[100%] h-[90%]"
+                    ? "w-[100%] h-[85%]"
                     : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
                 }`}
               >
@@ -238,7 +238,7 @@ const MainScreen = memo(
                 className={`${
                   showWhiteboardLarge
                     ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                    : "w-[100%] h-[90%]"
+                    : "w-[100%] h-[85%]"
                 }  bg-gray-100 ${hasSmallView ? "block" : "hidden"}`}
               ></div>
               <button
@@ -256,7 +256,7 @@ const MainScreen = memo(
               <div
                 ref={screenShareRef}
                 id="share-screen"
-                className={`w-[100%] h-[90%] bg-gray-100`}
+                className={`w-[100%] h-[85%] bg-gray-100`}
               ></div>
             </>
           )}
@@ -267,7 +267,7 @@ const MainScreen = memo(
                 id="share-screen"
                 className={`${
                   screenShareLarge
-                    ? "w-[100%] h-[90%]"
+                    ? "w-[100%] h-[85%]"
                     : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16 "
                 }  bg-gray-100 `}
               ></div>
@@ -276,7 +276,7 @@ const MainScreen = memo(
                 className={`${
                   screenShareLarge
                     ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                    : "w-[100%] h-[90%]"
+                    : "w-[100%] h-[85%]"
                 }  bg-gray-100 ${hasSmallViewScreen1 ? "block" : "hidden"}`}
               ></div>
               <button
@@ -289,92 +289,11 @@ const MainScreen = memo(
               </button>
             </>
           )}
-          {/* {roomToken && UID && uuid && !whiteboardOpen && (
-            <>
-              <div
-                ref={screenShareRef}
-                id="share-screen"
-                className={`
-                    w-[100%] h-[85%]
-                  bg-gray-100`}
-              ></div>
-            </>
-          )} */}
-          {/* {roomToken &&
-            UID &&
-            uuid &&
-            whiteboardOpen &&
-            !shareScreenOpen &&
-            role === "admin" && (
-              <>
-                <div className={`whiteBoard w-[100%] h-[85%]`}>
-                  <WhiteBoardMain
-                    showWhiteboardLarge={showWhiteboardLarge}
-                    showParticipants={showParticipants}
-                    showChat={chatShow}
-                    roomToken={roomToken}
-                    uid={stringUid}
-                    uuid={uuid}
-                  />
-                </div>
-              </>
-            )}
-          {roomToken &&
-            UID &&
-            uuid &&
-            shareScreenOpen &&
-            !whiteboardOpen &&
-            role === "admin" && (
-              <>
-                <div
-                  ref={screenShareRef}
-                  id="share-screen"
-                  className={`
-                    w-[100%] h-[85%]
-                  bg-gray-100`}
-                ></div>
-              </>
-            )}
 
-          {roomToken &&
-            UID &&
-            uuid &&
-            role === "reader" &&
-            !shareScreenOpen &&
-            whiteboardOpen && (
-              <>
-                <div className={`whiteBoard w-[100%] h-[85%]`}>
-                  <WhiteBoardMain
-                    showWhiteboardLarge={showWhiteboardLarge}
-                    showParticipants={showParticipants}
-                    showChat={chatShow}
-                    roomToken={roomToken}
-                    uid={stringUid}
-                    uuid={uuid}
-                  />
-                </div>
-              </>
-            )}
-          {roomToken &&
-            UID &&
-            uuid &&
-            role === "admin" &&
-            !whiteboardOpen &&
-            !shareScreenOpen && (
-              <>
-                <div
-                  ref={screenShareRef}
-                  id="share-screen"
-                  className={`
-                    w-[100%] !h-[85vh]
-                  bg-gray-100`}
-                ></div>
-              </>
-            )} */}
           {/* Join Stream */}
           <div className="w-full fixed py-2 z-10 bottom-0 flex justify-center ">
             <div
-              className={`flex justify-between bg-white  rounded-2xl items-center p-2 ${getContainerWidthClass(
+              className={`flex justify-between bg-white mb-3 rounded-2xl items-center p-2 ${getContainerWidthClass(
                 chatShow,
                 showParticipants
               )}`}
@@ -383,12 +302,12 @@ const MainScreen = memo(
                 <div className="timerArea flex flex-row items-center justify-center mr-3">
                   <div className="w-5 h-5 bg-red-600 rounded-full mr-2 blinking"></div>
                   <div className="flex flex-col items-center justify-center">
-                    <b className="text-lg cursor-pointer text-gray-600">
+                    <b className="lg:text-[1.3vw] xl:text-[1.1vw]  cursor-pointer text-gray-600">
                       {formatTime(timeElapsed)}
                     </b>
                   </div>
                 </div>
-                <h1 className="text-xl tracking-wider text-gray-700">
+                <h1 className="lg:text-[1.2vw] xl:text-[1vw] tracking-wider text-gray-700">
                   {decodeURIComponent(channel)} Toplantısı
                 </h1>
               </div>
@@ -407,7 +326,7 @@ const MainScreen = memo(
                         openWhiteboard();
                       }
                     }}
-                    className={`px-2 py-5 whiteBoardButton w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                    className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw]  whiteBoardButton flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
                       whiteboardOpen ? "bg-premiumOrange text-white" : ""
                     }`}
                   >
@@ -430,7 +349,7 @@ const MainScreen = memo(
                       ></rect>
                     </svg>
                   </button>
-                  <h1 className="text-sm text-center text-gray-700 mt-2">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw]  text-center text-gray-700 mt-1">
                     {whiteboardOpen
                       ? "Beyaz Tahtayı Kapat"
                       : "Beyaz Tahtayı Aç"}
@@ -442,7 +361,7 @@ const MainScreen = memo(
                     <div
                       id="camera"
                       title="Kamerayı Aç"
-                      className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                      className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
                         showCamera ? "bg-premiumOrange text-white" : ""
                       }`}
                       onClick={async () => {
@@ -485,7 +404,7 @@ const MainScreen = memo(
                         />
                       </svg>
                     </div>
-                    <h1 className="text-sm text-center text-gray-700 mt-2">
+                    <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
                       {showCamera ? "Kamera Kapat" : "Kamera Aç"}
                     </h1>
                   </div>
@@ -497,7 +416,7 @@ const MainScreen = memo(
                     title="Mikrofonu Aç"
                     className={`${
                       showMic ? "bg-premiumOrange text-white" : ""
-                    } px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                    } xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
                     onClick={async () => {
                       const user = users.find((user) => user.uid === UID);
                       if (user) {
@@ -522,7 +441,7 @@ const MainScreen = memo(
                       <i class="fa-solid fa-microphone-lines-slash flex items-center justify-center text-xl w-7 h-7 text-center"></i>
                     )}
                   </div>
-                  <h1 className="text-sm text-center text-gray-700 mt-2">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
                     {showMic ? "Mikrofon Kapat" : "Mikrofon Aç"}
                   </h1>
                 </div>
@@ -531,7 +450,7 @@ const MainScreen = memo(
                   <div
                     id="screen-share"
                     title="Ekranı Paylaş"
-                    className={`px-2 py-5 w-full flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                    className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
                       shareScreenOpen ? "bg-premiumOrange text-white" : ""
                     }`}
                     onClick={handleScreenShare}
@@ -551,7 +470,7 @@ const MainScreen = memo(
                       />
                     </svg>
                   </div>
-                  <h1 className="text-sm text-center text-gray-700 mt-2">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
                     {shareScreenOpen
                       ? "Ekran Paylaşımı Kapat"
                       : "Ekran Paylaşımı Aç"}
@@ -563,7 +482,7 @@ const MainScreen = memo(
                 <div
                   id="chat"
                   title="Chati Aç"
-                  className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
+                  className="w-[2vw] h-[2vw] rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
                   onClick={openChat}
                 >
                   <i class="fa-regular fa-comments"></i>
@@ -571,7 +490,7 @@ const MainScreen = memo(
                 <div
                   id="participants"
                   title="Katılımcıları Aç"
-                  className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
+                  className="w-[2vw] h-[2vw] rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
                   onClick={openParticipants}
                 >
                   <i class="fa-solid fa-users"></i>
@@ -580,7 +499,7 @@ const MainScreen = memo(
                   <div
                     id="copyMeet"
                     title="Toplantı Linkini Kopyala"
-                    className="p-2 rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
+                    className="w-[2vw] h-[2vw] rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
                     onClick={copyMeetingLink}
                   >
                     <i class="fa-solid fa-copy"></i>
@@ -591,12 +510,12 @@ const MainScreen = memo(
                   <div
                     id="exit"
                     title="Toplantıdan Ayrıl"
-                    className={`px-5 py-5 w-full flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
+                    className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
                     onClick={leaveRoom}
                   >
                     <i class="fa-solid fa-phone-slash text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
                   </div>
-                  <h1 className="text-sm text-center text-gray-700 mt-2">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
                     Ayrıl
                   </h1>
                 </div>

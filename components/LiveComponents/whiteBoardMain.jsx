@@ -45,7 +45,7 @@ function WhiteBoardMain({
       id="white-board"
       style={{
         width: showWhiteboardLarge === false ? "22vw" : size,
-        height: showWhiteboardLarge === false ? "25vh" : "85vh",
+        height: showWhiteboardLarge === false ? "25vh" : "82vh",
         border: "1px solid",
         borderRadius: "15px",
         borderColor: "hsl(215, 20%, 75%)",

@@ -73,7 +73,7 @@ const Participants = memo(
           </div>
           <div
             id="userVideo"
-            className="flex flex-col items-center justify-center max-h-screen overflow-y-auto"
+            className="flex flex-col items-center max-h-[85vh] justify-center overflow-scroll"
           >
             {users.map((user) => (
               <div

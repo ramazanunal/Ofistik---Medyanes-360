@@ -40,19 +40,6 @@ const VideoPlayer = memo(
       };
 
       playTracks();
-
-      // Clean up function
-      // return () => {
-      //   if (user.videoTrack) {
-      //     user.videoTrack.stop();
-      //   }
-      //   if (user.audioTrack) {
-      //     user.audioTrack.stop();
-      //   }
-      //   if (user.screenShareTrack) {
-      //     user.screenShareTrack.stop();
-      //   }
-      // };
     }, [user, UID]);
 
     const enLargeFrame = (event) => {
