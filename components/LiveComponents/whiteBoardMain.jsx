@@ -10,6 +10,7 @@ function WhiteBoardMain({
   showWhiteboardLarge,
 }) {
   const [size, setSize] = useState("");
+  const isMobile = window.innerWidth < 768;
   let fastboard;
   try {
     fastboard = useFastboard(() => ({
@@ -35,8 +36,10 @@ function WhiteBoardMain({
       setSize("74vw");
     } else if (showParticipants && showChat) {
       setSize("79vw");
-    } else if (!showParticipants && showChat) {
+    } else if (!showParticipants && showChat && !isMobile) {
       setSize("89vw");
+    } else if (!showParticipants && showChat && isMobile) {
+      setSize("79vw");
     }
   }, [showChat, showParticipants]);
 

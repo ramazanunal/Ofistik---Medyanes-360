@@ -77,7 +77,7 @@ const LiveChat = memo(
           ></i>
         </button>
         <div
-          className={`mr-[5vw] md:ml-0 h-[88vh] md:h-[96vh] ${
+          className={`mr-[5vw] md:mr-0 h-[88vh] md:h-[96vh] ${
             chatShow ? "hidden " : " animate__animated animate__fadeInRight"
           } flex flex-col fixed right-0 overflow-hidden z-30 bg-white rounded-2xl lg:relative w-[90vw] md:w-[15vw]`}
         >

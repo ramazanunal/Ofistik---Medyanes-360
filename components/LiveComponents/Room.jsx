@@ -44,7 +44,13 @@ function Room() {
   });
   const [inputUsername, setInputUsername] = useState("");
   const displayName = sessionStorage.getItem("username");
-
+  const isMobile = window.innerWidth < 768;
+  useEffect(() => {
+    if (isMobile) {
+      setChatShow(true);
+      setShowParticipants(false);
+    }
+  }, []);
   useEffect(() => {
     if (showCtrl.showParticipants || showCtrl.showLiveChat) {
       const elem = document.getElementById("video-holder");

@@ -88,6 +88,13 @@
   top: 0;
 }
 
+@media only screen and (max-width: 768px) {
+  #share-screen .videoPlayer {
+    margin-top: 10vh;
+    height: 80vh !important;
+  }
+}
+
 img {
   pointer-events: none;
 }

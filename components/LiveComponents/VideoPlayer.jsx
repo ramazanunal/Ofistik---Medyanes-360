@@ -13,7 +13,7 @@ const VideoPlayer = memo(
     hasSmallViewScreen1,
   }) => {
     const ref = useRef();
-
+    const isMobile = window.innerWidth < 768;
     useEffect(() => {
       // Oynatma işlemleri
       const playTracks = () => {
@@ -183,7 +183,7 @@ const VideoPlayer = memo(
             isInShareScreen1 ? "inScreen1" : ""
           } cursor-pointer ${
             showWhiteboard ? "openWhite " : "closeWhite"
-          }  md:w-[13vw] md:h-[20vh] w-[60vw] h-[30vh] videoPlayer rounded-t-2xl`}
+          }  md:w-[13vw] md:h-[20vh] w-[80vw] h-[40vh] videoPlayer rounded-t-2xl`}
         ></div>
       </>
     );

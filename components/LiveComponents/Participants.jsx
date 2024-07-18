@@ -78,7 +78,7 @@ const Participants = memo(
             {users.map((user) => (
               <div
                 key={user.uid}
-                className=" relative bg-gray-100 rounded-2xl md:w-[13vw] md:h-[20vh] w-[60vw] h-[20vh] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
+                className=" relative bg-gray-100 rounded-2xl md:w-[13vw] md:h-[20vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
                 id={`userBoxForCam-${user.uid}`}
               >
                 <VideoPlayer
