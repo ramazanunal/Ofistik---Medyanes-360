@@ -77,11 +77,11 @@ const LiveChat = memo(
           ></i>
         </button>
         <div
-          className={`h-[96vh] ${
+          className={`mr-[5vw] md:ml-0 h-[88vh] md:h-[96vh] ${
             chatShow ? "hidden " : " animate__animated animate__fadeInRight"
-          } flex flex-col fixed right-0 overflow-hidden z-30 bg-white rounded-2xl lg:relative lg:w-[15vw]`}
+          } flex flex-col fixed right-0 overflow-hidden z-30 bg-white rounded-2xl lg:relative w-[90vw] md:w-[15vw]`}
         >
-          <div className="h-[70vh] p-2 w-full overflow-y-auto flex flex-col gap-4 lg:h-[87vh]">
+          <div className="h-[80vh] md:h-[70vh] p-2 w-full overflow-y-auto flex flex-col gap-4 lg:h-[87vh]">
             {chats.map((chat, id) => (
               <div
                 key={id}
@@ -113,7 +113,7 @@ const LiveChat = memo(
             <div ref={chatRef} />
           </div>
           <form
-            className="h-[20vh]  p-2 flex items-center bg-white lg:h-[10vh]"
+            className="h-[8vh] p-2 flex items-center bg-white md:h-[10vh]"
             onSubmit={(e) => {
               e.preventDefault();
               const form = e.target;

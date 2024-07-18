@@ -59,11 +59,11 @@ const Participants = memo(
           <i className={`fa-solid fa-chevron-${show ? "left" : "right"}`}></i>
         </button>
         <div
-          className={`h-[96vh] fixed left-0 ${
+          className={`ml-[5vw] md:ml-0 h-[88vh] md:h-[96vh] fixed left-0 ${
             show
               ? "animate__animated animate__fadeInLeft"
               : "hidden animate__animated animate__fadeOutLeft"
-          } z-30 bg-white lg:relative rounded-2xl w-[15vw]`}
+          } z-30 bg-white lg:relative rounded-2xl w-[90vw] md:w-[15vw]`}
         >
           <div className="relative m-3 p-5 font-bold flex items-center justify-center gap-4 border-b-2 border-gray-300">
             <span className="text-xl text-gray-600">Katılımcılar</span>
@@ -73,12 +73,12 @@ const Participants = memo(
           </div>
           <div
             id="userVideo"
-            className="flex flex-col items-center max-h-[85vh] justify-center overflow-scroll"
+            className="flex flex-col items-center max-h-[75vh] justify-center overflow-scroll"
           >
             {users.map((user) => (
               <div
                 key={user.uid}
-                className=" relative bg-gray-100 rounded-2xl h-[20vh] w-[13vw] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
+                className=" relative bg-gray-100 rounded-2xl md:w-[13vw] md:h-[20vh] w-[60vw] h-[20vh] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
                 id={`userBoxForCam-${user.uid}`}
               >
                 <VideoPlayer

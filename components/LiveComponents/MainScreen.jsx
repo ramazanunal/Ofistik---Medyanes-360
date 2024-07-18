@@ -176,6 +176,19 @@ const MainScreen = memo(
             chatShow ? "lg:w-[92vw]" : "lg:w-[90vw]"
           } bg-gray-100`}
         >
+          <div className="channelNameArea flex-col items-center justify-center flex md:hidden">
+            <div className="timerArea flex flex-row items-center justify-center mr-3">
+              <div className="w-5 h-5 bg-red-600 rounded-full mr-2 blinking"></div>
+              <div className="flex flex-col items-center justify-center">
+                <b className="lg:text-[1.3vw] xl:text-[1.1vw]  cursor-pointer text-gray-600">
+                  {formatTime(timeElapsed)}
+                </b>
+              </div>
+            </div>
+            <h1 className="lg:text-[1.2vw] xl:text-[1vw] tracking-wider text-gray-700">
+              {decodeURIComponent(channel)} Toplantısı
+            </h1>
+          </div>
           {/* Share Screen */}
           {roomToken && UID && uuid && whiteboardOpen && shareScreenOpen && (
             <>
@@ -298,7 +311,7 @@ const MainScreen = memo(
                 showParticipants
               )}`}
             >
-              <div className="channelNameArea flex flex-col items-center justify-center">
+              <div className="channelNameArea flex-col items-center justify-center hidden md:flex">
                 <div className="timerArea flex flex-row items-center justify-center mr-3">
                   <div className="w-5 h-5 bg-red-600 rounded-full mr-2 blinking"></div>
                   <div className="flex flex-col items-center justify-center">
@@ -311,7 +324,7 @@ const MainScreen = memo(
                   {decodeURIComponent(channel)} Toplantısı
                 </h1>
               </div>
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-2 md:gap-4">
                 {/* Whiteboard açma/kapatma butonu */}
                 <div id="whiteBoard">
                   <button
@@ -326,7 +339,7 @@ const MainScreen = memo(
                         openWhiteboard();
                       }
                     }}
-                    className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw]  whiteBoardButton flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                    className={`w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw]  whiteBoardButton flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
                       whiteboardOpen ? "bg-premiumOrange text-white" : ""
                     }`}
                   >
@@ -349,7 +362,7 @@ const MainScreen = memo(
                       ></rect>
                     </svg>
                   </button>
-                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw]  text-center text-gray-700 mt-1">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw]  text-center text-gray-700 mt-1 hidden md:block">
                     {whiteboardOpen
                       ? "Beyaz Tahtayı Kapat"
                       : "Beyaz Tahtayı Aç"}
@@ -361,7 +374,7 @@ const MainScreen = memo(
                     <div
                       id="camera"
                       title="Kamerayı Aç"
-                      className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                      className={`w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
                         showCamera ? "bg-premiumOrange text-white" : ""
                       }`}
                       onClick={async () => {
@@ -404,7 +417,7 @@ const MainScreen = memo(
                         />
                       </svg>
                     </div>
-                    <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
+                    <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
                       {showCamera ? "Kamera Kapat" : "Kamera Aç"}
                     </h1>
                   </div>
@@ -416,7 +429,7 @@ const MainScreen = memo(
                     title="Mikrofonu Aç"
                     className={`${
                       showMic ? "bg-premiumOrange text-white" : ""
-                    } xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                    } w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
                     onClick={async () => {
                       const user = users.find((user) => user.uid === UID);
                       if (user) {
@@ -441,7 +454,7 @@ const MainScreen = memo(
                       <i class="fa-solid fa-microphone-lines-slash flex items-center justify-center text-xl w-7 h-7 text-center"></i>
                     )}
                   </div>
-                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
                     {showMic ? "Mikrofon Kapat" : "Mikrofon Aç"}
                   </h1>
                 </div>
@@ -450,7 +463,7 @@ const MainScreen = memo(
                   <div
                     id="screen-share"
                     title="Ekranı Paylaş"
-                    className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                    className={`w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
                       shareScreenOpen ? "bg-premiumOrange text-white" : ""
                     }`}
                     onClick={handleScreenShare}
@@ -470,19 +483,19 @@ const MainScreen = memo(
                       />
                     </svg>
                   </div>
-                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
                     {shareScreenOpen
                       ? "Ekran Paylaşımı Kapat"
                       : "Ekran Paylaşımı Aç"}
                   </h1>
                 </div>
               </div>
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-1 md:gap-4 ml-3 md:ml-0">
                 {/* Chat Butonu */}
                 <div
                   id="chat"
                   title="Chati Aç"
-                  className="w-[2vw] h-[2vw] rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
+                  className="w-[30px] h-[30px] md:w-[2vw] md:h-[2vw] rounded-xl cursor-pointer text-lg md:text-2xl text-premiumOrange transition-all duration-500"
                   onClick={openChat}
                 >
                   <i class="fa-regular fa-comments"></i>
@@ -490,7 +503,7 @@ const MainScreen = memo(
                 <div
                   id="participants"
                   title="Katılımcıları Aç"
-                  className="w-[2vw] h-[2vw] rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
+                  className="w-[30px] h-[30px] md:w-[2vw] md:h-[2vw] rounded-xl cursor-pointer text-lg md:text-2xl text-premiumOrange transition-all duration-500"
                   onClick={openParticipants}
                 >
                   <i class="fa-solid fa-users"></i>
@@ -499,23 +512,23 @@ const MainScreen = memo(
                   <div
                     id="copyMeet"
                     title="Toplantı Linkini Kopyala"
-                    className="w-[2vw] h-[2vw] rounded-xl cursor-pointer text-2xl text-premiumOrange transition-all duration-500"
+                    className="w-[30px] h-[30px] md:w-[2vw] md:h-[2vw] rounded-xl cursor-pointer text-lg md:text-2xl text-premiumOrange transition-all duration-500"
                     onClick={copyMeetingLink}
                   >
                     <i class="fa-solid fa-copy"></i>
                   </div>
                 )}
                 {/* Çıkış yapma Butonu */}
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center ">
                   <div
                     id="exit"
                     title="Toplantıdan Ayrıl"
-                    className={`xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500`}
+                    className={`w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-red-600 text-gray-50  transition-all duration-500 `}
                     onClick={leaveRoom}
                   >
                     <i class="fa-solid fa-phone-slash text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
                   </div>
-                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1">
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
                     Ayrıl
                   </h1>
                 </div>
