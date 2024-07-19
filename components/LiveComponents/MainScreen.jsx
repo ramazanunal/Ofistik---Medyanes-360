@@ -38,6 +38,10 @@ const MainScreen = memo(
     setShowScreenShareLarge,
     setHasSmallViewScreen1,
     hasSmallViewScreen1,
+    setShowCamera,
+    showCamera,
+    setTimeElapsed,
+    timeElapsed,
   }) => {
     const [role, setRole] = useState(false);
 
@@ -96,7 +100,6 @@ const MainScreen = memo(
     };
     const [muted, setMuted] = useState(true);
 
-    const [timeElapsed, setTimeElapsed] = useState(0);
     const intervalRef = useRef(null);
     useEffect(() => {
       intervalRef.current = setInterval(() => {
@@ -126,44 +129,48 @@ const MainScreen = memo(
       }
     }, [chatShow, showParticipants]);
 
-    const [showCamera, setShowCamera] = useState(true);
     const [showMic, setShowMic] = useState(true);
 
     const swapViews = () => {
       setShowWhiteboardLarge((prev) => !prev);
     };
     const [cameraPermission, setCameraPermission] = useState(null);
+    const [micPermission, setMicPermission] = useState(null);
     const checkCameraPermission = async () => {
       const permissionStatus = await navigator.permissions.query({
         name: "camera",
+      });
+      const permissionStatusMic = await navigator.permissions.query({
+        name: "microphone",
       });
       if (permissionStatus.state === "granted") {
         setCameraPermission(true);
       } else {
         setCameraPermission(false);
       }
+      if (permissionStatusMic.state === "granted") {
+        setMicPermission(true);
+      } else {
+        setMicPermission(false);
+      }
     };
     const [hasSmallView, setHasSmallView] = useState(false);
 
-    // Check for the smallView element when the component mounts or updates
     useEffect(() => {
-      // Check for the smallView element when the component mounts or updates
       const shareScreenElement = document.getElementById("share-screen");
       if (shareScreenElement) {
         const smallViewElement = shareScreenElement.querySelector(".inScreen");
         setHasSmallView(!!smallViewElement);
       }
-    }); // Empty dependency array to run only once on mount
+    });
 
-    // Check for the smallView element when the component mounts or updates
     useEffect(() => {
-      // Check for the smallView element when the component mounts or updates
       const shareScreenElement = document.getElementById("share-screen1");
       if (shareScreenElement) {
         const smallViewElement = shareScreenElement.querySelector(".inScreen1");
         setHasSmallViewScreen1(!!smallViewElement);
       }
-    }); // Empty dependency array to run only once on mount
+    });
 
     const swapViewsScreenShare = () => {
       setShowScreenShareLarge((prev) => !prev);
@@ -423,41 +430,43 @@ const MainScreen = memo(
                   </div>
                 )}
                 {/* Mikrofon Butonu */}
-                <div className="flex flex-col items-center justify-center">
-                  <div
-                    id="mic"
-                    title="Mikrofonu Aç"
-                    className={`${
-                      showMic ? "bg-premiumOrange text-white" : ""
-                    } w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
-                    onClick={async () => {
-                      const user = users.find((user) => user.uid === UID);
-                      if (user) {
-                        handleMuteMic(user);
-                      }
-                      if (user.audioTrack.muted === false) {
-                        toast.success(
-                          "Mikrofon başarılı bir şekilde kapatıldı"
-                        );
-                        setShowMic(false);
-                        setMuted(false);
-                      } else if (user.audioTrack.muted === true) {
-                        setMuted(true);
-                        setShowMic(true);
-                        toast.success("Mikrofon başarılı bir şekilde açıldı");
-                      }
-                    }}
-                  >
-                    {muted ? (
-                      <i class="fa-solid fa-microphone-lines text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
-                    ) : (
-                      <i class="fa-solid fa-microphone-lines-slash flex items-center justify-center text-xl w-7 h-7 text-center"></i>
-                    )}
+                {micPermission === true && (
+                  <div className="flex flex-col items-center justify-center">
+                    <div
+                      id="mic"
+                      title="Mikrofonu Aç"
+                      className={`${
+                        showMic ? "bg-premiumOrange text-white" : ""
+                      } w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex items-center justify-center  rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                      onClick={async () => {
+                        const user = users.find((user) => user.uid === UID);
+                        if (user) {
+                          handleMuteMic(user);
+                        }
+                        if (user.audioTrack.muted === false) {
+                          toast.success(
+                            "Mikrofon başarılı bir şekilde kapatıldı"
+                          );
+                          setShowMic(false);
+                          setMuted(false);
+                        } else if (user.audioTrack.muted === true) {
+                          setMuted(true);
+                          setShowMic(true);
+                          toast.success("Mikrofon başarılı bir şekilde açıldı");
+                        }
+                      }}
+                    >
+                      {muted ? (
+                        <i class="fa-solid fa-microphone-lines text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
+                      ) : (
+                        <i class="fa-solid fa-microphone-lines-slash flex items-center justify-center text-xl w-7 h-7 text-center"></i>
+                      )}
+                    </div>
+                    <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
+                      {showMic ? "Mikrofon Kapat" : "Mikrofon Aç"}
+                    </h1>
                   </div>
-                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
-                    {showMic ? "Mikrofon Kapat" : "Mikrofon Aç"}
-                  </h1>
-                </div>
+                )}
                 {/* Ekran Paylaş Butonu */}
                 <div className="flex flex-col items-center justify-center">
                   <div

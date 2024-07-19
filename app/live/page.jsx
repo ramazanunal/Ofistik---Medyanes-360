@@ -90,9 +90,14 @@ function Page() {
         Swal.showLoading();
       },
     });
+
+    // Oda ismine 5 basamaklı rastgele bir sayı ekleyin
+    const randomNum = Math.floor(10000 + Math.random() * 90000);
+    const uniqueRoomName = `${roomLogin.roomName}${randomNum}`;
+
     try {
       const response = await getAPI(
-        `/agora?channelName=${roomLogin.roomName}&uid=${roomLogin.username}`
+        `/agora?channelName=${uniqueRoomName}&uid=${roomLogin.username}`
       );
       const token = response.token;
       setChannel(roomLogin.roomName);
@@ -183,7 +188,7 @@ function Page() {
                 required
               />
               <div className="flex items-center justify-start ml-1 mt-2">
-                <i class="fa-solid fa-circle-exclamation text-red-600 text-sm mr-2"></i>
+                <i className="fa-solid fa-circle-exclamation text-red-600 text-sm mr-2"></i>
                 <h1 className="warningText text-red-600 text-sm">
                   Müşteriniz belirtilen oda ismi ile randevunuza katılacaktır.
                 </h1>

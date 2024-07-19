@@ -18,9 +18,9 @@ function Room() {
   const router = useRouter();
   const [whiteboardOpen, setWhiteboardOpen] = useState(false);
   const base = useParams();
-  const fullChName = base.ChName; // channelName%3Demrahoda
+  const fullChName = base.ChName;
   const chNameParts = fullChName.split("%3D");
-  const chName = chNameParts[1]; // emrahoda
+  const chName = chNameParts[1];
   const channel = chName;
 
   const screenShareRef = useRef();
@@ -28,15 +28,18 @@ function Room() {
   const [joined, setJoined] = useState(false);
   const [chatShow, setChatShow] = useState(false);
   const [showParticipants, setShowParticipants] = useState(true);
+  const [showCamera, setShowCamera] = useState(true);
   const [UID, setUID] = useState("");
   const [role, setRole] = useState("");
   const [users, setUsers] = useState([]);
+  const [timeElapsed1, setTimeElapsed1] = useState(0);
   const [localTracks, setLocalTracks] = useState({ audio: "", video: "" });
   const [screenShare, setScreenShare] = useState({ mode: false, track: "" });
   const [participants, setParticipants] = useState([]);
   const [rtmClient, setRtmClient] = useState(null);
   const [channelRes, setChannelRes] = useState(null);
   const [totalMembers, setTotalMembers] = useState(0);
+  const [screenShareOpen, setScreenShareOpen] = useState(false);
   const [chats, setChats] = useState([]);
   const [showCtrl, setShowCtrl] = useState({
     showParticipants: false,
@@ -45,6 +48,63 @@ function Room() {
   const [inputUsername, setInputUsername] = useState("");
   const displayName = sessionStorage.getItem("username");
   const isMobile = window.innerWidth < 768;
+
+  const [whiteboardStartTime, setWhiteboardStartTime] = useState(null);
+  const [cameraStartTime, setCameraStartTime] = useState(null);
+  const [screenShareStartTime, setScreenShareStartTime] = useState(null);
+  const [whiteboardDuration, setWhiteboardDuration] = useState(0);
+  const [cameraDuration, setCameraDuration] = useState(0);
+  const [screenShareDuration, setScreenShareDuration] = useState(0);
+  useEffect(() => {
+    console.log(formatTime(whiteboardDuration));
+  }, [whiteboardDuration]);
+  useEffect(() => {
+    if (whiteboardOpen) {
+      setWhiteboardStartTime(Date.now());
+    } else if (whiteboardStartTime) {
+      const now = Date.now();
+      setWhiteboardDuration(
+        (prev) => prev + (now - whiteboardStartTime) / 1000
+      );
+      setWhiteboardStartTime(null);
+    }
+  }, [whiteboardOpen]);
+
+  useEffect(() => {
+    if (screenShareOpen) {
+      setScreenShareStartTime(Date.now());
+    } else if (screenShareStartTime) {
+      const now = Date.now();
+      setScreenShareDuration(
+        (prev) => prev + (now - screenShareStartTime) / 1000
+      );
+      setScreenShareStartTime(null);
+    }
+  }, [screenShareOpen]);
+
+  useEffect(() => {
+    if (showCamera) {
+      setCameraStartTime(Date.now());
+    } else if (cameraStartTime) {
+      const now = Date.now();
+      setCameraDuration((prev) => prev + (now - cameraStartTime) / 1000);
+      setCameraStartTime(null);
+    }
+  }, [showCamera]);
+
+  useEffect(() => {
+    if (showCamera && cameraStartTime) {
+      const intervalId = setInterval(() => {
+        setCameraDuration(
+          (prev) => prev + (Date.now() - cameraStartTime) / 1000
+        );
+        setCameraStartTime(Date.now());
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [showCamera, cameraStartTime]);
+
   useEffect(() => {
     if (isMobile) {
       setChatShow(true);
@@ -75,6 +135,15 @@ function Room() {
     updateMemberTotal(members);
     setParticipants((prev) => prev.filter((id) => id !== MemberId));
   };
+  const formatTime = (seconds) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    return `${hrs}:${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   const leaveRoom = async () => {
     Swal.fire({
@@ -94,11 +163,13 @@ function Room() {
       setTimeout(() => {
         window.location.href = "/";
       }, 1000);
+
+      console.log("Whiteboard duration:", formatTime(whiteboardDuration));
+      console.log("Camera duration:", formatTime(cameraDuration));
+      console.log("Screen share duration:", formatTime(screenShareDuration));
+      console.log("Meeting duration:", formatTime(timeElapsed1));
     } catch (error) {
       Swal.close();
-      toast.error(
-        "Toplantıdan çıkarken bir hata oluştu. Lütfen tekrar deneyin."
-      );
       console.error("Error leaving the room:", error);
     }
   };
@@ -243,11 +314,13 @@ function Room() {
         Swal.showLoading();
       },
     });
-
     try {
-      // Kamera iznini kontrol et
-      const permissionStatus = await navigator.permissions.query({
+      // Kamera ve mikrofon izinlerini kontrol et
+      const permissionStatusCam = await navigator.permissions.query({
         name: "camera",
+      });
+      const permissionStatusMic = await navigator.permissions.query({
+        name: "microphone",
       });
 
       const uid = await client.join(APP_ID, channel, token, null);
@@ -256,19 +329,41 @@ function Room() {
       let audioTrack = null;
       let videoTrack = null;
 
-      if (permissionStatus.state === "granted") {
-        // Kamera izni varsa mikrofon ve kamera parçalarını oluştur
+      if (
+        permissionStatusCam.state !== "denied" &&
+        permissionStatusMic.state !== "denied"
+      ) {
+        // Hem kamera hem mikrofon izni var
         const [audioTrackLocal, videoTrackLocal] =
           await AgoraRTC.createMicrophoneAndCameraTracks();
         audioTrack = audioTrackLocal;
         videoTrack = videoTrackLocal;
         await client.publish([audioTrack, videoTrack]);
         setLocalTracks({ audio: audioTrack, video: videoTrack });
-      } else {
-        // Kamera izni yoksa sadece mikrofon parçasını oluştur
+      } else if (
+        permissionStatusCam.state === "denied" &&
+        permissionStatusMic.state !== "denied"
+      ) {
+        // Sadece mikrofon izni var
         audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
         await client.publish(audioTrack);
         setLocalTracks({ audio: audioTrack });
+      } else if (
+        permissionStatusCam.state !== "denied" &&
+        permissionStatusMic.state === "denied"
+      ) {
+        // Sadece kamera izni var
+        videoTrack = await AgoraRTC.createCameraVideoTrack();
+        await client.publish(videoTrack);
+        setLocalTracks({ video: videoTrack });
+      } else if (
+        permissionStatusCam.state === "denied" &&
+        permissionStatusMic.state === "denied"
+      ) {
+        // Hem kamera hem mikrofon izni yok, sahte yayın oluştur
+
+        await client.publish([audioTrack, videoTrack]);
+        setLocalTracks({ audio: audioTrack, video: videoTrack });
       }
 
       setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
@@ -322,7 +417,6 @@ function Room() {
       await user.audioTrack.setMuted(false);
     }
   };
-  const [screenShareOpen, setScreenShareOpen] = useState(false);
   const handleScreenShare = async () => {
     if (!screenShare.mode) {
       try {
@@ -434,6 +528,7 @@ function Room() {
     if (screenShareOpen) {
       handleScreenShare();
     }
+
     setWhiteboardOpen(true);
     toast.success("Beyaz Tahta Başarılı bir şekilde Açıldı");
   };
@@ -441,7 +536,6 @@ function Room() {
   const closeWhiteboard = () => {
     setWhiteboardOpen(false);
   };
-  console.log("ekran paylaşımı:   ", screenShareOpen);
   const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
   const [hasSmallViewScreen1, setHasSmallViewScreen1] = useState(false);
   const [screenShareLarge, setShowScreenShareLarge] = useState(true);
@@ -468,6 +562,13 @@ function Room() {
 
         {/* Main Screen */}
         <MainScreen
+          setTimeElapsed={setTimeElapsed1}
+          timeElapsed={timeElapsed1}
+          showCamera={showCamera}
+          setShowCamera={setShowCamera}
+          whiteboardDuration={whiteboardDuration}
+          cameraDuration={cameraDuration}
+          screenShareDuration={screenShareDuration}
           hasSmallViewScreen1={hasSmallViewScreen1}
           setHasSmallViewScreen1={setHasSmallViewScreen1}
           screenShareLarge={screenShareLarge}

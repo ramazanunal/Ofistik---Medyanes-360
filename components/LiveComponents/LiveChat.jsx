@@ -113,7 +113,7 @@ const LiveChat = memo(
             <div ref={chatRef} />
           </div>
           <form
-            className="h-[8vh] p-2 flex items-center bg-white md:h-[10vh]"
+            className="h-[8vh] p-2 flex items-center bg-white md:h-[10vh] w-[90vw] md:w-[15vw]"
             onSubmit={(e) => {
               e.preventDefault();
               const form = e.target;
@@ -124,13 +124,13 @@ const LiveChat = memo(
               }
             }}
           >
-            <button
+            {/* <button
               type="button"
               onClick={handleIconClick}
               className="bg-gray-100 p-3 rounded-lg mr-2"
             >
               <FontAwesomeIcon icon={faPaperclip} />
-            </button>
+            </button> */}
             <input
               type="file"
               id="file"
