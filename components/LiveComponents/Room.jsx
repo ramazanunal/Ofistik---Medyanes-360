@@ -304,6 +304,43 @@ function Room() {
       getMembers(channelRes);
     }
   }, [channelRes, rtmClient]);
+  console.log(users);
+  // Join as a subscriber method
+  const joinAsSubscriber = async (channelName) => {
+    client.on("stream-added", async function (evt) {
+      const stream = evt.stream;
+      console.log("New stream added: " + stream.getId());
+
+      client.subscribe(stream, async function (err) {
+        if (err) {
+          console.log("Subscribe stream failed", err);
+          return;
+        }
+      });
+    });
+
+    client.on("stream-subscribed", async function (evt) {
+      const stream = evt.stream;
+      console.log("Successfully subscribed to stream: " + stream.getId());
+      stream.play("video-container");
+
+      // Kullanıcıyı users arrayine ekle
+      const uid = stream.getId();
+      setUsers((prev) => [
+        ...prev,
+        { uid, audioTrack: null, videoTrack: null },
+      ]);
+      setLocalTracks({ audioTrack: null, videoTrack: null });
+
+      // Client'a publish et
+      try {
+        await client.publish([stream]);
+        console.log("Stream published successfully");
+      } catch (err) {
+        console.log("Publish stream failed", err);
+      }
+    });
+  };
 
   const joinRoom = async () => {
     Swal.fire({
@@ -360,10 +397,8 @@ function Room() {
         permissionStatusCam.state === "denied" &&
         permissionStatusMic.state === "denied"
       ) {
-        // Hem kamera hem mikrofon izni yok, sahte yayın oluştur
-
-        await client.publish([audioTrack, videoTrack]);
-        setLocalTracks({ audio: audioTrack, video: videoTrack });
+        // Hem kamera hem mikrofon izni yok
+        joinAsSubscriber(channel);
       }
 
       setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);

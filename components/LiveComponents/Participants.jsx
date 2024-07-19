@@ -31,11 +31,10 @@ const Participants = memo(
 
     const fetchName = async (participantId) => {
       try {
-        const usernamePromise = rtmClient.getUserAttributesByKeys(
+        const username = await rtmClient.getUserAttributesByKeys(
           participantId,
           ["name"]
         );
-        const username = await usernamePromise;
         const { name } = username;
         setParticipantNames((prevNames) => ({
           ...prevNames,
@@ -50,6 +49,41 @@ const Participants = memo(
       participants.forEach(fetchName);
     }, [participants, rtmClient]);
 
+    const renderUserBox = (user, isUser) => (
+      <div
+        key={user.uid}
+        className="relative bg-gray-100 rounded-2xl md:w-[13vw] md:h-[20vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
+        id={`userBoxForCam-${user.uid}`}
+      >
+        {isUser && (
+          <VideoPlayer
+            hasSmallViewScreen1={hasSmallViewScreen1}
+            closeWhiteboard={closeWhiteboard}
+            showWhiteboard={whiteboardOpen}
+            role={role}
+            showWhiteboardLarge={showWhiteboardLarge}
+            rtmClient={rtmClient}
+            key={user.uid}
+            user={user}
+            UID={UID}
+            usersNumber={users.length}
+          />
+        )}
+        <span
+          id={`user-${user.uid}`}
+          className="truncate text-gray-700 font-semibold text-center p-2"
+        >
+          {participantNames[user.uid] || user.uid}
+        </span>
+      </div>
+    );
+
+    // Benzersiz kullanıcıları toplamak için Set kullanın
+    const uniqueParticipants = new Set(users.map((user) => String(user.uid)));
+    participants.forEach((participantId) =>
+      uniqueParticipants.add(String(participantId))
+    );
+    debugger;
     return (
       <div className="p-5 pt-2 bg-gray-100 relative">
         <button
@@ -75,32 +109,10 @@ const Participants = memo(
             id="userVideo"
             className="flex flex-col items-center max-h-[75vh] justify-center overflow-scroll"
           >
-            {users.map((user) => (
-              <div
-                key={user.uid}
-                className=" relative bg-gray-100 rounded-2xl md:w-[13vw] md:h-[20vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
-                id={`userBoxForCam-${user.uid}`}
-              >
-                <VideoPlayer
-                  hasSmallViewScreen1={hasSmallViewScreen1}
-                  closeWhiteboard={closeWhiteboard}
-                  showWhiteboard={whiteboardOpen}
-                  role={role}
-                  showWhiteboardLarge={showWhiteboardLarge}
-                  rtmClient={rtmClient}
-                  key={user.uid}
-                  user={user}
-                  UID={UID}
-                  usersNumber={users.length}
-                />
-                <span
-                  id={`user-${user.uid}`}
-                  className="truncate text-gray-700 font-semibold text-center p-2"
-                >
-                  {participantNames[user.uid] || user.uid}
-                </span>
-              </div>
-            ))}
+            {[...uniqueParticipants].map((uid) => {
+              const user = users.find((user) => String(user.uid) === uid);
+              return renderUserBox(user || { uid }, Boolean(user));
+            })}
           </div>
         </div>
       </div>
