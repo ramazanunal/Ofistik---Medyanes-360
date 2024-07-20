@@ -40,21 +40,21 @@ const LiveChat = memo(
 
     const userColors = {};
     const colors = [
-      "bg-[#FFB3BA]",
-      "bg-[#FFC4C4]",
+      "bg-[#FFDAB9]",
+      "bg-[#87CEFA]",
       "bg-[#FFDFBA]",
-      "bg-[#C4E1FF]",
+      "bg-[#F5F5DC]",
       "bg-[#FFD700]",
-      "bg-[#FFFFBA]",
+      "bg-[#FFFACD]",
       "bg-[#BAFFC9]",
       "bg-[#BAE1FF]",
       "bg-[#D1BAFF]",
-      "bg-[#FFE4C4]",
+      "bg-[#FFF0F5]",
       "bg-[#FFFFD1]",
       "bg-[#C4FFD4]",
-      "bg-[#E1C4FF]",
+      "bg-[#E6E6FA]",
       "bg-[#FFC0CB]",
-      "bg-[#B0E0E6]",
+      "bg-[#98FB98]",
     ];
     let colorIndex = 0;
 
