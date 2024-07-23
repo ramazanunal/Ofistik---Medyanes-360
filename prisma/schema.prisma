@@ -148,3 +148,14 @@ model SavedTimes {
     id   String   @id @default(auto()) @map("_id") @db.ObjectId
     time String
 }
+
+model Adverts {
+    id                  String  @id @default(auto()) @map("_id") @db.ObjectId
+    baslangicTarihi     String
+    bitisTarihi         String
+    butceTipi           String
+    gunlukButceMiktari  Int
+    reklamAdi           String
+    reklamTarihi        String
+    reklamTipi          String
+}

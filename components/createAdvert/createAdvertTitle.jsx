@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import BalanceModal from "../balanceModal/balanceModal";
 import Link from "next/link";
@@ -64,7 +64,7 @@ function CreateAdvertTitleArea() {
     <>
       <div className="lg:flex m-5 justify-between">
         <div className="titleArea flex items-center justify-start my-4 lg:my-0 lg:w-1/4  rounded-lg lg:mr-5">
-          <Link href={"/"}>
+          <Link href={"/addsense"}>
             <i className="fa-solid fa-arrow-left md:text-[1.8vw] lg:text-[1.6vw] xl:text-[1.2vw] font-extrabold mr-5 cursor-pointer flex items-center justify-center"></i>
           </Link>
           <h1 className="md:text-[1.8vw] lg:text-[1.6vw] xl:text-[1.2vw] font-extrabold text-center py-2">

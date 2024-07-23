@@ -26,7 +26,7 @@ const AdvertInfo = ({ onSubmit }) => {
     baslangicTarihi: "",
     bitisTarihi: "",
     butceTipi: "",
-    gunlukButceMiktarı: "",
+    gunlukButceMiktari: "",
     reklamTarihi: formattedDate,
   };
 
@@ -43,7 +43,7 @@ const AdvertInfo = ({ onSubmit }) => {
         "Bitiş tarihi başlangıç tarihinden önce olamaz"
       ),
     butceTipi: Yup.string().required("Lütfen bütçe tipini seçiniz"),
-    gunlukButceMiktarı: Yup.number()
+    gunlukButceMiktari: Yup.number()
       .required("Lütfen miktarı giriniz")
       .typeError(/[0-9]/, "Sadece sayı giriniz"),
   });
@@ -277,7 +277,7 @@ const AdvertInfo = ({ onSubmit }) => {
                               Günlük Bütçe
                             </label>
                             <i
-                              class="fa-solid fa-circle-info text-sm lg:text-md text-gray-600 ml-2 flex items-center justify-center cursor-pointer"
+                              class="fa-solid fa-circle-info text-sm lg:text-md text-gray-600 ml-2 flex items-center justify-center cursor-pointer mt-[6px]"
                               onClick={() => {
                                 openModal();
                                 setSenario([
@@ -308,7 +308,7 @@ const AdvertInfo = ({ onSubmit }) => {
                               Toplam Bütçe
                             </label>
                             <i
-                              class="fa-solid fa-circle-info text-sm lg:text-md text-gray-600 ml-2 flex items-center justify-center cursor-pointer"
+                              class="fa-solid fa-circle-info text-sm lg:text-md text-gray-600 ml-2 flex items-center justify-center cursor-pointer  mt-[6px]"
                               onClick={() => {
                                 openModal();
                                 setSenario([
@@ -355,22 +355,22 @@ const AdvertInfo = ({ onSubmit }) => {
                                 </label>
                                 <Field
                                   type="number"
-                                  name="gunlukButceMiktarı"
-                                  id="gunlukButceMiktarı"
+                                  name="gunlukButceMiktari"
+                                  id="gunlukButceMiktari"
                                   placeholder="Her ürün için minimum 50₺"
                                   className={`w-full rounded-md border ${
-                                    formik.touched.gunlukButceMiktarı &&
-                                    formik.errors.gunlukButceMiktarı
+                                    formik.touched.gunlukButceMiktari &&
+                                    formik.errors.gunlukButceMiktari
                                       ? "border-b-red-500"
                                       : "border-[#e0e0e0]"
                                   } bg-white py-1 px-6 text-base font-medium text-txtGrey outline-none focus:border-lightGray focus:shadow-md`}
                                 />
                               </div>
                               <div className="flex">
-                                {formik.touched.gunlukButceMiktarı &&
-                                  formik.errors.gunlukButceMiktarı && (
+                                {formik.touched.gunlukButceMiktari &&
+                                  formik.errors.gunlukButceMiktari && (
                                     <p className="mt-1 text-sm text-red-500">
-                                      {formik.errors.gunlukButceMiktarı}
+                                      {formik.errors.gunlukButceMiktari}
                                     </p>
                                   )}
                               </div>
@@ -385,7 +385,7 @@ const AdvertInfo = ({ onSubmit }) => {
               {(selectedOption === "1" || selectedOption === "") && (
                 <div className="lg:w-2/3">
                   <AdvertTypeInfo
-                    img={'/img/cover.png'}
+                    img={"/img/cover.png"}
                     title={"Profil Reklamı"}
                     q1={[
                       "Profilinizi ön plana çıkartarak etkileşiminizi arttırmak için uygulanan reklam modelidir.",
@@ -411,7 +411,7 @@ const AdvertInfo = ({ onSubmit }) => {
               {selectedOption === "2" && (
                 <div className="lg:w-2/3">
                   <AdvertTypeInfo
-                    img={'/img/cover2.png'}
+                    img={"/img/cover2.png"}
                     title={"Gönderi Reklamı"}
                     q1={[
                       "Gönderilerinizi ön plana çıkartarak etkileşiminizi arttırmak için uygulanan reklam modelidir.",

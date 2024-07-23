@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import Pages from "./pages";
 import CreateAdvertTitleArea from "./createAdvertTitle";
@@ -6,6 +6,7 @@ import AdvertInfo from "../advertInfo/advertInfo";
 import MainSelectItemPage from "../selectItem/mainSelectItemPage";
 import Swal from "sweetalert2";
 import MainConfirmArea from "../confirmArea/mainConfirmArea";
+import { postAPI, getAPI } from "@/services/fetchAPI";
 
 function MainCreateAdvert({
   setInitialValueAdded,
@@ -94,15 +95,15 @@ function MainCreateAdvert({
               valuesForContent.reklamTipi || initialValueAdded.reklamTipi
             }
             amount={
-              valuesForContent.gunlukButceMiktarı ||
-              initialValueAdded.gunlukButceMiktarı
+              valuesForContent.gunlukButceMiktari ||
+              initialValueAdded.gunlukButceMiktari
             }
             selectedMethod={
               valuesForContent.reklamTipi || initialValueAdded.reklamTipi
             }
             time={day(
               valuesForContent.baslangicTarihi ||
-              initialValueAdded.baslangicTarihi,
+                initialValueAdded.baslangicTarihi,
               valuesForContent.bitisTarihi || initialValueAdded.bitisTarihi
             )}
             total={postList}
@@ -120,8 +121,8 @@ function MainCreateAdvert({
 
   const finish = async () => {
     try {
-      await Swal.fire({
-        title: `Emin misiniz ?`,
+      const result = await Swal.fire({
+        title: "Emin misiniz?",
         text: "Girilen bilgiler ile reklam oluşturuluyor. Bir hata olduğunu düşünüyorsanız iptal edip düzenleyebilirsiniz.",
         icon: "question",
         showCancelButton: true,
@@ -129,31 +130,36 @@ function MainCreateAdvert({
         cancelButtonColor: "#d33",
         confirmButtonText: "Oluştur",
         cancelButtonText: "İptal et",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const serializedValue = JSON.stringify(
-            valuesForContent || initialValueAdded
-          );
-          const existingAdverts = localStorage.getItem("adverts");
-          const advertsArray = existingAdverts
-            ? JSON.parse(existingAdverts)
-            : [];
-          const parsedValue = JSON.parse(serializedValue);
-          advertsArray.push(parsedValue);
-          localStorage.setItem("adverts", JSON.stringify(advertsArray));
+      });
+
+      if (result.isConfirmed) {
+        // API'ye POST isteği gönder
+        const response = await postAPI(
+          "/addsense",
+          valuesForContent || initialValueAdded
+        );
+        console.log(response);
+        if (response) {
           Swal.fire({
-            text: "Reklamınız başarı ile oluşturuldu reklamlarım bölümünden detaylarını takip edip yönetebilirsiniz !",
+            text: "Reklamınız başarı ile oluşturuldu. Reklamlarım bölümünden detaylarını takip edip yönetebilirsiniz!",
             icon: "success",
             confirmButtonText: "Tamam",
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "/";
+              window.location.href = "/addsense";
             }
           });
+        } else {
+          throw new Error("Advert creation failed");
         }
-      });
+      }
     } catch (error) {
-      console.error("Error saving advert to localStorage:", error);
+      console.error("Error saving advert to API:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Hata",
+        text: "Reklam oluşturma sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+      });
     }
   };
 

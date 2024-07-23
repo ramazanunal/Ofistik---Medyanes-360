@@ -50,7 +50,7 @@ function BalanceTransactions() {
       );
     } else if (filterIndex === 3) {
       setFilteredTransactions(
-        transactions.filter((transaction) => transaction.gunlukButceMiktarı > 0)
+        transactions.filter((transaction) => transaction.gunlukButceMiktari > 0)
       );
     }
   };
@@ -99,7 +99,7 @@ function BalanceTransactions() {
       {currentTransactions.map((transaction, index) => (
         <BalanceTransactionsCard
           key={index}
-          amount={transaction.miktar || -transaction.gunlukButceMiktarı}
+          amount={transaction.miktar || -transaction.gunlukButceMiktari}
           date={transaction.islemTarihi || transaction.reklamTarihi}
           type={transaction.reklamTipi || transaction.odemeTuru}
           name={transaction.reklamAdi || "Bakiye Yükleme"}

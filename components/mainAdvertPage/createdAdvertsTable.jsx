@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AdvertCardType from "./advertCardType";
 import AdvertStatistic from "../createAdvert/advertStatistic";
+import { postAPI, getAPI, deleteAPI } from "@/services/fetchAPI";
+import Swal from "sweetalert2";
 function CreatedAdvertsTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -22,9 +24,9 @@ function CreatedAdvertsTable() {
       /*ekran 768 den küçükse isMobil olur*/
     }
     setIsMobile(window.innerWidth <= 768);
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
-  };
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
     window.addEventListener("resize", handleResize);
 
@@ -33,10 +35,16 @@ function CreatedAdvertsTable() {
     };
   }, []);
   useEffect(() => {
-    const storedData = localStorage.getItem("adverts");
-    if (storedData) {
-      setData(JSON.parse(storedData));
-    }
+    const fetchAdverts = async () => {
+      try {
+        const adverts = await getAPI("/addsense");
+        setData(adverts);
+      } catch (error) {
+        console.error("Failed to fetch adverts", error);
+      }
+    };
+
+    fetchAdverts();
   }, []);
 
   const handlePageChange = (page) => {
@@ -60,7 +68,42 @@ function CreatedAdvertsTable() {
       return new Date(bitisTarihi) < new Date() ? "Tamamlandı" : "Aktif";
     }
   };
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Emin misiniz!",
+      text: "Reklamı silmek istediğinize emin misiniz?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Evet",
+      cancelButtonText: "Hayır",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const newArray = await postAPI(`/addsense/${id}`, "", "DELETE");
+        const adverts = await getAPI("/addsense");
 
+        setData(adverts);
+        Swal.fire({
+          title: "Başarılı !",
+          text: "Seçilen saat başarılı bir şekilde silindi.",
+          icon: "success",
+          confirmButtonText: "Kapat",
+        });
+      }
+    });
+  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     await deleteAPI(`/addsense/${id}`);
+  //     Swal.fire({
+  //       icon: "success",
+  //       title: "Başarılı",
+  //       text: "Reklam başarılı bir şekilde silindi.",
+  //     });
+  //     setData(data.filter((item) => item.id !== id));
+  //   } catch (error) {
+  //     console.error("Failed to delete advert", error);
+  //   }
+  // };
   const currentPageData = data.slice(startIndex, endIndex);
   return (
     <>
@@ -149,7 +192,7 @@ function CreatedAdvertsTable() {
                           <div className="flex items-center justify-center">
                             <h1 className="text-sm text-gray-400">Toplam : </h1>
                             <h1 className="text-sm font-semibold">
-                              {item.gunlukButceMiktarı}
+                              {item.gunlukButceMiktari}
                             </h1>
                           </div>
                         </td>
@@ -189,28 +232,32 @@ function CreatedAdvertsTable() {
                         </td>
                         <td className="px-2 py-3 flex items-center justify-center">
                           <div
-                            className={`flex items-center w-full justify-center ${statusFunction(item.bitisTarihi) === "Tamamlandı"
+                            className={`flex items-center w-full justify-center ${
+                              statusFunction(item.bitisTarihi) === "Tamamlandı"
                                 ? "border-gray-500"
                                 : "border-greenBalance"
-                              } border ${statusFunction(item.bitisTarihi) === "Tamamlandı"
+                            } border ${
+                              statusFunction(item.bitisTarihi) === "Tamamlandı"
                                 ? "bg-gray-200"
                                 : "bg-greenBalanceBg"
-                              } rounded-lg`}
+                            } rounded-lg`}
                           >
                             <div className="flex p-1">
                               <i
-                                className={`fa-solid fa-circle  ${statusFunction(item.bitisTarihi) ===
-                                    "Tamamlandı"
+                                className={`fa-solid fa-circle  ${
+                                  statusFunction(item.bitisTarihi) ===
+                                  "Tamamlandı"
                                     ? "text-gray-500"
                                     : "text-greenBalance"
-                                  }  text-[0.5rem] flex items-center justify-center mx-2`}
+                                }  text-[0.5rem] flex items-center justify-center mx-2 mt-[6px]`}
                               ></i>
                               <h1
-                                className={`text-center text-sm ${statusFunction(item.bitisTarihi) ===
-                                    "Tamamlandı"
+                                className={`text-center text-sm ${
+                                  statusFunction(item.bitisTarihi) ===
+                                  "Tamamlandı"
                                     ? "text-gray-500"
                                     : "text-greenBalance"
-                                  } `}
+                                } `}
                               >
                                 {statusFunction(item.bitisTarihi)}
                               </h1>
@@ -220,11 +267,11 @@ function CreatedAdvertsTable() {
 
                         <td className="px-2 py-3">
                           <div className="flex items-center justify-center">
-                            <button className="text-gray-400 mr-4">
+                            <button
+                              onClick={() => handleDelete(item.id)}
+                              className="text-gray-400 mr-4"
+                            >
                               <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                            <button className="text-gray-400 ">
-                              <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                           </div>
                         </td>
@@ -232,7 +279,7 @@ function CreatedAdvertsTable() {
                     )) ||
                     (isMobile && (
                       <AdvertCardType
-                        budget={item.gunlukButceMiktarı}
+                        budget={item.gunlukButceMiktari}
                         ciro={1300}
                         clickNumber={65}
                         end={item.bitisTarihi}
@@ -270,10 +317,13 @@ function CreatedAdvertsTable() {
               <ul className="flex space-x-2 mt-4 lg:mt-0 flex-wrap justify-center">
                 <li
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${currentPage === 1
+                  className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${
+                    itemsPerPage < currentPageData.length ? "" : "hidden"
+                  } ${
+                    currentPage === 1
                       ? "bg-grayBg text-gray-600 font-semibold"
                       : "border-grayBg"
-                    }`}
+                  }`}
                 >
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
@@ -287,10 +337,11 @@ function CreatedAdvertsTable() {
                   <li
                     key={page + 1}
                     onClick={() => handlePageChange(page + 1)}
-                    className={`px-3 py-2 border w-[40px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${page + 1 === currentPage
+                    className={`px-3 py-2 border w-[40px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${
+                      page + 1 === currentPage
                         ? "bg-grayBg text-gray-600 font-semibold"
                         : "border-grayBg"
-                      }`}
+                    }`}
                   >
                     <button onClick={() => handlePageChange(page + 1)}>
                       {page + 1}
@@ -299,10 +350,13 @@ function CreatedAdvertsTable() {
                 ))}
                 <li
                   onClick={() => handlePageChange(currentPage + 1)}
-                  className={`px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${currentPage === totalPages
+                  className={`${
+                    itemsPerPage < currentPageData.length ? "" : "hidden"
+                  }  px-5 py-2 border w-[80px] h-[40px] flex items-center justify-center cursor-pointer rounded-xl ${
+                    currentPage === totalPages
                       ? "bg-grayBg text-gray-600 font-semibold"
                       : "border-grayBg"
-                    }`}
+                  }`}
                 >
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}

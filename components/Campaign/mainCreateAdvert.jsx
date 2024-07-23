@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import Pages from "./pages";
 import CreateAdvertTitleArea from "./createAdvertTitle";
@@ -93,15 +93,15 @@ function MainCreateAdvert({
               valuesForContent.reklamTipi || initialValueAdded.reklamTipi
             }
             amount={
-              valuesForContent.gunlukButceMiktarı ||
-              initialValueAdded.gunlukButceMiktarı
+              valuesForContent.gunlukButceMiktari ||
+              initialValueAdded.gunlukButceMiktari
             }
             selectedMethod={
               valuesForContent.reklamTipi || initialValueAdded.reklamTipi
             }
             time={day(
               valuesForContent.baslangicTarihi ||
-              initialValueAdded.baslangicTarihi,
+                initialValueAdded.baslangicTarihi,
               valuesForContent.bitisTarihi || initialValueAdded.bitisTarihi
             )}
             total={postList}

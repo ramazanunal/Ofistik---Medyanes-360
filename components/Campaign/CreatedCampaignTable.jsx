@@ -151,7 +151,7 @@ function CreatedCampaignTable() {
                           <div className="flex items-center justify-center">
                             <h1 className="text-sm text-gray-400">Toplam : </h1>
                             <h1 className="text-sm font-semibold">
-                              {item.gunlukButceMiktarı}
+                              {item.gunlukButceMiktari}
                             </h1>
                           </div>
                         </td>
@@ -238,7 +238,7 @@ function CreatedCampaignTable() {
                     )) ||
                     (isMobile && (
                       <AdvertCardType
-                        budget={item.gunlukButceMiktarı}
+                        budget={item.gunlukButceMiktari}
                         ciro={1300}
                         clickNumber={65}
                         end={item.bitisTarihi}
