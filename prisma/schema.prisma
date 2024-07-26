@@ -151,6 +151,7 @@ model SavedTimes {
 
 model Adverts {
     id                  String  @id @default(auto()) @map("_id") @db.ObjectId
+    userID              String
     baslangicTarihi     String
     bitisTarihi         String
     butceTipi           String

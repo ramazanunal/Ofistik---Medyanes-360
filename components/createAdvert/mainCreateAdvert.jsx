@@ -7,12 +7,14 @@ import MainSelectItemPage from "../selectItem/mainSelectItemPage";
 import Swal from "sweetalert2";
 import MainConfirmArea from "../confirmArea/mainConfirmArea";
 import { postAPI, getAPI } from "@/services/fetchAPI";
+import { useSession } from "next-auth/react";
 
 function MainCreateAdvert({
   setInitialValueAdded,
   initialValueAdded,
   postList,
 }) {
+  const { data: session } = useSession();
   const [activePage, setActivePage] = useState(1);
   const [valuesForContent, setValuesForContent] = useState("");
   const [complatedPages, setComplatedPages] = useState([false, false, false]);
@@ -78,7 +80,6 @@ function MainCreateAdvert({
           />
         );
       case 3:
-        console.log(valuesForContent);
         return (
           <MainConfirmArea
             advertEndDate={
@@ -134,10 +135,11 @@ function MainCreateAdvert({
 
       if (result.isConfirmed) {
         // API'ye POST isteği gönder
-        const response = await postAPI(
-          "/addsense",
-          valuesForContent || initialValueAdded
-        );
+        const advertData = {
+          ...valuesForContent,
+          userID: session.user.id,
+        };
+        const response = await postAPI("/addsense", advertData);
         console.log(response);
         if (response) {
           Swal.fire({
@@ -162,7 +164,6 @@ function MainCreateAdvert({
       });
     }
   };
-
   return (
     <>
       <CreateAdvertTitleArea />

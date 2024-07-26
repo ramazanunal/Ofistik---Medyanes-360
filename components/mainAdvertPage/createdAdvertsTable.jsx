@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import AdvertCardType from "./advertCardType";
 import AdvertStatistic from "../createAdvert/advertStatistic";
 import { postAPI, getAPI, deleteAPI } from "@/services/fetchAPI";
 import Swal from "sweetalert2";
+
 function CreatedAdvertsTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -12,17 +14,17 @@ function CreatedAdvertsTable() {
   const [totalPages, setTotalPages] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { data: session } = useSession();
+
   const openModal = () => {
     setIsModalOpen(true);
   };
+
   useEffect(() => {
-    // Calculate total pages when data changes
     setTotalPages(Math.ceil(data.length / itemsPerPage));
   }, [data, itemsPerPage]);
+
   useEffect(() => {
-    {
-      /*ekran 768 den küçükse isMobil olur*/
-    }
     setIsMobile(window.innerWidth <= 768);
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -34,18 +36,24 @@ function CreatedAdvertsTable() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   useEffect(() => {
     const fetchAdverts = async () => {
       try {
-        const adverts = await getAPI("/addsense");
-        setData(adverts);
+        if (session) {
+          const adverts = await getAPI(`/addsense`);
+          const userAdverts = adverts.filter(
+            (ad) => ad.userID === session.user.id
+          );
+          setData(userAdverts);
+        }
       } catch (error) {
         console.error("Failed to fetch adverts", error);
       }
     };
 
     fetchAdverts();
-  }, []);
+  }, [session]);
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) {
@@ -56,6 +64,7 @@ function CreatedAdvertsTable() {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
   const handlePageNumberChange = (e) => {
     const value = parseInt(e.target.value);
     setItemsPerPage(value);
@@ -64,10 +73,9 @@ function CreatedAdvertsTable() {
   };
 
   const statusFunction = (bitisTarihi) => {
-    {
-      return new Date(bitisTarihi) < new Date() ? "Tamamlandı" : "Aktif";
-    }
+    return new Date(bitisTarihi) < new Date() ? "Tamamlandı" : "Aktif";
   };
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Emin misiniz!",
@@ -78,12 +86,14 @@ function CreatedAdvertsTable() {
       cancelButtonText: "Hayır",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const newArray = await postAPI(`/addsense/${id}`, "", "DELETE");
-        const adverts = await getAPI("/addsense");
-
-        setData(adverts);
+        await deleteAPI(`/addsense/${id}`);
+        const adverts = await getAPI(`/addsense`);
+        const userAdverts = adverts.filter(
+          (ad) => ad.userID === session.user.id
+        );
+        setData(userAdverts);
         Swal.fire({
-          title: "Başarılı !",
+          title: "Başarılı!",
           text: "Seçilen saat başarılı bir şekilde silindi.",
           icon: "success",
           confirmButtonText: "Kapat",
@@ -91,20 +101,9 @@ function CreatedAdvertsTable() {
       }
     });
   };
-  // const handleDelete = async (id) => {
-  //   try {
-  //     await deleteAPI(`/addsense/${id}`);
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "Başarılı",
-  //       text: "Reklam başarılı bir şekilde silindi.",
-  //     });
-  //     setData(data.filter((item) => item.id !== id));
-  //   } catch (error) {
-  //     console.error("Failed to delete advert", error);
-  //   }
-  // };
+
   const currentPageData = data.slice(startIndex, endIndex);
+
   return (
     <>
       <div className="bg-white rounded-lg mx-5 mb-8">
