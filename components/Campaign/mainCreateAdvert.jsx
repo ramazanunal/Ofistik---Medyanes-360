@@ -3,9 +3,11 @@ import { useState } from "react";
 import Pages from "./pages";
 import CreateAdvertTitleArea from "./createAdvertTitle";
 import AdvertInfo from "./advertInfo";
-import MainSelectItemPage from "../selectItem/mainSelectItemPage";
+import { MainSelectItemPage } from "./mainSelectItemPage";
 import Swal from "sweetalert2";
 import MainConfirmArea from "../confirmArea/mainConfirmArea";
+import { postAPI, getAPI, deleteAPI } from "@/services/fetchAPI";
+import { useSession } from "next-auth/react";
 
 function MainCreateAdvert({
   setInitialValueAdded,
@@ -13,6 +15,7 @@ function MainCreateAdvert({
   postList,
 }) {
   const [activePage, setActivePage] = useState(1);
+  const { data: session } = useSession();
   const [valuesForContent, setValuesForContent] = useState("");
   const [complatedPages, setComplatedPages] = useState([false, false, false]);
 
@@ -119,40 +122,53 @@ function MainCreateAdvert({
 
   const finish = async () => {
     try {
-      await Swal.fire({
+      // Show confirmation dialog using Swal
+      const result = await Swal.fire({
         title: `Emin misiniz ?`,
-        text: "Girilen bilgiler ile reklam oluşturuluyor. Bir hata olduğunu düşünüyorsanız iptal edip düzenleyebilirsiniz.",
+        text: "Girilen bilgiler ile kampanya oluşturuluyor. Bir hata olduğunu düşünüyorsanız iptal edip düzenleyebilirsiniz.",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Oluştur",
         cancelButtonText: "İptal et",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const serializedValue = JSON.stringify(
-            valuesForContent || initialValueAdded
-          );
-          const existingAdverts = localStorage.getItem("adverts");
-          const advertsArray = existingAdverts
-            ? JSON.parse(existingAdverts)
-            : [];
-          const parsedValue = JSON.parse(serializedValue);
-          advertsArray.push(parsedValue);
-          localStorage.setItem("adverts", JSON.stringify(advertsArray));
-          Swal.fire({
-            text: "Reklamınız başarı ile oluşturuldu reklamlarım bölümünden detaylarını takip edip yönetebilirsiniz !",
+      });
+
+      // If confirmed, proceed with API call
+      if (result.isConfirmed) {
+        // Prepare campaign data
+        const campaignData = {
+          ...valuesForContent,
+          userID: session.user.id,
+        };
+
+        const response = await postAPI("/campaign", campaignData);
+
+        if (response) {
+          await Swal.fire({
+            text: "Kampanyanız başarı ile oluşturuldu reklamlarım bölümünden detaylarını takip edip yönetebilirsiniz !",
             icon: "success",
             confirmButtonText: "Tamam",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "/";
-            }
+          });
+
+          // Redirect after confirmation
+          window.location.href = "/campaign";
+        } else {
+          // Handle error if the response was not successful
+          await Swal.fire({
+            text: "Kampanya oluşturulamadı, lütfen tekrar deneyin.",
+            icon: "error",
+            confirmButtonText: "Tamam",
           });
         }
-      });
+      }
     } catch (error) {
-      console.error("Error saving advert to localStorage:", error);
+      console.error("Error creating campaign:", error);
+      await Swal.fire({
+        text: "Kampanya oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.",
+        icon: "error",
+        confirmButtonText: "Tamam",
+      });
     }
   };
 

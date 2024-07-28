@@ -160,3 +160,13 @@ model Adverts {
     reklamTarihi        String
     reklamTipi          String
 }
+
+model Campaign {
+    id                    String  @id @default(auto()) @map("_id") @db.ObjectId
+    userID                String
+    baslangicTarihi       String
+    bitisTarihi           String
+    kampanyaTuru          String
+    kampanyaAdi           String
+    kampanyaTarihi        String
+}

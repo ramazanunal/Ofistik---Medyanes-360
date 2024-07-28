@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AdvertCardType from "../mainAdvertPage/advertCardType";
+import { postAPI, getAPI, deleteAPI } from "@/services/fetchAPI";
 import AdvertStatistic from "../createAdvert/advertStatistic";
+import { useSession } from "next-auth/react";
 
 function CreatedCampaignTable() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,6 +14,7 @@ function CreatedCampaignTable() {
   const [totalPages, setTotalPages] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { data: session } = useSession();
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -35,11 +38,23 @@ function CreatedCampaignTable() {
     };
   }, []);
   useEffect(() => {
-    const storedData = localStorage.getItem("adverts");
-    if (storedData) {
-      setData(JSON.parse(storedData));
-    }
-  }, []);
+    const fetchAdverts = async () => {
+      try {
+        if (session) {
+          const adverts = await getAPI(`/campaign`);
+          const userAdverts = adverts.filter(
+            (ad) => ad.userID === session.user.id
+          );
+          setData(userAdverts);
+          console.log(userAdverts);
+        }
+      } catch (error) {
+        console.error("Failed to fetch adverts", error);
+      }
+    };
+
+    fetchAdverts();
+  }, [session]);
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) {
@@ -96,13 +111,10 @@ function CreatedCampaignTable() {
               {!isMobile && (
                 <thead className="text-sm">
                   <tr className="sticky top-0 bg-lightGray text-gray-600">
-                    <th className="py-3 px-1">Reklam Bilgileri </th>
+                    <th className="py-3 px-1">Kampanya Bilgileri </th>
+
                     <th className="py-3 px-1">
-                      Reklam Bütçesi{" "}
-                      <i class="fa-solid fa-circle-info text-gray-400 ml-2 cursor-pointer"></i>
-                    </th>
-                    <th className="py-3 px-1">
-                      Reklam Tipi{" "}
+                      Kampanya Tipi{" "}
                       <i class="fa-solid fa-circle-info text-gray-400 ml-2  cursor-pointer"></i>
                     </th>
                     <th className="py-3 px-1">
@@ -126,7 +138,7 @@ function CreatedCampaignTable() {
                       <i class="fa-solid fa-circle-info text-gray-400 ml-2 cursor-pointer"></i>
                     </th>
                     <th className="py-3 px-1">
-                      Reklam Durumu{" "}
+                      Kampanya Durumu{" "}
                       <i class="fa-solid fa-circle-info text-gray-400 ml-2 cursor-pointer"></i>
                     </th>
                     <th className="py-3 px-1">İşlemler </th>
@@ -140,27 +152,20 @@ function CreatedCampaignTable() {
                       <tr key={index}>
                         <td className="px-2 py-3">
                           <div className="advertInfos flex items-center justify-start flex-col">
-                            <h1 className="name text-md">{item.reklamAdi}</h1>
+                            <h1 className="name text-md">{item.kampanyaAdi}</h1>
 
                             <h1 className="dates text-sm text-gray-400">
                               {item.baslangicTarihi} - {item.bitisTarihi}
                             </h1>
                           </div>
                         </td>
-                        <td className="px-2 py-3">
-                          <div className="flex items-center justify-center">
-                            <h1 className="text-sm text-gray-400">Toplam : </h1>
-                            <h1 className="text-sm font-semibold">
-                              {item.gunlukButceMiktari}
-                            </h1>
-                          </div>
-                        </td>
+
                         <td className="px-2 py-3">
                           <div className="flex items-center justify-center">
                             <h1 className="text-sm text-gray-400">
-                              {item.reklamTipi === "1"
-                                ? "Profil Reklamı"
-                                : "Gönderi Reklamı"}
+                              {item.kampanyaTuru === "sepetteFiyatIndirim"
+                                ? "Sepette Fiyat İndirimi"
+                                : "Sepette Yüzde İndirimi"}
                             </h1>
                           </div>
                         </td>
@@ -208,7 +213,7 @@ function CreatedCampaignTable() {
                                   "Tamamlandı"
                                     ? "text-gray-500"
                                     : "text-greenBalance"
-                                }  text-[0.5rem] flex items-center justify-center mx-2`}
+                                }  text-[0.5rem] flex items-center justify-center mx-2 mt-[6px]`}
                               ></i>
                               <h1
                                 className={`text-center text-sm ${
