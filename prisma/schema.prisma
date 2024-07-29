@@ -47,15 +47,16 @@ model HizmetVeren {
     surname              String
     onlineStatus         Boolean
     jobStatus            String
-    languages            String[]
+    languages            Language[]
     price                Int
     totalAppointments    Int
     appointmentIntervals DateTime[]
-    resume               String
+    resume               Resume?
     educationInfo        EducationInfo[]
     serviceAreas         String[]
     comments             Comment[]
     certificates         Certificate[]
+    skills               Skill[]
 
     phone     String
     userId    String?  @unique @db.ObjectId
@@ -69,7 +70,7 @@ model EducationInfo {
     id            String       @id @default(auto()) @map("_id") @db.ObjectId
     university    String
     year          String
-    profileId     String
+    profileId     String?
     HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
     hizmetVerenId String?      @db.ObjectId
 }
@@ -145,28 +146,50 @@ model SelectedTimes {
 }
 
 model SavedTimes {
-    id   String   @id @default(auto()) @map("_id") @db.ObjectId
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
     time String
 }
 
 model Adverts {
-    id                  String  @id @default(auto()) @map("_id") @db.ObjectId
-    userID              String
-    baslangicTarihi     String
-    bitisTarihi         String
-    butceTipi           String
-    gunlukButceMiktari  Int
-    reklamAdi           String
-    reklamTarihi        String
-    reklamTipi          String
+    id                 String @id @default(auto()) @map("_id") @db.ObjectId
+    userID             String
+    baslangicTarihi    String
+    bitisTarihi        String
+    butceTipi          String
+    gunlukButceMiktari Int
+    reklamAdi          String
+    reklamTarihi       String
+    reklamTipi         String
 }
 
 model Campaign {
-    id                    String  @id @default(auto()) @map("_id") @db.ObjectId
-    userID                String
-    baslangicTarihi       String
-    bitisTarihi           String
-    kampanyaTuru          String
-    kampanyaAdi           String
-    kampanyaTarihi        String
+    id              String @id @default(auto()) @map("_id") @db.ObjectId
+    userID          String
+    baslangicTarihi String
+    bitisTarihi     String
+    kampanyaTuru    String
+    kampanyaAdi     String
+    kampanyaTarihi  String
+}
+
+model Resume {
+    id            String       @id @default(auto()) @map("_id") @db.ObjectId
+    text          String
+    HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    hizmetVerenId String?      @unique @db.ObjectId
+}
+
+model Skill {
+    id            String       @id @default(auto()) @map("_id") @db.ObjectId
+    name          String
+    HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    hizmetVerenId String?      @db.ObjectId
+}
+
+model Language {
+    id            String       @id @default(auto()) @map("_id") @db.ObjectId
+    languageName  String
+    level         String
+    HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    hizmetVerenId String?      @db.ObjectId
 }
