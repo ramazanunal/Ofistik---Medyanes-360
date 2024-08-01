@@ -1,38 +1,37 @@
-"use client";
-import React, { useState } from "react";
-import { BiSupport } from "react-icons/bi";
-import { RiContactsBookFill } from "react-icons/ri";
-import { Tooltip } from "@chakra-ui/react";
-import DirectModal from "../DirectMessages/DirectModal";
-import { useContext } from "react";
-import PhoneBookContext from "@/context/PhoneBookContext";
+'use client'
+import React, { useState } from 'react'
+import { BiSupport } from 'react-icons/bi'
+import { RiContactsBookFill } from 'react-icons/ri'
+import { Tooltip } from '@chakra-ui/react'
+import DirectModal from '../DirectMessages/DirectModal'
+import { useContext } from 'react'
+import PhoneBookContext from '@/context/PhoneBookContext'
 
 function Header({ onSearch, onFilterChange, filteredUser }) {
-  const [selectOption, setSelectOption] = useState("inbox");
-  
-  const handleClickOption = (option) => {
-    setSelectOption(option);
-    onFilterChange(option); // Seçilen filtre tipini ilet
-  };
+  const [selectOption, setSelectOption] = useState('inbox')
 
+  const handleClickOption = (option) => {
+    setSelectOption(option)
+    onFilterChange(option) // Seçilen filtre tipini ilet
+  }
 
   const handleInputChange = (e) => {
-    onSearch(e.target.value);
-  };
-  const [isOpenModal, setIsOpenModal] = useState(false);
+    onSearch(e.target.value)
+  }
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   const handleClickOpenModal = () => {
-    setIsOpenModal(!isOpenModal);
-  };
-  const { handleUserSelect } = useContext(PhoneBookContext);
+    setIsOpenModal(!isOpenModal)
+  }
+  const { handleUserSelect } = useContext(PhoneBookContext)
 
   const handleSupportOfistik = () => {
     const supportObj = {
-      name: " Ofistik Support Team", // İsim
-      avatar: "/assets/images/support.jpg", // Resim URL'si
-    };
-    handleUserSelect(supportObj);
-  };
+      name: ' Ofistik Support Team', // İsim
+      avatar: '/assets/images/support.jpg', // Resim URL'si
+    }
+    handleUserSelect(supportObj)
+  }
 
   return (
     <div className="fixed z-40 h-[200px] bg-messageBodyBg md:w-[40%] lg:w-[25%] w-full  ">
@@ -53,7 +52,7 @@ function Header({ onSearch, onFilterChange, filteredUser }) {
       </div>
       <DirectModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
       <h2 className="text-xl ml-10 mt-6 mb-4 font-[500] text-messageBg ">
-        Mesajlar <span className="text-premiumOrange text-sm ">({filteredUser.length})</span>
+        Mesajlar <span className="text-premiumOrange text-sm ">(0)</span>
       </h2>
 
       <div className="flex  items-center w-[80%] h-12 rounded-sm focus-within:shadow-lg focus-within:outline container bg-inputbg">
@@ -86,28 +85,37 @@ function Header({ onSearch, onFilterChange, filteredUser }) {
       <div className="h-10 w-[79%] bg-inputbg rounded-lg  ml-10 mt-2 flex  justify-between items-center">
         <div
           className={`bg-inputbg cursor-pointer  text-newMessage text-sm p-2 rounded-lg ${
-            selectOption === "inbox" ? "bg-premiumOrange text-plusTxt duration-500" : ""
-          }`}  onClick={()=> handleClickOption("inbox")}
+            selectOption === 'inbox'
+              ? 'bg-premiumOrange text-plusTxt duration-500'
+              : ''
+          }`}
+          onClick={() => handleClickOption('inbox')}
         >
           Gelen Kutusu
         </div>
         <div
           className={`bg-inputbg cursor-pointer  text-newMessage text-sm p-2 rounded-lg ${
-            selectOption === "unread" ? "bg-premiumOrange text-plusTxt duration-500" : ""
-          }`}  onClick={()=> handleClickOption("unread")}
+            selectOption === 'unread'
+              ? 'bg-premiumOrange text-plusTxt duration-500'
+              : ''
+          }`}
+          onClick={() => handleClickOption('unread')}
         >
           Okunmamış
         </div>
         <div
           className={`bg-inputbg cursor-pointer  text-newMessage text-sm p-2 rounded-lg ${
-            selectOption === "archive" ? "bg-premiumOrange text-plusTxt duration-500" : ""
-          }`}  onClick={()=> handleClickOption("archive")}
+            selectOption === 'archive'
+              ? 'bg-premiumOrange text-plusTxt duration-500'
+              : ''
+          }`}
+          onClick={() => handleClickOption('archive')}
         >
           Arşiv
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Header;
+export default Header

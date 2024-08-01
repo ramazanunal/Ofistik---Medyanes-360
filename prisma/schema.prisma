@@ -18,9 +18,44 @@ model User {
     hizmetAlan  HizmetAlan?
     hizmetVeren HizmetVeren?
 
-    VerificationCode VerificationCode?
-    createdAt        DateTime          @default(now())
-    updatedAt        DateTime          @updatedAt
+    VerificationCode  VerificationCode?
+    createdAt         DateTime          @default(now())
+    updatedAt         DateTime          @updatedAt
+    messagesSent      Message[]         @relation("Sender")
+    messagesReceived  Message[]         @relation("Receiver")
+    chatsStarted      Chat[]            @relation("Starter")
+    chatsParticipated Chat[]            @relation("Participant")
+}
+
+model Chat {
+    id            String     @id @default(auto()) @map("_id") @db.ObjectId
+    starterId     String     @db.ObjectId
+    participantId String     @db.ObjectId
+    createdAt     DateTime   @default(now())
+    status        ChatStatus @default(ACTIVE)
+
+    starter     User      @relation("Starter", fields: [starterId], references: [id])
+    participant User      @relation("Participant", fields: [participantId], references: [id])
+    messages    Message[]
+}
+
+model Message {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    content    String
+    senderId   String   @db.ObjectId
+    receiverId String   @db.ObjectId
+    chatId     String   @db.ObjectId
+    createdAt  DateTime @default(now())
+
+    isRead   Boolean? @default(false)
+    sender   User     @relation("Sender", fields: [senderId], references: [id])
+    receiver User     @relation("Receiver", fields: [receiverId], references: [id])
+    chat     Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+}
+
+enum ChatStatus {
+    ACTIVE
+    ARCHIVED
 }
 
 model HizmetAlan {
