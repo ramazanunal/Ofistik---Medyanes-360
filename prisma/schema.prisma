@@ -228,3 +228,30 @@ model Language {
     HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
     hizmetVerenId String?      @db.ObjectId
 }
+model Post {
+  id         String         @id @default(auto()) @map("_id") @db.ObjectId
+  userID     String
+  username   String
+  caption    String
+  category   String
+  isLiked    Boolean
+  image_url  String
+  saveBook   String
+  likes      Int
+  comments   PostComment[]  @relation("PostComments") 
+  timestamp  String
+  type       String
+  video_url  String
+}
+
+model PostComment {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userID    String
+  username  String
+  comment   String
+  timestamp String
+  postId    String @db.ObjectId
+
+  post      Post   @relation("PostComments", fields: [postId], references: [id], onDelete: Cascade) 
+}
+

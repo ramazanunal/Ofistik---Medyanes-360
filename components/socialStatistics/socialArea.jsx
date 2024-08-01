@@ -1,7 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import mockPosts from "@/components/tabsSocialComponents/mock/posts";
-import mockUsers from "@/components/tabsSocialComponents/mock/users";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import Image from "next/image";
 import Loading from "@/components/Loading";
@@ -9,6 +7,7 @@ import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { FaPlus } from "react-icons/fa6";
 import { useProfileStore } from "@/store/useProfileStore";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useSession } from "next-auth/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -17,28 +16,49 @@ import InfoBoxTotal from "./infoBoxTotal";
 import AddPostComp from "../tabsSocialComponents/AddPostComp";
 
 export default function SocialArea() {
-  const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
-  const setPosts = useProfileStore((state) => state.setPosts);
-  const posts = useProfileStore((state) => state.posts);
-  const setUsers = useProfileStore((state) => state.setUsers);
+  const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
   const isMobile = useMediaQuery(768);
+  const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
   const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost);
   const openAddPost = useProfileStore((state) => state.openAddPost);
 
   useEffect(() => {
-    setPosts(mockPosts);
-    setUsers(mockUsers);
-    setLoading(false);
-  }, []);
+    if (status === "loading") {
+      // Session is being loaded, show a loading state or similar
+      return;
+    }
+
+    if (status === "authenticated") {
+      const userID = session.user.id;
+
+      const fetchPosts = async () => {
+        try {
+          const response = await fetch("/api/post");
+          const allPosts = await response.json();
+          const filteredPosts = allPosts.filter(
+            (post) => post.userID === userID
+          );
+          setPosts(filteredPosts);
+        } catch (error) {
+          console.error("Failed to fetch posts", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchPosts();
+    }
+  }, [status, session]);
 
   if (loading) return <Loading />;
 
   const handleClick = (index) => {
     setOpenpageId(index);
   };
+
   const boxesTotal = [
-    //İNFO KUTULARINA VERİLERİ GÖNDERDİĞİMİZ ARRAY
     {
       number: 58,
       title: "TOPLAM GÖNDERİ",
@@ -70,6 +90,7 @@ export default function SocialArea() {
       description: "Toplam kaydetme sayısını gösterir.",
     },
   ];
+
   const renderSwiperTotalInfos = (items) => {
     const itemsPerSlide = isMobile ? 6 : 10;
     const swiperSlides = [];
@@ -103,6 +124,7 @@ export default function SocialArea() {
       </Swiper>
     );
   };
+
   return (
     <>
       <div className="flex mx-5 items-center py-3 lg:py-0 lg:px-5 lg:justify-center flex-row flex-wrap lg:mx-5">
@@ -132,7 +154,7 @@ export default function SocialArea() {
                 onClick={() => handleClick(index)}
               >
                 <Image
-                  src={post.image_url.src}
+                  src={post.image_url}
                   className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
                   alt="Picture of the author"
                   width={isMobile ? 150 : 700}

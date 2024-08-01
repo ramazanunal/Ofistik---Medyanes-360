@@ -1,17 +1,20 @@
-"use cleint";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { useProfileStore } from "@/store/useProfileStore";
+import { postAPI } from "@/services/fetchAPI";
 
 function AddPostComp() {
-  const [fileData, setFileData] = useState(false);
-  const [fileName, setFileName] = useState(false);
-  const [fileType, setFileType] = useState(false);
+  const [fileData, setFileData] = useState(null); // Initialize as null
+  const [fileName, setFileName] = useState(null); // Initialize as null
+  const [fileType, setFileType] = useState(null); // Initialize as null
   const videoRef = useRef(null);
   const formRef = useRef(null);
   const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost);
   const openAddPost = useProfileStore((state) => state.openAddPost);
+
+  const { data: session } = useSession();
 
   const handleClose = () => {
     setOpenAddPost(false);
@@ -37,18 +40,42 @@ function AddPostComp() {
 
   return (
     <div
-      className={`w-full h-screen fixed  top-0 left-0 bg-white/60 backdrop-blur-sm flex justify-center items-center z-[45] md:items-center ${
-        openAddPost != false ? "block" : "hidden"
+      className={`w-full h-screen fixed top-0 left-0 bg-white/60 backdrop-blur-sm flex justify-center items-center z-[45] md:items-center ${
+        openAddPost ? "block" : "hidden"
       }`}
     >
       <Formik
         initialValues={{
           file: "",
-          description: "",
+          caption: "",
+          category: "", // Add a field for category
         }}
         onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(values, null, 2));
+          const { caption, category } = values;
+
+          const formData = {
+            userID: session.user.id, // Correctly assigning userID
+            username: session.user.username,
+            caption,
+            category,
+            isLiked: false,
+            saveBook: "",
+            likes: 0,
+            comments: [],
+            timestamp: new Date().toISOString(),
+            type: fileType,
+            image_url: fileType === "image" ? fileData : "",
+            video_url: fileType === "video" ? fileData : "",
+          };
+
+          try {
+            const response = await postAPI("/post", formData); // Correct API endpoint
+            console.log("Post created successfully:", response);
+            handleClose();
+          } catch (error) {
+            console.error("Error creating post:", error);
+            alert("Failed to create post. Please try again.");
+          }
         }}
       >
         {(props) => (
@@ -57,8 +84,8 @@ function AddPostComp() {
             className="flex relative flex-col items-center bg-primary px-4 py-16 md:p-16 gap-5 text-white w-[95%] md:w-[40%] rounded-md"
           >
             <div
-              className="w-5 h-5 md:w-10 md:h-10 rounded-md p-4 cursor-pointer transition-all duration-700  bg-gray-200/50 hover:bg-red-500 group absolute right-2 top-2"
-              onClick={() => handleClose()}
+              className="w-5 h-5 md:w-10 md:h-10 rounded-md p-4 cursor-pointer transition-all duration-700 bg-gray-200/50 hover:bg-red-500 group absolute right-2 top-2"
+              onClick={handleClose}
             >
               <svg
                 stroke="currentColor"
@@ -85,27 +112,27 @@ function AddPostComp() {
                 <path d="M4.5 12.75a.75.75 0 0 1 .75-.75h13.5a.75.75 0 0 1 0 1.5H5.25a.75.75 0 0 1-.75-.75Z"></path>
               </svg>
             </div>
-            <div className="flex gap-2 flex-col w-full ">
+            <div className="flex gap-2 flex-col w-full">
               <label
                 htmlFor="file"
                 className="flex items-center flex-col gap-2 w-full cursor-pointer"
               >
-                <div className=" w-[200px] h-[200px] relative ">
+                <div className="w-[200px] h-[200px] relative">
                   <div
-                    className={` w-[200px] h-[200px] relative ${
-                      fileType == "image" ? "block" : "hidden"
+                    className={`w-[200px] h-[200px] relative ${
+                      fileType === "image" ? "block" : "hidden"
                     }`}
                   >
                     <Image
                       src={
-                        fileData && fileType == "image"
+                        fileData && fileType === "image"
                           ? fileData
                           : "/images/placeholder.png"
                       }
                       fill
                       alt="resim"
                       className={`bg-white/10 ${
-                        fileData == false && "p-8"
+                        !fileData && "p-8"
                       } object-cover rounded-md`}
                     />
                   </div>
@@ -113,28 +140,28 @@ function AddPostComp() {
                     width={200}
                     height={200}
                     className={`w-[200px] h-[200px] relative ${
-                      fileType == "video" ? "block" : "hidden"
+                      fileType === "video" ? "block" : "hidden"
                     } object-cover`}
                     ref={videoRef}
                     muted
                   />
                   <div
-                    className={` w-[200px] h-[200px] relative ${
-                      fileType == false ? "block" : "hidden"
+                    className={`w-[200px] h-[200px] relative ${
+                      !fileType ? "block" : "hidden"
                     }`}
                   >
                     <Image
-                      src={"/images/placeholder.png"}
+                      src="/images/placeholder.png"
                       fill
                       alt="resim"
                       className={`bg-white/10 ${
-                        fileData == false && "p-8"
+                        !fileData && "p-8"
                       } object-cover rounded-md`}
                     />
                   </div>
                 </div>
                 <div className="border border-dashed text-center p-5 w-full">
-                  {fileName ? fileName : "Tıkla Resim - Video seç"}
+                  {fileName || "Tıkla Resim - Video seç"}
                 </div>
               </label>
               {fileData && (
@@ -142,15 +169,15 @@ function AddPostComp() {
                   type="button"
                   onClick={() => {
                     props.setFieldValue("file", "");
-                    fileType == "image"
-                      ? setFileData(false)
+                    fileType === "image"
+                      ? setFileData(null)
                       : (videoRef.current.src = "");
-                    setFileType(false);
-                    setFileName(false);
-                    setFileData(false);
+                    setFileType(null);
+                    setFileName(null);
+                    setFileData(null);
                   }}
                 >
-                  {fileType == "image" ? (
+                  {fileType === "image" ? (
                     <span>Resmi Sil</span>
                   ) : (
                     <span>Videoyu Sil</span>
@@ -172,7 +199,7 @@ function AddPostComp() {
                   reader.onloadend = () => {
                     setFileData(reader.result);
                     if (
-                      file.type.split("/")[0] == "video" &&
+                      file.type.split("/")[0] === "video" &&
                       videoRef.current
                     ) {
                       videoRef.current.src = URL.createObjectURL(file);
@@ -185,16 +212,15 @@ function AddPostComp() {
               />
             </div>
             <div className="flex gap-2 flex-col w-full">
-              <label htmlFor="description">Açıklama</label>
+              <label htmlFor="caption">Açıklama</label>
               <Field
-                id="description"
-                name="description"
-                as="textArea"
+                id="caption"
+                name="caption"
+                as="textarea"
                 placeholder="Açıklama..."
                 className="bg-secondary text-black p-2 rounded-md w-full"
               />
             </div>
-
             <button
               className="bg-secondary text-black p-2 rounded-md w-full"
               type="submit"

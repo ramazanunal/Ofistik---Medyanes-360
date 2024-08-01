@@ -14,8 +14,9 @@ import CommentForm from "./commentForm";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import SocialImage from "./socialImage";
 import { useProfileStore } from "@/store/useProfileStore";
-
+import axios from "axios"; // Import axios for making HTTP requests
 function HorizontalCarousel({ mainPosts, setMainPosts }) {
+  console.log(mainPosts);
   const [openFullCaption, setOpenFullCaption] = useState(undefined);
   const [openCommentPage, setOpenCommentPage] = useState(undefined);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
@@ -42,20 +43,52 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
     );
   };
 
-  const handleLiked = (index) => {
-    if (mainPosts[index]?.isLiked == false) {
-      setLiked(index);
+  const handleLiked = async (index) => {
+    const post = mainPosts[index];
+
+    // Toggle isLiked and update the likes count
+    const updatedPost = {
+      ...post,
+      isLiked: !post.isLiked,
+      likes: post.isLiked ? post.likes - 1 : post.likes + 1, // Decrease if already liked, increase if not
+    };
+
+    // Update local state immediately for a responsive UI
+    setMainPosts(mainPosts.map((p, i) => (i === index ? updatedPost : p)));
+
+    // Optimistically update the UI and then make an API request to update the database
+    try {
+      const response = await axios.put("/api/post", {
+        id: post.id,
+        data: {
+          likes: updatedPost.likes,
+        },
+      });
+
+      // Optional: Update the mainPosts state with the response if needed
+      setMainPosts(response.data);
+    } catch (error) {
+      console.error("Error updating likes:", error);
+
+      // Revert the likes change in case of an error
+      setMainPosts(
+        mainPosts.map((p, i) =>
+          i === index
+            ? { ...post, isLiked: post.isLiked, likes: post.likes }
+            : p
+        )
+      );
     }
 
-    // Beğeni animasyonunu geri almak için bir süre bekleyebilirsiniz.
-    setTimeout(() => {
-      setLiked(undefined);
-    }, 1000);
-    setMainPosts(
-      mainPosts.map((post, i) =>
-        i === index ? { ...post, isLiked: !post.isLiked } : post
-      )
-    );
+    // Set the animation effect for the liked post
+    if (!post.isLiked) {
+      setLiked(index);
+
+      // Remove the animation effect after 1 second
+      setTimeout(() => {
+        setLiked(undefined);
+      }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -110,21 +143,29 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
     }
 
     const carousel = openCarouselRef?.current?.childNodes[0];
-    let totalHeight = carousel?.scrollHeight;
-    for (let i = 0; i < mainPosts.length; i++) {
-      totalHeight -= carousel?.childNodes[i].scrollHeight;
-    }
-    const carouselGapHeight = totalHeight / (mainPosts.length - 1);
+    if (!carousel) return; // Ensure carousel is defined
 
-    let startHeigth = 0;
+    let totalHeight = carousel.scrollHeight;
+    for (let i = 0; i < mainPosts.length; i++) {
+      const child = carousel?.childNodes[i];
+      if (child) {
+        totalHeight -= child.scrollHeight;
+      }
+    }
+    const carouselGapHeight = totalHeight / (mainPosts.length - 1) || 0;
+
+    let startHeight = 0;
     for (let i = 0; i < openPageId; i++) {
-      startHeigth += carousel?.childNodes[i].scrollHeight;
+      const child = carousel?.childNodes[i];
+      if (child) {
+        startHeight += child.scrollHeight;
+      }
     }
     carousel?.scrollTo({
-      top: openPageId == 0 ? 0 : startHeigth + carouselGapHeight * openPageId,
+      top: openPageId == 0 ? 0 : startHeight + carouselGapHeight * openPageId,
       left: 0,
     });
-  }, [openPageId]);
+  }, [openPageId, mainPosts.length]);
 
   const timeStamp = (targetDate) => {
     const currentDate = new Date();
@@ -344,6 +385,7 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
                         posts={mainPosts}
                         index={index}
                         setMainPosts={setMainPosts}
+                        postId={post.id}
                       />
                     </div>
                   </div>
@@ -432,8 +474,9 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
               <div>
                 <CommentForm
                   posts={mainPosts}
-                  index={openCommentPage}
+                  index={index}
                   setMainPosts={setMainPosts}
+                  postId={post.id}
                 />
               </div>
             </div>

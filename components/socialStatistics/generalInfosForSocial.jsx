@@ -13,19 +13,45 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import HorizontalCarousel from "../tabsSocialComponents/HorizontalCarousel";
+import { useSession } from "next-auth/react";
 
 function GeneralInfosForSocial() {
   const isMobile = useMediaQuery(1024);
+  const { data: session, status } = useSession();
   Chart.register(...registerables);
   Chart.register(CategoryScale);
   const [currentDate, setCurrentDate] = useState(new Date());
   const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
-  const setPosts = useProfileStore((state) => state.setPosts);
-  const posts = useProfileStore((state) => state.posts);
+
+  const [posts, setPosts] = useState([]);
   const setUsers = useProfileStore((state) => state.setUsers);
   const users = useProfileStore((state) => state.users);
   const openPageId = useProfileStore((state) => state.openPageId);
+  useEffect(() => {
+    if (status === "loading") {
+      // Session is being loaded, show a loading state or similar
+      return;
+    }
 
+    if (status === "authenticated") {
+      const userID = session.user.id;
+
+      const fetchPosts = async () => {
+        try {
+          const response = await fetch("/api/post");
+          const allPosts = await response.json();
+          const filteredPosts = allPosts.filter(
+            (post) => post.userID === userID
+          );
+          setPosts(filteredPosts);
+        } catch (error) {
+          console.error("Failed to fetch posts", error);
+        }
+      };
+
+      fetchPosts();
+    }
+  }, [status, session]);
   const gun = currentDate.getDate().toString().padStart(2, "0");
   const ay = (currentDate.getMonth() + 1).toString().padStart(2, "0");
   const yil = currentDate.getFullYear();

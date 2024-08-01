@@ -12,9 +12,12 @@ import HorizontalCarousel from "../tabsSocialComponents/HorizontalCarousel";
 import HorizontalSocial from "./socialHorizontal";
 import { FaUserFriends } from "react-icons/fa";
 import { FaRegCompass } from "react-icons/fa";
+
+import { useSession } from "next-auth/react";
 import { FaRegSave } from "react-icons/fa";
 
 export default function SocialAreaForUser() {
+  const { data: session, status } = useSession();
   const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
   const setPosts = useProfileStore((state) => state.setPosts);
   const posts = useProfileStore((state) => state.posts);
@@ -26,10 +29,32 @@ export default function SocialAreaForUser() {
   const [activeComponent, setActiveComponent] = useState("Takip ettiklerim");
 
   useEffect(() => {
-    setPosts(mockPosts);
-    setUsers(mockUsers);
-    setLoading(false);
-  }, []);
+    if (status === "loading") {
+      // Session is being loaded, show a loading state or similar
+      return;
+    }
+
+    if (status === "authenticated") {
+      const userID = session.user.id;
+      setUsers(mockUsers);
+      const fetchPosts = async () => {
+        try {
+          const response = await fetch("/api/post");
+          const allPosts = await response.json();
+          const filteredPosts = allPosts.filter(
+            (post) => post.userID === userID
+          );
+          setPosts(filteredPosts);
+        } catch (error) {
+          console.error("Failed to fetch posts", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchPosts();
+    }
+  }, [status, session]);
 
   if (loading) return <Loading />;
 
