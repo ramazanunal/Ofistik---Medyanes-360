@@ -16,7 +16,6 @@ import SocialImage from "./socialImage";
 import { useProfileStore } from "@/store/useProfileStore";
 import axios from "axios"; // Import axios for making HTTP requests
 function HorizontalCarousel({ mainPosts, setMainPosts }) {
-  console.log(mainPosts);
   const [openFullCaption, setOpenFullCaption] = useState(undefined);
   const [openCommentPage, setOpenCommentPage] = useState(undefined);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
@@ -42,21 +41,24 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
       )
     );
   };
-
+  useEffect(() => {
+    mainPosts.forEach((post) => {
+      if (!post.comments) {
+        post.comments = [];
+      }
+    });
+  }, []);
   const handleLiked = async (index) => {
     const post = mainPosts[index];
 
-    // Toggle isLiked and update the likes count
     const updatedPost = {
       ...post,
       isLiked: !post.isLiked,
-      likes: post.isLiked ? post.likes - 1 : post.likes + 1, // Decrease if already liked, increase if not
+      likes: post.isLiked ? post.likes - 1 : post.likes + 1,
     };
 
-    // Update local state immediately for a responsive UI
     setMainPosts(mainPosts.map((p, i) => (i === index ? updatedPost : p)));
 
-    // Optimistically update the UI and then make an API request to update the database
     try {
       const response = await axios.put("/api/post", {
         id: post.id,
@@ -65,12 +67,14 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
         },
       });
 
-      // Optional: Update the mainPosts state with the response if needed
-      setMainPosts(response.data);
+      // If successful, update the post in state with server response (optional)
+      setMainPosts(
+        mainPosts.map((p, i) => (i === index ? { ...p, ...response.data } : p))
+      );
     } catch (error) {
       console.error("Error updating likes:", error);
 
-      // Revert the likes change in case of an error
+      // Revert the like state change
       setMainPosts(
         mainPosts.map((p, i) =>
           i === index
@@ -80,11 +84,9 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
       );
     }
 
-    // Set the animation effect for the liked post
+    // Handle animation for liking a post
     if (!post.isLiked) {
       setLiked(index);
-
-      // Remove the animation effect after 1 second
       setTimeout(() => {
         setLiked(undefined);
       }, 1000);

@@ -41,9 +41,7 @@ export default function SocialAreaForUser() {
         try {
           const response = await fetch("/api/post");
           const allPosts = await response.json();
-          const filteredPosts = allPosts.filter(
-            (post) => post.userID === userID
-          );
+          const filteredPosts = allPosts;
           setPosts(filteredPosts);
         } catch (error) {
           console.error("Failed to fetch posts", error);
@@ -132,7 +130,7 @@ export default function SocialAreaForUser() {
                   onClick={() => handleClick(index)}
                 >
                   <Image
-                    src={post.image_url.src}
+                    src={post.image_url}
                     className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
                     alt="Picture of the author"
                     width={700}
@@ -160,7 +158,7 @@ export default function SocialAreaForUser() {
                   onClick={() => handleClick(index)}
                 >
                   <Image
-                    src={post.image_url.src}
+                    src={post.image_url}
                     className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
                     alt="Picture of the author"
                     width={700}

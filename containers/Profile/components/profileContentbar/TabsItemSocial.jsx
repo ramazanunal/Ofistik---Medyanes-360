@@ -40,7 +40,7 @@ export default function TabsItemSocial() {
                 onClick={() => handleClick(index)}
               >
                 <Image
-                  src={post.image_url.src}
+                  src={post.image_url}
                   className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
                   alt="Picture of the author"
                   width={700}

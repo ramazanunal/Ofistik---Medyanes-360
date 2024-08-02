@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useProfileStore } from "@/store/useProfileStore";
 import { postAPI } from "@/services/fetchAPI";
-
+import Swal from "sweetalert2";
 function AddPostComp() {
   const [fileData, setFileData] = useState(null); // Initialize as null
   const [fileName, setFileName] = useState(null); // Initialize as null
@@ -68,13 +68,35 @@ function AddPostComp() {
             video_url: fileType === "video" ? fileData : "",
           };
 
+          Swal.fire({
+            title: "Paylaşılıyor...",
+            text: "Gönderiniz paylaşılırken lütfen bekleyin.",
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+
           try {
-            const response = await postAPI("/post", formData); // Correct API endpoint
-            console.log("Post created successfully:", response);
+            const response = await postAPI("/post", formData);
+            Swal.fire({
+              icon: "success",
+              title: "Başarılı!",
+              text: "Gönderi başarıyla yüklendi.",
+              showConfirmButton: false,
+              timer: 2000, // Automatically close after 2 seconds
+            });
+
             handleClose();
           } catch (error) {
             console.error("Error creating post:", error);
-            alert("Failed to create post. Please try again.");
+
+            Swal.fire({
+              icon: "error",
+              title: "Hata!",
+              text: "Gönderi oluşturulamadı. Lütfen tekrar deneyin.",
+              confirmButtonText: "Tamam",
+            });
           }
         }}
       >
