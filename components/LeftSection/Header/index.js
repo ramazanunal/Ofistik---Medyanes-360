@@ -8,8 +8,6 @@ import { useContext } from 'react'
 import PhoneBookContext from '@/context/PhoneBookContext'
 
 function Header({ onSearch, onFilterChange, filteredUser }) {
-  const [selectOption, setSelectOption] = useState('inbox')
-
   const handleClickOption = (option) => {
     setSelectOption(option)
     onFilterChange(option) // Seçilen filtre tipini ilet
@@ -23,7 +21,8 @@ function Header({ onSearch, onFilterChange, filteredUser }) {
   const handleClickOpenModal = () => {
     setIsOpenModal(!isOpenModal)
   }
-  const { handleUserSelect } = useContext(PhoneBookContext)
+  const { handleUserSelect, selectOption, setSelectOption } =
+    useContext(PhoneBookContext)
 
   const handleSupportOfistik = () => {
     const supportObj = {

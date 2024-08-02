@@ -8,16 +8,14 @@ datasource db {
 }
 
 model User {
-    id         String  @id @default(auto()) @map("_id") @db.ObjectId
-    username   String  @unique
-    email      String  @unique
-    password   String
-    isVerified Boolean @default(false)
-    role       Role    @default(customer)
-
-    hizmetAlan  HizmetAlan?
-    hizmetVeren HizmetVeren?
-
+    id                String            @id @default(auto()) @map("_id") @db.ObjectId
+    username          String            @unique
+    email             String            @unique
+    password          String
+    isVerified        Boolean           @default(false)
+    role              Role              @default(customer)
+    hizmetAlan        HizmetAlan?
+    hizmetVeren       HizmetVeren?
     VerificationCode  VerificationCode?
     createdAt         DateTime          @default(now())
     updatedAt         DateTime          @updatedAt
@@ -25,18 +23,29 @@ model User {
     messagesReceived  Message[]         @relation("Receiver")
     chatsStarted      Chat[]            @relation("Starter")
     chatsParticipated Chat[]            @relation("Participant")
+    archivedChats     ChatArchive[]     @relation("UserArchives")
 }
 
 model Chat {
-    id            String     @id @default(auto()) @map("_id") @db.ObjectId
-    starterId     String     @db.ObjectId
-    participantId String     @db.ObjectId
-    createdAt     DateTime   @default(now())
-    status        ChatStatus @default(ACTIVE)
+    id            String        @id @default(auto()) @map("_id") @db.ObjectId
+    starterId     String        @db.ObjectId
+    participantId String        @db.ObjectId
+    createdAt     DateTime      @default(now())
+    status        ChatStatus    @default(ACTIVE)
+    starter       User          @relation("Starter", fields: [starterId], references: [id])
+    participant   User          @relation("Participant", fields: [participantId], references: [id])
+    messages      Message[]
+    archives      ChatArchive[] @relation("ChatArchives")
+}
 
-    starter     User      @relation("Starter", fields: [starterId], references: [id])
-    participant User      @relation("Participant", fields: [participantId], references: [id])
-    messages    Message[]
+model ChatArchive {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @db.ObjectId
+    chatId    String   @db.ObjectId
+    archived  Boolean  @default(true)
+    createdAt DateTime @default(now())
+    user      User     @relation("UserArchives", fields: [userId], references: [id])
+    chat      Chat     @relation("ChatArchives", fields: [chatId], references: [id])
 }
 
 model Message {
@@ -228,30 +237,30 @@ model Language {
     HizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
     hizmetVerenId String?      @db.ObjectId
 }
+
 model Post {
-  id         String         @id @default(auto()) @map("_id") @db.ObjectId
-  userID     String
-  username   String
-  caption    String
-  category   String
-  isLiked    Boolean
-  image_url  String
-  saveBook   String
-  likes      Int
-  comments   PostComment[]  @relation("PostComments") 
-  timestamp  String
-  type       String
-  video_url  String
+    id        String        @id @default(auto()) @map("_id") @db.ObjectId
+    userID    String
+    username  String
+    caption   String
+    category  String
+    isLiked   Boolean
+    image_url String
+    saveBook  String
+    likes     Int
+    comments  PostComment[] @relation("PostComments")
+    timestamp String
+    type      String
+    video_url String
 }
 
 model PostComment {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  userID    String
-  username  String
-  comment   String
-  timestamp String
-  postId    String @db.ObjectId
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    userID    String
+    username  String
+    comment   String
+    timestamp String
+    postId    String @db.ObjectId
 
-  post      Post   @relation("PostComments", fields: [postId], references: [id], onDelete: Cascade) 
+    post Post @relation("PostComments", fields: [postId], references: [id], onDelete: Cascade)
 }
-

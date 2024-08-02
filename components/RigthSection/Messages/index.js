@@ -142,7 +142,11 @@ function Messages() {
           <div key={index}>
             {index === 0 ||
             messages[index].date !== messages[index - 1].date ? (
-              <div className={styles.dateSeparator}>{message.date}</div>
+              <div className="text-center flex justify-center items-center   ">
+                <p className="bg-[#F66451] text-white p-1 px-4 rounded-md font-semibold text-sm">
+                  {message.date}
+                </p>
+              </div>
             ) : null}
             <div
               className={`${styles.message}  ${

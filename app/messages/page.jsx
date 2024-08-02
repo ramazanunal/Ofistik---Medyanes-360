@@ -4,7 +4,7 @@ import Chat from '@/components/RigthSection/Chat'
 import { ChakraProvider } from '@chakra-ui/react'
 import PhoneBookContext from '@/context/PhoneBookContext'
 import { useState, useEffect } from 'react'
-import userData from '@/public/assets/data/users.json'
+
 import { useSession } from 'next-auth/react'
 import { postAPI, getAPI } from '@/services/fetchAPI'
 
@@ -12,22 +12,26 @@ export default function Home() {
   const [selectedUser, setSelectedUser] = useState()
   const [inbox, setInbox] = useState([])
   const { data: session } = useSession()
-
+  const [selectOption, setSelectOption] = useState('inbox')
   useEffect(() => {
     const getMessages = async () => {
       if (session?.user?.id) {
-        const res = await getAPI(`/message/${session.user.id}/get-messages`)
+        const res = await getAPI(
+          `/message/${session.user.id}/get-messages?queryType=${selectOption}`
+        )
+
         setInbox(res)
       }
     }
     getMessages()
-  }, [session, selectedUser])
+  }, [session, selectedUser, selectOption])
 
   const showAvatar = true
   const showCheckBox = true
   const handleUserSelect = async (chatId) => {
-    const data = { chatId }
+    const data = { chatId, receiverId: session.user.id }
     const res = await postAPI('/message/get-message', data)
+
     setSelectedUser(res)
   }
 
@@ -48,6 +52,8 @@ export default function Home() {
     selectedUser,
     handleUserSelect,
     handleIsMutedChange,
+    selectOption,
+    setSelectOption,
   }
 
   return (
