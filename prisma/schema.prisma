@@ -8,22 +8,32 @@ datasource db {
 }
 
 model User {
-    id                String            @id @default(auto()) @map("_id") @db.ObjectId
-    username          String            @unique
-    email             String            @unique
-    password          String
-    isVerified        Boolean           @default(false)
-    role              Role              @default(customer)
-    hizmetAlan        HizmetAlan?
-    hizmetVeren       HizmetVeren?
-    VerificationCode  VerificationCode?
-    createdAt         DateTime          @default(now())
-    updatedAt         DateTime          @updatedAt
-    messagesSent      Message[]         @relation("Sender")
-    messagesReceived  Message[]         @relation("Receiver")
-    chatsStarted      Chat[]            @relation("Starter")
-    chatsParticipated Chat[]            @relation("Participant")
-    archivedChats     ChatArchive[]     @relation("UserArchives")
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  username          String            @unique
+  email             String            @unique
+  password          String
+  isVerified        Boolean           @default(false)
+  role              Role              @default(customer)
+  hizmetAlan        HizmetAlan?
+  hizmetVeren       HizmetVeren?
+  VerificationCode  VerificationCode?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  messagesSent      Message[]         @relation("Sender")
+  messagesReceived  Message[]         @relation("Receiver")
+  chatsStarted      Chat[]            @relation("Starter")
+  chatsParticipated Chat[]            @relation("Participant")
+  archivedChats     ChatArchive[]     @relation("UserArchives")
+  savedPosts        SavedPost[]       @relation("UserSavedPosts")
+  following         Follow[]          @relation("UserFollowing")
+  followers         Follow[]          @relation("UserFollowers")
+}
+model Follow {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  follower   User   @relation("UserFollowing", fields: [followerId], references: [id])
+  followerId String
+  following  User   @relation("UserFollowers", fields: [followingId], references: [id])
+  followingId String
 }
 
 model Chat {
@@ -239,19 +249,27 @@ model Language {
 }
 
 model Post {
-    id        String        @id @default(auto()) @map("_id") @db.ObjectId
-    userID    String
-    username  String
-    caption   String
-    category  String
-    isLiked   Boolean
-    image_url String
-    saveBook  String
-    likes     Int
-    comments  PostComment[] @relation("PostComments")
-    timestamp String
-    type      String
-    video_url String
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  userID    String
+  username  String
+  caption   String
+  category  String
+  isLiked   Boolean
+  image_url String
+  saveBook  String
+  likes     Int
+  comments  PostComment[] @relation("PostComments")
+  timestamp String
+  type      String
+  video_url String
+  savedBy   SavedPost[]   @relation("PostSavedBy")
+}
+model SavedPost {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  user   User   @relation("UserSavedPosts", fields: [userId], references: [id])
+  userId String
+  post   Post   @relation("PostSavedBy", fields: [postId], references: [id])
+  postId String
 }
 
 model PostComment {
@@ -261,6 +279,5 @@ model PostComment {
     comment   String
     timestamp String
     postId    String @db.ObjectId
-
     post Post @relation("PostComments", fields: [postId], references: [id], onDelete: Cascade)
 }

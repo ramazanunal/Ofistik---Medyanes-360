@@ -1,26 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import mockPosts from "@/components/tabsSocialComponents/mock/posts";
-import mockUsers from "@/components/tabsSocialComponents/mock/users";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import Image from "next/image";
 import Loading from "@/components/Loading";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import ChoseType2 from "../ChooseType2";
 import { useProfileStore } from "@/store/useProfileStore";
 import HorizontalCarousel from "../tabsSocialComponents/HorizontalCarousel";
 import HorizontalSocial from "./socialHorizontal";
-import { FaUserFriends } from "react-icons/fa";
-import { FaRegCompass } from "react-icons/fa";
-
+import { FaUserFriends, FaRegCompass, FaRegSave } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import { FaRegSave } from "react-icons/fa";
 
 export default function SocialAreaForUser() {
   const { data: session, status } = useSession();
   const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
-  const setPosts = useProfileStore((state) => state.setPosts);
-  const posts = useProfileStore((state) => state.posts);
+  const [posts, setPosts] = useState([]);
+  const [followPosts, setFollowPosts] = useState([]);
   const setUsers = useProfileStore((state) => state.setUsers);
   const [loading, setLoading] = useState(true);
   const users = useProfileStore((state) => state.users);
@@ -30,19 +24,26 @@ export default function SocialAreaForUser() {
 
   useEffect(() => {
     if (status === "loading") {
-      // Session is being loaded, show a loading state or similar
-      return;
+      return; // Loading state
     }
 
     if (status === "authenticated") {
       const userID = session.user.id;
-      setUsers(mockUsers);
-      const fetchPosts = async () => {
+
+      // Fetch following IDs
+      const fetchFollowingIds = async () => {
         try {
-          const response = await fetch("/api/post");
-          const allPosts = await response.json();
-          const filteredPosts = allPosts;
-          setPosts(filteredPosts);
+          const response = await fetch(`/api/profile/${userID}/get-following`);
+          const { followingIds } = await response.json();
+
+          // Fetch posts and filter by following IDs
+          const responsePosts = await fetch("/api/post");
+          const allPosts = await responsePosts.json();
+          setPosts(allPosts);
+          const filteredPosts = allPosts.filter((post) =>
+            followingIds.includes(post.userID)
+          );
+          setFollowPosts(filteredPosts);
         } catch (error) {
           console.error("Failed to fetch posts", error);
         } finally {
@@ -50,7 +51,7 @@ export default function SocialAreaForUser() {
         }
       };
 
-      fetchPosts();
+      fetchFollowingIds();
     }
   }, [status, session]);
 
@@ -102,23 +103,15 @@ export default function SocialAreaForUser() {
             Kaydedilenler
           </div>
         </div>
-        {/* <div className="flex-wrap">
-          <ChoseType2
-            headers={["Takip ettiklerim", "Keşfet", "Kaydedilenler"]}
-            changeComponent={changeComponent}
-            activeComponent={activeComponent}
-            className="w-full"
-          />
-        </div> */}
       </div>
-      <div className="flex flex-col lg:mx-auto relative overflow-x-hidden  overflow-hidden md:max-w-[1200px]   md:h-[88vh]">
-        <div className=" overflow-y-auto ">
+      <div className="flex flex-col lg:mx-auto relative overflow-x-hidden overflow-hidden md:max-w-[1200px] md:h-[88vh]">
+        <div className="overflow-y-auto">
           <div className="flex justify-center flex-wrap gap-4">
             {activeComponent === "Takip ettiklerim" && (
               <HorizontalSocial
                 usersData={users}
                 setUsersData={setUsers}
-                mainPosts={posts}
+                mainPosts={followPosts}
                 setMainPosts={setPosts}
               />
             )}
@@ -126,12 +119,12 @@ export default function SocialAreaForUser() {
               posts.map((post, index) => (
                 <button
                   key={index}
-                  className="relative group w-[100px] h-[100px]  md:w-[200px] md:h-[200px]"
+                  className="relative group w-[100px] h-[100px] md:w-[200px] md:h-[200px]"
                   onClick={() => handleClick(index)}
                 >
                   <Image
                     src={post.image_url}
-                    className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
+                    className="w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
                     alt="Picture of the author"
                     width={700}
                     height={700}
@@ -142,10 +135,10 @@ export default function SocialAreaForUser() {
                   {post.video_url && (
                     <MdOutlineVideoLibrary
                       size={isMobile ? 20 : 30}
-                      className=" absolute top-2 right-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]"
+                      className="absolute top-2 right-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]"
                     />
                   )}
-                  <div className="absolute hidden  justify-center items-center w-full h-full top-0 left-0 font-semibold md:text-desktop text-white group-hover:flex">
+                  <div className="absolute hidden justify-center items-center w-full h-full top-0 left-0 font-semibold md:text-desktop text-white group-hover:flex">
                     click to view
                   </div>
                 </button>
@@ -154,12 +147,12 @@ export default function SocialAreaForUser() {
               posts.map((post, index) => (
                 <button
                   key={index}
-                  className="relative group w-[130px] h-[130px]  md:w-[250px] md:h-[250px]"
+                  className="relative group w-[130px] h-[130px] md:w-[250px] md:h-[250px]"
                   onClick={() => handleClick(index)}
                 >
                   <Image
                     src={post.image_url}
-                    className=" w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
+                    className="w-full h-full md:h-full xl:h-full cursor-pointer object-cover"
                     alt="Picture of the author"
                     width={700}
                     height={700}
@@ -170,10 +163,10 @@ export default function SocialAreaForUser() {
                   {post.video_url && (
                     <MdOutlineVideoLibrary
                       size={isMobile ? 20 : 30}
-                      className=" absolute top-2 right-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]"
+                      className="absolute top-2 right-2 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]"
                     />
                   )}
-                  <div className="absolute hidden  justify-center items-center w-full h-full top-0 left-0 font-semibold md:text-desktop text-white group-hover:flex">
+                  <div className="absolute hidden justify-center items-center w-full h-full top-0 left-0 font-semibold md:text-desktop text-white group-hover:flex">
                     click to view
                   </div>
                 </button>

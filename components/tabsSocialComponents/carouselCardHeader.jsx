@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import { FaPlus, FaCheck, FaRegCircleCheck, FaXmark } from "react-icons/fa6";
+import { FaPlus, FaCheck, FaXmark } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
 import {
   Popover,
@@ -21,7 +21,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import reports from "./mock/reports";
 import { useProfileStore } from "@/store/useProfileStore";
 import { MdDelete } from "react-icons/md";
+import { useSession } from "next-auth/react";
 import { MdEdit } from "react-icons/md";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 function CarouselCardHeader({
   post,
@@ -39,6 +42,10 @@ function CarouselCardHeader({
   const [reportHeader, setReportHeader] = useState(null);
   const setUsersData = useProfileStore((state) => state.setUsers);
   const usersData = useProfileStore((state) => state.users);
+  const { data: session } = useSession();
+  const id = session?.user.id;
+  const [userInfo, setUserInfo] = useState(null); // Ensure default state is null
+  const [isFollowing, setIsFollowing] = useState(false); // Follow state
 
   const footerData = [
     {
@@ -54,12 +61,86 @@ function CarouselCardHeader({
     },
   ];
 
-  const handleFollow = (userName) => {
-    setUsersData(
-      usersData.map((user) =>
-        user.username === userName ? { ...user, follow: !user.follow } : user
-      )
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(`/api/profile/${id}/get-info`);
+        setUserInfo(response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    if (id) {
+      fetchProfile();
+    }
+  }, [id]);
+
+  const updateFollowStatus = useCallback(() => {
+    const isFollowingUser = userInfo?.following.some(
+      (follow) => follow.followingId === post.userID
     );
+    setIsFollowing(isFollowingUser);
+  }, [userInfo, post.userID]);
+
+  useEffect(() => {
+    updateFollowStatus();
+  }, [updateFollowStatus]);
+
+  const handleFollow = async (userIdToFollow) => {
+    try {
+      const response = await axios.post("/api/follow", {
+        userIdToFollow,
+        followerId: id,
+      });
+
+      if (response.data.message === "Followed successfully") {
+        Swal.fire({
+          icon: "success",
+          title: "Başarılı",
+          text: "Takip edildi!",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        // Update follow status
+        setIsFollowing(true);
+
+        // Update the users data store
+        setUsersData(
+          usersData.map((user) =>
+            user.id === userIdToFollow ? { ...user, follow: true } : user
+          )
+        );
+      } else if (response.data.message === "Unfollowed successfully") {
+        Swal.fire({
+          icon: "success",
+          title: "Başarılı",
+          text: "Takipten Çıkıldı!",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        // Update follow status
+        setIsFollowing(false);
+
+        // Update the users data store
+        setUsersData(
+          usersData.map((user) =>
+            user.id === userIdToFollow ? { ...user, follow: false } : user
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Failed to follow/unfollow:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Hata",
+        text: "Bir hata oluştu. Lütfen tekrar deneyin.",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
   };
 
   useEffect(() => {
@@ -108,7 +189,7 @@ function CarouselCardHeader({
   }, []);
 
   useEffect(() => {
-    if (openCommentPage != undefined) {
+    if (openCommentPage !== undefined) {
       setOpen(false);
       setRadioSelectedValue(null);
       setReportHeader(null);
@@ -116,9 +197,7 @@ function CarouselCardHeader({
   }, [openCommentPage]);
 
   useEffect(() => {
-    // Her iki state değiştiğinde çalışacak kodlar buraya gelecek
     if (reportHeader !== null && valueIdInDialog !== null) {
-      // İlgili işlemleri burada gerçekleştirin
       if (
         reportHeader === "spam" ||
         reportHeader === "Sadece bundan hoşlanmadım" ||
@@ -130,7 +209,6 @@ function CarouselCardHeader({
   }, [reportHeader, valueIdInDialog]);
 
   const handleSubmit = () => {
-    // bu kısımda verilerin backende gönderilmesi gerekiyor
     console.log(reportHeader != null ? reportHeader : "");
     console.log(radioSelectedValue != null ? radioSelectedValue : "");
   };
@@ -158,13 +236,12 @@ function CarouselCardHeader({
       setValueIdInDialog(undefined);
     }, 200);
   };
-
   return (
     <div className={`flex justify-between items-center p-2 ${className}`}>
-      <div className="flex items-center gap-3 text-white py-1 ">
+      <div className="flex items-center gap-3 text-white py-1">
         <Image
           src={
-            usersData.find((user) => user.username == post.username)
+            usersData.find((user) => user.username === post.username)
               ?.profile_picture.src
           }
           className="rounded-full w-[35px] h-[35px] sm:w-[40px] sm:h-[40px] xl:w-[50px] xl:h-[50px]"
@@ -174,7 +251,6 @@ function CarouselCardHeader({
           alt="Profile of the author"
         />
         <div className="flex flex-col items-start">
-          {/* signup tarafında belirli bir uzunluktan sonra kabul etmemesi gerekir */}
           <span className="text-sm sm:text-base xl:text-xl">
             {post.username}
           </span>
@@ -184,26 +260,23 @@ function CarouselCardHeader({
         </div>
       </div>
       <div className="flex gap-2">
-        {/* tıklandığında follow && unfollow işlemi yapılacak */}
-        <button
-          onClick={() => handleFollow(post.username)}
-          className="flex flex-nowrap justify-center items-center gap-2 md:gap-1 xl:gap-2 text-white border text-sm h-fit w-fit p-1 rounded-lg transition-all ease-in-out duration-200 hover:text-black hover:bg-white/80 md:scale-90 xl:scale-100"
-        >
-          {usersData.find((user) => user.username == post.username)?.follow ==
-          true ? (
-            <>
-              <span className="hidden md:block whitespace-nowrap">
-                Takip ediliyor
-              </span>{" "}
-              <FaCheck />
-            </>
-          ) : (
-            <>
-              <span className="hidden md:block">Takip et</span> <FaPlus />{" "}
-            </>
-          )}
-        </button>
-        {type == "horizontalPage" && (
+        {post.userID !== session.user.id && (
+          <button
+            onClick={() => handleFollow(post.userID)}
+            className="flex flex-nowrap justify-center items-center gap-2 md:gap-1 xl:gap-2 text-white border text-sm h-fit w-fit p-1 rounded-lg transition-all ease-in-out duration-200 hover:text-black hover:bg-white/80 md:scale-90 xl:scale-100"
+          >
+            {isFollowing ? (
+              <>
+                Takiptesin <FaCheck />
+              </>
+            ) : (
+              <>
+                Takip et <FaPlus />
+              </>
+            )}
+          </button>
+        )}
+        {type === "horizontalPage" && (
           <Popover open={open} className="">
             <PopoverTrigger onClick={() => setOpen(!open)}>
               <BsThreeDots className="text-white" />
@@ -221,230 +294,120 @@ function CarouselCardHeader({
                 )}
                 {options === 2 && (
                   <>
-                    <DialogTrigger className="flex items-center rounded-xl gap-1 p-3 hover:bg-premiumOrange transition-all duration-500 hover:text-white">
+                    <DialogTrigger className="flex items-center rounded-xl gap-1 p-3 hover:bg-premiumOrange transition-all duration-500 hover:text-white/70">
                       <MdEdit />
                       <span>Düzenle</span>
                     </DialogTrigger>
-                    <DialogTrigger className="flex items-center rounded-xl gap-1 p-3 hover:bg-premiumOrange transition-all duration-500 hover:text-white">
+                    <DialogTrigger className="flex items-center rounded-xl gap-2 p-3 hover:bg-premiumOrange transition-all duration-500 hover:text-white/70">
                       <MdDelete />
                       <span>Sil</span>
                     </DialogTrigger>
                   </>
                 )}
                 <DialogContent
-                  className="bg-primary border-none  w-full max-w-screen-[450px] p-0 z-[80]"
                   ref={dialogContentRef}
+                  className="overflow-auto no-scrollbar sm:max-w-lg max-h-[80vh] sm:h-fit z-[90]"
+                  onEscapeKeyDown={handleClose}
+                  onInteractOutside={handleClose}
                 >
-                  <DialogHeader>
-                    {
-                      <DialogTitle
-                        className={`text-white flex justify-between border-b px-6 py-4`}
-                      >
-                        {
-                          <button
-                            className={`disabled:opacity-100 opacity-0}`}
-                            disabled={
-                              valueIdInDialog != undefined &&
-                              valueIdInDialog.child == undefined
-                                ? true
-                                : false
-                            }
-                            onClick={goBack}
-                          >
-                            <span
-                              className={` ${
-                                valueIdInDialog != undefined &&
-                                valueIdInDialog.child
-                                  ? "block"
-                                  : "hidden"
-                              } `}
+                  <DialogHeader className="justify-start">
+                    <DialogTitle>Gönderiyi şikayet et</DialogTitle>
+                    <DialogDescription>
+                      <p>
+                        <b>{post.username}</b> adlı kullanıcının{" "}
+                        <b>
+                          {type === "horizontalPage"
+                            ? post?.images?.length === 1
+                              ? "fotoğrafını"
+                              : "gönderisini"
+                            : "yorumunu"}
+                        </b>{" "}
+                        neden şikayet ettiğini seç.
+                      </p>
+                      <div className="mt-5 border-t pt-5">
+                        {valueIdInDialog === undefined ? (
+                          <ul className="grid gap-2">
+                            {reports.map((report, index) => (
+                              <li key={report.id}>
+                                <button
+                                  onClick={() => {
+                                    setValueIdInDialog(report);
+                                    setReportHeader(report.header);
+                                  }}
+                                  className="flex items-center gap-3 w-full hover:bg-premiumOrange/50 transition-all duration-200 text-start p-3 rounded-xl"
+                                >
+                                  <span className="bg-red-200 p-2 rounded-full">
+                                    <RiSpam2Fill />
+                                  </span>
+                                  <span>{report.header}</span>
+                                  <IoIosArrowForward className="ml-auto" />
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div>
+                            <button
+                              onClick={goBack}
+                              className="flex gap-1 items-center p-1 text-white/60 transition-all duration-200 hover:text-white"
                             >
                               <IoIosArrowBack />
-                            </span>
-                          </button>
-                        }
-                        <span>Şikayet</span>
-                        <button
-                          className="justify-self-end"
-                          onClick={handleClose}
-                        >
-                          <FaXmark />
-                        </button>
-                      </DialogTitle>
-                    }
-                    <DialogDescription>
-                      <div className="flex flex-col items-start gap-4 mt-2 px-6 py-2 w-full">
-                        {valueIdInDialog == undefined ? (
-                          <>
-                            <span className="text-white text-lg font-semibold">
-                              Bu gönderiyi neden bildiriyorsunuz?
-                            </span>
-                            {reports.map((report, index) => (
-                              <button
-                                key={index}
-                                onClick={() => {
-                                  setReportHeader(report.name);
-                                  setValueIdInDialog(reports[report.id]?.child);
-                                }}
-                                className="flex items-center md:gap-4 py-1 px-[5px] justify-between w-full text-white text-base "
-                              >
-                                <span className="text-start  ">
-                                  {report.name}
-                                </span>
-                                <span className="text-gray-400">
-                                  <IoIosArrowForward />
-                                </span>
-                              </button>
-                            ))}
-                          </>
-                        ) : valueIdInDialog.child == undefined ? (
-                          <div className="flex flex-col items-center gap-2 text-center text-white w-full">
-                            <div className="text-green-500 mb-4">
-                              <FaRegCircleCheck size={30} />
-                            </div>
-                            <div className="font-semibold  ">
-                              {valueIdInDialog.name}
-                            </div>
-                            <div className="text-gray-400 ">
-                              {valueIdInDialog.description}
-                            </div>
-                            {usersData.find(
-                              (user) => user.username == post.username
-                            )?.follow == true && (
-                              <div className="flex flex-col gap-4 mt-8 w-full items-start ">
-                                {footerData.map((item, index) => (
-                                  <button
-                                    key={index}
-                                    onClick={() => {
-                                      setOpen(false);
-                                      setTimeout(() => {
-                                        item.onclick(post.username);
-                                      }, 100);
-                                    }}
-                                    className="mb-2  w-fit border rounded-lg p-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white  transition-all duration-200"
-                                  >
-                                    {item.name} {post.username}
-                                  </button>
-                                ))}
-                              </div>
-                            )}
-                            <button
-                              onClick={handleClose}
-                              className={`disabled:bg-blue-400/80 w-full text-center rounded-lg  bg-blue-600 text-white py-1 mb-2`}
-                            >
-                              {" "}
-                              Kapat{" "}
+                              Geri git
                             </button>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col w-full">
-                            {valueIdInDialog.name && (
-                              <div className="font-semibold text-white">
-                                {valueIdInDialog.name}
-                              </div>
-                            )}
-                            {valueIdInDialog.description && (
-                              <div className="text-gray-400">
-                                {valueIdInDialog.description}
-                              </div>
-                            )}
-                            {valueIdInDialog.radioList && (
-                              <RadioGroup
-                                className="text-white border p-4 my-2"
-                                onValueChange={(value) =>
-                                  setRadioSelectedValue(value)
-                                }
-                              >
-                                {valueIdInDialog.radioList.map((radio) => (
-                                  <div
-                                    key={radio.id}
-                                    className="flex items-center space-x-2"
+                            <ul className="grid gap-2 mt-5">
+                              {valueIdInDialog?.child.map((subReport) => (
+                                <li key={subReport.id}>
+                                  <button
+                                    onClick={() =>
+                                      setRadioSelectedValue(subReport.header)
+                                    }
+                                    className="flex items-center gap-3 w-full hover:bg-premiumOrange/50 transition-all duration-200 text-start p-3 rounded-xl"
                                   >
-                                    <RadioGroupItem
-                                      className=" border-white text-white"
-                                      value={radio.name}
-                                      id={`r${radio.id}`}
-                                    />
-                                    <label htmlFor={`r${radio.id}`}>
-                                      {radio.name}
-                                    </label>
-                                  </div>
-                                ))}
-                              </RadioGroup>
-                            )}
-                            {valueIdInDialog.listTitle && (
-                              <div className="text-white my-1">
-                                {valueIdInDialog.listTitle}
-                              </div>
-                            )}
-                            {valueIdInDialog.listSubtitle && (
-                              <div className="text-gray-400 font-semibold my-1">
-                                {valueIdInDialog.listSubtitle}
-                              </div>
-                            )}
-                            {valueIdInDialog.listItems && (
-                              <ul className="text-gray-400 list-disc list-inside my-1">
-                                {valueIdInDialog.listItems.map(
-                                  (item, index) => (
-                                    <li key={index}>{item}</li>
-                                  )
-                                )}
-                              </ul>
-                            )}
-                            {valueIdInDialog.buttons && (
-                              <div className="flex flex-col gap-4 my-4 w-full">
-                                {valueIdInDialog.buttons.map(
-                                  (button, index) => (
-                                    <button
-                                      type="button"
-                                      key={index}
-                                      className="flex items-center md:gap-4 justify-between w-full text-white"
-                                      onClick={() => {
-                                        setValueIdInDialog(
-                                          valueIdInDialog.child
-                                        );
-                                        setRadioSelectedValue(button.name);
-                                        reportHeader == "Yanlış bilgi" &&
-                                          handleSubmit();
-                                      }}
+                                    <RadioGroup
+                                      defaultValue=""
+                                      value={radioSelectedValue}
+                                      className="flex items-center gap-3"
                                     >
-                                      <span className="text-start">
-                                        {button.name}
-                                      </span>
-                                      <span className="text-gray-400">
-                                        <IoIosArrowForward />
-                                      </span>
-                                    </button>
-                                  )
-                                )}
-                              </div>
-                            )}
-                            {valueIdInDialog.child &&
-                              valueIdInDialog.child.child == undefined &&
-                              reportHeader != "Yanlış bilgi" && (
-                                <button
-                                  type="submit"
-                                  className={`disabled:bg-blue-400/80 w-full text-center rounded-lg  bg-blue-600 text-white py-1 my-2`}
-                                  onClick={() => {
-                                    setValueIdInDialog(valueIdInDialog.child);
-                                    valueIdInDialog.child.child == undefined &&
-                                      handleSubmit();
-                                  }}
-                                  disabled={
-                                    valueIdInDialog.radioList &&
-                                    radioSelectedValue == null
-                                  }
-                                >
-                                  Şikayeti gönder
-                                </button>
-                              )}
+                                      <RadioGroupItem
+                                        value={subReport.header}
+                                        id={subReport.id}
+                                        className="bg-white"
+                                      />
+                                      <span>{subReport.header}</span>
+                                    </RadioGroup>
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
                         )}
                       </div>
                     </DialogDescription>
                   </DialogHeader>
+                  {reportHeader !== null &&
+                    valueIdInDialog !== null &&
+                    reportHeader !== "spam" &&
+                    reportHeader !== "Sadece bundan hoşlanmadım" &&
+                    reportHeader !== "Sahtecilik veya dolandırıcılık" && (
+                      <button
+                        onClick={handleSubmit}
+                        className="bg-premiumOrange hover:bg-premiumOrange/70 transition-all duration-200 text-white w-full p-3 mt-5 rounded-xl"
+                      >
+                        Şikayet et
+                      </button>
+                    )}
                 </DialogContent>
               </Dialog>
+              {footerData.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => item.onclick(post.username)}
+                  className="flex items-center gap-2 p-3 hover:bg-premiumOrange transition-all duration-500 rounded-b-xl"
+                >
+                  <FaXmark />
+                  <span>{item.name}</span>
+                </button>
+              ))}
             </PopoverContent>
           </Popover>
         )}
@@ -452,4 +415,5 @@ function CarouselCardHeader({
     </div>
   );
 }
+
 export default CarouselCardHeader;

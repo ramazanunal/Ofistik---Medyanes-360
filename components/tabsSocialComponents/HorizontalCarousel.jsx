@@ -474,12 +474,11 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
                 )}
               </div>
               <div>
-                <CommentForm
+                {/* <CommentForm
                   posts={mainPosts}
-                  index={index}
                   setMainPosts={setMainPosts}
                   postId={post.id}
-                />
+                /> */}
               </div>
             </div>
           </div>
