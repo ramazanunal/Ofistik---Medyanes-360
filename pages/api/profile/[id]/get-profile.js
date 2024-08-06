@@ -19,8 +19,6 @@ const handler = async (req, res) => {
       resume: true,
       skills: true,
       languages: true,
-      followers: true,
-      following: true,
     };
 
     try {
