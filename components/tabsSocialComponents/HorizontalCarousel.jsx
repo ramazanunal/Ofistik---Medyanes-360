@@ -13,8 +13,10 @@ import VideoPlayer from "./videoPlayer";
 import CommentForm from "./commentForm";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import SocialImage from "./socialImage";
+import { useSession } from "next-auth/react";
 import { useProfileStore } from "@/store/useProfileStore";
-import axios from "axios"; // Import axios for making HTTP requests
+import axios from "axios";
+import Swal from "sweetalert2";
 function HorizontalCarousel({ mainPosts, setMainPosts }) {
   const [openFullCaption, setOpenFullCaption] = useState(undefined);
   const [openCommentPage, setOpenCommentPage] = useState(undefined);
@@ -34,12 +36,63 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
     setOpenFullCaption(undefined);
   };
 
-  const handleSave = (index) => {
-    setMainPosts(
-      mainPosts.map((post, i) =>
-        i === index ? { ...post, saveBook: !post.saveBook } : post
-      )
-    );
+  const [savedPosts, setSavedPosts] = useState([]);
+  const { data: session } = useSession();
+  const userId = session?.user.id;
+  useEffect(() => {
+    const fetchSavedPosts = async () => {
+      try {
+        const response = await axios.get(`/api/profile/${userId}/get-info`);
+        const { savedPosts } = response.data;
+        setSavedPosts(savedPosts.map((post) => post.id));
+      } catch (error) {
+        console.error("Error fetching saved posts:", error);
+      }
+    };
+
+    fetchSavedPosts();
+  }, []);
+  const handleSave = async (index) => {
+    const post = mainPosts[index];
+    const isCurrentlySaved = savedPosts.includes(post.id); // Check if the post is in the savedPosts
+
+    try {
+      const response = await axios.put("/api/savePost", {
+        userId: userId,
+        postId: post.id,
+        isSaved: isCurrentlySaved,
+      });
+      console.log(response.data.message);
+
+      if (response.data.message === "saved") {
+        Swal.fire({
+          icon: "success",
+          title: "Post başarılı bir şekilde kaydedildi",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+
+        // Update the savedPosts state
+        setSavedPosts((prev) => [...prev, post.id]);
+      } else if (response.data.message === "removed") {
+        Swal.fire({
+          icon: "success",
+          title: "Post kaydedilenlerden kaldırıldı.",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+
+        // Update the savedPosts state
+        setSavedPosts((prev) => prev.filter((id) => id !== post.id));
+      }
+    } catch (error) {
+      console.error("Error updating saved post:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Please try again later.",
+      });
+    }
   };
   useEffect(() => {
     mainPosts.forEach((post) => {
@@ -67,14 +120,12 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
         },
       });
 
-      // If successful, update the post in state with server response (optional)
       setMainPosts(
         mainPosts.map((p, i) => (i === index ? { ...p, ...response.data } : p))
       );
     } catch (error) {
       console.error("Error updating likes:", error);
 
-      // Revert the like state change
       setMainPosts(
         mainPosts.map((p, i) =>
           i === index
@@ -83,8 +134,6 @@ function HorizontalCarousel({ mainPosts, setMainPosts }) {
         )
       );
     }
-
-    // Handle animation for liking a post
     if (!post.isLiked) {
       setLiked(index);
       setTimeout(() => {

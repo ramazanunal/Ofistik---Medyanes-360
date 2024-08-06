@@ -15,6 +15,7 @@ export default function SocialAreaForUser() {
   const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
   const [posts, setPosts] = useState([]);
   const [followPosts, setFollowPosts] = useState([]);
+  const [savedPosts, setSavedPosts] = useState([]);
   const setUsers = useProfileStore((state) => state.setUsers);
   const [loading, setLoading] = useState(true);
   const users = useProfileStore((state) => state.users);
@@ -29,21 +30,25 @@ export default function SocialAreaForUser() {
 
     if (status === "authenticated") {
       const userID = session.user.id;
-
-      // Fetch following IDs
       const fetchFollowingIds = async () => {
         try {
           const response = await fetch(`/api/profile/${userID}/get-following`);
+          const responseSaved = await fetch(
+            `/api/profile/${userID}/get-savedPosts`
+          );
           const { followingIds } = await response.json();
-
-          // Fetch posts and filter by following IDs
+          const { postId } = await responseSaved.json();
           const responsePosts = await fetch("/api/post");
           const allPosts = await responsePosts.json();
           setPosts(allPosts);
           const filteredPosts = allPosts.filter((post) =>
             followingIds.includes(post.userID)
           );
+          const savedPosts = allPosts.filter((post) =>
+            postId.includes(post.id)
+          );
           setFollowPosts(filteredPosts);
+          setSavedPosts(savedPosts);
         } catch (error) {
           console.error("Failed to fetch posts", error);
         } finally {
@@ -116,7 +121,7 @@ export default function SocialAreaForUser() {
               />
             )}
             {activeComponent === "Kaydedilenler" &&
-              posts.map((post, index) => (
+              savedPosts.map((post, index) => (
                 <button
                   key={index}
                   className="relative group w-[100px] h-[100px] md:w-[200px] md:h-[200px]"

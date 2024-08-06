@@ -38,7 +38,7 @@ const ProfileCardHeader = ({
   const optionsRef = useRef();
   const { data: session } = useSession();
   const id = session?.user.id;
-  const userIdToFollow = data.id;
+  const userIdToFollow = session?.user.id;
 
   const [wideScreenImg, setWideScreenImg] = useState(false);
   const [profile, setProfile] = useState();

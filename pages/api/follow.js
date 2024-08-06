@@ -5,12 +5,10 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     try {
-      // Validate input
       if (!userIdToFollow || !followerId) {
         return res.status(400).json({ error: "User IDs must be provided" });
       }
 
-      // Check for existing follow relationship
       const existingFollow = await prisma.follow.findFirst({
         where: {
           followerId: followerId,
@@ -21,7 +19,6 @@ export default async function handler(req, res) {
       let message;
 
       if (existingFollow) {
-        // If already following, unfollow the user
         await prisma.follow.delete({
           where: {
             id: existingFollow.id,
@@ -29,7 +26,6 @@ export default async function handler(req, res) {
         });
         message = "Unfollowed successfully";
       } else {
-        // If not following, create a follow relationship
         await prisma.follow.create({
           data: {
             followerId: followerId,
