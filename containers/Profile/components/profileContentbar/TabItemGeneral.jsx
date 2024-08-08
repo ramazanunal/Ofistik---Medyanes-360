@@ -18,9 +18,10 @@ const TabItemsGeneral = ({ params }) => {
   useEffect(() => {
     const getProfile = async () => {
       const result = await getAPI(`/profile/${id}/get-profile`)
-      console.log(result)
-      setProfileInfo(result.data)
-      setLoading(false)
+      if (result.status === 'success') {
+        setProfileInfo(result.data)
+        setLoading(false)
+      }
     }
     getProfile()
   }, [id])
