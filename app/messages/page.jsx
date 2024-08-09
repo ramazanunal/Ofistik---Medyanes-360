@@ -13,6 +13,7 @@ export default function Home() {
   const [inbox, setInbox] = useState([])
   const { data: session } = useSession()
   const [selectOption, setSelectOption] = useState('inbox')
+  const [searchQuery, setSearchQuery] = useState('')
   useEffect(() => {
     const getMessages = async () => {
       if (session?.user?.id) {
@@ -20,11 +21,33 @@ export default function Home() {
           `/message/${session.user.id}/get-messages?queryType=${selectOption}`
         )
 
-        setInbox(res)
+        let filteredInbox = res
+
+        if (searchQuery) {
+          const cleanedQuery = searchQuery
+            .trim()
+            .replace(/\s+/g, ' ')
+            .toLowerCase()
+
+          filteredInbox = res.filter(
+            (chat) =>
+              chat.starter.username
+                .toLowerCase()
+                .replace(/\s+/g, ' ')
+                .includes(cleanedQuery) ||
+              chat.participant.username
+                .toLowerCase()
+                .replace(/\s+/g, ' ')
+                .includes(cleanedQuery)
+          )
+        }
+
+        setInbox(filteredInbox)
       }
     }
+
     getMessages()
-  }, [session, selectedUser, selectOption])
+  }, [session, selectedUser, selectOption, searchQuery])
 
   const showAvatar = true
   const showCheckBox = true
@@ -60,7 +83,7 @@ export default function Home() {
     <PhoneBookContext.Provider value={data}>
       <ChakraProvider>
         <div className="flex bg-inputbg">
-          <MessagesList inbox={inbox} />
+          <MessagesList inbox={inbox} setSearchQuery={setSearchQuery} />
           <Chat selectedUser={selectedUser} />
         </div>
       </ChakraProvider>

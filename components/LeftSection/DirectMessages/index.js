@@ -12,11 +12,7 @@ function DirectMessages({ inbox, filterType }) {
 
   return (
     <div className="mt-[250px] md:mt-[390px]">
-      <div className="flex justify-between items-center pr-7">
-        <div className="text-favTxt text-xs font-semibold ml-10">
-          Sohbet Listesi
-        </div>
-      </div>
+      <div className="flex justify-between items-center pr-7"></div>
       <div className="mt-5">
         {inbox.map((person) => (
           <React.Fragment key={person.id}>

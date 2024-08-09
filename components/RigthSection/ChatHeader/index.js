@@ -34,8 +34,7 @@ function ChatHeader() {
   }
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenSearch, setIsOpenSearch] = useState(false)
-  const [isOpenPhoneModal, setIsOpenPhoneModal] = useState(false)
-  const [isOpenVideoCallModal, setIsOpenVideoCallModal] = useState(false)
+  const [searchMessage, setSearchMessage] = useState('')
 
   const searchRef = useRef(null)
   const menuRef = useRef(null)
@@ -97,6 +96,7 @@ function ChatHeader() {
                 isOpenSearch={isOpenSearch}
                 setIsOpenSearch={setIsOpenSearch}
                 handleOpenSearch={handleOpenSearch}
+                setSearchMessage={setSearchMessage}
               />
 
               <DropMenu

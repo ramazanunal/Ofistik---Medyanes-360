@@ -50,8 +50,8 @@ function Header({ onSearch, onFilterChange, filteredUser }) {
         </Tooltip>
       </div>
       <DirectModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
-      <h2 className="text-xl ml-10 mt-6 mb-4 font-[500] text-messageBg ">
-        Mesajlar <span className="text-premiumOrange text-sm ">(0)</span>
+      <h2 className="text-xl ml-10 mt-6 mb-4 font-[500] text-messageBg  ">
+        Sohbetler
       </h2>
 
       <div className="flex  items-center w-[80%] h-12 rounded-sm focus-within:shadow-lg focus-within:outline container bg-inputbg">

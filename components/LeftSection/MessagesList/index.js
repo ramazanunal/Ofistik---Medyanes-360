@@ -3,7 +3,7 @@ import Header from '../Header'
 import DirectMessages from '../DirectMessages'
 import styles from './styles.module.css'
 
-function MessagesList({ inbox }) {
+function MessagesList({ inbox, setSearchQuery }) {
   const [filterType, setFilterType] = useState('inbox') // Yeni state
 
   const handleSearch = (query) => {
