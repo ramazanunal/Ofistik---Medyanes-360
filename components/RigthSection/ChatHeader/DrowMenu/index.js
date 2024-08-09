@@ -9,6 +9,7 @@ import useClickOutside from '@/hook/useClickOutside'
 import { useContext } from 'react'
 import PhoneBookContext from '@/context/PhoneBookContext'
 import { postAPI } from '@/services/fetchAPI'
+import { useSession } from 'next-auth/react'
 
 function DropMenu({
   handleOpenMenu,
@@ -24,6 +25,8 @@ function DropMenu({
     setIsOpenMenu(false)
   })
 
+  const { data: session } = useSession()
+
   const handleMutedClick = () => {
     handleIsMutedChange() // isMuted değerini değiştiren fonksiyonu çağır
     setIsOpenMenu(false) // menüyü kapat
@@ -32,6 +35,7 @@ function DropMenu({
   const handleChatType = async () => {
     const res = await postAPI('/message/change-type-chat', {
       chatId: selectedUser[0].chatId,
+      userId: session.user.id,
     })
     console.log(res)
 

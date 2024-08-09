@@ -22,6 +22,13 @@ export default async (req, res) => {
                   isRead: false,
                 },
               },
+              NOT: {
+                archives: {
+                  some: {
+                    userId: id,
+                  },
+                },
+              },
             },
             include: {
               messages: {
@@ -53,8 +60,11 @@ export default async (req, res) => {
         case 'archive':
           chats = await prisma.chat.findMany({
             where: {
-              OR: [{ starterId: id }, { participantId: id }],
-              status: 'ARCHIVED',
+              archives: {
+                some: {
+                  userId: id,
+                },
+              },
             },
             include: {
               messages: {
@@ -81,8 +91,6 @@ export default async (req, res) => {
               },
             },
           })
-
-          break
           break
 
         case 'inbox':
@@ -90,6 +98,13 @@ export default async (req, res) => {
           chats = await prisma.chat.findMany({
             where: {
               OR: [{ starterId: id }, { participantId: id }],
+              NOT: {
+                archives: {
+                  some: {
+                    userId: id,
+                  },
+                },
+              },
             },
             include: {
               messages: {
