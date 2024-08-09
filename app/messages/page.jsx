@@ -14,6 +14,7 @@ export default function Home() {
   const { data: session } = useSession()
   const [selectOption, setSelectOption] = useState('inbox')
   const [searchQuery, setSearchQuery] = useState('')
+  const [searchMessage, setSearchMessage] = useState('')
   useEffect(() => {
     const getMessages = async () => {
       if (session?.user?.id) {
@@ -56,6 +57,7 @@ export default function Home() {
     const res = await postAPI('/message/get-message', data)
 
     setSelectedUser(res)
+    setSearchMessage('')
   }
 
   const handleIsMutedChange = () => {
@@ -77,6 +79,8 @@ export default function Home() {
     handleIsMutedChange,
     selectOption,
     setSelectOption,
+    setSearchMessage,
+    searchMessage,
   }
 
   return (

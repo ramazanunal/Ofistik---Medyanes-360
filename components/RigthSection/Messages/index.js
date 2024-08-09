@@ -12,11 +12,12 @@ import PhoneBookContext from '@/context/PhoneBookContext'
 import { useSession } from 'next-auth/react'
 import { formatDate } from '@/lib/utilities/dayGenerator'
 import { postAPI } from '@/services/fetchAPI'
+import ChatMessage from '@/components/ChatMessage'
 
 function Messages() {
   const { selectedUser } = useContext(PhoneBookContext)
   const { data: session } = useSession()
-  const { handleUserSelect } = useContext(PhoneBookContext)
+  const { handleUserSelect, searchMessage } = useContext(PhoneBookContext)
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
 
@@ -33,7 +34,7 @@ function Messages() {
         text: msg.content,
         sender: msg.senderId === session?.user?.id ? 'me' : 'you',
         avatar:
-          'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png', // Adjust accordingly if avatars are different
+          'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png',
         hour: new Date(msg.createdAt).toLocaleTimeString([], {
           hour: '2-digit',
           minute: '2-digit',
@@ -276,15 +277,7 @@ function Messages() {
                         : styles.messageText
                     }`}
                   >
-                    <span className="max-w-screen-sm overflow-hidden break-words">
-                      {message.text}
-                    </span>
-                    <div className=" flex  justify-end items-center space-x-2 text-xs mt-1 opacity-70">
-                      <div>{message.hour}</div>
-                      {message.sent && (
-                        <IoCheckmarkDoneSharp className="text-premiumOrange" />
-                      )}
-                    </div>
+                    <ChatMessage message={message} inputValue={searchMessage} />
                   </div>
                 </div>
               )}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ChatHeader from '../ChatHeader'
 import Messages from '../Messages'
 

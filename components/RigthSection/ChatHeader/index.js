@@ -10,7 +10,8 @@ import SearchBar from './SearchBar'
 import DropMenu from './DrowMenu'
 
 function ChatHeader() {
-  const { selectedUser, handleUserSelect } = useContext(PhoneBookContext)
+  const { selectedUser, handleUserSelect, setSearchMessage } =
+    useContext(PhoneBookContext)
 
   const [isInfoPanelOpen, setIsInfoPanelOpen] = useState(false)
 
@@ -34,7 +35,6 @@ function ChatHeader() {
   }
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenSearch, setIsOpenSearch] = useState(false)
-  const [searchMessage, setSearchMessage] = useState('')
 
   const searchRef = useRef(null)
   const menuRef = useRef(null)
