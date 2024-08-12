@@ -100,7 +100,9 @@ const ProfileCardHeader = ({
         setProfile(result.data)
         setLoading(false)
       }
+      console.log(result)
     }
+
     getProfile()
   }, [id])
 

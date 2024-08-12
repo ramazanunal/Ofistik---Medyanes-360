@@ -19,6 +19,7 @@ model User {
     VerificationCode  VerificationCode?
     createdAt         DateTime          @default(now())
     updatedAt         DateTime          @updatedAt
+    userType          UserType?         @default(RECEIVER)
     messagesSent      Message[]         @relation("Sender")
     messagesReceived  Message[]         @relation("Receiver")
     chatsStarted      Chat[]            @relation("Starter")
@@ -167,6 +168,11 @@ enum Role {
     customer
     admin
     partner
+}
+
+enum UserType {
+    RECEIVER
+    PROVIDER
 }
 
 model Date {
