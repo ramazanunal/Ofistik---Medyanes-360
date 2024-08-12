@@ -53,7 +53,7 @@ function DirectMessages({ inbox, filterType }) {
                         </span>
                       </div>
                     )} */}
-                  <div>{formatMessageDate(person.createdAt)}</div>
+                  <div>{formatMessageDate(person.lastMessage.createdAt)}</div>
                   <div>
                     {!person.lastMessage.isRead && (
                       <IoCheckmarkDoneSharp className="text-checktxt" />

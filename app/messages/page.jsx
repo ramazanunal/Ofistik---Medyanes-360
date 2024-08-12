@@ -22,6 +22,8 @@ export default function Home() {
           `/message/${session.user.id}/get-messages?queryType=${selectOption}`
         )
 
+        console.log(res)
+
         let filteredInbox = res
 
         if (searchQuery) {
