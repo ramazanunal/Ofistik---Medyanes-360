@@ -61,15 +61,15 @@ const MainScreen = memo(
     }, []);
 
     const stringUid = UID.toString();
-
+    const isMobile = window.innerWidth < 768;
     const getContainerWidthClass = (chatShow, showParticipants) => {
-      if (!chatShow && showParticipants) {
-        return "w-[65%]";
-      } else if (!chatShow && !showParticipants) {
-        return "w-[75%]";
-      } else if (showParticipants && chatShow) {
-        return "w-[75%]";
-      } else if (!showParticipants && chatShow) {
+      if (!chatShow && !isMobile) {
+        return "w-[73%]";
+      } else if (chatShow && !isMobile) {
+        return "w-[95%]";
+      } else if (!chatShow && isMobile) {
+        return "w-[90%]";
+      } else if (chatShow && isMobile) {
         return "w-[90%]";
       }
     };
@@ -119,13 +119,13 @@ const MainScreen = memo(
     useEffect(() => {
       // showChat ve showParticipants durumlarına göre genişliği ayarlayın
       if (!chatShow && showParticipants) {
-        setSize("57vw");
+        setSize("67vw");
       } else if (!chatShow && !showParticipants) {
-        setSize("72vw");
+        setSize("82vw");
       } else if (showParticipants && chatShow) {
-        setSize("77vw");
-      } else if (!showParticipants && chatShow) {
         setSize("87vw");
+      } else if (!showParticipants && chatShow) {
+        setSize("97vw");
       }
     }, [chatShow, showParticipants]);
 
@@ -180,7 +180,7 @@ const MainScreen = memo(
         <div
           id="video-holder"
           className={`relative h-screen overflow-y-auto w-full flex flex-wrap justify-center p-2 gap-4 lg:p-4 ${
-            chatShow ? "lg:w-[92vw]" : "lg:w-[90vw]"
+            chatShow ? "lg:w-[100vw]" : "lg:w-[95vw]"
           } bg-gray-100`}
         >
           <div className="channelNameArea flex-col items-center justify-center flex md:hidden">
@@ -311,12 +311,16 @@ const MainScreen = memo(
           )}
 
           {/* Join Stream */}
-          <div className="w-full fixed py-2 z-10 bottom-0 flex justify-center ">
+          <div
+            className={`w-full fixed py-2 z-10 bottom-0 flex justify-center ${getContainerWidthClass(
+              chatShow,
+              showParticipants
+            )}`}
+          >
             <div
-              className={`flex justify-between bg-white mb-3 rounded-2xl items-center p-2 ${getContainerWidthClass(
-                chatShow,
-                showParticipants
-              )}`}
+              className={`flex justify-between bg-white mb-3 rounded-2xl items-center p-2 ${
+                chatShow ? "w-[95%]" : "w-[100%]"
+              }`}
             >
               <div className="channelNameArea flex-col items-center justify-center hidden md:flex">
                 <div className="timerArea flex flex-row items-center justify-center mr-3">
@@ -498,35 +502,40 @@ const MainScreen = memo(
                       : "Ekran Paylaşımı Aç"}
                   </h1>
                 </div>
+                <div className="flex flex-col items-center justify-center ">
+                  <div
+                    id="chat"
+                    title="Chati Aç"
+                    className={`w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                      !chatShow ? "bg-premiumOrange text-white" : ""
+                    }`}
+                    onClick={openChat}
+                  >
+                    <i class="fa-regular fa-comments text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
+                  </div>
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
+                    {chatShow ? "Sohbeti Aç" : "Sohbeti Kapat"}
+                  </h1>
+                </div>
+                {role === "admin" && (
+                  <div className="flex flex-col items-center justify-center ">
+                    <div
+                      id="copyMeet"
+                      title="Toplantı Linkini Kopyala"
+                      className={`w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500`}
+                      onClick={copyMeetingLink}
+                    >
+                      <i class="fa-solid fa-copy text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
+                    </div>
+                    <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
+                      Kopyala
+                    </h1>
+                  </div>
+                )}
               </div>
               <div className="flex items-center justify-center gap-1 md:gap-4 ml-3 md:ml-0">
                 {/* Chat Butonu */}
-                <div
-                  id="chat"
-                  title="Chati Aç"
-                  className="w-[30px] h-[30px] md:w-[2vw] md:h-[2vw] rounded-xl cursor-pointer text-lg md:text-2xl text-premiumOrange transition-all duration-500"
-                  onClick={openChat}
-                >
-                  <i class="fa-regular fa-comments"></i>
-                </div>
-                <div
-                  id="participants"
-                  title="Katılımcıları Aç"
-                  className="w-[30px] h-[30px] md:w-[2vw] md:h-[2vw] rounded-xl cursor-pointer text-lg md:text-2xl text-premiumOrange transition-all duration-500"
-                  onClick={openParticipants}
-                >
-                  <i class="fa-solid fa-users"></i>
-                </div>
-                {role === "admin" && (
-                  <div
-                    id="copyMeet"
-                    title="Toplantı Linkini Kopyala"
-                    className="w-[30px] h-[30px] md:w-[2vw] md:h-[2vw] rounded-xl cursor-pointer text-lg md:text-2xl text-premiumOrange transition-all duration-500"
-                    onClick={copyMeetingLink}
-                  >
-                    <i class="fa-solid fa-copy"></i>
-                  </div>
-                )}
+
                 {/* Çıkış yapma Butonu */}
                 <div className="flex flex-col items-center justify-center ">
                   <div

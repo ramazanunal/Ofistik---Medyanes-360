@@ -579,7 +579,7 @@ function Room() {
       <Toaster />
       <section className=" flex justify-between overflow-hidden">
         {/* Participants */}
-        <Participants
+        {/* <Participants
           closeWhiteboard={closeWhiteboard}
           users={users}
           openParticipants={openParticipants}
@@ -593,7 +593,7 @@ function Room() {
           whiteboardOpen={whiteboardOpen}
           showWhiteboardLarge={showWhiteboardLarge}
           hasSmallViewScreen1={hasSmallViewScreen1}
-        />
+        /> */}
 
         {/* Main Screen */}
         <MainScreen
@@ -641,11 +641,22 @@ function Room() {
         />
 
         <LiveChat
+          closeWhiteboard={closeWhiteboard}
+          users={users}
+          openParticipants={openParticipants}
+          showCtrl={showCtrl}
+          setShowCtrl={setShowCtrl}
+          rtmClient={rtmClient}
+          totalMembers={totalMembers}
+          participants={participants}
+          UID={UID}
+          whiteboardOpen={whiteboardOpen}
+          showWhiteboardLarge={showWhiteboardLarge}
+          hasSmallViewScreen1={hasSmallViewScreen1}
           chatShow={chatShow}
           openFunction={openChat}
           show={chatShow}
           sendFile={sendFile}
-          showCtrl={showCtrl}
           sendMessage={sendMessage}
           chats={chats}
         />

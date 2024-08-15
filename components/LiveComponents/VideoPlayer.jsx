@@ -183,7 +183,7 @@ const VideoPlayer = memo(
             isInShareScreen1 ? "inScreen1" : ""
           } cursor-pointer ${
             showWhiteboard ? "openWhite " : "closeWhite"
-          }  md:w-[13vw] md:h-[20vh] w-[80vw] h-[40vh] videoPlayer rounded-t-2xl`}
+          }  md:w-[9vw] md:h-[18vh] w-[80vw] h-[40vh] videoPlayer rounded-t-2xl`}
         ></div>
       </>
     );

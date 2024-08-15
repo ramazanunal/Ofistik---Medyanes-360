@@ -30,18 +30,17 @@ function WhiteBoardMain({
 
   useEffect(() => {
     // showChat ve showParticipants durumlarına göre genişliği ayarlayın
-    if (!showChat && showParticipants) {
-      setSize("64vw");
-    } else if (!showChat && !showParticipants) {
-      setSize("74vw");
-    } else if (showParticipants && showChat) {
-      setSize("79vw");
-    } else if (!showParticipants && showChat && !isMobile) {
+
+    if (!showChat && !isMobile) {
+      setSize("73vw");
+    } else if (showChat && !isMobile) {
+      setSize("97vw");
+    } else if (showChat && isMobile) {
       setSize("89vw");
-    } else if (!showParticipants && showChat && isMobile) {
-      setSize("79vw");
+    } else if (!showChat && isMobile) {
+      setSize("89vw");
     }
-  }, [showChat, showParticipants]);
+  }, [showChat, isMobile]);
 
   return (
     <div

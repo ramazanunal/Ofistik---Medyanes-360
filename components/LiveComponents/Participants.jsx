@@ -52,7 +52,7 @@ const Participants = memo(
     const renderUserBox = (user, isUser) => (
       <div
         key={user.uid}
-        className="relative bg-gray-100 rounded-2xl md:w-[13vw] md:h-[20vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
+        className="relative bg-gray-100 rounded-2xl md:w-[8vw] md:h-[16vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between mb-5 userBoxForCam shadow-lg"
         id={`userBoxForCam-${user.uid}`}
       >
         {isUser && (
@@ -107,7 +107,7 @@ const Participants = memo(
           </div>
           <div
             id="userVideo"
-            className="flex flex-col items-center max-h-[75vh] justify-center overflow-scroll"
+            className="flex flex-row flex-wrap items-center max-h-[75vh] justify-center overflow-scroll"
           >
             {[...uniqueParticipants].map((uid) => {
               const user = users.find((user) => String(user.uid) === uid);
