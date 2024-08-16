@@ -64,13 +64,13 @@ const MainScreen = memo(
     const isMobile = window.innerWidth < 768;
     const getContainerWidthClass = (chatShow, showParticipants) => {
       if (!chatShow && !isMobile) {
-        return "w-[73%]";
+        return "lg:w-[73%]";
       } else if (chatShow && !isMobile) {
-        return "w-[95%]";
+        return "lg:w-[95%]";
       } else if (!chatShow && isMobile) {
-        return "w-[90%]";
+        return "lg:w-[90%]";
       } else if (chatShow && isMobile) {
-        return "w-[90%]";
+        return "lg:w-[90%]";
       }
     };
 
@@ -175,6 +175,31 @@ const MainScreen = memo(
     const swapViewsScreenShare = () => {
       setShowScreenShareLarge((prev) => !prev);
     };
+
+    const [isInShareScreen, setIsInShareScreen] = useState(false);
+    const [large, setLarge] = useState(false);
+
+    const handleAddDiv = () => {
+      if (whiteboardOpen) {
+        toast.error("Lütfen önce whiteboard'ı kapatın !");
+      } else {
+        const container = document.getElementById("userVideo");
+        const userContainer = document.getElementById("usersContainer");
+        const videoHolder = document.getElementById("share-screen");
+        if (isInShareScreen) {
+          setLarge(false);
+          userContainer.appendChild(container);
+        } else {
+          setLarge(true);
+          if (videoHolder && container) {
+            videoHolder.appendChild(container);
+          }
+        }
+
+        setIsInShareScreen(!isInShareScreen);
+      }
+    };
+
     return (
       <>
         <div
@@ -517,6 +542,21 @@ const MainScreen = memo(
                     {chatShow ? "Sohbeti Aç" : "Sohbeti Kapat"}
                   </h1>
                 </div>
+                {/* <div className="flex flex-col items-center justify-center ">
+                  <div
+                    id="cam"
+                    title="Kameraları Büyüt"
+                    className={`w-[45px] h-[45px] xl:w-[5vw] xl:h-[3.5vw] lg:w-[5.5vw] lg:h-[4vw] md:w-[6vw] md:h-[4.5vw] flex flex-row items-center justify-center rounded-2xl cursor-pointer bg-gray-200 text-premiumOrange hover:bg-premiumOrange hover:text-white transition-all duration-500 ${
+                      large ? "bg-premiumOrange text-white" : ""
+                    }`}
+                    onClick={handleAddDiv}
+                  >
+                    <i class="fa-solid fa-magnifying-glass text-[22px] w-7 h-7 text-center flex items-center justify-center"></i>
+                  </div>
+                  <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
+                    {large ? "Kameraları Küçült" : "Kameraları Büyüt"}
+                  </h1>
+                </div> */}
                 {role === "admin" && (
                   <div className="flex flex-col items-center justify-center ">
                     <div

@@ -641,6 +641,7 @@ function Room() {
         />
 
         <LiveChat
+          showWhiteboard={whiteboardOpen}
           closeWhiteboard={closeWhiteboard}
           users={users}
           openParticipants={openParticipants}

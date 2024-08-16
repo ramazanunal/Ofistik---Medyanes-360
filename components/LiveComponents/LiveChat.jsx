@@ -1,11 +1,11 @@
 import React, { memo, useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import profile from "@/assets/icons/profile.png";
 import Image from "next/image";
 import "animate.css";
 import VideoPlayer from "./VideoPlayer";
-
+import toast, { Toaster } from "react-hot-toast";
 const LiveChat = memo(
   ({
     showCtrl,
@@ -24,9 +24,11 @@ const LiveChat = memo(
     showWhiteboardLarge,
     closeWhiteboard,
     hasSmallViewScreen1,
+    showWhiteboard,
   }) => {
     const chatRef = useRef(null);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [large, setLarge] = useState(false);
     const [participantNames, setParticipantNames] = useState({});
     const [role, setRole] = useState(false);
 
@@ -64,7 +66,9 @@ const LiveChat = memo(
     const renderUserBox = (user, isUser) => (
       <div
         key={user.uid}
-        className="relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg"
+        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
+          large ? "!w-[32vw] !h-[37vh]" : ""
+        }`}
         id={`userBoxForCam-${user.uid}`}
       >
         {isUser && (
@@ -83,7 +87,9 @@ const LiveChat = memo(
         )}
         <span
           id={`user-${user.uid}`}
-          className="truncate text-gray-700 font-semibold text-center p-2"
+          className={`truncate text-gray-700 font-semibold text-center p-2 ${
+            large ? "absolute bottom-0" : ""
+          }`}
         >
           {participantNames[user.uid] || user.uid}
         </span>
@@ -124,6 +130,30 @@ const LiveChat = memo(
     };
 
     const isMobile = window.innerWidth < 768;
+
+    const [isInShareScreen, setIsInShareScreen] = useState(false);
+
+    const handleAddDiv = () => {
+      if (showWhiteboard) {
+        toast.error("Lütfen önce whiteboard'ı kapatın !");
+      } else {
+        const container = document.getElementById("userVideo");
+        const userContainer = document.getElementById("usersContainer");
+        const videoHolder = document.getElementById("share-screen");
+        if (isInShareScreen) {
+          setLarge(false);
+          userContainer.appendChild(container);
+        } else {
+          setLarge(true);
+          if (videoHolder && container) {
+            videoHolder.appendChild(container);
+          }
+        }
+
+        setIsInShareScreen(!isInShareScreen);
+      }
+    };
+
     return (
       <div
         className={`p-5  bg-gray-100  ${
@@ -144,16 +174,27 @@ const LiveChat = memo(
             chatShow ? "hidden " : " animate__animated animate__fadeInRight"
           } `}
         >
-          <div className="flex flex-col items-center bg-white rounded-2xl shadow-lg md:h-[50vh] h-[40vh] overflow-y-auto mb-4 md:w-[23vw]">
+          <div
+            className="flex flex-col items-center bg-white rounded-2xl shadow-lg md:h-[50vh] h-[40vh] overflow-y-auto mb-4 md:w-[23vw] usersContainer"
+            id="usersContainer"
+          >
             <div className="relative m-3 p-5 font-bold flex items-center justify-center gap-4 border-b border-gray-300 w-full">
               <span className="text-xl text-gray-600">Katılımcılar</span>
+
               <div className="text-premiumOrange text-lg flex justify-center items-center rounded-full">
                 {totalMembers}
               </div>
+              <FontAwesomeIcon
+                icon={faSearch}
+                onClick={handleAddDiv}
+                className="cursor-pointer hover:scale-110 transform duration-300 bg-premiumOrange p-2 text-white rounded-full"
+              />
             </div>
             <div
               id="userVideo"
-              className="flex flex-row flex-wrap items-center max-h-[55vh] justify-center overflow-scroll w-full"
+              className={`flex flex-row flex-wrap items-center  justify-center overflow-scroll w-full ${
+                large ? "h-[85vh]" : "max-h-[55vh]"
+              }`}
             >
               {[...uniqueParticipants].map((uid) => {
                 const user = users.find((user) => String(user.uid) === uid);
