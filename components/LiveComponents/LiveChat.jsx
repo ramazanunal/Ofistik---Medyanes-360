@@ -25,10 +25,10 @@ const LiveChat = memo(
     closeWhiteboard,
     hasSmallViewScreen1,
     showWhiteboard,
+    large,
   }) => {
     const chatRef = useRef(null);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [large, setLarge] = useState(false);
     const [participantNames, setParticipantNames] = useState({});
     const [role, setRole] = useState(false);
 
@@ -133,27 +133,6 @@ const LiveChat = memo(
 
     const [isInShareScreen, setIsInShareScreen] = useState(false);
 
-    const handleAddDiv = () => {
-      if (showWhiteboard) {
-        toast.error("Lütfen önce whiteboard'ı kapatın !");
-      } else {
-        const container = document.getElementById("userVideo");
-        const userContainer = document.getElementById("usersContainer");
-        const videoHolder = document.getElementById("share-screen");
-        if (isInShareScreen) {
-          setLarge(false);
-          userContainer.appendChild(container);
-        } else {
-          setLarge(true);
-          if (videoHolder && container) {
-            videoHolder.appendChild(container);
-          }
-        }
-
-        setIsInShareScreen(!isInShareScreen);
-      }
-    };
-
     return (
       <div
         className={`p-5  bg-gray-100  ${
@@ -184,11 +163,6 @@ const LiveChat = memo(
               <div className="text-premiumOrange text-lg flex justify-center items-center rounded-full">
                 {totalMembers}
               </div>
-              <FontAwesomeIcon
-                icon={faSearch}
-                onClick={handleAddDiv}
-                className="cursor-pointer hover:scale-110 transform duration-300 bg-premiumOrange p-2 text-white rounded-full"
-              />
             </div>
             <div
               id="userVideo"

@@ -574,6 +574,7 @@ function Room() {
   const [showWhiteboardLarge, setShowWhiteboardLarge] = useState(true);
   const [hasSmallViewScreen1, setHasSmallViewScreen1] = useState(false);
   const [screenShareLarge, setShowScreenShareLarge] = useState(true);
+  const [large, setLarge] = useState(false);
   return displayName !== null ? (
     <div className="h-screen bg-gray-100">
       <Toaster />
@@ -597,6 +598,8 @@ function Room() {
 
         {/* Main Screen */}
         <MainScreen
+          large={large}
+          setLarge={setLarge}
           setTimeElapsed={setTimeElapsed1}
           timeElapsed={timeElapsed1}
           showCamera={showCamera}
@@ -641,6 +644,8 @@ function Room() {
         />
 
         <LiveChat
+          large={large}
+          setLarge={setLarge}
           showWhiteboard={whiteboardOpen}
           closeWhiteboard={closeWhiteboard}
           users={users}
