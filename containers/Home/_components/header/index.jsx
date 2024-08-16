@@ -1,67 +1,69 @@
-"use client";
-import React, { use, useEffect, useState } from "react";
-import Link from "next/link";
-import { RxCross2 } from "react-icons/rx";
-import { RxHamburgerMenu } from "react-icons/rx";
-import classNames from "classnames";
-import Logo from "@/assets/icons/logo";
-import LoginModal from "@/components/modal/auth/Login";
-import RegisterModal from "@/components/modal/auth/Register";
-import { useSession, signIn, signOut } from "next-auth/react";
+'use client'
+import React, { use, useEffect, useState } from 'react'
+import Link from 'next/link'
+import { RxCross2 } from 'react-icons/rx'
+import { RxHamburgerMenu } from 'react-icons/rx'
+import classNames from 'classnames'
+import Logo from '@/assets/icons/logo'
+import LoginModal from '@/components/modal/auth/Login'
+import RegisterModal from '@/components/modal/auth/Register'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
-import { Input } from "@/components/ui/input";
-import Mock_data from "./MOCK_DATA.json";
-import { AnimatePresence } from "framer-motion";
-import Search_Algorithm from "@/containers/Home/_components/header/Search_Algorithm";
-import { useHomeStore } from "@/store/HomeStore";
+import { Input } from '@/components/ui/input'
+import Mock_data from './MOCK_DATA.json'
+import { AnimatePresence } from 'framer-motion'
+import Search_Algorithm from '@/containers/Home/_components/header/Search_Algorithm'
+import { useHomeStore } from '@/store/HomeStore'
+import { useRouter } from 'next/navigation'
 
 function Header() {
-  const { data: session } = useSession();
-  console.log(session);
+  const { data: session } = useSession()
+  const router = useRouter()
+  console.log(session)
   //hamburger meu button change
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   //scroll event
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(0)
   //change language menu
-  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false)
   // Search Input value
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('')
   // Aranmış verileri gösteren popup tarzı yapı
-  const [isOpenSearchResults, setIsOpenSearchResults] = useState(false);
+  const [isOpenSearchResults, setIsOpenSearchResults] = useState(false)
   // Arama yaparken verinin gelme süresince gönecek spiner'ın görünüp görünmeyeceğini belirleyen state
-  const [isOpenSearchLoading, setIsOpenSearchLoading] = useState(false);
+  const [isOpenSearchLoading, setIsOpenSearchLoading] = useState(false)
   // Data -> Ham Data ile başlangıç
-  const [data, setData] = useState(Mock_data);
+  const [data, setData] = useState(Mock_data)
   // clicked keys
-  const [clickedKeys, setClickedKeys] = useState([]);
+  const [clickedKeys, setClickedKeys] = useState([])
 
-  const activeComponent = useHomeStore((state) => state.activeComponent);
+  const activeComponent = useHomeStore((state) => state.activeComponent)
 
-  const searching_keys = ["company_name", "job_title"];
+  const searching_keys = ['company_name', 'job_title']
 
   useEffect(() => {
-    const onScroll = () => setOffset(Math.floor(window.scrollY));
+    const onScroll = () => setOffset(Math.floor(window.scrollY))
 
     // first enter website - control scroll
-    onScroll();
+    onScroll()
 
     // clean up code
-    window.removeEventListener("scroll", onScroll);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.removeEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
-    if (searchTerm.replace(" ", "") !== "") {
-      setIsOpenSearchResults(true);
-      setIsOpenSearchLoading(true);
+    if (searchTerm.replace(' ', '') !== '') {
+      setIsOpenSearchResults(true)
+      setIsOpenSearchLoading(true)
     } else {
-      setIsOpenSearchResults(false);
-      setIsOpenSearchLoading(false);
+      setIsOpenSearchResults(false)
+      setIsOpenSearchLoading(false)
     }
 
     const timer =
-      searchTerm !== ""
+      searchTerm !== ''
         ? setTimeout(() => {
             const new_dt = Search_Algorithm(
               Mock_data,
@@ -69,77 +71,85 @@ function Header() {
               0.5,
               searching_keys,
               clickedKeys
-            );
-            setData(new_dt);
-            setIsOpenSearchLoading(false);
+            )
+            setData(new_dt)
+            setIsOpenSearchLoading(false)
           }, 1000)
-        : null;
+        : null
 
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
+    return () => clearTimeout(timer)
+  }, [searchTerm])
 
-  const isAuthenticated = false;
+  const isAuthenticated = false
 
   const navLinks =
-    activeComponent == "Hizmet Al"
+    activeComponent == 'Hizmet Al'
       ? [
           {
-            href: "#aLittleBitAboutUs",
-            title: "Hizmetlerimiz",
+            href: '#aLittleBitAboutUs',
+            title: 'Hizmetlerimiz',
           },
           {
-            href: "#howToUse",
-            title: "Nasıl Kullanırım",
+            href: '#howToUse',
+            title: 'Nasıl Kullanırım',
           },
           {
-            href: "#mainFeatures",
-            title: "Öne Çıkan Özellikler",
+            href: '#mainFeatures',
+            title: 'Öne Çıkan Özellikler',
           },
           {
-            href: "#faq",
-            title: "S.S.S.",
+            href: '#faq',
+            title: 'S.S.S.',
           },
         ]
       : [
           {
-            href: "#aLittleBitAboutUs",
-            title: "Sektörünü bul",
+            href: '#aLittleBitAboutUs',
+            title: 'Sektörünü bul',
           },
           {
-            href: "#howToUse",
-            title: "Nasıl Kullanırım",
+            href: '#howToUse',
+            title: 'Nasıl Kullanırım',
           },
           {
-            href: "#mainFeatures",
-            title: "Öne Çıkan Özellikler",
+            href: '#mainFeatures',
+            title: 'Öne Çıkan Özellikler',
           },
           {
-            href: "#faq",
-            title: "S.S.S.",
+            href: '#faq',
+            title: 'S.S.S.',
           },
-        ];
+        ]
 
   const NavLinkButton = ({ href, title }) => {
     return (
       <Link
         href={href}
         className={classNames(
-          "transition-all duration-500 ease-in-out hover:underline underline-offset-4 whitespace-nowrap text-sm 2xl:text-base",
-          offset >= 80 ? "text-foreground" : "text-muted",
-          isMenuOpen && "!text-foreground"
+          'transition-all duration-500 ease-in-out hover:underline underline-offset-4 whitespace-nowrap text-sm 2xl:text-base',
+          offset >= 80 ? 'text-foreground' : 'text-muted',
+          isMenuOpen && '!text-foreground'
         )}
       >
         {title.toUpperCase()}
       </Link>
-    );
-  };
+    )
+  }
+
+  const profileNavigationHandle = (userType, username) => {
+    if (userType === 'PROVIDER') {
+      router.push(`/profile/${username}`)
+    } else {
+      router.push(`/profile-receiver/${username}`)
+    }
+  }
 
   return (
     <>
       <div
         id="header-animation"
         className={`sticky w-full transition-all delay-500 z-40 ${
-          isMenuOpen ? "show" : "hidden"
+          isMenuOpen ? 'show' : 'hidden'
         }`}
       ></div>
       <header
@@ -147,16 +157,16 @@ function Header() {
         className={`fixed mx-auto left-0 right-0 border-2 border-transparent flex flex-wrap justify-self-center  items-center justify-between  px-[2%] transition-all  duration-500 text-muted  w-[90%] py-3 lg:flex-nowrap lg:gap-16 rounded-3xl lg:rounded-full lg:py-6 z-50
        ${
          isMenuOpen
-           ? "min-h-fit bg-[#fbfafa] border-2 border-muted-foreground !shadow-2xl mt-5 rounded-3xl mx-auto "
-           : ""
+           ? 'min-h-fit bg-[#fbfafa] border-2 border-muted-foreground !shadow-2xl mt-5 rounded-3xl mx-auto '
+           : ''
        }
        ${
-         offset >= 80 ? "bg-white top-5 shadow-sm" : "top-0 rounded-3xl bg-none"
+         offset >= 80 ? 'bg-white top-5 shadow-sm' : 'top-0 rounded-3xl bg-none'
        }`}
       >
         <Link href="#" className="flex items-center w-[110px] h-[47px]  ml-2">
           <Logo
-            color={isMenuOpen ? "#322460" : offset >= 80 ? "#322460" : "#fff"}
+            color={isMenuOpen ? '#322460' : offset >= 80 ? '#322460' : '#fff'}
           />
         </Link>
 
@@ -173,12 +183,12 @@ function Header() {
         </button>
         <nav
           className={` justify-between items-center w-full ${
-            isMenuOpen ? "show" : "hidden"
+            isMenuOpen ? 'show' : 'hidden'
           } lg:flex`}
         >
           <div
             className={`flex w-full items-center gap-4 font-semibold mt-8 ${
-              isMenuOpen && "flex-col"
+              isMenuOpen && 'flex-col'
             } lg:flex-row lg:mt-0 `}
           >
             {isAuthenticated ? (
@@ -187,7 +197,7 @@ function Header() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   value={searchTerm}
                   className="w-full text-foreground"
-                  placeholder={"Arama yap..."}
+                  placeholder={'Arama yap...'}
                 />
                 <AnimatePresence>
                   {isOpenSearchResults ? (
@@ -201,11 +211,11 @@ function Header() {
                             <>
                               <div
                                 onClick={() => {
-                                  const clickeds = [];
+                                  const clickeds = []
 
                                   searching_keys.forEach((key) => {
-                                    clickeds.push(dt[key]);
-                                  });
+                                    clickeds.push(dt[key])
+                                  })
 
                                   setClickedKeys((prev) => [
                                     ...clickedKeys,
@@ -213,7 +223,7 @@ function Header() {
                                       searchTerm: searchTerm,
                                       clicked: clickeds,
                                     },
-                                  ]);
+                                  ])
                                 }}
                                 key={idx}
                                 className="text-sm flex items-center gap-4"
@@ -312,6 +322,16 @@ function Header() {
                 >
                   Çıkış Yap
                 </button>
+                <button
+                  onClick={() =>
+                    profileNavigationHandle(
+                      session.user.userType,
+                      session.user.username
+                    )
+                  }
+                >
+                  Profile Git
+                </button>
               </>
             ) : (
               <>
@@ -323,7 +343,7 @@ function Header() {
         </nav>
       </header>
     </>
-  );
+  )
 }
 
-export default Header;
+export default Header
