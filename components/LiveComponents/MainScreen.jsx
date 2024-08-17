@@ -42,6 +42,8 @@ const MainScreen = memo(
     showCamera,
     setTimeElapsed,
     timeElapsed,
+    large,
+    setLarge,
   }) => {
     const [role, setRole] = useState(false);
 
@@ -177,7 +179,6 @@ const MainScreen = memo(
     };
 
     const [isInShareScreen, setIsInShareScreen] = useState(false);
-    const [large, setLarge] = useState(false);
 
     const handleAddDiv = () => {
       if (whiteboardOpen) {
@@ -542,7 +543,7 @@ const MainScreen = memo(
                     {chatShow ? "Sohbeti Aç" : "Sohbeti Kapat"}
                   </h1>
                 </div>
-                {/* <div className="flex flex-col items-center justify-center ">
+                <div className="flex flex-col items-center justify-center ">
                   <div
                     id="cam"
                     title="Kameraları Büyüt"
@@ -556,7 +557,7 @@ const MainScreen = memo(
                   <h1 className="lg:text-[1vw] md:text-[1.2vw] xl:text-[0.7vw] text-center text-gray-700 mt-1 hidden md:block">
                     {large ? "Kameraları Küçült" : "Kameraları Büyüt"}
                   </h1>
-                </div> */}
+                </div>
                 {role === "admin" && (
                   <div className="flex flex-col items-center justify-center ">
                     <div
