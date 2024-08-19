@@ -16,7 +16,7 @@ const conn = new AC.connection({
 });
 function Room() {
   const router = useRouter();
-  const [whiteboardOpen, setWhiteboardOpen] = useState(false);
+  const [whiteboardOpen, setWhiteboardOpen] = useState(true);
   const base = useParams();
   const fullChName = base.ChName;
   const chNameParts = fullChName.split("%3D");
@@ -560,11 +560,15 @@ function Room() {
   }, []);
 
   const openWhiteboard = () => {
+    const container = document.getElementById("userVideo");
+    const userContainer = document.getElementById("usersContainer");
     if (screenShareOpen) {
       handleScreenShare();
     }
-
+    setLarge(false);
+    userContainer.appendChild(container);
     setWhiteboardOpen(true);
+    setLarge(false);
     toast.success("Beyaz Tahta Başarılı bir şekilde Açıldı");
   };
 

@@ -166,14 +166,6 @@ const MainScreen = memo(
       }
     });
 
-    useEffect(() => {
-      const shareScreenElement = document.getElementById("share-screen1");
-      if (shareScreenElement) {
-        const smallViewElement = shareScreenElement.querySelector(".inScreen1");
-        setHasSmallViewScreen1(!!smallViewElement);
-      }
-    });
-
     const swapViewsScreenShare = () => {
       setShowScreenShareLarge((prev) => !prev);
     };
@@ -181,24 +173,29 @@ const MainScreen = memo(
     const [isInShareScreen, setIsInShareScreen] = useState(false);
 
     const handleAddDiv = () => {
-      if (whiteboardOpen) {
-        toast.error("Lütfen önce whiteboard'ı kapatın !");
-      } else {
-        const container = document.getElementById("userVideo");
-        const userContainer = document.getElementById("usersContainer");
-        const videoHolder = document.getElementById("share-screen");
-        if (isInShareScreen) {
-          setLarge(false);
-          userContainer.appendChild(container);
-        } else {
-          setLarge(true);
-          if (videoHolder && container) {
-            videoHolder.appendChild(container);
-          }
-        }
+      const container = document.getElementById("userVideo");
+      const userContainer = document.getElementById("usersContainer");
+      const videoHolder = document.getElementById("share-screen");
+      const videoHolderGeneral = document.getElementById("video-holder");
+      const whiteboard = videoHolderGeneral.querySelector(".whiteboard");
 
-        setIsInShareScreen(!isInShareScreen);
+      if (isInShareScreen) {
+        userContainer.appendChild(container);
+        setLarge(false);
+        setWhiteboardOpen(true);
+        if (whiteboard) {
+          videoHolderGeneral.appendChild(whiteboard);
+        }
+      } else {
+        videoHolder.appendChild(container);
+        setLarge(true);
+        if (whiteboard) {
+          videoHolderGeneral.removeChild(whiteboard);
+        }
+        setWhiteboardOpen(false);
       }
+
+      setIsInShareScreen(!isInShareScreen);
     };
 
     return (
@@ -223,118 +220,30 @@ const MainScreen = memo(
             </h1>
           </div>
           {/* Share Screen */}
-          {roomToken && UID && uuid && whiteboardOpen && shareScreenOpen && (
-            <>
-              <div
-                className={`whiteBoard ${
-                  showWhiteboardLarge
-                    ? "w-[100%] h-[85%]"
-                    : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                }`}
-              >
-                <WhiteBoardMain
-                  showWhiteboardLarge={showWhiteboardLarge}
-                  showParticipants={showParticipants}
-                  showChat={chatShow}
-                  roomToken={roomToken}
-                  uid={stringUid}
-                  uuid={uuid}
-                />
-              </div>
-              <div
-                ref={screenShareRef}
-                id="share-screen"
-                className={`${
-                  showWhiteboardLarge
-                    ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                    : "w-[100%] h-[85%]"
-                }  bg-gray-100`}
-              ></div>
-              <button
-                onClick={swapViews}
-                className={`bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
-                  hasSmallView || whiteboardOpen ? "block" : "hidden"
-                }`}
-              >
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </>
+
+          {roomToken && UID && uuid && whiteboardOpen && (
+            <div
+              className={`whiteBoard flex flex-row  ${
+                !chatShow ? "lg:w-[75vw]" : "lg:w-[95vw]"
+              }`}
+            >
+              <WhiteBoardMain
+                showWhiteboardLarge={showWhiteboardLarge}
+                showParticipants={showParticipants}
+                showChat={chatShow}
+                roomToken={roomToken}
+                uid={stringUid}
+                uuid={uuid}
+              />
+            </div>
           )}
-          {roomToken && UID && uuid && whiteboardOpen && !shareScreenOpen && (
-            <>
-              <div
-                className={`whiteBoard ${
-                  showWhiteboardLarge
-                    ? "w-[100%] h-[85%]"
-                    : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                }`}
-              >
-                <WhiteBoardMain
-                  showWhiteboardLarge={showWhiteboardLarge}
-                  showParticipants={showParticipants}
-                  showChat={chatShow}
-                  roomToken={roomToken}
-                  uid={stringUid}
-                  uuid={uuid}
-                />
-              </div>
-              <div
-                ref={screenShareRef}
-                id="share-screen"
-                className={`${
-                  showWhiteboardLarge
-                    ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                    : "w-[100%] h-[85%]"
-                }  bg-gray-100 ${hasSmallView ? "block" : "hidden"}`}
-              ></div>
-              <button
-                onClick={swapViews}
-                className={`bg-premiumOrange   w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
-                  hasSmallView ? "block" : "hidden"
-                }`}
-              >
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </>
-          )}
-          {roomToken && UID && uuid && !whiteboardOpen && !shareScreenOpen && (
-            <>
-              <div
-                ref={screenShareRef}
-                id="share-screen"
-                className={`w-[100%] h-[85%] bg-gray-100`}
-              ></div>
-            </>
-          )}
-          {roomToken && UID && uuid && !whiteboardOpen && shareScreenOpen && (
-            <>
-              <div
-                ref={screenShareRef}
-                id="share-screen"
-                className={`${
-                  screenShareLarge
-                    ? "w-[100%] h-[85%]"
-                    : "!w-[400px] !h-[250px] absolute z-20 top-8 right-16 "
-                }  bg-gray-100 `}
-              ></div>
-              <div
-                id="share-screen1"
-                className={`${
-                  screenShareLarge
-                    ? "!w-[400px] !h-[250px] absolute z-20 top-8 right-16"
-                    : "w-[100%] h-[85%]"
-                }  bg-gray-100 ${hasSmallViewScreen1 ? "block" : "hidden"}`}
-              ></div>
-              <button
-                onClick={swapViewsScreenShare}
-                className={`bg-premiumOrange w-8 h-8 rounded-full text-white absolute top-8 right-12 z-30 ${
-                  hasSmallViewScreen1 ? "block" : "hidden"
-                }`}
-              >
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </>
-          )}
+          <div
+            ref={screenShareRef}
+            id="share-screen"
+            className={`${
+              large ? "block" : "hidden"
+            } top-0 left-0 !w-[100%] h-[75vh] bg-gray-100`}
+          ></div>
 
           {/* Join Stream */}
           <div
