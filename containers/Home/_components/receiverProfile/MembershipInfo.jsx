@@ -1,21 +1,70 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useSession } from 'next-auth/react'
+import { getAPI, postAPI } from '@/services/fetchAPI'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import isEqual from 'lodash/isEqual'
+import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 const MembershipInfo = () => {
+  const { data: session } = useSession()
+  const [profileInfo, setProfileInfo] = useState()
+  const [initialValues, setInitialValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    birthDate: null,
+    corporateCheck: false,
+  })
+  const [formKey, setFormKey] = useState(0)
+  const router = useRouter()
+
+  useEffect(() => {
+    const getProfileInfo = async () => {
+      const res = await getAPI(
+        `/profile/${session.user.id}/get-profile-receiver`
+      )
+      setProfileInfo(res.data)
+      console.log(res.data)
+    }
+    if (session?.user?.id) {
+      getProfileInfo()
+    }
+  }, [session?.user?.id])
+
+  useEffect(() => {
+    if (profileInfo) {
+      let birthDateValue = null
+
+      if (profileInfo?.user?.birthdate) {
+        const [day, month, year] = profileInfo.user.birthdate.split('/')
+        birthDateValue = new Date(`${year}-${month}-${day}`)
+      }
+
+      const values = {
+        firstName: profileInfo?.name || '',
+        lastName: profileInfo?.surname || '',
+        email: profileInfo?.user?.email || '',
+        phone: profileInfo?.phone || '',
+        birthDate: birthDateValue,
+        corporateCheck: false,
+      }
+
+      setInitialValues(values)
+      setFormKey((prevKey) => prevKey + 1) // formKey'i güncelle
+    }
+  }, [profileInfo])
+
   const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: 'vicasrob@gmail.com', // Default value
-      phone: '',
-      day: '',
-      month: '',
-      year: '',
-      corporateCheck: false,
-    },
+    enableReinitialize: true,
+    key: formKey, // formKey ile formu yeniden render et
+    initialValues,
     validationSchema: Yup.object({
       firstName: Yup.string().required('Ad zorunludur'),
       lastName: Yup.string().required('Soyad zorunludur'),
@@ -25,14 +74,36 @@ const MembershipInfo = () => {
       phone: Yup.string()
         .matches(/^\+?\d+$/, 'Geçerli bir telefon numarası girin')
         .required('Cep telefonu zorunludur'),
+      birthDate: Yup.date().nullable(),
     }),
-    onSubmit: (values) => {
-      console.log('Form values:', values)
+    onSubmit: async (values) => {
+      const formattedBirthDate = values.birthDate
+        ? `${values.birthDate.getDate()}/${
+            values.birthDate.getMonth() + 1
+          }/${values.birthDate.getFullYear()}`
+        : null
+
+      const res = await postAPI('/profile/receiver/update-profile-receiver', {
+        ...values,
+        birthdate: formattedBirthDate,
+        hizmetAlanId: profileInfo.id,
+      })
+
+      if (res.status === 'UPDATED') {
+        toast.success('Profil Bilgisi Başarıyla güncellendi')
+        setInitialValues(values)
+        setFormKey((prevKey) => prevKey + 1)
+        router.refresh()
+      } else {
+        toast.error('Bir hata oluştu tekrar deneyiniz')
+      }
     },
   })
 
+  const isFormModified = !isEqual(formik.values, initialValues)
+
   return (
-    <div className="flex flex-col p-6 bg-white shadow-lg rounded-md w-full  h-[500px] overflow-y-auto ">
+    <div className="flex flex-col p-6 bg-white shadow-lg rounded-md w-full h-[500px] overflow-y-auto">
       <h2 className="text-lg font-bold mb-4">Üyelik Bilgilerim</h2>
       <form
         onSubmit={formik.handleSubmit}
@@ -41,7 +112,7 @@ const MembershipInfo = () => {
         <div className="flex items-center gap-4">
           {/* First Name */}
           <div className="flex flex-col gap-1 flex-1">
-            <label htmlFor="" className="text-sm font-semibold">
+            <label htmlFor="firstName" className="text-sm font-semibold">
               Ad
             </label>
             <input
@@ -64,7 +135,7 @@ const MembershipInfo = () => {
 
           {/* Last Name */}
           <div className="flex flex-col gap-1 flex-1">
-            <label htmlFor="" className="text-sm font-semibold">
+            <label htmlFor="lastName" className="text-sm font-semibold">
               Soyad
             </label>
             <input
@@ -88,7 +159,7 @@ const MembershipInfo = () => {
 
         {/* Email */}
         <div className="flex flex-col gap-1">
-          <label htmlFor="E-Mail" className="text-sm font-semibold">
+          <label htmlFor="email" className="text-sm font-semibold">
             E-Mail
           </label>
           <input
@@ -120,9 +191,6 @@ const MembershipInfo = () => {
               onBlur={formik.handleBlur}
               value={formik.values.phone}
             />
-            <button className="bg-premiumOrange text-white p-1 px-2 rounded text-sm font-semibold">
-              Güncelle
-            </button>
           </div>
           <div className="min-h-[20px]">
             {formik.touched.phone && formik.errors.phone ? (
@@ -133,72 +201,34 @@ const MembershipInfo = () => {
 
         {/* Date of Birth */}
         <div className="flex flex-col gap-1 w-full">
-          <label htmlFor="" className="text-sm font-semibold">
+          <label htmlFor="birthDate" className="text-sm font-semibold">
             Doğum Tarihiniz
           </label>
-          <div className="flex w-full gap-4">
-            <div className="w-full">
-              <select
-                name="day"
-                className="border p-2 rounded w-full"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.day}
-              >
-                <option value="">Gün</option>
-                {/* Add day options */}
-              </select>
-              <div className="min-h-[20px]">
-                {formik.touched.day && formik.errors.day ? (
-                  <div className="text-red-500 text-sm">
-                    {formik.errors.day}
-                  </div>
-                ) : null}
+          <DatePicker
+            selected={formik.values.birthDate}
+            onChange={(date) => formik.setFieldValue('birthDate', date)}
+            dateFormat="dd/MM/yyyy"
+            className="border p-2 rounded w-full"
+            placeholderText="Gün/Ay/Yıl"
+          />
+          <div className="min-h-[20px]">
+            {formik.touched.birthDate && formik.errors.birthDate ? (
+              <div className="text-red-500 text-sm">
+                {formik.errors.birthDate}
               </div>
-            </div>
-
-            <div className="w-full">
-              <select
-                name="month"
-                className="border p-2 rounded w-full"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.month}
-              >
-                <option value="">Ay</option>
-                {/* Add month options */}
-              </select>
-              <div className="min-h-[20px]">
-                {formik.touched.month && formik.errors.month ? (
-                  <div className="text-red-500 text-sm">
-                    {formik.errors.month}
-                  </div>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="w-full">
-              <select
-                name="year"
-                className="border p-2 rounded w-full"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.year}
-              >
-                <option value="">Yıl</option>
-                {/* Add year options */}
-              </select>
-              <div className="min-h-[20px]">
-                {formik.touched.year && formik.errors.year ? (
-                  <div className="text-red-500 text-sm">
-                    {formik.errors.year}
-                  </div>
-                ) : null}
-              </div>
-            </div>
+            ) : null}
           </div>
         </div>
-        <button type="submit" className="bg-orange-500 text-white p-2 rounded">
+
+        <button
+          type="submit"
+          className={`p-2 rounded text-white ${
+            isFormModified && !formik.isSubmitting
+              ? 'bg-orange-500'
+              : 'bg-orange-300 cursor-not-allowed'
+          }`}
+          disabled={!isFormModified || formik.isSubmitting}
+        >
           Güncelle
         </button>
       </form>

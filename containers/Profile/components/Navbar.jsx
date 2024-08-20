@@ -1,58 +1,58 @@
-"use client";
-import React, { useState, useEffect, useRef } from "react";
+'use client'
+import React, { useState, useEffect, useRef } from 'react'
 //Components
-import SidebarMenu from "./Sidebar";
+import SidebarMenu from './Sidebar'
 //Icons
-import { PiStethoscopeFill } from "react-icons/pi";
-import { IoCaretDown } from "react-icons/io5";
-import { IoMenu } from "react-icons/io5";
+import { PiStethoscopeFill } from 'react-icons/pi'
+import { IoCaretDown } from 'react-icons/io5'
+import { IoMenu } from 'react-icons/io5'
 
 const Navbar = () => {
-  const [dropShow, setDropShow] = useState("hidden");
+  const [dropShow, setDropShow] = useState('hidden')
   const [dropdownContent, setDropdownContent] = useState({
-    flag: "/turkey.png",
-    language: "TR",
-  });
-  const [isOpenSideMenu, setIsOpenSideMenu] = useState(true);
-  const dropdownRef = useRef(null);
+    flag: '/turkey.png',
+    language: 'TR',
+  })
+  const [isOpenSideMenu, setIsOpenSideMenu] = useState(true)
+  const dropdownRef = useRef(null)
 
   const dropdownData = [
     {
-      flag: "/turkey.png",
-      language: "TR",
+      flag: '/turkey.png',
+      language: 'TR',
     },
     {
-      flag: "/england.png",
-      language: "EN",
+      flag: '/england.png',
+      language: 'EN',
     },
-  ];
+  ]
 
   const handleDropdownShow = () => {
-    setDropShow((prev) => (prev === "hidden" ? "block" : "hidden"));
-  };
+    setDropShow((prev) => (prev === 'hidden' ? 'block' : 'hidden'))
+  }
 
   const handleSideMenu = () => {
-    setIsOpenSideMenu(!isOpenSideMenu);
-  };
+    setIsOpenSideMenu(!isOpenSideMenu)
+  }
 
   const handleChangeDropdownContent = (item) => {
     setDropdownContent((prevContent) => {
-      return { ...prevContent, flag: item.flag, language: item.language };
-    });
-    setDropShow("hidden");
-  };
+      return { ...prevContent, flag: item.flag, language: item.language }
+    })
+    setDropShow('hidden')
+  }
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropShow("hidden");
+      setDropShow('hidden')
     }
-  };
+  }
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <div className="fixed top-0 bg-white w-full mx-auto border-b z-30">
@@ -97,7 +97,7 @@ const Navbar = () => {
                             {item.language}
                           </h1>
                         </div>
-                      );
+                      )
                     })}
                 </div>
               </div>
@@ -113,14 +113,14 @@ const Navbar = () => {
               </div>
               <div className="text-sm">KURUMLAR</div>
             </div>
-            <div className="hidden md:flex items-center gap-[1px]">
+            {/* <div className="hidden md:flex items-center gap-[1px]">
               <button className="bg-premiumOrange text-white min-w-[90px] tracking-normal rounded-s-md py-[9px] cursor-pointer hover:opacity-80 duration-300">
                 Giriş
               </button>
               <button className="bg-premiumOrange text-white min-w-[90px] tracking-normal rounded-e-md py-[9px] cursor-pointer hover:opacity-80 duration-300">
                 Üye Ol
               </button>
-            </div>
+            </div> */}
             <div className="flex md:hidden ">
               <IoMenu
                 className="text-gray-700 "
@@ -136,7 +136,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

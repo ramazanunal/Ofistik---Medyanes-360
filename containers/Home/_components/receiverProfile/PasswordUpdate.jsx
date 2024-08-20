@@ -4,11 +4,15 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { postAPI } from '@/services/fetchAPI'
+import { useSession } from 'next-auth/react'
+import { toast } from 'react-toastify'
 
 const PasswordUpdate = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const { data: session } = useSession()
 
   const toggleVisibility = (field) => {
     if (field === 'current') {
@@ -39,7 +43,20 @@ const PasswordUpdate = () => {
         .required('Şifre doğrulama zorunludur'),
     }),
     onSubmit: (values) => {
-      console.log('Form values:', values)
+      const updatePassword = async (values) => {
+        const res = await postAPI('/profile/receiver/update-password', {
+          ...values,
+          userId: session.user.id,
+        })
+        if (res.status === 'UPDATED') {
+          toast.success(res.message)
+          formik.resetForm()
+        } else {
+          toast.error(res.message)
+        }
+      }
+
+      updatePassword(values)
     },
   })
 
@@ -143,7 +160,13 @@ const PasswordUpdate = () => {
           </div>
         </div>
 
-        <button type="submit" className="bg-gray-500 text-white p-2 rounded">
+        <button
+          type="submit"
+          className={`p-2 rounded text-white ${
+            formik.isValid && formik.dirty ? 'bg-gray-500' : 'bg-gray-300'
+          }`}
+          disabled={!(formik.isValid && formik.dirty)}
+        >
           Güncelle
         </button>
       </form>

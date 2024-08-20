@@ -315,14 +315,9 @@ function Header() {
           </div>
           <div className="flex relative flex-col gap-1 items-center justify-center md:flex-row mt-4 md:mt-0 ">
             {session ? (
-              <>
+              <div className="flex items-center gap-4">
                 <button
-                  onClick={() => signOut()}
-                  className="w-[150px] text-sm 2xl:text-base font-semibold text-white bg-red-500 px-4 py-2 rounded-md transition-all duration-500 ease-in-out hover:bg-green-600"
-                >
-                  Çıkış Yap
-                </button>
-                <button
+                  className="w-[150px] text-sm 2xl:text-base font-semibold text-white bg-gray-500 px-4 py-2 rounded-md transition-all duration-500 ease-in-out hover:bg-gray-400"
                   onClick={() =>
                     profileNavigationHandle(
                       session.user.userType,
@@ -332,7 +327,13 @@ function Header() {
                 >
                   Profile Git
                 </button>
-              </>
+                <button
+                  onClick={() => signOut()}
+                  className="w-[150px] text-sm 2xl:text-base font-semibold text-white bg-red-500 px-4 py-2 rounded-md transition-all duration-500 ease-in-out hover:bg-green-600"
+                >
+                  Çıkış Yap
+                </button>
+              </div>
             ) : (
               <>
                 <LoginModal />
