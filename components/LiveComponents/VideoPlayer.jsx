@@ -47,92 +47,78 @@ const VideoPlayer = memo(
     }, [user, UID]);
 
     const enLargeFrame = (event) => {
-      if (showWhiteboard) {
-        toast.error("Lütfen önce whiteboard'ı kapatın !");
-      } else {
-        const shareScreen = document.getElementById("share-screen");
-        const targetId = event.currentTarget.id;
-        const videoHolder = document.querySelector(
-          `#userBoxForCam-${targetId}`
-        );
-        const shareScreen1 = document.getElementById("share-screen1");
-        const shareScreenElement = document.getElementById("share-screen");
-        const videoPlayerElement = ref.current;
+      const shareScreen = document.getElementById("share-screen");
+      const targetId = event.currentTarget.id;
+      const videoHolder = document.querySelector(`#userBoxForCam-${targetId}`);
+      const shareScreen1 = document.getElementById("share-screen1");
+      const shareScreenElement = document.getElementById("share-screen");
+      const videoPlayerElement = ref.current;
+      setIsLarge((prev) => !prev);
 
-        // Toggle the large class
-        setIsLarge((prev) => !prev);
-
-        if (shareScreen1) {
-          if (shareScreenElement) {
-            const smallViewElement = shareScreenElement.querySelector("div");
-            if (smallViewElement) {
-              if (!shareScreen1.contains(event.currentTarget)) {
-                let child = shareScreen1.children[0];
-                if (child) {
-                  const originalHolder = document.querySelector(
-                    `#userBoxForCam-${child.id}`
-                  );
-                  if (originalHolder) {
-                    originalHolder.insertBefore(
-                      child,
-                      originalHolder.firstChild
-                    );
-                  }
-                }
-                shareScreen1.classList.remove("hidden");
-                shareScreen1.appendChild(event.currentTarget);
-              } else {
-                videoHolder.insertBefore(
-                  shareScreen1.children[0],
-                  videoHolder.firstChild
+      if (shareScreen1) {
+        if (shareScreenElement) {
+          const smallViewElement = shareScreenElement.querySelector("div");
+          if (smallViewElement) {
+            if (!shareScreen1.contains(event.currentTarget)) {
+              let child = shareScreen1.children[0];
+              if (child) {
+                const originalHolder = document.querySelector(
+                  `#userBoxForCam-${child.id}`
                 );
-                // shareScreen1.classList.add("hidden");
+                if (originalHolder) {
+                  originalHolder.insertBefore(child, originalHolder.firstChild);
+                }
               }
+              shareScreen1.classList.remove("hidden");
+              shareScreen1.appendChild(event.currentTarget);
             } else {
-              if (!shareScreen.contains(event.currentTarget)) {
-                let child = shareScreen.children[0];
-                if (child) {
-                  const originalHolder = document.querySelector(
-                    `#userBoxForCam-${child.id}`
-                  );
-                  if (originalHolder) {
-                    originalHolder.insertBefore(
-                      child,
-                      originalHolder.firstChild
-                    );
-                  }
-                }
-                shareScreen.classList.remove("hidden");
-                shareScreen.appendChild(event.currentTarget);
-              } else {
-                videoHolder.insertBefore(
-                  shareScreen.children[0],
-                  videoHolder.firstChild
-                );
-                // shareScreen.classList.add("hidden");
-              }
-            }
-          }
-        } else {
-          if (!shareScreen.contains(event.currentTarget)) {
-            let child = shareScreen.children[0];
-            if (child) {
-              const originalHolder = document.querySelector(
-                `#userBoxForCam-${child.id}`
+              videoHolder.insertBefore(
+                shareScreen1.children[0],
+                videoHolder.firstChild
               );
-              if (originalHolder) {
-                originalHolder.insertBefore(child, originalHolder.firstChild);
-              }
+              // shareScreen1.classList.add("hidden");
             }
-            shareScreen.classList.remove("hidden");
-            shareScreen.appendChild(event.currentTarget);
           } else {
-            videoHolder.insertBefore(
-              shareScreen.children[0],
-              videoHolder.firstChild
-            );
-            // shareScreen.classList.add("hidden");
+            if (!shareScreen.contains(event.currentTarget)) {
+              let child = shareScreen.children[0];
+              if (child) {
+                const originalHolder = document.querySelector(
+                  `#userBoxForCam-${child.id}`
+                );
+                if (originalHolder) {
+                  originalHolder.insertBefore(child, originalHolder.firstChild);
+                }
+              }
+              shareScreen.classList.remove("hidden");
+              shareScreen.appendChild(event.currentTarget);
+            } else {
+              videoHolder.insertBefore(
+                shareScreen.children[0],
+                videoHolder.firstChild
+              );
+              // shareScreen.classList.add("hidden");
+            }
           }
+        }
+      } else {
+        if (!shareScreen.contains(event.currentTarget)) {
+          let child = shareScreen.children[0];
+          if (child) {
+            const originalHolder = document.querySelector(
+              `#userBoxForCam-${child.id}`
+            );
+            if (originalHolder) {
+              originalHolder.insertBefore(child, originalHolder.firstChild);
+            }
+          }
+          shareScreen.classList.remove("hidden");
+          shareScreen.appendChild(event.currentTarget);
+        } else {
+          videoHolder.insertBefore(
+            shareScreen.children[0],
+            videoHolder.firstChild
+          );
+          // shareScreen.classList.add("hidden");
         }
       }
     };

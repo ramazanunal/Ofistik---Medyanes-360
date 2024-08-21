@@ -23,3 +23,8 @@
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
 }
+@media only screen and (max-width: 768px) {
+  #share-screen .videoPlayer.large {
+    height: 29vh !important;
+  }
+}

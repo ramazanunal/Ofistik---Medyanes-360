@@ -56,9 +56,6 @@ function Room() {
   const [cameraDuration, setCameraDuration] = useState(0);
   const [screenShareDuration, setScreenShareDuration] = useState(0);
   useEffect(() => {
-    console.log(formatTime(whiteboardDuration));
-  }, [whiteboardDuration]);
-  useEffect(() => {
     if (whiteboardOpen) {
       setWhiteboardStartTime(Date.now());
     } else if (whiteboardStartTime) {
@@ -144,8 +141,34 @@ function Room() {
       .toString()
       .padStart(2, "0")}`;
   };
-
   const leaveRoom = async () => {
+    const now = Date.now();
+
+    // Süre hesaplamalarını bitir
+    const newWhiteboardDuration = whiteboardStartTime
+      ? (now - whiteboardStartTime) / 1000
+      : 0;
+    const newScreenShareDuration = screenShareStartTime
+      ? (now - screenShareStartTime) / 1000
+      : 0;
+
+    // Durasyonları güncelle
+    setWhiteboardDuration((prev) => prev + newWhiteboardDuration);
+    setScreenShareDuration((prev) => prev + newScreenShareDuration);
+
+    // Durasyonlar güncellenene kadar bekle
+    await new Promise((resolve) => setTimeout(resolve, 100)); // 100ms bekle
+
+    // Debugging için konsol çıktısı
+    console.log(
+      "Whiteboard duration:",
+      whiteboardDuration + newWhiteboardDuration
+    );
+    console.log(
+      "Screen share duration:",
+      screenShareDuration + newScreenShareDuration
+    );
+
     Swal.fire({
       title: "Çıkış yapılıyor...",
       html: "Lütfen bekleyin.",
@@ -159,20 +182,93 @@ function Room() {
       await channelRes.leave();
       await rtmClient.logout();
 
+      // Çıkış başarılıysa loading ekranını kapat ve rating penceresini göster
       Swal.close();
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1000);
 
-      console.log("Whiteboard duration:", formatTime(whiteboardDuration));
-      console.log("Camera duration:", formatTime(cameraDuration));
-      console.log("Screen share duration:", formatTime(screenShareDuration));
-      console.log("Meeting duration:", formatTime(timeElapsed1));
+      // Yıldız değerlendirme ve süreler için bir Swal kutusu açıyoruz
+      Swal.fire({
+        title: "Toplantıdan ayrıldınız!",
+        html: `
+          <div>
+            <p style="margin-bottom:3px;">Toplantı süreleri:</p>
+            <ul>
+              <li style="margin-bottom:3px;">Beyaz tahta süresi: ${formatTime(
+                whiteboardDuration + newWhiteboardDuration
+              )}</li>
+              <li style="margin-bottom:3px;">Kamera süresi: ${formatTime(
+                cameraDuration
+              )}</li>
+              <li style="margin-bottom:3px;">Ekran paylaşım süresi: ${formatTime(
+                screenShareDuration + newScreenShareDuration
+              )}</li>
+              <li style="margin-bottom:3px;">Toplam toplantı süresi: ${formatTime(
+                timeElapsed1
+              )}</li>
+            </ul>
+          </div>
+          <div>
+            <p style="margin-bottom:3px;">Toplantıyı nasıl değerlendirdiniz?</p>
+            <div id="rating-stars">
+              ${[1, 2, 3, 4, 5]
+                .map(
+                  (star) =>
+                    `<i class="fa fa-star" data-value="${star}" style="font-size: 24px; color: gray; cursor: pointer;"></i>`
+                )
+                .join("")}
+            </div>
+          </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: "Gönder",
+        cancelButtonText: "İptal",
+        preConfirm: () => {
+          const rating = document.querySelector("#rating-stars .selected");
+          if (!rating) {
+            Swal.showValidationMessage("Lütfen bir yıldız seçin.");
+            return false;
+          }
+          return rating.dataset.value;
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const userRating = result.value;
+          // Yıldız değerini al ve işlemlerini yap
+          console.log("Kullanıcı yıldız değerlendirmesi:", userRating);
+
+          // Değerlendirmeniz için teşekkürler mesajını göster
+          Swal.fire({
+            title: "Teşekkürler!",
+            html: "Değerlendirmeniz için teşekkürler, ana sayfaya yönlendiriliyorsunuz...",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false,
+            willClose: () => {
+              // Yönlendirme işlemini yap
+              window.location.href = "/";
+            },
+          });
+        }
+      });
+
+      // Yıldızları dinleyerek seçilen yıldıza göre renklendirme yapıyoruz
+      const stars = document.querySelectorAll("#rating-stars i");
+      stars.forEach((star) => {
+        star.addEventListener("click", (e) => {
+          stars.forEach((s) => s.classList.remove("selected"));
+          e.target.classList.add("selected");
+          stars.forEach(
+            (s) =>
+              (s.style.color =
+                s.dataset.value <= e.target.dataset.value ? "gold" : "gray")
+          );
+        });
+      });
     } catch (error) {
       Swal.close();
       console.error("Error leaving the room:", error);
     }
   };
+
   const getMembers = async (channelResIn) => {
     const members = await channelResIn.getMembers();
     updateMemberTotal(members);
@@ -304,7 +400,6 @@ function Room() {
       getMembers(channelRes);
     }
   }, [channelRes, rtmClient]);
-  console.log(users);
   // Join as a subscriber method
   const joinAsSubscriber = async (channelName) => {
     client.on("stream-added", async function (evt) {

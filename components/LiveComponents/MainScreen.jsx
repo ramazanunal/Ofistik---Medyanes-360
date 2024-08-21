@@ -206,7 +206,7 @@ const MainScreen = memo(
             chatShow ? "lg:w-[100vw]" : "lg:w-[95vw]"
           } bg-gray-100`}
         >
-          <div className="channelNameArea flex-col items-center justify-center flex md:hidden">
+          <div className="channelNameArea flex-col items-center justify-center h-[80px] flex md:hidden">
             <div className="timerArea flex flex-row items-center justify-center mr-3">
               <div className="w-5 h-5 bg-red-600 rounded-full mr-2 blinking"></div>
               <div className="flex flex-col items-center justify-center">
@@ -223,9 +223,9 @@ const MainScreen = memo(
 
           {roomToken && UID && uuid && whiteboardOpen && (
             <div
-              className={`whiteBoard flex flex-row  ${
-                !chatShow ? "lg:w-[75vw]" : "lg:w-[95vw]"
-              }`}
+              className={`whiteBoard flex flex-row ${
+                isMobile ? "h-[90vh]" : ""
+              }  ${!chatShow ? "lg:w-[75vw]" : "lg:w-[95vw]"}`}
             >
               <WhiteBoardMain
                 showWhiteboardLarge={showWhiteboardLarge}
@@ -240,9 +240,9 @@ const MainScreen = memo(
           <div
             ref={screenShareRef}
             id="share-screen"
-            className={`${
-              large ? "block" : "hidden"
-            } top-0 left-0 !w-[100%] h-[75vh] bg-gray-100`}
+            className={`${large ? "block" : "hidden"} top-0 left-0 !w-[100%] ${
+              isMobile ? "h-[88vh]" : "h-[75vh]"
+            } bg-gray-100`}
           ></div>
 
           {/* Join Stream */}

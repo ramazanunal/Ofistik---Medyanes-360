@@ -66,8 +66,10 @@ const LiveChat = memo(
     const renderUserBox = (user, isUser) => (
       <div
         key={user.uid}
-        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
-          large ? "!w-[32vw] !h-[37vh]" : ""
+        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[29vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
+          large
+            ? "!w-[32vw] !h-[37vh] max-[768px]:!w-[80vw] max-[768px]:!h-[29vh]"
+            : ""
         }`}
         id={`userBoxForCam-${user.uid}`}
       >
@@ -135,9 +137,9 @@ const LiveChat = memo(
 
     return (
       <div
-        className={`p-5  bg-gray-100  ${
-          isMobile ? "h-[90vh] absolute z-30" : "relative"
-        }`}
+        className={`p-5  bg-gray-100 ${
+          isMobile && !chatShow ? "w-full flex items-center justify-center" : ""
+        }  ${isMobile ? "h-[90vh] absolute z-[9999] " : "relative"}`}
       >
         <button
           onClick={openFunction}

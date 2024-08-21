@@ -36,18 +36,20 @@ function WhiteBoardMain({
     } else if (showChat && !isMobile) {
       setSize("97vw");
     } else if (showChat && isMobile) {
-      setSize("89vw");
+      setSize("80vw");
     } else if (!showChat && isMobile) {
       setSize("89vw");
     }
   }, [showChat, isMobile]);
+  const height =
+    showWhiteboardLarge === false ? "25vh" : isMobile ? "79vh" : "82vh";
 
   return (
     <div
       id="white-board"
       style={{
         width: showWhiteboardLarge === false ? "22vw" : size,
-        height: showWhiteboardLarge === false ? "25vh" : "82vh",
+        height: height,
         border: "1px solid",
         borderRadius: "15px",
         borderColor: "hsl(215, 20%, 75%)",
