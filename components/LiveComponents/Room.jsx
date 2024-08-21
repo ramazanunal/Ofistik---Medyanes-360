@@ -7,6 +7,8 @@ import MainScreen from "./MainScreen";
 import { Toaster, toast } from "react-hot-toast";
 import Participants from "./Participants";
 import LiveChat from "./LiveChat";
+import { firebaseDb } from "@/firebase/config";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Swal from "sweetalert2";
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
 import AC from "agora-chat";
@@ -159,6 +161,23 @@ function Room() {
       await channelRes.leave();
       await rtmClient.logout();
 
+      // if (role === "admin") {
+      //   try {
+      //     const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
+      //     const folderRef = ref(firebaseDb, `${uniqueRoomName}/`);
+
+      //     const listResults = await listAll(folderRef);
+      //     const deletePromises = listResults.items.map((itemRef) =>
+      //       deleteObject(itemRef)
+      //     );
+
+      //     await Promise.all(deletePromises);
+      //     console.log(`All files in ${folderPath} deleted successfully.`);
+      //   } catch (error) {
+      //     console.error("Error deleting folder contents:", error);
+      //   }
+      // }
+
       Swal.close();
       setTimeout(() => {
         window.location.href = "/";
@@ -191,59 +210,204 @@ function Room() {
     }
   };
 
-  var sendFile = function () {
-    // Select the local file.
-    var input = document.getElementById("file");
-    // Turn the file message to a binary file.
-    var file = AC.utils.getFileUrl(input);
-    var allowType = {
-      jpg: true,
-      gif: true,
-      png: true,
-      bmp: true,
-      zip: true,
-      txt: true,
-      doc: true,
-      pdf: true,
-    };
-    if (file.filetype.toLowerCase() in allowType) {
-      var option = {
-        // Set the message type.
-        type: "file",
-        file: file,
-        // Set the username of the message receiver.
-        to: "252378044497921",
-        // Set the chat type.
-        chatType: "chatRoom",
-        // Occurs when the file fails to be uploaded.
-        onFileUploadError: function () {
-          console.log("onFileUploadError");
-        },
-        // Reports the progress of uploading the file.
-        onFileUploadProgress: function (e) {
-          console.log(e);
-        },
-        // Occurs when the file is uploaded.
-        onFileUploadComplete: function () {
-          console.log("onFileUploadComplete");
-        },
-        ext: { file_length: file.data.size },
-      };
-      // Create a file message.
-      var msg = AC.message.create(option);
-      // Call send to send the file message.
-      conn
-        .send(msg)
-        .then((res) => {
-          // Occurs when the file message is sent.
-          console.log("Success");
-        })
-        .catch((e) => {
-          // Occurs when the file message fails to be sent.
-          console.log("Fail");
+  const sendFile = async ({ url, name, type }) => {
+    if (joined) {
+      const displayName = sessionStorage.getItem("username");
+      const file = { url, name, type };
+
+      try {
+        const fileMessage = JSON.stringify({
+          type: "file",
+          file,
+          displayName,
         });
+        await channelRes.sendMessage({ text: fileMessage });
+
+        setChats((prev) => [...prev, { displayName, file }]);
+      } catch (error) {
+        console.log("Fail: ", error);
+      }
+    } else {
+      alert("You must join the room first");
     }
   };
+
+  // var sendFile = function () {
+  //   // Select the local file.
+  //   var input = document.getElementById("file");
+  //   // Turn the file message to a binary file.
+  //   var file = AC.utils.getFileUrl(input);
+  //   var allowType = {
+  //     jpg: true,
+  //     gif: true,
+  //     png: true,
+  //     bmp: true,
+  //     zip: true,
+  //     txt: true,
+  //     doc: true,
+  //     pdf: true,
+  //   };
+  //   if (file.filetype.toLowerCase() in allowType) {
+  //     var option = {
+  //       // Set the message type.
+  //       type: "file",
+  //       file: file,
+  //       // Set the username of the message receiver.
+  //       to: "252378044497921",
+  //       // Set the chat type.
+  //       chatType: "chatRoom",
+  //       // Occurs when the file fails to be uploaded.
+  //       onFileUploadError: function () {
+  //         console.log("onFileUploadError");
+  //       },
+  //       // Reports the progress of uploading the file.
+  //       onFileUploadProgress: function (e) {
+  //         console.log(e);
+  //       },
+  //       // Occurs when the file is uploaded.
+  //       onFileUploadComplete: function () {
+  //         console.log("onFileUploadComplete");
+  //       },
+  //       ext: { file_length: file.data.size },
+  //     };
+  //     // Create a file message.
+  //     var msg = AC.message.create(option);
+  //     // Call send to send the file message.
+  //     conn
+  //       .send(msg)
+  //       .then((res) => {
+  //         // Occurs when the file message is sent.
+  //         console.log("Success");
+  //       })
+  //       .catch((e) => {
+  //         // Occurs when the file message fails to be sent.
+  //         console.log("Fail");
+  //       });
+  //   }
+  // };
+
+  // var sendFile = async function ({ url, name, type }) {
+  //   if (joined) {
+  //     const displayName = sessionStorage.getItem("username");
+  //     const file = { url, name, type };
+
+  //     await channelRes.sendMessage({
+  //       text: JSON.stringify({
+  //         type: "chat",
+  //         file,
+  //         displayName,
+  //       }),
+  //     });
+
+  //     setChats((prev) => [...prev, { displayName, file }]);
+  //   } else {
+  //     alert("You must join the room first");
+  //   }
+  // };
+
+  // var sendFile = async function ({ url, name, type, size }) {
+  //   if (joined) {  // Ensure the user has joined the room
+  //     console.log("Sending file...");
+
+  //     const displayName = sessionStorage.getItem("username");
+  //     const file = { url, name, type };
+
+  //     const option = {
+  //       // Set the message type.
+  //       type: "file",
+  //       file,
+  //       // Set the username of the message receiver.
+  //       to: "chatRoom",
+  //       // Set the chat type.
+  //       chatType: "chatRoom",
+  //       // Occurs when the file fails to be uploaded.
+  //       onFileUploadError: function () {
+  //         console.log("onFileUploadError");
+  //       },
+  //       // Reports the progress of uploading the file.
+  //       onFileUploadProgress: function (e) {
+  //         console.log(e);
+  //       },
+  //       // Occurs when the file is uploaded.
+  //       onFileUploadComplete: function () {
+  //         console.log("onFileUploadComplete");
+  //       },
+  //       ext: { file_length: size },
+  //     };
+
+  //     // Create a file message.
+  //     const msg = AC.message.create(option);
+
+  //     // Call send to send the file message.
+  //     conn
+  //       .send(msg)
+  //       .then((res) => {
+  //         // Occurs when the file message is sent.
+  //         console.log("Success");
+
+  //         // Update the chat state on the sender's side
+  //         setChats((prev) => [...prev, { displayName, file }]);
+  //       })
+  //       .catch((e) => {
+  //         // Occurs when the file message fails to be sent.
+  //         console.log("Fail: ", e);
+  //         toast.error(`Fail: ${e}`, {
+  //           position: "bottom-right",
+  //         });
+  //       });
+  //   } else {
+  //     alert("You must join the room first");
+  //   }
+  // };
+
+  // var sendFile = function ({ url, name, type, size }) {
+  //   console.log("Sending file...");
+
+  //   const displayName = sessionStorage.getItem("username");
+  //   const file = { url, name, type };
+
+  //   const option = {
+  //     // Set the message type.
+  //     type: "file",
+  //     file,
+  //     // Set the username of the message receiver.
+  //     to: "chatRoom",
+  //     // Set the chat type.
+  //     chatType: "chatRoom",
+  //     // Occurs when the file fails to be uploaded.
+  //     onFileUploadError: function () {
+  //       console.log("onFileUploadError");
+  //     },
+  //     // Reports the progress of uploading the file.
+  //     onFileUploadProgress: function (e) {
+  //       console.log(e);
+  //     },
+  //     // Occurs when the file is uploaded.
+  //     onFileUploadComplete: function () {
+  //       console.log("onFileUploadComplete");
+  //     },
+  //     ext: { file_length: size },
+  //   };
+  //   // Create a file message.
+  //   const msg = AC.message.create(option);
+  //   // Call send to send the file message.
+  //   conn
+  //     .send(msg)
+  //     .then((res) => {
+  //       // Occurs when the file message is sent.
+  //       console.log("Success");
+
+  //       // Update the chat state on the sender's side
+  //       setChats((prev) => [...prev, { displayName, file }]);
+  //     })
+  //     .catch((e) => {
+  //       // Occurs when the file message fails to be sent.
+  //       console.log("Fail: ", e);
+  //       toast.error(`Fail: ${e}`, {
+  //         position: "bottom-right",
+  //       });
+  //     });
+  // };
 
   const openChat = () => {
     setChatShow(!chatShow);
@@ -353,12 +517,12 @@ function Room() {
     });
     try {
       // Kamera ve mikrofon izinlerini kontrol et
-      const permissionStatusCam = await navigator.permissions.query({
-        name: "camera",
-      });
-      const permissionStatusMic = await navigator.permissions.query({
-        name: "microphone",
-      });
+      // const permissionStatusCam = await navigator.permissions.query({
+      //   name: "camera",
+      // });
+      // const permissionStatusMic = await navigator.permissions.query({
+      //   name: "microphone",
+      // });
 
       const uid = await client.join(APP_ID, channel, token, null);
       setUID(uid);
@@ -366,40 +530,40 @@ function Room() {
       let audioTrack = null;
       let videoTrack = null;
 
-      if (
-        permissionStatusCam.state !== "denied" &&
-        permissionStatusMic.state !== "denied"
-      ) {
-        // Hem kamera hem mikrofon izni var
-        const [audioTrackLocal, videoTrackLocal] =
-          await AgoraRTC.createMicrophoneAndCameraTracks();
-        audioTrack = audioTrackLocal;
-        videoTrack = videoTrackLocal;
-        await client.publish([audioTrack, videoTrack]);
-        setLocalTracks({ audio: audioTrack, video: videoTrack });
-      } else if (
-        permissionStatusCam.state === "denied" &&
-        permissionStatusMic.state !== "denied"
-      ) {
-        // Sadece mikrofon izni var
-        audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-        await client.publish(audioTrack);
-        setLocalTracks({ audio: audioTrack });
-      } else if (
-        permissionStatusCam.state !== "denied" &&
-        permissionStatusMic.state === "denied"
-      ) {
-        // Sadece kamera izni var
-        videoTrack = await AgoraRTC.createCameraVideoTrack();
-        await client.publish(videoTrack);
-        setLocalTracks({ video: videoTrack });
-      } else if (
-        permissionStatusCam.state === "denied" &&
-        permissionStatusMic.state === "denied"
-      ) {
-        // Hem kamera hem mikrofon izni yok
-        joinAsSubscriber(channel);
-      }
+      // if (
+      //   permissionStatusCam.state !== "denied" &&
+      //   permissionStatusMic.state !== "denied"
+      // ) {
+      //   // Hem kamera hem mikrofon izni var
+      //   const [audioTrackLocal, videoTrackLocal] =
+      //     await AgoraRTC.createMicrophoneAndCameraTracks();
+      //   audioTrack = audioTrackLocal;
+      //   videoTrack = videoTrackLocal;
+      //   await client.publish([audioTrack, videoTrack]);
+      //   setLocalTracks({ audio: audioTrack, video: videoTrack });
+      // } else if (
+      //   permissionStatusCam.state === "denied" &&
+      //   permissionStatusMic.state !== "denied"
+      // ) {
+      //   // Sadece mikrofon izni var
+      //   audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+      //   await client.publish(audioTrack);
+      //   setLocalTracks({ audio: audioTrack });
+      // } else if (
+      //   permissionStatusCam.state !== "denied" &&
+      //   permissionStatusMic.state === "denied"
+      // ) {
+      //   // Sadece kamera izni var
+      //   videoTrack = await AgoraRTC.createCameraVideoTrack();
+      //   await client.publish(videoTrack);
+      //   setLocalTracks({ video: videoTrack });
+      // } else if (
+      //   permissionStatusCam.state === "denied" &&
+      //   permissionStatusMic.state === "denied"
+      // ) {
+      //   // Hem kamera hem mikrofon izni yok
+      // }
+      joinAsSubscriber(channel);
 
       setUsers((prev) => [...prev, { uid, audioTrack, videoTrack }]);
       setJoined(true);

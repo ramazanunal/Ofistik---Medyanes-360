@@ -94,7 +94,8 @@ function Page() {
     // Oda ismine 5 basamaklı rastgele bir sayı ekleyin
     const randomNum = Math.floor(10000 + Math.random() * 90000);
     const uniqueRoomName = `${roomLogin.roomName}${randomNum}`;
-
+    sessionStorage.setItem("uniqueRoomName", uniqueRoomName)
+    
     try {
       const response = await getAPI(
         `/agora?channelName=${uniqueRoomName}&uid=${roomLogin.username}`

@@ -1,11 +1,16 @@
 import React, { memo, useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import profile from "@/assets/icons/profile.png";
 import Image from "next/image";
 import "animate.css";
 import VideoPlayer from "./VideoPlayer";
 import toast, { Toaster } from "react-hot-toast";
+
+import { firebaseDb } from "@/firebase/config";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+
 const LiveChat = memo(
   ({
     showCtrl,
@@ -62,6 +67,21 @@ const LiveChat = memo(
     useEffect(() => {
       participants.forEach(fetchName);
     }, [participants, rtmClient]);
+
+    const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
+
+    const handleFileUpload = async (e) => {
+      const file = e.target.files[0];
+      console.log("file: => ", file);
+
+      if (file) {
+        const storageRef = ref(firebaseDb, `${uniqueRoomName}/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const fileURL = await getDownloadURL(storageRef);
+
+        sendFile({ url: fileURL, name: file.name, type: file.type });
+      }
+    };
 
     const renderUserBox = (user, isUser) => (
       <div
@@ -194,7 +214,19 @@ const LiveChat = memo(
                     <span className="text-blue-900 font-semibold">
                       {chat.displayName}
                     </span>
-                    <span className="font-medium">{chat.message}</span>
+                    {/* <span className="font-medium">{chat.message}</span> */}
+                    {chat.message ? (
+                      <span className="font-medium">{chat.message}</span>
+                    ) : (
+                      <a
+                        href={chat.file.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-blue-500"
+                      >
+                        {chat.file.name}
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}
@@ -218,6 +250,14 @@ const LiveChat = memo(
                 className="h-[44px] flex-grow bg-white rounded-lg p-3 focus:outline-none focus:border focus:border-premiumOrange placeholder:text-slate-600"
                 placeholder="Mesaj Gönder..."
               />
+              <label className="cursor-pointer ml-2">
+                <FontAwesomeIcon icon={faPaperclip} />
+                <input
+                  type="file"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+              </label>
               <button
                 type="submit"
                 className="bg-premiumOrange text-white p-2 rounded-lg ml-2"
