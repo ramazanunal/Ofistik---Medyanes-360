@@ -36,9 +36,9 @@ function WhiteBoardMain({
     } else if (showChat && !isMobile) {
       setSize("97vw");
     } else if (showChat && isMobile) {
-      setSize("80vw");
+      setSize("96vw");
     } else if (!showChat && isMobile) {
-      setSize("89vw");
+      setSize("96vw");
     }
   }, [showChat, isMobile]);
   const height =

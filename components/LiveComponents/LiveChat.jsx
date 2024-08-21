@@ -137,13 +137,15 @@ const LiveChat = memo(
 
     return (
       <div
-        className={`p-5  bg-gray-100 ${
+        className={` lg:p-5  bg-gray-100 ${
           isMobile && !chatShow ? "w-full flex items-center justify-center" : ""
-        }  ${isMobile ? "h-[90vh] absolute z-[9999] " : "relative"}`}
+        }  ${isMobile ? "h-[90vh] absolute " : "relative"}`}
       >
         <button
           onClick={openFunction}
-          className="bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500"
+          className={`${
+            isMobile ? "hidden" : ""
+          } bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500 `}
         >
           <i
             className={`fa-solid fa-chevron-${chatShow ? "left" : "right"}`}
@@ -151,7 +153,7 @@ const LiveChat = memo(
         </button>
         {/* Participants Section */}
         <div
-          className={` ${
+          className={`${isMobile ? "p-3 z-[200]" : ""} ${
             chatShow ? "hidden " : " animate__animated animate__fadeInRight"
           } `}
         >

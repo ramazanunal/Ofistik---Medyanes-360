@@ -224,7 +224,7 @@ const MainScreen = memo(
           {roomToken && UID && uuid && whiteboardOpen && (
             <div
               className={`whiteBoard flex flex-row ${
-                isMobile ? "h-[90vh]" : ""
+                isMobile ? "h-[90vh] w-full" : ""
               }  ${!chatShow ? "lg:w-[75vw]" : "lg:w-[95vw]"}`}
             >
               <WhiteBoardMain
