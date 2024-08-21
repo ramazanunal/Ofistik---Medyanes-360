@@ -161,22 +161,22 @@ function Room() {
       await channelRes.leave();
       await rtmClient.logout();
 
-      // if (role === "admin") {
-      //   try {
-      //     const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
-      //     const folderRef = ref(firebaseDb, `${uniqueRoomName}/`);
+      if (!participants.length) {
+        try {
+          const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
+          const folderRef = ref(firebaseDb, `${uniqueRoomName}/`);
 
-      //     const listResults = await listAll(folderRef);
-      //     const deletePromises = listResults.items.map((itemRef) =>
-      //       deleteObject(itemRef)
-      //     );
+          const itemsList = await listAll(folderRef);
+          const deletePromises = itemsList.items.map((itemRef) =>
+            deleteObject(itemRef)
+          );
 
-      //     await Promise.all(deletePromises);
-      //     console.log(`All files in ${folderPath} deleted successfully.`);
-      //   } catch (error) {
-      //     console.error("Error deleting folder contents:", error);
-      //   }
-      // }
+          await Promise.all(deletePromises);
+          console.log(`All files in ${folderPath} deleted successfully.`);
+        } catch (error) {
+          console.error("Error deleting folder contents:", error);
+        }
+      }
 
       Swal.close();
       setTimeout(() => {
