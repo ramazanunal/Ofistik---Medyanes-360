@@ -206,7 +206,7 @@ const MainScreen = memo(
             chatShow ? "lg:w-[100vw]" : "lg:w-[95vw]"
           } bg-gray-100`}
         >
-          <div className="channelNameArea flex-col items-center justify-center h-[80px] flex md:hidden">
+          <div className="channelNameArea flex-col items-center justify-center h-[60px] flex md:hidden">
             <div className="timerArea flex flex-row items-center justify-center mr-3">
               <div className="w-5 h-5 bg-red-600 rounded-full mr-2 blinking"></div>
               <div className="flex flex-col items-center justify-center">
@@ -253,7 +253,7 @@ const MainScreen = memo(
             )}`}
           >
             <div
-              className={`flex justify-between bg-white mb-3 rounded-2xl items-center p-2 ${
+              className={`flex justify-between bg-white mb-3 overflow-x-scroll rounded-2xl items-center p-2 ${
                 chatShow ? "w-[95%]" : "w-[100%]"
               }`}
             >
