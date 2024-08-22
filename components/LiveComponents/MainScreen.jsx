@@ -6,6 +6,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const MainScreen = memo(
   ({
+    setScreenShareOpen,
+    screenShare,
+    setUsers,
+    client,
+    setScreenShare,
     joined,
     setJoined,
     joinRoom,
@@ -172,13 +177,39 @@ const MainScreen = memo(
 
     const [isInShareScreen, setIsInShareScreen] = useState(false);
 
-    const handleAddDiv = () => {
+    const handleAddDiv = async () => {
       const container = document.getElementById("userVideo");
       const userContainer = document.getElementById("usersContainer");
       const videoHolder = document.getElementById("share-screen");
       const videoHolderGeneral = document.getElementById("video-holder");
       const whiteboard = videoHolderGeneral.querySelector(".whiteboard");
+      while (videoHolder.firstChild) {
+        videoHolder.removeChild(videoHolder.firstChild);
+        setScreenShareOpen(false);
+        if (screenShare.track) {
+          await client.unpublish(screenShare.track);
+          screenShare.track.stop();
+        }
+        users.forEach((user) => {
+          if (user.screenShareTrack) {
+            client.unpublish(user.screenShareTrack);
+            user.screenShareTrack.stop();
+          }
+        });
 
+        setUsers((prev) =>
+          prev.map((user) =>
+            user.uid === UID ? { ...user, screenShareTrack: null } : user
+          )
+        );
+
+        if (localTracks.video) {
+          await client.publish(localTracks.video);
+        }
+
+        setScreenShare({ mode: false, track: null });
+        screenShareRef.current.classList.add("hidden");
+      }
       if (isInShareScreen) {
         userContainer.appendChild(container);
         setLarge(false);

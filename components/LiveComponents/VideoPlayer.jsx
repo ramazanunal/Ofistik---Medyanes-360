@@ -2,6 +2,9 @@ import React, { memo, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 const VideoPlayer = memo(
   ({
+    handleScreenShare,
+    setWhiteboardOpen,
+    screenShareOpen,
     user,
     UID,
     usersNumber,
@@ -10,11 +13,12 @@ const VideoPlayer = memo(
     showWhiteboard,
     closeWhiteboard,
     hasSmallViewScreen1,
+    large,
   }) => {
     const ref = useRef();
     const [isInShareScreen, setIsInShareScreen] = useState(false);
     const [isInShareScreen1, setIsInShareScreen1] = useState(false);
-    const [isLarge, setIsLarge] = useState(false); // Local state for large class
+    const [isLarge, setIsLarge] = useState(false);
 
     const isMobile = window.innerWidth < 768;
 
@@ -54,6 +58,13 @@ const VideoPlayer = memo(
       const shareScreenElement = document.getElementById("share-screen");
       const videoPlayerElement = ref.current;
       setIsLarge((prev) => !prev);
+      if (showWhiteboard) {
+        setWhiteboardOpen(false);
+        setIsLarge(true);
+      } else if (screenShareOpen) {
+        handleScreenShare();
+        setIsLarge(true);
+      }
 
       if (shareScreen1) {
         if (shareScreenElement) {
@@ -179,7 +190,7 @@ const VideoPlayer = memo(
         <div
           ref={ref}
           id={user.uid}
-          onClick={enLargeFrame}
+          onClick={large ? null : enLargeFrame}
           className={`userCam ${isInShareScreen ? "inScreen" : ""} ${
             isInShareScreen1 ? "inScreen1" : ""
           } ${isLarge ? "large" : ""} cursor-pointer ${

@@ -548,6 +548,31 @@ function Room() {
     }
   };
   const handleScreenShare = async () => {
+    const userContainer = document.getElementById("usersContainer");
+    const videoHolder = document.getElementById("share-screen");
+    const shareScreenDiv = videoHolder.querySelector("div");
+    if (shareScreenDiv) {
+      const targetDivId = shareScreenDiv.id;
+      const targetDiv = document.getElementById(`userBoxForCam-${targetDivId}`);
+      if (targetDiv) {
+        videoHolder.removeChild(shareScreenDiv);
+        videoHolder.classList.add("hidden");
+        targetDiv.insertBefore(shareScreenDiv, targetDiv.firstChild);
+        setTimeout(() => {
+          const newVideo = targetDiv.querySelector("div");
+          newVideo.classList.remove("large");
+        }, 1000);
+      } else {
+        console.error(`Div with ID ${targetDivId} not found in userVideo`);
+      }
+    }
+    if (whiteboardOpen) {
+      setWhiteboardOpen(false);
+    }
+    while (videoHolder.firstChild) {
+      userContainer.appendChild(videoHolder.firstChild);
+      setLarge(false);
+    }
     if (!screenShare.mode) {
       try {
         const screenShareTrack = await AgoraRTC.createScreenVideoTrack({
@@ -567,6 +592,7 @@ function Room() {
         screenShareTrack.play(screenShareRef.current);
         setScreenShare({ mode: true, track: screenShareTrack });
         screenShareRef.current.classList.remove("hidden");
+        toast.success("Ekran Paylaşımı Başarılı bir şekilde Açıldı");
       } catch (error) {
         console.error("Error starting screen share:", error);
       }
@@ -596,7 +622,10 @@ function Room() {
         }
 
         setScreenShare({ mode: false, track: null });
-        screenShareRef.current.classList.add("hidden");
+        if (large) {
+          screenShareRef.current.classList.add("hidden");
+        }
+        toast.success("Ekran Paylaşımı Başarılı bir şekilde Kapatıldı");
       } catch (error) {
         console.error("Error stopping screen share:", error);
       }
@@ -654,11 +683,55 @@ function Room() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const openWhiteboard = () => {
+  const openWhiteboard = async () => {
     const container = document.getElementById("userVideo");
     const userContainer = document.getElementById("usersContainer");
-    if (screenShareOpen) {
-      handleScreenShare();
+    const videoHolder = document.getElementById("share-screen");
+    const shareScreenDiv = videoHolder.querySelector("div");
+    if (shareScreenDiv) {
+      const targetDivId = shareScreenDiv.id;
+      const targetDiv = document.getElementById(`userBoxForCam-${targetDivId}`);
+      if (targetDiv) {
+        videoHolder.removeChild(shareScreenDiv);
+        videoHolder.classList.add("hidden");
+        targetDiv.insertBefore(shareScreenDiv, targetDiv.firstChild);
+        setTimeout(() => {
+          const newVideo = targetDiv.querySelector("div");
+          newVideo.classList.remove("large");
+        }, 1000);
+        setWhiteboardOpen(true);
+      } else {
+        console.error(`Div with ID ${targetDivId} not found in userVideo`);
+      }
+    }
+    while (videoHolder.firstChild) {
+      videoHolder.removeChild(videoHolder.firstChild);
+      videoHolder.classList.add("hidden");
+
+      setScreenShareOpen(false);
+      if (screenShare.track) {
+        await client.unpublish(screenShare.track);
+        screenShare.track.stop();
+      }
+      users.forEach((user) => {
+        if (user.screenShareTrack) {
+          client.unpublish(user.screenShareTrack);
+          user.screenShareTrack.stop();
+        }
+      });
+
+      setUsers((prev) =>
+        prev.map((user) =>
+          user.uid === UID ? { ...user, screenShareTrack: null } : user
+        )
+      );
+
+      if (localTracks.video) {
+        await client.publish(localTracks.video);
+      }
+
+      setScreenShare({ mode: false, track: null });
+      screenShareRef.current.classList.add("hidden");
     }
     setLarge(false);
     userContainer.appendChild(container);
@@ -697,6 +770,11 @@ function Room() {
 
         {/* Main Screen */}
         <MainScreen
+          setScreenShareOpen={setScreenShareOpen}
+          screenShare={screenShare}
+          setUsers={setUsers}
+          client={client}
+          setScreenShare={setScreenShare}
           large={large}
           setLarge={setLarge}
           setTimeElapsed={setTimeElapsed1}
@@ -743,6 +821,16 @@ function Room() {
         />
 
         <LiveChat
+          handleScreenShare={handleScreenShare}
+          localTracks={localTracks}
+          screenShareOpen={screenShareOpen}
+          setWhiteboardOpen={setWhiteboardOpen}
+          setScreenShareOpen={setScreenShareOpen}
+          screenShare={screenShare}
+          setUsers={setUsers}
+          client={client}
+          setScreenShare={setScreenShare}
+          screenShareRef={screenShareRef}
           large={large}
           setLarge={setLarge}
           showWhiteboard={whiteboardOpen}

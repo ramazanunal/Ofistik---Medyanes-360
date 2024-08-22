@@ -8,6 +8,16 @@ import VideoPlayer from "./VideoPlayer";
 import toast, { Toaster } from "react-hot-toast";
 const LiveChat = memo(
   ({
+    handleScreenShare,
+    localTracks,
+    screenShareOpen,
+    setScreenShareOpen,
+    screenShare,
+    setUsers,
+    client,
+    setScreenShare,
+    users,
+    screenShareRef,
     showCtrl,
     sendMessage,
     sendFile,
@@ -18,8 +28,8 @@ const LiveChat = memo(
     rtmClient,
     totalMembers,
     participants,
-    users,
     UID,
+    setWhiteboardOpen,
     whiteboardOpen,
     showWhiteboardLarge,
     closeWhiteboard,
@@ -75,6 +85,17 @@ const LiveChat = memo(
       >
         {isUser && (
           <VideoPlayer
+            large={large}
+            handleScreenShare={handleScreenShare}
+            localTracks={localTracks}
+            screenShareOpen={screenShareOpen}
+            setWhiteboardOpen={setWhiteboardOpen}
+            setScreenShareOpen={setScreenShareOpen}
+            screenShare={screenShare}
+            setUsers={setUsers}
+            client={client}
+            setScreenShare={setScreenShare}
+            screenShareRef={screenShareRef}
             hasSmallViewScreen1={hasSmallViewScreen1}
             closeWhiteboard={closeWhiteboard}
             showWhiteboard={whiteboardOpen}
@@ -83,6 +104,7 @@ const LiveChat = memo(
             rtmClient={rtmClient}
             key={user.uid}
             user={user}
+            users={users}
             UID={UID}
             usersNumber={users.length}
           />
