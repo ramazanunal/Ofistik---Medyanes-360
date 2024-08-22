@@ -5,7 +5,7 @@ import { GrLanguage } from 'react-icons/gr'
 import { IoIosAddCircle } from 'react-icons/io'
 import { toast } from 'react-toastify'
 
-const LanguageSection = ({ data: userInfo }) => {
+const LanguageSection = ({ data: userInfo, isOwner }) => {
   const [languages, setLanguages] = useState(userInfo.languages)
   const [editLanguagesId, setEditLanguagesId] = useState(null)
   const [editLanguagesData, setEditLanguagesData] = useState({
@@ -116,7 +116,7 @@ const LanguageSection = ({ data: userInfo }) => {
         </h1>
       </div>
       <div className="bg-white p-5 rounded-md shadow-lg text-gray-800 ">
-        {editLanguagesId === null && (
+        {editLanguagesId === null && isOwner && (
           <button
             className=" text-black px-2 py-1 flex  justify-end w-full items-end"
             onClick={handleAddLanguageClick}
@@ -175,26 +175,28 @@ const LanguageSection = ({ data: userInfo }) => {
 
                   <div className="flex items-center gap-4">
                     <h1>{language.level}</h1>
-                    <div className="flex items-center">
-                      <button
-                        className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
-                        onClick={() =>
-                          handleEditLanguageClick(
-                            language.id,
-                            language.languageName,
-                            language.level
-                          )
-                        }
-                      >
-                        <FaPencilAlt size={15} />
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
-                        onClick={() => handleDeleteLanguageClick(language.id)}
-                      >
-                        <FaTrash size={15} />
-                      </button>
-                    </div>
+                    {isOwner && (
+                      <div className="flex items-center">
+                        <button
+                          className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
+                          onClick={() =>
+                            handleEditLanguageClick(
+                              language.id,
+                              language.languageName,
+                              language.level
+                            )
+                          }
+                        >
+                          <FaPencilAlt size={15} />
+                        </button>
+                        <button
+                          className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
+                          onClick={() => handleDeleteLanguageClick(language.id)}
+                        >
+                          <FaTrash size={15} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </li>

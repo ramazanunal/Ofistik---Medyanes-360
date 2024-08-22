@@ -1,21 +1,25 @@
 'use client'
-import ProfileContainer from "@/containers/Profile/ProfileContainer";
-import {useEffect, useState} from "react";
-import {postAPI} from "@/services/fetchAPI";
+import ProfileContainer from '@/containers/Profile/ProfileContainer'
+import { useEffect, useState } from 'react'
+import { postAPI } from '@/services/fetchAPI'
 
-export default () => {
-    const [data, setData] = useState(null)
+export default ({ params }) => {
+  const [data, setData] = useState(null)
 
-    //"example@ofistik.com"
-    async function getProfileData() {
-        const response = await postAPI("/auth", {email: "example@ofistik.com"} ,"POST")
+  //"example@ofistik.com"
+  async function getProfileData() {
+    const response = await postAPI(
+      '/auth',
+      { email: 'example@ofistik.com' },
+      'POST'
+    )
 
-        setData(response)
-    }
+    setData(response)
+  }
 
-    useEffect(() => {
-        getProfileData()
-    }, [])
+  useEffect(() => {
+    getProfileData()
+  }, [])
 
-    return <ProfileContainer data={data?.data}/>
+  return <ProfileContainer data={data?.data} query={params.id} />
 }

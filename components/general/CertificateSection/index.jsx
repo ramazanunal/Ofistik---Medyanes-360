@@ -5,13 +5,14 @@ import { IoIosAddCircle } from 'react-icons/io'
 import { LiaCertificateSolid } from 'react-icons/lia'
 import { toast } from 'react-toastify'
 
-const Certificate = ({ mockData }) => {
+const Certificate = ({ mockData, isOwner }) => {
   const [certificates, setSertificates] = useState(mockData.certificates)
   const [editCertificateId, setEditCertificateId] = useState(null)
   const [editCertificationData, setEditCertificationData] = useState({
     certificate: '',
     year: '',
   })
+
   const handleEditCertificateClick = (id, certificate, year) => {
     setEditCertificateId(id)
     setEditCertificationData({ certificate, year })
@@ -33,7 +34,6 @@ const Certificate = ({ mockData }) => {
 
     let data
     if (editCertificateId === 'new') {
-      // Yeni eğitim bilgisi ekleniyor
       data = {
         certificate: editCertificationData.certificate,
         year: editCertificationData.year,
@@ -41,7 +41,6 @@ const Certificate = ({ mockData }) => {
         hizmetVerenId: mockData.id,
       }
     } else {
-      // Mevcut eğitim bilgisi güncelleniyor
       data = {
         id: editCertificateId,
         certificate: editCertificationData.certificate,
@@ -100,7 +99,7 @@ const Certificate = ({ mockData }) => {
         }
       )
       if (res.status === 'DELETED') {
-        toast.success('Sertifika bilgisi başarıyla Silindi')
+        toast.success('Sertifika bilgisi başarıyla silindi')
         setSertificates((prevInfo) =>
           prevInfo.filter((certificate) => certificate.id !== id)
         )
@@ -119,9 +118,9 @@ const Certificate = ({ mockData }) => {
         </h1>
       </div>
       <div className="bg-white p-5 rounded-md shadow-lg text-gray-800 ">
-        {editCertificateId === null && (
+        {isOwner && editCertificateId === null && (
           <button
-            className=" text-black px-2 py-1 flex  justify-end w-full items-end"
+            className="text-black px-2 py-1 flex justify-end w-full items-end"
             onClick={handleAddCertificateClick}
           >
             <IoIosAddCircle
@@ -178,28 +177,30 @@ const Certificate = ({ mockData }) => {
 
                   <div className="flex items-center gap-4">
                     <h1>{certificate.year}</h1>
-                    <div className="flex items-center">
-                      <button
-                        className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
-                        onClick={() =>
-                          handleEditCertificateClick(
-                            certificate.id,
-                            certificate.certificate,
-                            certificate.year
-                          )
-                        }
-                      >
-                        <FaPencilAlt size={15} />
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
-                        onClick={() =>
-                          handleDeleteCertificateClick(certificate.id)
-                        }
-                      >
-                        <FaTrash size={15} />
-                      </button>
-                    </div>
+                    {isOwner && (
+                      <div className="flex items-center">
+                        <button
+                          className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
+                          onClick={() =>
+                            handleEditCertificateClick(
+                              certificate.id,
+                              certificate.certificate,
+                              certificate.year
+                            )
+                          }
+                        >
+                          <FaPencilAlt size={15} />
+                        </button>
+                        <button
+                          className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
+                          onClick={() =>
+                            handleDeleteCertificateClick(certificate.id)
+                          }
+                        >
+                          <FaTrash size={15} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </li>
@@ -212,4 +213,5 @@ const Certificate = ({ mockData }) => {
     </>
   )
 }
+
 export default Certificate

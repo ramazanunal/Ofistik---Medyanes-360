@@ -32,6 +32,7 @@ const ProfileCardHeader = ({
   setIsFollow,
   socialRef,
   data,
+  query,
   price,
   minSessionTime,
 }) => {
@@ -95,7 +96,7 @@ const ProfileCardHeader = ({
 
   useEffect(() => {
     const getProfile = async () => {
-      const result = await getAPI(`/profile/${id}/get-profile`)
+      const result = await getAPI(`/profile/${query}/get-profile`)
       if (result.status === 'success') {
         setProfile(result.data)
         setLoading(false)

@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation'
 function Header() {
   const { data: session } = useSession()
   const router = useRouter()
-  console.log(session)
+
   //hamburger meu button change
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   //scroll event

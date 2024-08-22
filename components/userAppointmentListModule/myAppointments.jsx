@@ -1,86 +1,87 @@
-import React, { useEffect, useState } from "react";
-import MyAppointmentBox from "./myAppointmentBox";
-import "../../style/myAppointments.css";
-import resim from "../../images/service.png";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
-import EditModal from "./editModal";
-import Swal from "sweetalert2";
-import { getAPI } from "@/services/fetchAPI";
+'use client'
+
+import MyAppointmentBox from './myAppointmentBox'
+import '../../style/myAppointments.css'
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+import { Navigation } from 'swiper/modules'
+import EditModal from './editModal'
+import Swal from 'sweetalert2'
+import { getAPI } from '@/services/fetchAPI'
+import { useState } from 'react'
 
 function MyAppointments() {
-  const [formData, setFormData] = useState([]); // tüm randevuleri atadığımız array
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const [appointmentDataValue, setAppointmentDataValue] = useState();
+  const [formData, setFormData] = useState([]) // tüm randevuleri atadığımız array
+  const [openEditModal, setOpenEditModal] = useState(false)
+  const [appointmentDataValue, setAppointmentDataValue] = useState()
 
   const handleOpenEditModal = (selectedAppointment) => {
-    setAppointmentDataValue(selectedAppointment);
-    setOpenEditModal(true);
-  };
+    setAppointmentDataValue(selectedAppointment)
+    setOpenEditModal(true)
+  }
 
   const handleCloseEditModal = () => {
-    setOpenEditModal(false);
-  };
+    setOpenEditModal(false)
+  }
 
   const handleDelete = async (selectedAppointment) => {
     Swal.fire({
-      title: "Emin misiniz!",
-      text: "Randevuyu iptal etmek istediğinize emin misiniz?",
-      icon: "question",
+      title: 'Emin misiniz!',
+      text: 'Randevuyu iptal etmek istediğinize emin misiniz?',
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonText: "Evet",
-      cancelButtonText: "Hayır",
+      confirmButtonText: 'Evet',
+      cancelButtonText: 'Hayır',
     }).then(async (result) => {
       if (result.isConfirmed) {
-
         const selectedTimes = await getSelectedTimes()
 
-        const dateParts = selectedAppointment.time.split(" ");
-        const datePart = dateParts[0].split(".");
-        const timePart = dateParts[2];
+        const dateParts = selectedAppointment.time.split(' ')
+        const datePart = dateParts[0].split('.')
+        const timePart = dateParts[2]
 
-        const year = parseInt(datePart[2], 10);
-        const month = parseInt(datePart[1], 10) - 1;
-        const day = parseInt(datePart[0], 10);
+        const year = parseInt(datePart[2], 10)
+        const month = parseInt(datePart[1], 10) - 1
+        const day = parseInt(datePart[0], 10)
 
-        const timeParts = timePart.split(":");
-        const hours = parseInt(timeParts[0], 10);
-        const minutes = parseInt(timeParts[1], 10);
+        const timeParts = timePart.split(':')
+        const hours = parseInt(timeParts[0], 10)
+        const minutes = parseInt(timeParts[1], 10)
 
-        const originalDate = new Date(year, month, day, hours, minutes);
+        const originalDate = new Date(year, month, day, hours, minutes)
 
-        const formattedDate = originalDate.toISOString().split("T")[0];
+        const formattedDate = originalDate.toISOString().split('T')[0]
         const formattedTime = originalDate.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+          hour: '2-digit',
+          minute: '2-digit',
+        })
 
         const result1 = {
           date: formattedDate,
           time: formattedTime,
-        };
+        }
 
         Swal.fire({
-          title: "Başarılı !",
-          text: "Randevu başarılı bir şekilde silindi.",
-          icon: "success",
-          confirmButtonText: "Kapat",
-        });
+          title: 'Başarılı !',
+          text: 'Randevu başarılı bir şekilde silindi.',
+          icon: 'success',
+          confirmButtonText: 'Kapat',
+        })
 
         const updatedSelectedTimes = selectedTimes.map((appointment) => {
           if (
             appointment.date === result1.date &&
             appointment.time === result1.time
           ) {
-            return { ...appointment, active: true };
+            return { ...appointment, active: true }
           }
-          return appointment;
-        });
+          return appointment
+        })
 
-        await postAPI("/selectedtimes", updatedSelectedTimes, "POST") // GÜNCELLENMİŞ SAATLERİ YENİDEN DATABASE E GÖNDERECEĞİZ
+        await postAPI('/selectedtimes', updatedSelectedTimes, 'POST') // GÜNCELLENMİŞ SAATLERİ YENİDEN DATABASE E GÖNDERECEĞİZ
 
         // Form datayı güncelle
         const dates = await getDatas(true)
@@ -89,25 +90,29 @@ function MyAppointments() {
             appointment.date !== selectedAppointment.date ||
             appointment.time !== selectedAppointment.time
           ) {
-            await postAPI("/date", {
-              id: appointment.id,
-              data: {
-                delete: true
-              }
-            }, "PUT")
+            await postAPI(
+              '/date',
+              {
+                id: appointment.id,
+                data: {
+                  delete: true,
+                },
+              },
+              'PUT'
+            )
           }
-        });
+        })
 
         await getDatas()
       }
-    });
-  };
+    })
+  }
 
   const renderSwiper = (appointments) => {
     //en fazla alt alta 3 tane randevu görüntülememizi sağlayan kod
-    const swiperSlides = [];
+    const swiperSlides = []
     for (let i = 0; i < appointments.length; i += 3) {
-      const currentAppointments = appointments.slice(i, i + 3);
+      const currentAppointments = appointments.slice(i, i + 3)
       const swiperSlide = (
         <SwiperSlide key={i}>
           <div className="flex flex-col items-center justify-center appointmentBoxArea">
@@ -115,10 +120,10 @@ function MyAppointments() {
               <>
                 <MyAppointmentBox
                   key={index}
-                  image={resim}
+                  image={''}
                   infos={{
                     ...appointmentData,
-                    duration: appointmentData.duration || "0", // duration bilgisini ekledik
+                    duration: appointmentData.duration || '0', // duration bilgisini ekledik
                   }}
                   onDelete={handleDelete}
                   handleOpenEditModal={() =>
@@ -129,22 +134,22 @@ function MyAppointments() {
             ))}
           </div>
         </SwiperSlide>
-      );
-      swiperSlides.push(swiperSlide);
+      )
+      swiperSlides.push(swiperSlide)
     }
     return (
       <Swiper
         navigation={{
-          prevEl: ".custom-swiper-button-prev", // Class or element for the back button
-          nextEl: ".custom-swiper-button-next", // Class or element for the next button
+          prevEl: '.custom-swiper-button-prev', // Class or element for the back button
+          nextEl: '.custom-swiper-button-next', // Class or element for the next button
         }}
         modules={[Navigation]}
         className="mySwiper"
       >
         {swiperSlides}
       </Swiper>
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -164,7 +169,7 @@ function MyAppointments() {
                     image={resim}
                     infos={{
                       ...appointmentData,
-                      duration: appointmentData.duration || "0", // duration bilgisini ekledik
+                      duration: appointmentData.duration || '0', // duration bilgisini ekledik
                     }}
                     onDelete={handleDelete}
                     handleOpenEditModal={() =>
@@ -192,14 +197,14 @@ function MyAppointments() {
         onClose={handleCloseEditModal}
         event={appointmentDataValue}
         randevuTarih={
-          appointmentDataValue && appointmentDataValue.time.split(" ")[0]
+          appointmentDataValue && appointmentDataValue.time.split(' ')[0]
         }
         randevuSaat={
-          appointmentDataValue && appointmentDataValue.time.split(" ")[2]
+          appointmentDataValue && appointmentDataValue.time.split(' ')[2]
         }
       />
     </>
-  );
+  )
 }
 
-export default MyAppointments;
+export default MyAppointments

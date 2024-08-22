@@ -1,85 +1,85 @@
-"use client";
-import React, { useState, useRef } from "react";
-import useAlert from "@/lib/hooks/useAlert";
-import HorizontalCarousel from "@/components/tabsSocialComponents/HorizontalCarousel";
-import { useProfileStore } from "@/store/useProfileStore";
-import dynamic from "next/dynamic";
+'use client'
+import React, { useState, useRef } from 'react'
+import useAlert from '@/lib/hooks/useAlert'
+import HorizontalCarousel from '@/components/tabsSocialComponents/HorizontalCarousel'
+import { useProfileStore } from '@/store/useProfileStore'
+import dynamic from 'next/dynamic'
 
 // Components
-import ProfileDetail from "./components/profileContentbar/ProfileContentbar";
-import ProfileCardInfo from "./components/profileCard/profileCardInfo/ProfileCardInfo";
-import Alert from "@/components/Alert";
+import ProfileDetail from './components/profileContentbar/ProfileContentbar'
+import ProfileCardInfo from './components/profileCard/profileCardInfo/ProfileCardInfo'
+import Alert from '@/components/Alert'
 const AppointmentComponent = dynamic(
-  () => import("@/components/appointmentModule/appointmentComponent"),
+  () => import('@/components/appointmentModule/appointmentComponent'),
   { ssr: false }
-);
+)
 
 //Icons
-import { IoCopy } from "react-icons/io5";
-import AddPostComp from "@/components/tabsSocialComponents/AddPostComp";
+import { IoCopy } from 'react-icons/io5'
+import AddPostComp from '@/components/tabsSocialComponents/AddPostComp'
 
 const socialMediaItems = [
   {
-    icon: "https://img.icons8.com/3d-fluency/94/instagram-new.png",
-    alt: "instagram-new",
-    nickname: "@gabriel02",
+    icon: 'https://img.icons8.com/3d-fluency/94/instagram-new.png',
+    alt: 'instagram-new',
+    nickname: '@gabriel02',
     isUrl: false,
   },
   {
-    icon: "https://img.icons8.com/ios-filled/50/twitterx--v1.png",
-    alt: "twitter",
-    nickname: "@gabriel02",
+    icon: 'https://img.icons8.com/ios-filled/50/twitterx--v1.png',
+    alt: 'twitter',
+    nickname: '@gabriel02',
     isUrl: false,
   },
   {
-    icon: "https://img.icons8.com/color/48/facebook.png",
-    alt: "facebook",
-    nickname: "@gabriel02face",
+    icon: 'https://img.icons8.com/color/48/facebook.png',
+    alt: 'facebook',
+    nickname: '@gabriel02face',
     isUrl: false,
   },
   {
-    icon: "https://img.icons8.com/ios-filled/50/link--v1.png",
-    alt: "link",
-    nickname: "Profil Link",
+    icon: 'https://img.icons8.com/ios-filled/50/link--v1.png',
+    alt: 'link',
+    nickname: 'Profil Link',
     isUrl: true,
   },
-];
+]
 
-const ProfilePageLayout = ({ data }) => {
-  const users = useProfileStore((state) => state.users);
-  const setUsers = useProfileStore((state) => state.setUsers);
-  const posts = useProfileStore((state) => state.posts);
-  const setPosts = useProfileStore((state) => state.setPosts);
-  const openPageId = useProfileStore((state) => state.openPageId);
-  const setOpenpageId = useProfileStore((state) => state.setOpenpageId);
-  const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost);
-  const openAddPost = useProfileStore((state) => state.openAddPost);
+const ProfilePageLayout = ({ data, query }) => {
+  const users = useProfileStore((state) => state.users)
+  const setUsers = useProfileStore((state) => state.setUsers)
+  const posts = useProfileStore((state) => state.posts)
+  const setPosts = useProfileStore((state) => state.setPosts)
+  const openPageId = useProfileStore((state) => state.openPageId)
+  const setOpenpageId = useProfileStore((state) => state.setOpenpageId)
+  const setOpenAddPost = useProfileStore((state) => state.setOpenAddPost)
+  const openAddPost = useProfileStore((state) => state.openAddPost)
 
-  const [isHearted, setIsHearted] = useState(false); //Hert button control in profile
-  const [isCommented, setIsCommented] = useState(false); //Comment icon opening and update control
-  const [isFollow, setIsFollow] = useState(false); //Social media field opening control
-  const [detailControl, setDetailControl] = useState("general");
+  const [isHearted, setIsHearted] = useState(false) //Hert button control in profile
+  const [isCommented, setIsCommented] = useState(false) //Comment icon opening and update control
+  const [isFollow, setIsFollow] = useState(false) //Social media field opening control
+  const [detailControl, setDetailControl] = useState('general')
 
-  const socialRef = useRef();
-  const textRef = useRef();
+  const socialRef = useRef()
+  const textRef = useRef()
 
-  const { alertMessage, showAlert, alertVisible, alertType } = useAlert();
+  const { alertMessage, showAlert, alertVisible, alertType } = useAlert()
 
   // Click and copy text
   const handleCopySocialMediaNickMame = () => {
     textRef.current
       ? navigator.clipboard.writeText(textRef.current.innerText)
-      : null;
+      : null
 
-    showAlert("Kopyalandı!", "success");
-  };
+    showAlert('Kopyalandı!', 'success')
+  }
 
   // Click and copy text
   const handleCopySocialMediaUrlAddress = () => {
-    textRef.current ? navigator.clipboard.writeText("www.example.com") : null;
+    textRef.current ? navigator.clipboard.writeText('www.example.com') : null
 
-    showAlert("Kopyalandı!", "success");
-  };
+    showAlert('Kopyalandı!', 'success')
+  }
 
   return (
     <>
@@ -102,12 +102,13 @@ const ProfilePageLayout = ({ data }) => {
               setIsFollow={setIsFollow}
               minSessionTime={60}
               socialRef={socialRef}
+              query={query}
             />
             <div
               className={`${
                 isFollow
-                  ? "flex flex-col items-center justify-center shadow-lg p-3 w-full transition-all duration-300 ease-in-out bg-white text-black rounded-lg z-50 mt-3"
-                  : "overflow-hidden transition-all h-0 duration-300 ease-in-out"
+                  ? 'flex flex-col items-center justify-center shadow-lg p-3 w-full transition-all duration-300 ease-in-out bg-white text-black rounded-lg z-50 mt-3'
+                  : 'overflow-hidden transition-all h-0 duration-300 ease-in-out'
               }`}
             >
               <Alert
@@ -117,7 +118,7 @@ const ProfilePageLayout = ({ data }) => {
               />
               <div
                 className={`flex items-center justify-around overflow-x-auto gap-1 w-full ${
-                  isFollow ? "h-20" : "overflow-hidden transition h-0"
+                  isFollow ? 'h-20' : 'overflow-hidden transition h-0'
                 }`}
               >
                 {socialMediaItems &&
@@ -162,6 +163,7 @@ const ProfilePageLayout = ({ data }) => {
               isCommented={isCommented}
               isFollow={isFollow}
               setIsFollow={setIsFollow}
+              query={query}
             />
           </div>
         </div>
@@ -178,7 +180,7 @@ const ProfilePageLayout = ({ data }) => {
       )}
       {openAddPost && <AddPostComp openAddPost={openAddPost} />}
     </>
-  );
-};
+  )
+}
 
-export default ProfilePageLayout;
+export default ProfilePageLayout

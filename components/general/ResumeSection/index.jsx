@@ -4,7 +4,8 @@ import { FaPencilAlt } from 'react-icons/fa'
 import { TfiWrite } from 'react-icons/tfi'
 import { postAPI } from '@/services/fetchAPI'
 import { toast } from 'react-toastify'
-const ResumeSection = ({ mockData, loading }) => {
+
+const ResumeSection = ({ mockData, loading, isOwner }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [resumeText, setResumeText] = useState(mockData?.resume?.text || '')
   const [initialResumeText, setInitialResumeText] = useState(
@@ -79,24 +80,26 @@ const ResumeSection = ({ mockData, loading }) => {
             </div>
           ) : (
             <div className="">
-              <button
-                className="text-blue-500 hover:text-blue-400 px-2 py-1 mb-2"
-                onClick={handleEditClick}
-              >
-                {mockData?.resume === '' || mockData?.resume === null ? (
-                  <IoIosAddCircle
-                    size={25}
-                    className="text-blue-600 hover:text-blue-500"
-                  />
-                ) : (
-                  <FaPencilAlt size={15} />
-                )}
-              </button>
+              {isOwner && ( // isOwner true ise ikonlar görünür
+                <button
+                  className="text-blue-500 hover:text-blue-400 px-2 py-1 mb-2"
+                  onClick={handleEditClick}
+                >
+                  {mockData?.resume === '' || mockData?.resume === null ? (
+                    <IoIosAddCircle
+                      size={25}
+                      className="text-blue-600 hover:text-blue-500"
+                    />
+                  ) : (
+                    <FaPencilAlt size={15} />
+                  )}
+                </button>
+              )}
               <p>
                 {resumeText ? (
                   resumeText
                 ) : (
-                  <p>Hernagi Bir Özgeçiş Verisi Bulunamadı</p>
+                  <p>Hernagi Bir Özgeçmiş Verisi Bulunamadı</p>
                 )}
               </p>
             </div>

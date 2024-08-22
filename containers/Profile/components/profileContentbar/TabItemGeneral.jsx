@@ -8,31 +8,47 @@ import SkillsSection from '@/components/general/SkillsSection'
 import LanguageSection from '@/components/general/LanguageSection'
 import { useSession } from 'next-auth/react'
 
-const TabItemsGeneral = ({ params }) => {
+const TabItemsGeneral = ({ query }) => {
   const { data: session } = useSession()
   const id = session?.user.id
+  console.log(id)
 
   const [profileInfo, setProfileInfo] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isOwner, setIsOwner] = useState(false) // isOwner state'i oluşturuldu
 
   useEffect(() => {
     const getProfile = async () => {
-      const result = await getAPI(`/profile/${id}/get-profile`)
+      const result = await getAPI(`/profile/${query}/get-profile`)
       if (result.status === 'success') {
         setProfileInfo(result.data)
+        console.log(result.data.user.id)
+
+        // API'den dönen id ile session id'sini karşılaştır
+        if (result.data.user.id === id) {
+          setIsOwner(true)
+        } else {
+          setIsOwner(false)
+        }
+
         setLoading(false)
       }
     }
     getProfile()
-  }, [id])
+  }, [id, query]) // useEffect bağımlılığına query'yi de ekledik
+
   return (
     !loading && (
-      <div className="lg:h-[calc(100vh_-_200px)] w-full mx-auto lg:overflow-y-scroll top-0 bottom-0  flex flex-col gap-3 pt-5   ">
-        <ResumeSection mockData={profileInfo} loading={loading} />
-        <EducationInfoSection mockData={profileInfo} />
-        <Certificate mockData={profileInfo} />
-        <SkillsSection data={profileInfo} />
-        <LanguageSection data={profileInfo} />
+      <div className="lg:h-[calc(100vh_-_200px)] w-full mx-auto lg:overflow-y-scroll top-0 bottom-0 flex flex-col gap-3 pt-5">
+        <ResumeSection
+          mockData={profileInfo}
+          loading={loading}
+          isOwner={isOwner}
+        />
+        <EducationInfoSection mockData={profileInfo} isOwner={isOwner} />
+        <Certificate mockData={profileInfo} isOwner={isOwner} />
+        <SkillsSection data={profileInfo} isOwner={isOwner} />
+        <LanguageSection data={profileInfo} isOwner={isOwner} />
       </div>
     )
   )

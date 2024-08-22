@@ -1,3 +1,4 @@
+import MyAppointments from '@/components/userAppointmentListModule/myAppointments'
 import MembershipInfo from '@/containers/Home/_components/receiverProfile/MembershipInfo'
 import PasswordUpdate from '@/containers/Home/_components/receiverProfile/PasswordUpdate'
 import React from 'react'
@@ -18,6 +19,7 @@ const ProfilePage = () => {
           <MembershipInfo />
           <PasswordUpdate />
         </div>
+        <MyAppointments />
       </div>
     </div>
   )

@@ -5,7 +5,7 @@ import { IoIosAddCircle } from 'react-icons/io'
 import { PiStethoscopeFill } from 'react-icons/pi'
 import { toast } from 'react-toastify'
 
-const SkillsSection = ({ data: userInfo }) => {
+const SkillsSection = ({ data: userInfo, isOwner }) => {
   const [skills, setSkills] = useState(userInfo.skills)
   const [editSkillId, setEditSkillId] = useState(null)
   const [editSkillData, setEditSkillData] = useState({
@@ -32,14 +32,12 @@ const SkillsSection = ({ data: userInfo }) => {
 
     let data
     if (editSkillId === 'new') {
-      // Yeni eğitim bilgisi ekleniyor
       data = {
         name: editSkillData.name,
         id: null,
         hizmetVerenId: userInfo.id,
       }
     } else {
-      // Mevcut eğitim bilgisi güncelleniyor
       data = {
         id: editSkillId,
         name: editSkillData.name,
@@ -106,7 +104,7 @@ const SkillsSection = ({ data: userInfo }) => {
         </h1>
       </div>
       <div className="bg-white p-5 rounded-md shadow-lg text-gray-800 ">
-        {editSkillId === null && (
+        {isOwner && editSkillId === null && (
           <button
             className=" text-black px-2 py-1 flex  justify-end w-full items-end"
             onClick={handleAddSkillClick}
@@ -118,7 +116,7 @@ const SkillsSection = ({ data: userInfo }) => {
           </button>
         )}
 
-        {editSkillId !== null && (
+        {isOwner && editSkillId !== null && (
           <div className="w-full flex flex-col">
             <input
               type="text"
@@ -156,24 +154,26 @@ const SkillsSection = ({ data: userInfo }) => {
                 <div className="flex items-center justify-between w-full">
                   <h1>{skill.name}</h1>
 
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center">
-                      <button
-                        className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
-                        onClick={() =>
-                          handleEditSkillClick(skill.id, skill.name)
-                        }
-                      >
-                        <FaPencilAlt size={15} />
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
-                        onClick={() => handleDeleteSkillClick(skill.id)}
-                      >
-                        <FaTrash size={15} />
-                      </button>
+                  {isOwner && (
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center">
+                        <button
+                          className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
+                          onClick={() =>
+                            handleEditSkillClick(skill.id, skill.name)
+                          }
+                        >
+                          <FaPencilAlt size={15} />
+                        </button>
+                        <button
+                          className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
+                          onClick={() => handleDeleteSkillClick(skill.id)}
+                        >
+                          <FaTrash size={15} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </li>
             ))}

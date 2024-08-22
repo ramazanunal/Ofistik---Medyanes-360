@@ -5,7 +5,7 @@ import { FaPencilAlt } from 'react-icons/fa'
 
 import { IoIosAddCircle } from 'react-icons/io'
 import { toast } from 'react-toastify'
-const EducationInfoSection = ({ mockData }) => {
+const EducationInfoSection = ({ mockData, isOwner }) => {
   const [educationInfo, setEducationInfo] = useState(mockData?.educationInfo)
   const [editEducationId, setEditEducationId] = useState(null)
   const [editEducationData, setEditEducationData] = useState({
@@ -117,7 +117,7 @@ const EducationInfoSection = ({ mockData }) => {
         </h1>
       </div>
       <div className="bg-white p-5 rounded-md shadow-lg text-gray-800 ">
-        {editEducationId === null && educationInfo.length < 2 && (
+        {editEducationId === null && educationInfo.length < 2 && isOwner && (
           <button
             className=" text-black px-2 py-1 flex  justify-end w-full items-end"
             onClick={handleAddEducationClick}
@@ -176,26 +176,30 @@ const EducationInfoSection = ({ mockData }) => {
 
                   <div className="flex items-center gap-4">
                     <h1>{education.year}</h1>
-                    <div className="flex items-center">
-                      <button
-                        className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
-                        onClick={() =>
-                          handleEditEducationClick(
-                            education.id,
-                            education.university,
-                            education.year
-                          )
-                        }
-                      >
-                        <FaPencilAlt size={15} />
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
-                        onClick={() => handleDeleteEducationClick(education.id)}
-                      >
-                        <FaTrash size={15} />
-                      </button>
-                    </div>
+                    {isOwner && (
+                      <div className="flex items-center">
+                        <button
+                          className="text-blue-500 hover:text-blue-400 px-2 py-1 ml-2"
+                          onClick={() =>
+                            handleEditEducationClick(
+                              education.id,
+                              education.university,
+                              education.year
+                            )
+                          }
+                        >
+                          <FaPencilAlt size={15} />
+                        </button>
+                        <button
+                          className="text-red-500 hover:text-red-400 px-2 py-1 ml-2"
+                          onClick={() =>
+                            handleDeleteEducationClick(education.id)
+                          }
+                        >
+                          <FaTrash size={15} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </li>
