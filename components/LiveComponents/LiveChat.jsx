@@ -1,23 +1,17 @@
 import React, { memo, useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import profile from "@/assets/icons/profile.png";
 import Image from "next/image";
 import "animate.css";
 import VideoPlayer from "./VideoPlayer";
 import toast, { Toaster } from "react-hot-toast";
+
+import { firebaseDb } from "./firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 const LiveChat = memo(
   ({
-    handleScreenShare,
-    localTracks,
-    screenShareOpen,
-    setScreenShareOpen,
-    screenShare,
-    setUsers,
-    client,
-    setScreenShare,
-    users,
-    screenShareRef,
     showCtrl,
     sendMessage,
     sendFile,
@@ -28,8 +22,8 @@ const LiveChat = memo(
     rtmClient,
     totalMembers,
     participants,
+    users,
     UID,
-    setWhiteboardOpen,
     whiteboardOpen,
     showWhiteboardLarge,
     closeWhiteboard,
@@ -73,29 +67,30 @@ const LiveChat = memo(
       participants.forEach(fetchName);
     }, [participants, rtmClient]);
 
+    const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
+
+    const handleFileUpload = async (e) => {
+      const file = e.target.files[0];
+      console.log("file: => ", file);
+      if (file) {
+        const storageRef = ref(firebaseDb, `${uniqueRoomName}/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const fileURL = await getDownloadURL(storageRef);
+
+        sendFile({ url: fileURL, name: file.name, type: file.type });
+      }
+    };
+
     const renderUserBox = (user, isUser) => (
       <div
         key={user.uid}
-        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[29vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
-          large
-            ? "!w-[32vw] !h-[37vh] max-[768px]:!w-[80vw] max-[768px]:!h-[29vh]"
-            : ""
+        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
+          large ? "!w-[32vw] !h-[37vh]" : ""
         }`}
         id={`userBoxForCam-${user.uid}`}
       >
         {isUser && (
           <VideoPlayer
-            large={large}
-            handleScreenShare={handleScreenShare}
-            localTracks={localTracks}
-            screenShareOpen={screenShareOpen}
-            setWhiteboardOpen={setWhiteboardOpen}
-            setScreenShareOpen={setScreenShareOpen}
-            screenShare={screenShare}
-            setUsers={setUsers}
-            client={client}
-            setScreenShare={setScreenShare}
-            screenShareRef={screenShareRef}
             hasSmallViewScreen1={hasSmallViewScreen1}
             closeWhiteboard={closeWhiteboard}
             showWhiteboard={whiteboardOpen}
@@ -104,7 +99,6 @@ const LiveChat = memo(
             rtmClient={rtmClient}
             key={user.uid}
             user={user}
-            users={users}
             UID={UID}
             usersNumber={users.length}
           />
@@ -159,15 +153,13 @@ const LiveChat = memo(
 
     return (
       <div
-        className={` lg:p-5  bg-gray-100 ${
-          isMobile && !chatShow ? "w-full flex items-center justify-center" : ""
-        }  ${isMobile ? "h-[90vh] absolute " : "relative"}`}
+        className={`p-5  bg-gray-100  ${
+          isMobile ? "h-[90vh] absolute z-30" : "relative"
+        }`}
       >
         <button
           onClick={openFunction}
-          className={`${
-            isMobile ? "hidden" : ""
-          } bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500 `}
+          className="bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500"
         >
           <i
             className={`fa-solid fa-chevron-${chatShow ? "left" : "right"}`}
@@ -175,7 +167,7 @@ const LiveChat = memo(
         </button>
         {/* Participants Section */}
         <div
-          className={`${isMobile ? "p-3 z-[200]" : ""} ${
+          className={` ${
             chatShow ? "hidden " : " animate__animated animate__fadeInRight"
           } `}
         >
@@ -220,7 +212,44 @@ const LiveChat = memo(
                     <span className="text-blue-900 font-semibold">
                       {chat.displayName}
                     </span>
-                    <span className="font-medium">{chat.message}</span>
+                    {Array.isArray(chat.message) ? (
+                      <div>
+                        {chat.message[0].name.match(/\.(jpeg|jpg|gif|png)$/) ? (
+                          <>
+                            <img
+                              src={chat.message[0].url}
+                              alt={chat.message[0].name}
+                              className="w-40 h-auto object-cover"
+                            />
+                            <a
+                              target="_blank"
+                              href={chat.message[0].url}
+                              download={chat.message[0].name}
+                              className="text-blue-500 font-medium underline ml-2"
+                            >
+                              İndir
+                            </a>
+                          </>
+                        ) : chat.message[0].name.match(/\.pdf$/) ? (
+                          <iframe
+                            src={chat.message[0].url}
+                            title={chat.message[0].name}
+                            className="w-full h-96"
+                          />
+                        ) : (
+                          <a
+                            href={chat.message[0].url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-medium text-blue-500"
+                          >
+                            {chat.message[0].name}
+                          </a>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="font-medium">{chat.message}</span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -244,6 +273,16 @@ const LiveChat = memo(
                 className="h-[44px] flex-grow bg-white rounded-lg p-3 focus:outline-none focus:border focus:border-premiumOrange placeholder:text-slate-600"
                 placeholder="Mesaj Gönder..."
               />
+              <label className="cursor-pointer ml-2">
+                <FontAwesomeIcon icon={faPaperclip} />
+                <input
+                  type="file"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  accept=".pdf,.doc,.docx,image/*"
+                />
+              </label>
+
               <button
                 type="submit"
                 className="bg-premiumOrange text-white p-2 rounded-lg ml-2"
