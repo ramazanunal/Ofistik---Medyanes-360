@@ -219,7 +219,7 @@ const LiveChat = memo(
           </div>
 
           {/* Chat Section */}
-          <div className="flex flex-col h-[45vh] md:h-[45vh] bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="flex flex-col h-[35vh] md:h-[45vh] bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="h-[40vh] p-2 overflow-y-auto flex flex-col gap-4">
               {chats.map((chat, id) => (
                 <div

@@ -91,17 +91,22 @@ function Page() {
       },
     });
 
-    // Oda ismine 5 basamaklı rastgele bir sayı ekleyin
-    const randomNum = Math.floor(10000 + Math.random() * 90000);
-    const uniqueRoomName = `${roomLogin.roomName}${randomNum}`;
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let randomText = "";
+    for (let i = 0; i < 10; i++) {
+      randomText += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    const uniqueRoomName = `${roomLogin.roomName}${randomText}`;
 
     try {
       const response = await getAPI(
         `/agora?channelName=${uniqueRoomName}&uid=${roomLogin.username}`
       );
-      const token = response.token;
-      setChannel(roomLogin.roomName);
-      setToken(token);
+      setChannel(uniqueRoomName);
+      setToken(response.token);
       setUid(roomLogin.username);
       Swal.close();
       router.push(
