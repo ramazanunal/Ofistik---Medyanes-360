@@ -140,7 +140,7 @@ function Header() {
     if (userType === 'PROVIDER') {
       router.push(`/profile/${username}`)
     } else {
-      router.push(`/profile-receiver/${username}`)
+      router.push(`/profile-receiver`)
     }
   }
 
