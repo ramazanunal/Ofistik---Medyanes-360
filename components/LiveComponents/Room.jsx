@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { firebaseDb } from "./firebase";
 const APP_ID = "b524a5780b4c4657bf7c8501881792be";
 import AC from "agora-chat";
+import { deleteObject, listAll, ref } from "firebase/storage";
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 const conn = new AC.connection({
   appKey: "611139134#1334578",
@@ -23,7 +24,6 @@ function Room() {
   const chNameParts = fullChName.split("%3D");
   const chName = chNameParts[1];
   const channel = chName;
-
   const screenShareRef = useRef();
   const [token, setToken] = useState(null);
   const [joined, setJoined] = useState(false);
@@ -182,6 +182,40 @@ function Room() {
     try {
       await channelRes.leave();
       await rtmClient.logout();
+
+      if (participants.length === 1) {
+        try {
+          const folderRef = ref(firebaseDb, `${base.ChName.split("%3D")[1]}/`); // oda ismini al
+
+          listAll(folderRef) // odada bulunan tüm dosyaları siler. klasör boş kalınca kendini siliyor.
+            .then((result) => {
+              // Klasördeki her dosya için
+              result.items.forEach((itemRef) => {
+                // Dosyayı sil
+                deleteObject(itemRef)
+                  .then(() => {
+                    console.log(
+                      `${itemRef.fullPath} dosyası başarıyla silindi.`
+                    );
+                  })
+                  .catch((error) => {
+                    console.error(
+                      `${itemRef.fullPath} dosyası silinirken hata oluştu: `,
+                      error
+                    );
+                  });
+              });
+            })
+            .catch((error) => {
+              console.error(
+                "Klasör içeriği listelenirken hata oluştu: ",
+                error
+              );
+            });
+        } catch (error) {
+          console.error("Error deleting folder contents:", error);
+        }
+      }
 
       // Çıkış başarılıysa loading ekranını kapat ve rating penceresini göster
       Swal.close();

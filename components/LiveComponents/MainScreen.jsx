@@ -52,6 +52,8 @@ const MainScreen = memo(
   }) => {
     const [role, setRole] = useState(false);
 
+    const channelName = decodeURIComponent(channel).slice(0, -10);
+
     useEffect(() => {
       const parts = window.location.href.split("/");
       const role = parts[parts.length - 1];
@@ -247,7 +249,7 @@ const MainScreen = memo(
               </div>
             </div>
             <h1 className="lg:text-[1.2vw] xl:text-[1vw] tracking-wider text-gray-700">
-              {decodeURIComponent(channel)} Toplantısı
+              {channelName} Toplantısı
             </h1>
           </div>
           {/* Share Screen */}
@@ -298,7 +300,7 @@ const MainScreen = memo(
                   </div>
                 </div>
                 <h1 className="lg:text-[1.2vw] xl:text-[1vw] tracking-wider text-gray-700">
-                  {decodeURIComponent(channel)} Toplantısı
+                  {channelName} Toplantısı
                 </h1>
               </div>
               <div className="flex items-center justify-center gap-2 md:gap-4">

@@ -110,7 +110,8 @@ function Page() {
       setUid(roomLogin.username);
       Swal.close();
       router.push(
-        `/live/channelName=${roomLogin.roomName}/uuid=${uuid}/roomToken=${roomToken}/role=${role}`
+        // `/live/channelName=${roomLogin.roomName}/uuid=${uuid}/roomToken=${roomToken}/role=${role}`
+        `/live/channelName=${uniqueRoomName}/uuid=${uuid}/roomToken=${roomToken}/role=${role}`
       );
       closeRoomModal();
     } catch (error) {

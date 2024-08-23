@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { firebaseDb } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useParams } from "next/navigation";
 const LiveChat = memo(
   ({
     handleScreenShare,
@@ -48,19 +49,23 @@ const LiveChat = memo(
     useEffect(() => {
       chatRef.current.scrollIntoView({ behavior: "smooth" });
     }, [chats]);
-    const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
+
+    const { ChName } = useParams();
+    const channelName = decodeURIComponent(ChName).split("=")[1];
 
     const handleFileUpload = async (e) => {
       const file = e.target.files[0];
       console.log("file: => ", file);
+
       if (file) {
-        const storageRef = ref(firebaseDb, `${uniqueRoomName}/${file.name}`);
+        const storageRef = ref(firebaseDb, `${channelName}/${file.name}`);
         await uploadBytes(storageRef, file);
         const fileURL = await getDownloadURL(storageRef);
 
         sendFile({ url: fileURL, name: file.name, type: file.type });
       }
     };
+
     useEffect(() => {
       const parts = window.location.href.split("/");
       const role = parts[parts.length - 1];
