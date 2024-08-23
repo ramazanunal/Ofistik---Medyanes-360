@@ -1,17 +1,26 @@
 import React, { memo, useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import profile from "@/assets/icons/profile.png";
 import Image from "next/image";
 import "animate.css";
 import VideoPlayer from "./VideoPlayer";
 import toast, { Toaster } from "react-hot-toast";
-
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { firebaseDb } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 const LiveChat = memo(
   ({
+    handleScreenShare,
+    localTracks,
+    screenShareOpen,
+    setScreenShareOpen,
+    screenShare,
+    setUsers,
+    client,
+    setScreenShare,
+    users,
+    screenShareRef,
     showCtrl,
     sendMessage,
     sendFile,
@@ -22,8 +31,8 @@ const LiveChat = memo(
     rtmClient,
     totalMembers,
     participants,
-    users,
     UID,
+    setWhiteboardOpen,
     whiteboardOpen,
     showWhiteboardLarge,
     closeWhiteboard,
@@ -39,7 +48,19 @@ const LiveChat = memo(
     useEffect(() => {
       chatRef.current.scrollIntoView({ behavior: "smooth" });
     }, [chats]);
+    const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
 
+    const handleFileUpload = async (e) => {
+      const file = e.target.files[0];
+      console.log("file: => ", file);
+      if (file) {
+        const storageRef = ref(firebaseDb, `${uniqueRoomName}/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const fileURL = await getDownloadURL(storageRef);
+
+        sendFile({ url: fileURL, name: file.name, type: file.type });
+      }
+    };
     useEffect(() => {
       const parts = window.location.href.split("/");
       const role = parts[parts.length - 1];
@@ -67,30 +88,29 @@ const LiveChat = memo(
       participants.forEach(fetchName);
     }, [participants, rtmClient]);
 
-    const uniqueRoomName = sessionStorage.getItem("uniqueRoomName");
-
-    const handleFileUpload = async (e) => {
-      const file = e.target.files[0];
-      console.log("file: => ", file);
-      if (file) {
-        const storageRef = ref(firebaseDb, `${uniqueRoomName}/${file.name}`);
-        await uploadBytes(storageRef, file);
-        const fileURL = await getDownloadURL(storageRef);
-
-        sendFile({ url: fileURL, name: file.name, type: file.type });
-      }
-    };
-
     const renderUserBox = (user, isUser) => (
       <div
         key={user.uid}
-        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[25vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
-          large ? "!w-[32vw] !h-[37vh]" : ""
+        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[29vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
+          large
+            ? "!w-[32vw] !h-[37vh] max-[768px]:!w-[80vw] max-[768px]:!h-[29vh]"
+            : ""
         }`}
         id={`userBoxForCam-${user.uid}`}
       >
         {isUser && (
           <VideoPlayer
+            large={large}
+            handleScreenShare={handleScreenShare}
+            localTracks={localTracks}
+            screenShareOpen={screenShareOpen}
+            setWhiteboardOpen={setWhiteboardOpen}
+            setScreenShareOpen={setScreenShareOpen}
+            screenShare={screenShare}
+            setUsers={setUsers}
+            client={client}
+            setScreenShare={setScreenShare}
+            screenShareRef={screenShareRef}
             hasSmallViewScreen1={hasSmallViewScreen1}
             closeWhiteboard={closeWhiteboard}
             showWhiteboard={whiteboardOpen}
@@ -99,6 +119,7 @@ const LiveChat = memo(
             rtmClient={rtmClient}
             key={user.uid}
             user={user}
+            users={users}
             UID={UID}
             usersNumber={users.length}
           />
@@ -153,13 +174,15 @@ const LiveChat = memo(
 
     return (
       <div
-        className={`p-5  bg-gray-100  ${
-          isMobile ? "h-[90vh] absolute z-30" : "relative"
-        }`}
+        className={` lg:p-5  bg-gray-100 ${
+          isMobile && !chatShow ? "w-full flex items-center justify-center" : ""
+        }  ${isMobile ? "h-[90vh] absolute " : "relative"}`}
       >
         <button
           onClick={openFunction}
-          className="bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500"
+          className={`${
+            isMobile ? "hidden" : ""
+          } bg-premiumOrange w-6 text-xs h-6 rounded-full text-white absolute top-12 left-2 z-40 hover:scale-125 transform duration-500 `}
         >
           <i
             className={`fa-solid fa-chevron-${chatShow ? "left" : "right"}`}
@@ -167,7 +190,7 @@ const LiveChat = memo(
         </button>
         {/* Participants Section */}
         <div
-          className={` ${
+          className={`${isMobile ? "p-3 z-[200]" : ""} ${
             chatShow ? "hidden " : " animate__animated animate__fadeInRight"
           } `}
         >
@@ -282,7 +305,6 @@ const LiveChat = memo(
                   accept=".pdf,.doc,.docx,image/*"
                 />
               </label>
-
               <button
                 type="submit"
                 className="bg-premiumOrange text-white p-2 rounded-lg ml-2"

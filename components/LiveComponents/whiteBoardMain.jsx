@@ -42,7 +42,7 @@ function WhiteBoardMain({
     }
   }, [showChat, isMobile]);
   const height =
-    showWhiteboardLarge === false ? "25vh" : isMobile ? "79vh" : "82vh";
+    showWhiteboardLarge === false ? "25vh" : isMobile ? "75vh" : "82vh";
 
   return (
     <div
