@@ -95,9 +95,9 @@ model HizmetAlan {
     userId String? @unique @db.ObjectId
     user   User?   @relation(fields: [userId], references: [id])
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    // Date      Date[]
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    appointments Appointment[]
 }
 
 model HizmetVeren {
@@ -117,12 +117,13 @@ model HizmetVeren {
     certificates         Certificate[]
     skills               Skill[]
 
-    phone     String
-    userId    String?  @unique @db.ObjectId
-    user      User?    @relation(fields: [userId], references: [id])
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    // Date      Date[]
+    phone  String
+    userId String? @unique @db.ObjectId
+    user   User?   @relation(fields: [userId], references: [id])
+
+    appointments Appointment[]
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
 }
 
 model EducationInfo {
@@ -176,29 +177,43 @@ enum UserType {
     PROVIDER
 }
 
-model Date {
-    id            String  @id @default(auto()) @map("_id") @db.ObjectId
-    confirm       Boolean @default(false)
-    date_of_birth String?
-    delete        Boolean @default(false)
-    duration      Int
-    service       String
-    notes         String
-    language      String
-    kim_icin      String
-    gender        String?
-    firstName     String?
-    lastName      String?
-    time          String?
+enum Gender {
+    ERKEK
+    KADIN
+}
 
-    // hizmetAlanId String?     @unique @db.ObjectId
-    // hizmetAlan   HizmetAlan? @relation(fields: [hizmetAlanId], references: [id])
+enum ForWhom {
+    KENDIM_ICIN
+    BASKASI_ICIN
+}
 
-    // hizmetVerenId String?      @unique @db.ObjectId
-    // hizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+enum LanguageAppointment {
+    TURKCE
+    INGILIZCE
+}
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Appointment {
+    id          String              @id @default(auto()) @map("_id") @db.ObjectId
+    confirm     Boolean             @default(false)
+    dateOfBirth String?
+    isDeleted   Boolean             @default(false)
+    duration    Int
+    service     String
+    notes       String
+    language    LanguageAppointment
+    forWhom     ForWhom
+    gender      Gender?
+    firstName   String?
+    lastName    String?
+    time        String?
+
+    hizmetAlanId String     @db.ObjectId
+    hizmetAlan   HizmetAlan @relation(fields: [hizmetAlanId], references: [id])
+
+    hizmetVerenId String?      @db.ObjectId // Foreign key to HizmetVeren
+    hizmetVeren   HizmetVeren? @relation(fields: [hizmetVerenId], references: [id])
+    createdAt     DateTime     @default(now())
+    updatedAt     DateTime     @updatedAt
 }
 
 model SelectedTimes {

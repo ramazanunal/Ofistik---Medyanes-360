@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma'
 const handler = async (req, res) => {
   if (req.method === 'GET') {
     const { id } = req.query
+    console.log(id)
 
     // ID kontrolü
     if (!id) {

@@ -3,17 +3,15 @@
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useSession } from 'next-auth/react'
-import { getAPI, postAPI } from '@/services/fetchAPI'
+
+import { postAPI } from '@/services/fetchAPI'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import isEqual from 'lodash/isEqual'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 
-const MembershipInfo = () => {
-  const { data: session } = useSession()
-  const [profileInfo, setProfileInfo] = useState()
+const MembershipInfo = ({ profileInfo }) => {
   const [initialValues, setInitialValues] = useState({
     firstName: '',
     lastName: '',
@@ -24,19 +22,6 @@ const MembershipInfo = () => {
   })
   const [formKey, setFormKey] = useState(0)
   const router = useRouter()
-
-  useEffect(() => {
-    const getProfileInfo = async () => {
-      const res = await getAPI(
-        `/profile/${session.user.id}/get-profile-receiver`
-      )
-      setProfileInfo(res.data)
-      console.log(res.data)
-    }
-    if (session?.user?.id) {
-      getProfileInfo()
-    }
-  }, [session?.user?.id])
 
   useEffect(() => {
     if (profileInfo) {

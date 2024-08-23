@@ -10,11 +10,13 @@ import 'swiper/css/navigation'
 import { Navigation } from 'swiper/modules'
 import EditModal from './editModal'
 import Swal from 'sweetalert2'
-import { getAPI } from '@/services/fetchAPI'
-import { useState } from 'react'
+import { getAPI, postAPI } from '@/services/fetchAPI'
+import { useEffect, useState } from 'react'
 
-function MyAppointments() {
-  const [formData, setFormData] = useState([]) // tüm randevuleri atadığımız array
+function MyAppointments({ appointments }) {
+  console.log(appointments)
+
+  const [formData, setFormData] = useState(appointments || [])
   const [openEditModal, setOpenEditModal] = useState(false)
   const [appointmentDataValue, setAppointmentDataValue] = useState()
 
@@ -27,6 +29,10 @@ function MyAppointments() {
     setOpenEditModal(false)
   }
 
+  useEffect(() => {
+    setFormData(appointments)
+  }, [appointments])
+
   const handleDelete = async (selectedAppointment) => {
     Swal.fire({
       title: 'Emin misiniz!',
@@ -37,79 +43,51 @@ function MyAppointments() {
       cancelButtonText: 'Hayır',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const selectedTimes = await getSelectedTimes()
+        try {
+          const id = selectedAppointment.id
+          const response = await postAPI(
+            `/appointment/receiver/delete-appointment`,
+            id
+          )
+          console.log(response)
 
-        const dateParts = selectedAppointment.time.split(' ')
-        const datePart = dateParts[0].split('.')
-        const timePart = dateParts[2]
+          if (response.status === 'Success') {
+            // Başarı mesajını göster
+            Swal.fire({
+              title: 'Başarılı!',
+              text: 'Randevu başarılı bir şekilde silindi.',
+              icon: 'success',
+              confirmButtonText: 'Kapat',
+            })
 
-        const year = parseInt(datePart[2], 10)
-        const month = parseInt(datePart[1], 10) - 1
-        const day = parseInt(datePart[0], 10)
-
-        const timeParts = timePart.split(':')
-        const hours = parseInt(timeParts[0], 10)
-        const minutes = parseInt(timeParts[1], 10)
-
-        const originalDate = new Date(year, month, day, hours, minutes)
-
-        const formattedDate = originalDate.toISOString().split('T')[0]
-        const formattedTime = originalDate.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-
-        const result1 = {
-          date: formattedDate,
-          time: formattedTime,
-        }
-
-        Swal.fire({
-          title: 'Başarılı !',
-          text: 'Randevu başarılı bir şekilde silindi.',
-          icon: 'success',
-          confirmButtonText: 'Kapat',
-        })
-
-        const updatedSelectedTimes = selectedTimes.map((appointment) => {
-          if (
-            appointment.date === result1.date &&
-            appointment.time === result1.time
-          ) {
-            return { ...appointment, active: true }
-          }
-          return appointment
-        })
-
-        await postAPI('/selectedtimes', updatedSelectedTimes, 'POST') // GÜNCELLENMİŞ SAATLERİ YENİDEN DATABASE E GÖNDERECEĞİZ
-
-        // Form datayı güncelle
-        const dates = await getDatas(true)
-        dates.forEach(async (appointment) => {
-          if (
-            appointment.date !== selectedAppointment.date ||
-            appointment.time !== selectedAppointment.time
-          ) {
-            await postAPI(
-              '/date',
-              {
-                id: appointment.id,
-                data: {
-                  delete: true,
-                },
-              },
-              'PUT'
+            // Form datayı güncelle
+            const updatedFormData = formData.filter(
+              (appointment) => appointment.id !== selectedAppointment.id
             )
+            setFormData(updatedFormData)
+          } else {
+            // Hata durumunda kullanıcıya bilgi ver
+            Swal.fire({
+              title: 'Hata!',
+              text: 'Randevu silinirken bir hata oluştu.',
+              icon: 'error',
+              confirmButtonText: 'Kapat',
+            })
           }
-        })
-
-        await getDatas()
+        } catch (error) {
+          // Ağ hatası veya diğer hatalar için yakalama
+          Swal.fire({
+            title: 'Hata!',
+            text: 'Randevu silinirken bir hata oluştu.',
+            icon: 'error',
+            confirmButtonText: 'Kapat',
+          })
+        }
       }
     })
   }
 
   const renderSwiper = (appointments) => {
-    //en fazla alt alta 3 tane randevu görüntülememizi sağlayan kod
     const swiperSlides = []
     for (let i = 0; i < appointments.length; i += 3) {
       const currentAppointments = appointments.slice(i, i + 3)
@@ -117,20 +95,13 @@ function MyAppointments() {
         <SwiperSlide key={i}>
           <div className="flex flex-col items-center justify-center appointmentBoxArea">
             {currentAppointments.map((appointmentData, index) => (
-              <>
-                <MyAppointmentBox
-                  key={index}
-                  image={''}
-                  infos={{
-                    ...appointmentData,
-                    duration: appointmentData.duration || '0', // duration bilgisini ekledik
-                  }}
-                  onDelete={handleDelete}
-                  handleOpenEditModal={() =>
-                    handleOpenEditModal(appointmentData)
-                  }
-                />
-              </>
+              <MyAppointmentBox
+                key={index}
+                image={''}
+                infos={appointmentData}
+                onDelete={handleDelete}
+                handleOpenEditModal={() => handleOpenEditModal(appointmentData)}
+              />
             ))}
           </div>
         </SwiperSlide>
@@ -140,8 +111,8 @@ function MyAppointments() {
     return (
       <Swiper
         navigation={{
-          prevEl: '.custom-swiper-button-prev', // Class or element for the back button
-          nextEl: '.custom-swiper-button-next', // Class or element for the next button
+          prevEl: '.custom-swiper-button-prev',
+          nextEl: '.custom-swiper-button-next',
         }}
         modules={[Navigation]}
         className="mySwiper"
@@ -154,31 +125,27 @@ function MyAppointments() {
   return (
     <>
       <div className="myAppointments bg-dayComponentBg flex flex-col items-center justify-center p-3 relative lg:w-[56rem] mr-auto ml-auto mt-[50px] h-auto">
-        <h1 className="text-center text-2xl font-semibold text-deepSlateBlue p-3">
-          Randevularım
-        </h1>
         <div className="swipperAppointments h-auto sm:w-[27rem] lg:w-[35rem]">
-          {formData.length > 3 ? (
-            renderSwiper(formData)
+          {formData.length > 0 ? (
+            formData.length > 3 ? (
+              renderSwiper(formData)
+            ) : (
+              formData.map((appointmentData, index) => (
+                <MyAppointmentBox
+                  key={index}
+                  image={''}
+                  infos={appointmentData}
+                  onDelete={handleDelete}
+                  handleOpenEditModal={() =>
+                    handleOpenEditModal(appointmentData)
+                  }
+                />
+              ))
+            )
           ) : (
-            <>
-              {formData.map((appointmentData, index) => (
-                <>
-                  <MyAppointmentBox
-                    key={index}
-                    image={resim}
-                    infos={{
-                      ...appointmentData,
-                      duration: appointmentData.duration || '0', // duration bilgisini ekledik
-                    }}
-                    onDelete={handleDelete}
-                    handleOpenEditModal={() =>
-                      handleOpenEditModal(appointmentData)
-                    }
-                  />
-                </>
-              ))}
-            </>
+            <div className="no-appointments-message text-center mt-6">
+              Herhangi bir randevu bulunamadı.
+            </div>
           )}
         </div>
         {formData.length > 3 && (
@@ -196,12 +163,8 @@ function MyAppointments() {
         isOpen={openEditModal}
         onClose={handleCloseEditModal}
         event={appointmentDataValue}
-        randevuTarih={
-          appointmentDataValue && appointmentDataValue.time.split(' ')[0]
-        }
-        randevuSaat={
-          appointmentDataValue && appointmentDataValue.time.split(' ')[2]
-        }
+        randevuTarih={appointmentDataValue?.time?.split(' ')[0]}
+        randevuSaat={appointmentDataValue?.time?.split(' ')[1]}
       />
     </>
   )
