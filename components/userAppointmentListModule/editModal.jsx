@@ -4,107 +4,71 @@ import Swal from 'sweetalert2'
 import Image from 'next/image'
 import { getAPI, postAPI } from '@/services/fetchAPI'
 
-// Örnek bir unique randevu numarası oluşturma fonksiyonu
 const generateUniqueNumber = () => {
   return `RND-${Math.floor(Math.random() * 1000000)}`
 }
 
 const EditModal = ({ isOpen, onClose, event }) => {
   if (!event) return null
-  console.log(event)
 
-  // Tarih formatını YYYY-MM-DD şeklinde dönüştürme fonksiyonu
-  function formatDate(inputDate) {
+  const formatDate = (inputDate) => {
     if (!inputDate) return ''
     const parts = inputDate.split('.')
-    const day = parts[0]
-      ? parts[0].length === 1
-        ? `0${parts[0]}`
-        : parts[0]
-      : '01'
-    const month = parts[1]
-      ? parts[1].length === 1
-        ? `0${parts[1]}`
-        : parts[1]
-      : '01'
-    const year = parts[2] || '0000'
+    const day = parts[0] ? parts[0].padStart(2, '0') : '01'
+    const month = parts[1] ? parts[1].padStart(2, '0') : '01'
+    const year = parts[2] ? parts[2].substring(0, 4) : '0000'
     return `${year}-${month}-${day}`
   }
 
-  // Saatleri karşılaştırarak çakışma olup olmadığını kontrol eden fonksiyon
-  function areTimesOverlapping(time1, time2, duration1, duration2) {
-    const [hours1, minutes1] = time1.split(':').map(Number)
-    const [hours2, minutes2] = time2.split(':').map(Number)
+  const [eventDate = '0000-01-01', eventTime = '00:00'] = event.time
+    ? event.time.trim().split(' ')
+    : ['0000-01-01', '00:00']
 
-    const totalMinutes1 = hours1 * 60 + minutes1 + duration1
-    const totalMinutes2 = hours2 * 60 + minutes2 + duration2
-    return totalMinutes1 > hours2 * 60 && totalMinutes2 > hours1 * 60
-  }
-
-  // Formu gönderirken yapılacak işlemler
   const submitForm = async (values) => {
-    const storedEvents = await getAPI('/date')
-    const newDate = values.time.date
-    const newTime = values.time.time
-    const convertedTime = `${newDate} ${newTime} ${values.time.status}`
+    try {
+      const response = await postAPI(
+        '/appointment/receiver/update-appointment',
+        { values }
+      )
 
-    const isDuplicate = storedEvents.some(
-      (storedEvent) =>
-        storedEvent.id !== values.id && storedEvent.time === convertedTime
-    )
-
-    const isOverlapping = storedEvents.some((storedEvent) => {
-      if (storedEvent.id !== values.id) {
-        const oldDate = storedEvent.time.split(' ')[0]
-        const oldTime = storedEvent.time.split(' ')[1]
-        const oldDuration = storedEvent.duration
-        if (newDate === oldDate) {
-          return areTimesOverlapping(
-            newTime,
-            oldTime,
-            values.duration,
-            oldDuration
-          )
-        }
+      if (response.status === 'conflict') {
+        await Swal.fire({
+          title: 'Çakışma Uyarısı!',
+          text: response.message,
+          icon: 'error',
+          confirmButtonText: 'Kapat',
+        })
+      } else if (response.status === 'success') {
+        await Swal.fire({
+          title: 'Başarılı!',
+          text: response.message,
+          icon: 'success',
+          confirmButtonText: 'Kapat',
+        })
+        onClose()
       }
-      return false
-    })
-
-    if (isDuplicate || isOverlapping) {
-      const errorMessage = isDuplicate
-        ? 'Bu saatte başka bir randevu var.'
-        : 'Bu saat başka bir randevu zamanı ile çakışıyor.'
+    } catch (error) {
+      console.error('Randevu güncellenirken bir hata oluştu:', error)
       await Swal.fire({
         title: 'Hata!',
-        text: errorMessage,
+        text: 'Randevu güncellenirken bir hata oluştu. Lütfen tekrar deneyin.',
         icon: 'error',
         confirmButtonText: 'Kapat',
       })
-    } else {
-      values.time = convertedTime
-      await postAPI(`/date/${values.id}`, values, 'PUT')
-      onClose()
     }
   }
 
-  // Modal'ın görünürlük durumu
   const modalClass = isOpen
     ? 'fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-gray-600 bg-opacity-50'
     : 'hidden'
 
-  // Eğer event.time null veya undefined ise varsayılan değerler döndür
-  const [eventDate = '', eventTime = '', eventStatus = ''] = event.time
-    ? event.time.split(' ')
-    : ['', '', '']
-
-  // Unique randevu numarası oluştur
   const uniqueAppointmentNumber = generateUniqueNumber()
 
   return (
     <div className={modalClass} onClick={onClose}>
       <div className="absolute w-full h-full flex items-center justify-center">
         <div
-          className="relative w-[430px] max-[768px]:w-[375px] p-5 bg-white rounded-2xl shadow-lg animate__animated animate__fadeInDown"
+          className="relative w-[430px] max-[768px]:w-[375px] p-6 bg-white rounded-xl shadow-2xl transform transition-all duration-300 ease-in-out"
           onClick={(e) => e.stopPropagation()}
         >
           <Formik
@@ -116,28 +80,27 @@ const EditModal = ({ isOpen, onClose, event }) => {
               service: event.service || '',
               language: event.language || '',
               duration: event.duration || '',
-              id: uniqueAppointmentNumber, // Unique randevu numarası
+              id: event.id,
               notes: event.notes || '',
               forWhom: event.forWhom || '',
               time: {
                 date: formatDate(eventDate),
                 time: eventTime || '',
-                status: eventStatus || '',
               },
             }}
             onSubmit={submitForm}
           >
             {({ resetForm }) => (
-              <Form>
-                <div className="flex items-center justify-center relative mb-4">
-                  <h1 className="text-center text-2xl font-bold">
+              <Form className="space-y-5">
+                <div className="flex items-center justify-center relative mb-6">
+                  <h1 className="text-center text-3xl font-semibold text-gray-800">
                     Randevu Detayları
                   </h1>
                   <button
                     type="button"
                     onClick={() => {
-                      resetForm() // Formu sıfırla
-                      onClose() // Modalı kapat
+                      resetForm()
+                      onClose()
                     }}
                     className="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700"
                   >
@@ -157,8 +120,8 @@ const EditModal = ({ isOpen, onClose, event }) => {
                     </svg>
                   </button>
                 </div>
-                <div className="space-y-4">
-                  <div className="flex justify-around items-center">
+                <div className="space-y-5">
+                  <div className="flex justify-around ">
                     <div className="w-[100px]">
                       <Image
                         src="/images/pp.png"
@@ -166,57 +129,62 @@ const EditModal = ({ isOpen, onClose, event }) => {
                         height={100}
                         quality={100}
                         alt="Profile"
+                        className="rounded-full"
                       />
                     </div>
-                    <div className="flex flex-col items-center">
-                      <div className="flex mb-1">
+                    <div className="flex flex-col ">
+                      <div className="flex mb-2 items-center">
                         <i className="fa-solid fa-user text-deepSlateBlue"></i>
-                        <h2 className="text-lg font-bold ml-2">İsim Soyisim</h2>
+                        <h2 className="text-lg font-semibold ml-2 text-gray-700">
+                          İsim Soyisim
+                        </h2>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-3">
                         <Field
                           type="text"
                           name="firstName"
-                          className="text-sm w-[120px] p-2 border-2 border-gray-300 rounded-lg"
+                          className="text-sm w-[120px] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                         <Field
                           type="text"
                           name="lastName"
-                          className="text-sm p-2 w-[120px] border-2 border-gray-300 rounded-lg"
+                          className="text-sm p-2 w-[120px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="flex justify-around">
                     <div>
-                      <div className="flex items-center mb-1">
+                      <div className="flex items-center mb-2">
                         <i className="fa-solid fa-calendar-day text-deepSlateBlue"></i>
-                        <h2 className="text-lg font-bold ml-2">
+                        <h2 className="text-lg font-semibold ml-2 text-gray-700">
                           Randevu Tarihi
                         </h2>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-3">
                         <Field
                           type="date"
                           name="time.date"
-                          className="text-sm p-2 border-2 border-gray-300 rounded-lg"
+                          className="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                         <Field
                           type="time"
                           name="time.time"
-                          className="text-sm p-2 border-2 border-gray-300 rounded-lg"
+                          className="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                     </div>
                     <div>
-                      <div className="flex items-center mb-1">
+                      <div className="flex items-center mb-2">
                         <i className="fa-solid fa-user text-deepSlateBlue"></i>
-                        <h2 className="text-lg font-bold ml-2">Kim İçin</h2>
+                        <h2 className="text-lg font-semibold ml-2 text-gray-700">
+                          Kim İçin
+                        </h2>
                       </div>
                       <Field
                         as="select"
                         name="forWhom"
-                        className="text-sm p-2 border-2 border-gray-300 rounded-lg"
+                        className="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       >
                         <option value="KENDIM_ICIN" label="Kendim İçin" />
                         <option value="BASKASI_ICIN" label="Başkası İçin" />
@@ -225,54 +193,72 @@ const EditModal = ({ isOpen, onClose, event }) => {
                   </div>
                   <div className="flex justify-around">
                     <div>
-                      <div className="flex items-center mb-1">
+                      <div className="flex items-center mb-2">
                         <i className="fa-solid fa-earth-americas text-deepSlateBlue"></i>
-                        <h2 className="text-lg font-bold ml-2">Dil</h2>
+                        <h2 className="text-lg font-semibold ml-2 text-gray-700">
+                          Dil
+                        </h2>
                       </div>
                       <Field
                         as="select"
                         name="language"
-                        className="text-sm p-2 border-2 border-gray-300 rounded-lg"
+                        className="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       >
                         <option value="TURKCE" label="Türkçe" />
                         <option value="INGILIZCE" label="İngilizce" />
                       </Field>
                     </div>
                     <div>
-                      <div className="flex items-center mb-1">
+                      <div className="flex items-center mb-2">
                         <i className="fa-solid fa-id-badge text-deepSlateBlue"></i>
-                        <h2 className="text-lg font-bold ml-2">
+                        <h2 className="text-lg font-semibold ml-2 text-gray-700">
                           Randevu Numarası
                         </h2>
                       </div>
                       <Field
                         type="text"
                         name="id"
-                        className="text-sm text-center w-[200px] p-2 border-2 border-gray-300 rounded-lg"
-                        disabled // ID alanını sadece görüntüleme amaçlı, düzenlenemez
+                        className="text-sm text-center w-[200px] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        disabled
                       />
                     </div>
                   </div>
-                  <div className="mt-5 border-2 border-gray-300 rounded-lg">
-                    <div className="p-3">
+                  <div className="flex justify-around">
+                    <div>
                       <div className="flex items-center mb-2">
-                        <i className="fa-solid fa-book text-xl text-deepSlateBlue"></i>
-                        <h2 className="text-xl ml-2 text-deepSlateBlue">
+                        <i className="fa-solid fa-hourglass-half text-deepSlateBlue"></i>
+                        <h2 className="text-lg font-semibold ml-2 text-gray-700">
+                          Süre
+                        </h2>
+                      </div>
+                      <Field
+                        type="number"
+                        name="duration"
+                        min="0"
+                        step="15"
+                        className="text-sm w-[100px] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Dakika"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center mb-2">
+                        <i className="fa-solid fa-pen text-deepSlateBlue"></i>
+                        <h2 className="text-lg font-semibold ml-2 text-gray-700">
                           Notlar
                         </h2>
                       </div>
                       <Field
-                        name="notes"
                         as="textarea"
-                        className="w-full p-2 border-2 border-gray-300 rounded-lg"
-                        rows="4"
+                        name="notes"
+                        className="text-sm w-[200px] h-[80px] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Eklemek istediğiniz notlar"
                       />
                     </div>
                   </div>
-                  <div className="flex justify-end mt-5">
+                  <div className="flex justify-center mt-4">
                     <button
                       type="submit"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                      className="w-full bg-deepSlateBlue text-white py-2 px-4 rounded-lg hover:bg-slate-700 transition duration-300"
                     >
                       Kaydet
                     </button>
