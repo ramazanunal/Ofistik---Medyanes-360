@@ -20,8 +20,8 @@ function WhiteBoardMain({
 
   // Configure AWS S3
   const s3 = new AWS.S3({
-    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS, // Add your AWS access key
-    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRETA, // Add your AWS secret access key
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID, // Add your AWS access key
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY, // Add your AWS secret access key
     region: "us-east-1", // Adjust region as necessary
   });
 
