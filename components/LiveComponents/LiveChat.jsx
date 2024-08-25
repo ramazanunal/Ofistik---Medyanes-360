@@ -55,7 +55,6 @@ const LiveChat = memo(
 
     const handleFileUpload = async (e) => {
       const file = e.target.files[0];
-      console.log("file: => ", file);
 
       if (file) {
         const storageRef = ref(firebaseDb, `${channelName}/${file.name}`);
@@ -96,7 +95,7 @@ const LiveChat = memo(
     const renderUserBox = (user, isUser) => (
       <div
         key={user.uid}
-        className={`relative bg-gray-100 rounded-2xl md:w-[9vw] md:h-[18vh] w-[80vw] h-[29vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
+        className={`relative bg-gray-100 rounded-2xl md:w-[8vw] md:h-[17vh] w-[80vw] h-[29vh] flex flex-col items-center justify-between m-3 userBoxForCam shadow-lg ${
           large
             ? "!w-[32vw] !h-[37vh] max-[768px]:!w-[80vw] max-[768px]:!h-[29vh]"
             : ""

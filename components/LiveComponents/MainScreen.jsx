@@ -261,6 +261,7 @@ const MainScreen = memo(
               }  ${!chatShow ? "lg:w-[75vw]" : "lg:w-[95vw]"}`}
             >
               <WhiteBoardMain
+                users={users}
                 showWhiteboardLarge={showWhiteboardLarge}
                 showParticipants={showParticipants}
                 showChat={chatShow}

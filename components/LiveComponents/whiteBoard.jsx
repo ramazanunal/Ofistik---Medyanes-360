@@ -1,20 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import { WhiteWebSdk } from "white-web-sdk";
 
-const WhiteboardContainer = () => {
+const WhiteboardContainer = ({ roomUid, roomToken }) => {
   const whiteboardRef = useRef(null);
 
   useEffect(() => {
     const whiteWebSdk = new WhiteWebSdk({
-      appIdentifier: process.env.NEXT_PUBLIC_WHITEBOARD_APP_ID,
+      appIdentifier: "PFDmUAhSEe-X_REUu_elzA/iqDTdcAIEz2DlQ",
       region: "us-sv",
     });
 
     const joinWhiteboard = async () => {
       try {
         const room = await whiteWebSdk.joinRoom({
-          uuid: process.env.NEXT_PUBLIC_WHITEBOARD_ROOM_UUID,
-          roomToken: process.env.NEXT_PUBLIC_WHITEBOARD_ROOM_TOKEN,
+          uuid: roomUid,
+          roomToken: roomToken,
         });
         room.bindHtmlElement(whiteboardRef.current);
       } catch (error) {
@@ -25,7 +25,7 @@ const WhiteboardContainer = () => {
     joinWhiteboard();
   }, []);
 
-  return <div ref={whiteboardRef} className="whiteboard-container"></div>;
+  return <div ref={whiteboardRef} id="whiteboard"></div>;
 };
 
 export default WhiteboardContainer;
