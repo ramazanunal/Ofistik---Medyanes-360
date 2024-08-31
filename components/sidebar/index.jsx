@@ -10,8 +10,10 @@ import {
   FiChevronUp,
   FiChevronRight,
   FiChevronLeft,
+  FiDollarSign 
 } from 'react-icons/fi'
 import { CiSearch } from 'react-icons/ci'
+
 
 const Sidebar = ({ activeTab, setActiveTab, profile }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true)
@@ -29,6 +31,11 @@ const Sidebar = ({ activeTab, setActiveTab, profile }) => {
         { name: 'Past', key: 'past' },
       ],
     },
+    {
+      name: "Cüzdan",
+      icon: <FiDollarSign  />,
+      key:  "wallet"
+    }
   ]
 
   const toggleSidebar = () => {

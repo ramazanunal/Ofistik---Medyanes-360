@@ -4,6 +4,7 @@ import Sidebar from '@/components/sidebar'
 import MyAppointments from '@/components/userAppointmentListModule/myAppointments'
 import MembershipInfo from '@/containers/Home/_components/receiverProfile/MembershipInfo'
 import PasswordUpdate from '@/containers/Home/_components/receiverProfile/PasswordUpdate'
+import CardPayment from "@/components/CardPayment"
 import { getAPI } from '@/services/fetchAPI'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -20,6 +21,8 @@ const ProfilePage = ({ params }) => {
         `/profile/${session.user.id}/get-profile-receiver`
       )
       setProfileInfo(res.data)
+      console.log(res.data);
+      
       if (res.status === 'success') {
         const appointments = await getAPI(
           `/appointment/receiver/${res.data.id}/get-appointment`
@@ -50,6 +53,12 @@ const ProfilePage = ({ params }) => {
 
           {activeTab === 'appointments' && (
             <MyAppointments appointments={appointments} />
+          )}
+
+          {activeTab === "wallet" && (
+            <div className='h-[500px]'>
+              <CardPayment profileInfo={profileInfo} />
+            </div>
           )}
         </div>
       </div>
